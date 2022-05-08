@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Board4.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[node name="Game4" type="Spatial"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0 )
+light_energy = 31.0
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Board4" parent="." instance=ExtResource( 1 )]
+transform = Transform( 65, 0, 0, 0, 1, 0, 0, 0, 65, 0, 0, 0 )
+physics_material_override = SubResource( 1 )
+
+[node name="Piece" parent="." instance=ExtResource( 2 )]
+transform = Transform( 2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 5, 76, -12.076 )
+
+[node name="Piece2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.753, 80.061, 0 )
