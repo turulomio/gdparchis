@@ -32,3 +32,7 @@ func _process(delta):
 		if object.filename=="res://4_square_normal.tscn":
 			object.global_transform.origin.y=20
 		
+	if Input.is_action_just_pressed("zoom_in"):
+		get_viewport().get_camera().global_transform.origin.y=get_viewport().get_camera().global_transform.origin.y-20
+	if Input.is_action_just_pressed("zoom_out"):
+		get_viewport().get_camera().global_transform.origin.y=get_viewport().get_camera().global_transform.origin.y+20
