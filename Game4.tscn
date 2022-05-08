@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Board4.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Piece.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game4.gd" type="Script" id=3]
+[ext_resource path="res://4_square_normal.tscn" type="PackedScene" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
@@ -23,8 +24,20 @@ __meta__ = {
 transform = Transform( 65, 0, 0, 0, 1, 0, 0, 0, 65, 0, 0, 0 )
 physics_material_override = SubResource( 1 )
 
-[node name="Piece" parent="." groups=["pieces"] instance=ExtResource( 2 )]
+[node name="piece_red_1" parent="." groups=["pieces"] instance=ExtResource( 2 )]
 transform = Transform( 2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 5, 76, -12.076 )
 
-[node name="Piece2" parent="." groups=["pieces"] instance=ExtResource( 2 )]
+[node name="piece_red_2" parent="." groups=["pieces"] instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.753, 80.061, 0 )
+
+[node name="square_73" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 60, -19.5 )
+
+[node name="square_74" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 60, -13.5 )
+
+[node name="square_75" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 60, -7.5 )
+
+[node name="square_2" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 60, 16.5 )

@@ -29,4 +29,6 @@ func _process(delta):
 		var object=get_object_under_mouse()
 		if object.filename=="res://Piece.tscn":
 			object.global_transform.origin.y=20
+		if object.filename=="res://4_square_normal.tscn":
+			object.global_transform.origin.y=20
 		
