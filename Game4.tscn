@@ -21,7 +21,7 @@ __meta__ = {
 }
 
 [node name="Board4" parent="." instance=ExtResource( 1 )]
-transform = Transform( 65, 0, 0, 0, 1, 0, 0, 0, 65, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 physics_material_override = SubResource( 1 )
 
 [node name="piece_red_1" parent="." groups=["pieces"] instance=ExtResource( 2 )]
