@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Piece",
+"language": "GDScript",
+"path": "res://Piece.gd"
+} ]
+_global_script_class_icons={
+"Piece": ""
+}
+
 [application]
 
 config/name="Gdparchis"

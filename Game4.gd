@@ -6,6 +6,8 @@ extends Spatial
 # var b = "text"
 var pieces_nodes=[]
 
+onready var camera =$Camera
+
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
 	var ray_from=$Camera.project_ray_origin(mouse_pos)
@@ -16,12 +18,16 @@ func get_object_under_mouse():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pieces_nodes=get_tree().get_nodes_in_group("pieces")
-	print(pieces_nodes)
+	for i in range(20):
+		print(i)
+		var piece=Piece.new()
+		add_child(piece)
+		print(piece)
+		piece.scale=Vector3(10,10,10)
+		piece.translate(Vector3(5*i,5*i,5*i))
+		pieces_nodes.append(piece)
+		
 
-
-func pick(instanceId):
-	print(instanceId)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -33,6 +39,6 @@ func _process(delta):
 			object.global_transform.origin.y=20
 		
 	if Input.is_action_just_pressed("zoom_in"):
-		get_viewport().get_camera().global_transform.origin.y=get_viewport().get_camera().global_transform.origin.y-20
+		camera.global_transform.origin.y=camera.global_transform.origin.y-20
 	if Input.is_action_just_pressed("zoom_out"):
-		get_viewport().get_camera().global_transform.origin.y=get_viewport().get_camera().global_transform.origin.y+20
+		camera.global_transform.origin.y=camera.global_transform.origin.y+20
