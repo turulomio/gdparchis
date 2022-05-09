@@ -20,11 +20,13 @@ func get_object_under_mouse():
 func _ready():
 	for i in range(20):
 		print(i)
-		var piece=Piece.new()
+		var piece_scene=load("res://Piece.tscn")
+		var piece=piece_scene.instance()
 		add_child(piece)
+		#piece.set_owner(get_tree().get_edited_scene_root())
 		print(piece)
 		piece.scale=Vector3(10,10,10)
-		piece.translate(Vector3(5*i,5*i,5*i))
+		piece.global_transform.origin=Vector3(5*i,5*i,5*i)
 		pieces_nodes.append(piece)
 		
 
