@@ -12,7 +12,6 @@ script = ExtResource( 3 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 200, 0 )
-light_energy = 31.0
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0 )
@@ -24,10 +23,10 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 physics_material_override = SubResource( 1 )
 
-[node name="piece_red_1" parent="." groups=["pieces"] instance=ExtResource( 2 )]
+[node name="PieceRed" parent="." groups=["pieces"] instance=ExtResource( 2 )]
 transform = Transform( 2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 5, 76, -12.076 )
 
-[node name="piece_red_2" parent="." groups=["pieces"] instance=ExtResource( 2 )]
+[node name="PieceYellow" parent="." groups=["pieces"] instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.753, 80.061, 0 )
 
 [node name="square_73" parent="." instance=ExtResource( 4 )]
