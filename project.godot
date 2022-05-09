@@ -12,16 +12,22 @@ _global_script_classes=[ {
 "base": "KinematicBody",
 "class": "Piece",
 "language": "GDScript",
-"path": "res://Piece.gd"
+"path": "res://scenes/Piece.gd"
+}, {
+"base": "KinematicBody",
+"class": "SquareNormal4",
+"language": "GDScript",
+"path": "res://scenes/SquareNormal4.gd"
 } ]
 _global_script_class_icons={
-"Piece": ""
+"Piece": "",
+"SquareNormal4": ""
 }
 
 [application]
 
 config/name="Gdparchis"
-run/main_scene="res://Game4.tscn"
+run/main_scene="res://scenes/Game4.tscn"
 config/icon="res://icon.png"
 
 [display]

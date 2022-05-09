@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://4_square_normal.gd" type="Script" id=1]
+[ext_resource path="res://scenes/SquareNormal4.gd" type="Script" id=1]
 [ext_resource path="res://images/7.png" type="Texture" id=2]
 
 [sub_resource type="CubeMesh" id=4]

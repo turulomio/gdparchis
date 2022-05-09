@@ -13,11 +13,19 @@ func get_object_under_mouse():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	## Creating pieces
+	var piece_scene=load("res://scenes/Piece.tscn")
 	for i in range(16):
-		var piece_scene=load("res://Piece.tscn")
 		var piece=piece_scene.instance()
 		add_child(piece)
 		piece.set_id(i)
+		
+	## Creating squares
+	var square_scene=load("res://scenes/SquareNormal4.tscn")
+	for i in range(104):
+		var square=square_scene.instance()
+		add_child(square)
+		square.set_id(i)
+		
 
 
 		
@@ -27,10 +35,10 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("piece_click"):
 		var object=get_object_under_mouse()
-		if object.filename=="res://Piece.tscn":
+		if object.filename=="res://scenes/Piece.tscn":
 			object.global_transform.origin.y=20
 			print(object.id)
-		if object.filename=="res://4_square_normal.tscn":
+		if object.filename=="res://scenes/SquareNormal4.tscn":
 			object.global_transform.origin.y=20
 		
 	if Input.is_action_just_pressed("zoom_in"):
