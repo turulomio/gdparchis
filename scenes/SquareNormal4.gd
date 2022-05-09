@@ -20,13 +20,11 @@ func set_id(node_id):
 	self.id=node_id
 
 	match(self.id):
-		0:
-			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Vector3(0, 110, -9)
-			self.rotate_y(PI/2)
 		75:
 			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Vector3(-3*self.id+5, self.id*8, 60)
+			print(self.scale)
+			self.global_transform.origin=Vector3(0, 110, -11.5)
+			self.rotate_y(PI/2)
 		_:
 			self.set_color(ColorN("white",1))
 			self.global_transform.origin=Vector3(-3*self.id+5, self.id*8, 60)
