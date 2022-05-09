@@ -29,9 +29,9 @@ func _process(_delta):
 		var object=get_object_under_mouse()
 		if object.filename=="res://Piece.tscn":
 			object.global_transform.origin.y=20
+			print(object.id)
 		if object.filename=="res://4_square_normal.tscn":
 			object.global_transform.origin.y=20
-		print(object.id)
 		
 	if Input.is_action_just_pressed("zoom_in"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y-20
