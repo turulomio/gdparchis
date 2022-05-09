@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "Piece",
 "language": "GDScript",
 "path": "res://scenes/Piece.gd"
-}, {
-"base": "KinematicBody",
-"class": "SquareNormal4",
-"language": "GDScript",
-"path": "res://scenes/SquareNormal4.gd"
 } ]
 _global_script_class_icons={
-"Piece": "",
-"SquareNormal4": ""
+"Piece": ""
 }
 
 [application]

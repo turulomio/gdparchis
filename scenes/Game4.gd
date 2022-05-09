@@ -20,12 +20,17 @@ func _ready():
 		piece.set_id(i)
 		
 	## Creating squares
-	var square_scene=load("res://scenes/SquareNormal4.tscn")
-	for i in range(104):
-		var square=square_scene.instance()
+	var SquareNormal4=load("res://scenes/SquareNormal4.tscn")
+	for i in range(7)+range(68,76):
+		var square=SquareNormal4.instance()
 		add_child(square)
 		square.set_id(i)
 		
+	var SquareEnd4=load("res://scenes/SquareEnd4.tscn")
+	for i in [76,84,92,100]:
+		var square=SquareEnd4.instance()
+		add_child(square)
+		square.set_id(i)
 
 
 		
@@ -40,6 +45,10 @@ func _process(_delta):
 			print(object.id)
 		if object.filename=="res://scenes/SquareNormal4.tscn":
 			object.global_transform.origin.y=20
+			print(object.id)
+		if object.filename=="res://scenes/SquareEnd4.tscn":
+			object.global_transform.origin.y=20
+			print(object.id)
 		
 	if Input.is_action_just_pressed("zoom_in"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y-20
