@@ -15,7 +15,7 @@ uv1_scale = Vector3( 3, 2, 1 )
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 65, 0, 0, 0, 1, 0, 0, 0, 65, 0, 0, 0 )
+transform = Transform( 32.5, 0, 0, 0, 1, 0, 0, 0, 32.5, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 3 )
 

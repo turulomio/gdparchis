@@ -32,3 +32,4 @@ func set_id(node_id):
 		100:
 			self.set_color(ColorN("green",1))
 			self.rotate_y(+PI/2)
+	print("SquareEnd4",$MeshInstance.get_aabb())
