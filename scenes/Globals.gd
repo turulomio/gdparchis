@@ -25,6 +25,16 @@ func position4(square_id, square_position):
 			return [Vector3(-4.9,h,-27.0), Vector3(-7.8,h,-27.0)][square_position]
 		3:
 			return [Vector3(-4.9,h,-23.8), Vector3(-7.8,h,-23.8)][square_position]
+		4:
+			return [Vector3(-4.9,h,-20.6), Vector3(-7.8,h,-20.6)][square_position]
+		5:
+			return [Vector3(-4.9,h,-17.4), Vector3(-7.8,h,-17.4)][square_position]
+		6:
+			return [Vector3(-4.9,h,-14.2), Vector3(-7.8,h,-14.2)][square_position]
+		7:
+			return [Vector3(-4.9,h,-11.1), Vector3(-7.8,h,-11.1)][square_position]
+		8:
+			return [Vector3(-4.3,h,-7.9), Vector3(-6.9,h,-8.2)][square_position]
 		101:
 			return [Vector3(-21,h,-21+3.2), Vector3(-21+3,h,-21+3.2),Vector3(-21+6,h,-21+3.2),Vector3(-21+9,h,-21+3.2)][square_position]
 		102:
