@@ -7,4 +7,13 @@ func size():
 	
 ## object must hava an id attribute
 func append(o):
-	d[o.id]=o
+	d[str(o.id)]=o
+
+func values():
+	return self.d.values()
+
+func keys():
+	return self.d.keys()
+
+func get(id):
+	return self.d[str(id)]

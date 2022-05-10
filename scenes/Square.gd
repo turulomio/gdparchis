@@ -1,35 +1,51 @@
-extends KinematicBody
+class_name Square
+## This is a passive container movements must be set in Piece
 
-var vel : Vector3 = Vector3(0,-100,0)
+
 var id : int = 0
+var type #eSquareTypes
+var color#: Globals.eColors
+var max_ 
+var pieces =[]# Filled with null values to mantain positions
 
-func _physics_process(_delta): 
-	return move_and_slide(vel,Vector3.UP)
-
-	
-# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-func set_color(s):
-	var image = load("res://images/wood.png")
-	
-	var new_material = SpatialMaterial.new()
-	new_material.albedo_texture = image
-	new_material.albedo_color = s
-	$MeshInstance.material_override=new_material
-
-func set_id(node_id):
+func _to_string():
+	return "[Square: "+ str(self.id) + "]"
+func _init(node_id):
 	self.id=node_id
 
-	self.global_transform.origin=Vector3(0,100,0)
 	match(self.id):
 		76:
-			self.set_color(ColorN("yellow",1))
-			self.rotate_y(PI)
+			self.type=Globals.eSquareTypes.END
+			self.color=Globals.eColors.YELLOW
 		84:
-			self.set_color(ColorN("blue",1))
-			self.rotate_y(-PI/2)
+			self.type=Globals.eSquareTypes.END
+			self.color=Globals.eColors.BLUE
 		92:
-			self.set_color(ColorN("red",1))
+			self.type=Globals.eSquareTypes.END
+			self.color=Globals.eColors.RED
 		100:
-			self.set_color(ColorN("green",1))
-			self.rotate_y(+PI/2)
-	print("SquareEnd4",$MeshInstance.get_aabb())
+			self.type=Globals.eSquareTypes.END
+			self.color=Globals.eColors.GREEN
+		101:
+			self.type=Globals.eSquareTypes.START
+			self.color=Globals.eColors.YELLOW
+	
+	for i in range(self.max_pieces()):
+		self.pieces.append(null)
+
+func max_pieces():
+	if self.type==Globals.eSquareTypes.START:
+		return 4
+	return 2
+
+## Devuelve Null si no encuentra sitio libre o la posicion
+func empty_position():
+	for position in range(self.max_pieces()):
+		if self.pieces[position] == null:
+			return position
+	return -1
+			
+	if self.pieces.size()<self.max_pieces():
+		return true
+	return false
+			

@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/DictionaryManager.gd"
 }, {
+"base": "Reference",
+"class": "ListManager",
+"language": "GDScript",
+"path": "res://scenes/ListManager.gd"
+}, {
 "base": "KinematicBody",
 "class": "Piece",
 "language": "GDScript",
@@ -28,18 +33,41 @@ _global_script_classes=[ {
 "class": "PlayerManager",
 "language": "GDScript",
 "path": "res://scenes/PlayerManager.gd"
+}, {
+"base": "ListManager",
+"class": "Route",
+"language": "GDScript",
+"path": "res://scenes/Route.gd"
+}, {
+"base": "Reference",
+"class": "Square",
+"language": "GDScript",
+"path": "res://scenes/Square.gd"
+}, {
+"base": "DictionaryManager",
+"class": "SquareManager",
+"language": "GDScript",
+"path": "res://scenes/SquareManager.gd"
 } ]
 _global_script_class_icons={
 "DictionaryManager": "",
+"ListManager": "",
 "Piece": "",
 "Player": "",
-"PlayerManager": ""
+"PlayerManager": "",
+"Route": "",
+"Square": "",
+"SquareManager": ""
 }
 
 [application]
 
 config/name="Gdparchis"
 run/main_scene="res://scenes/Game4.tscn"
+
+[autoload]
+
+Globals="*res://scenes/Globals.gd"
 
 [display]
 
