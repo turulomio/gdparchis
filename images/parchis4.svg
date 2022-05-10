@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1668"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="parchis4_mio.svg"
+   sodipodi:docname="parchis4.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,13 +24,13 @@
      inkscape:document-units="mm"
      showgrid="false"
      units="cm"
-     inkscape:zoom="0.25"
-     inkscape:cx="924"
-     inkscape:cy="1242"
+     inkscape:zoom="0.66"
+     inkscape:cx="1821.9697"
+     inkscape:cy="1395.4545"
      inkscape:window-width="1714"
      inkscape:window-height="995"
      inkscape:window-x="38"
-     inkscape:window-y="16"
+     inkscape:window-y="8"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:lockguides="true" />
@@ -221,7 +221,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1-8-7-5-3);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283174">13</tspan></text>
+         id="tspan747">13</tspan></text>
     <path
        style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 95.12048,346.41136 v -62.8227 H 63.709193 v 62.8227 z"
@@ -261,7 +261,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1-8-7-1);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283176">11</tspan></text>
+         id="tspan749">11</tspan></text>
     <path
        style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 189.35447,346.41136 v -62.8227 h -31.41129 v 62.8227 z"
@@ -282,7 +282,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1-8-7);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283178">10</tspan></text>
+         id="tspan751">10</tspan></text>
     <path
        style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 220.76575,346.41136 v -62.8227 h -31.41128 v 62.8227 z"
@@ -341,7 +341,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283180">3</tspan></text>
+         id="tspan753">3</tspan></text>
     <path
        style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 346.41134,95.12068 h -62.8227 V 63.709393 h 62.8227 z"
@@ -402,7 +402,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283182">8</tspan></text>
+         id="tspan755">8</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.26458333,-0.26458333,0,324.37737,352.29381)"
@@ -410,7 +410,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1-8);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283184">9</tspan></text>
+         id="tspan757">9</tspan></text>
     <path
        style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 346.41134,252.17733 h -62.8227 v -31.41138 h 62.8227 z"
@@ -533,6 +533,18 @@
          y="676.45093" />
     </g>
     <g
+       transform="matrix(0,-1.7729962,1.7729962,0,-790.11095,752.33515)"
+       id="g2957-3"
+       style="fill:#0000ff;fill-opacity:1">
+      <rect
+         style="fill:#0000ff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2955-6"
+         width="124.01575"
+         height="124.01575"
+         x="69.499016"
+         y="676.45093" />
+    </g>
+    <g
        transform="matrix(0,-1.7729962,1.7729962,0,-1198.4584,343.98745)"
        id="g2957-1"
        style="fill:#ffff00;fill-opacity:1">
@@ -557,17 +569,6 @@
          y="676.45093" />
     </g>
     <g
-       transform="matrix(0,-1.7729962,1.7729962,0,-790.11088,752.33501)"
-       id="g2957-2">
-      <rect
-         style="fill:#e6e6e6;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         id="rect2955-45"
-         width="124.01575"
-         height="124.01575"
-         x="69.499016"
-         y="676.45093" />
-    </g>
-    <g
        id="g120588">
       <path
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
@@ -582,10 +583,6 @@
          ry="11.727657"
          transform="rotate(-90)" />
     </g>
-    <path
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.811485;paint-order:markers fill stroke"
-       d="M 518.9393,627.9745 H 410.37121 V 519.4064 410.8383 H 518.9393 627.50742 v 108.5681 108.5681 z"
-       id="path4123" />
     <circle
        id="path80175"
        style="fill:#0000ff;stroke:#000000;stroke-width:0.264583"
@@ -723,7 +720,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283186">1</tspan></text>
+         id="tspan759">1</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(-0.26458333,0,0,-0.26458333,151.46104,135.81609)"
@@ -731,7 +728,7 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283188">2</tspan></text>
+         id="tspan761">2</tspan></text>
     <path
        style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="M 126.53176,283.58866 V 220.76594 H 95.12048 v 62.82272 z"
@@ -743,6 +740,11 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-7-6-1-8-7-5);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="-396.71289"
          y="349.20706"
-         id="tspan283190">12</tspan></text>
+         id="tspan763">12</tspan></text>
+    <path
+       style="fill:#ff0000;stroke-width:1.51515"
+       d="m 1550.7576,1962.1212 v -411.3636 h 411.3636 411.3636 v 411.3636 411.3636 h -411.3636 -411.3636 z"
+       id="path549"
+       transform="scale(0.26458333)" />
   </g>
 </svg>

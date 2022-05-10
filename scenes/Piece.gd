@@ -21,52 +21,52 @@ func set_id(node_id):
 	match(self.id):
 		0:
 			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Globals.position4(115,0)
+			self.global_transform.origin=Globals.position4(101,0)
 		1:
 			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Globals.position4(115,1)
+			self.global_transform.origin=Globals.position4(101,1)
 		2:
 			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Globals.position4(115,2)
+			self.global_transform.origin=Globals.position4(101,2)
 		3:
 			self.set_color(ColorN("yellow",1))
-			self.global_transform.origin=Globals.position4(115,3)
+			self.global_transform.origin=Globals.position4(101,3)
 		4:
-			self.set_color(ColorN("blueviolet",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.set_color(ColorN("blue",1))
+			self.global_transform.origin=Globals.position4(102,0)
 		5:
 			self.set_color(ColorN("blue",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(102,1)
 		6:
 			self.set_color(ColorN("blue",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(102,2)
 		7:
 			self.set_color(ColorN("blue",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(102,3)
 		8:
 			self.set_color(ColorN("red",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(103,0)
 		9:
 			self.set_color(ColorN("red",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(103,1)
 		10:
 			self.set_color(ColorN("red",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(103,2)
 		11:
 			self.set_color(ColorN("red",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(103,3)
 		12:
 			self.set_color(ColorN("green",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(104,0)
 		13:
 			self.set_color(ColorN("green",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(104,1)
 		14:
 			self.set_color(ColorN("green",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(104,2)
 		15:
 			self.set_color(ColorN("green",1))
-			self.global_transform.origin=Vector3(-3*self.id+3, self.id*8, 50)
+			self.global_transform.origin=Globals.position4(104,3)
 	
 func square():
 	return self.route.square_at(self.route_position)

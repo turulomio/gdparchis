@@ -1,7 +1,7 @@
 class_name Route
 extends ListManager
 
-var max_players
+var max_players: int
 var e_color
 func _init (p_max_players, e_color,squares):
 	self.max_players=p_max_players

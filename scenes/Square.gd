@@ -29,12 +29,21 @@ func _init(node_id):
 		101:
 			self.type=Globals.eSquareTypes.START
 			self.color=Globals.eColors.YELLOW
+		102:
+			self.type=Globals.eSquareTypes.START
+			self.color=Globals.eColors.BLUE
+		103:
+			self.type=Globals.eSquareTypes.START
+			self.color=Globals.eColors.RED
+		104:
+			self.type=Globals.eSquareTypes.START
+			self.color=Globals.eColors.GREEN
 	
-	for i in range(self.max_pieces()):
+	for _i in range(self.max_pieces()):
 		self.pieces.append(null)
-
+	print(self.pieces)
 func max_pieces():
-	if self.type==Globals.eSquareTypes.START:
+	if self.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.END]:
 		return 4
 	return 2
 
@@ -44,8 +53,3 @@ func empty_position():
 		if self.pieces[position] == null:
 			return position
 	return -1
-			
-	if self.pieces.size()<self.max_pieces():
-		return true
-	return false
-			

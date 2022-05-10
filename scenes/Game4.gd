@@ -15,10 +15,14 @@ func get_object_under_mouse():
 	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
 	var space_state=get_world().direct_space_state
 	var selection=space_state.intersect_ray(ray_from,ray_to)
+	print(selection)
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var piece_scene=load("res://scenes/Piece.tscn")
+	var debug=true	
+
 	
 	## Creating players
 	self.max_players=4
@@ -28,6 +32,16 @@ func _ready():
 	self.squares=SquareManager.new()
 	for i in range(1,105):
 		self.squares.append(Square.new(i))
+
+	## DEBUG SHOWS ALL PIECES IN ALL SQUARES		
+	if debug==true:
+		for s in self.squares.values():
+			while s.empty_position()>=0:
+				var piece=piece_scene.instance()
+				self.add_child(piece)
+				piece.global_transform.origin=Globals.position4(s.id,s.empty_position())
+				s.pieces[s.empty_position()]=piece
+		return
 		
 	## Creating routes
 	self.routes={}
@@ -35,7 +49,6 @@ func _ready():
 		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
 	
 	# Create players pieces
-	var piece_scene=load("res://scenes/Piece.tscn")
 	for i in range(16):
 		var player=self.players.get(int(i / self.max_players)) 
 		var route=self.routes[str(player.id)]
