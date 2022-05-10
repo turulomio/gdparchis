@@ -9,20 +9,37 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "DictionaryManager",
+"language": "GDScript",
+"path": "res://scenes/DictionaryManager.gd"
+}, {
 "base": "KinematicBody",
 "class": "Piece",
 "language": "GDScript",
 "path": "res://scenes/Piece.gd"
+}, {
+"base": "Reference",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/Player.gd"
+}, {
+"base": "DictionaryManager",
+"class": "PlayerManager",
+"language": "GDScript",
+"path": "res://scenes/PlayerManager.gd"
 } ]
 _global_script_class_icons={
-"Piece": ""
+"DictionaryManager": "",
+"Piece": "",
+"Player": "",
+"PlayerManager": ""
 }
 
 [application]
 
 config/name="Gdparchis"
 run/main_scene="res://scenes/Game4.tscn"
-config/icon="res://icon.png"
 
 [display]
 
