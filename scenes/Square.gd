@@ -47,7 +47,7 @@ func max_pieces():
 		return 4
 	return 2
 
-## Devuelve Null si no encuentra sitio libre o la posicion
+## Devuelve -1 si no encuentra sitio libre o la posicion
 func empty_position():
 	for position in range(self.max_pieces()):
 		if self.pieces[position] == null:

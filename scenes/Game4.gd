@@ -1,4 +1,5 @@
 extends Spatial
+class_name Game4
 
 
 onready var camera =$Camera
@@ -27,27 +28,38 @@ func _ready():
 	## Creating players
 	self.max_players=4
 	self.players=PlayerManager.new(self.max_players)
+	for p in self.players.values():
+		p.set_game(self)
 	
 	## Creating squares
 	self.squares=SquareManager.new()
 	for i in range(1,105):
 		self.squares.append(Square.new(i))
 
-	## DEBUG SHOWS ALL PIECES IN ALL SQUARES		
-	if debug==true:
-		for s in self.squares.values():
-			while s.empty_position()>=0:
-				var piece=piece_scene.instance()
-				self.add_child(piece)
-				piece.global_transform.origin=Globals.position4(s.id,s.empty_position())
-				s.pieces[s.empty_position()]=piece
-		return
-		
 	## Creating routes
 	self.routes={}
 	for e_color in Globals.e_colors(self.max_players):
 		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
 	
+	## DEBUG SHOWS ALL PIECES IN ALL SQUARES		
+	if debug==true:
+		for route in self.routes.values():
+			var route_pos=0
+			for s in route.arr:
+				print(route_pos)
+				while s.empty_position()>=0:
+					var piece=piece_scene.instance()
+					self.add_child(piece)
+					piece.set_color(Globals.colorn(s.empty_position()))
+					piece.set_player(self.players.get(route.e_color))
+					piece.set_route(route)
+					piece.move_to_route_position(route_pos)
+					#piece.global_transform.origin=Globals.position4(s.id,s.empty_position())
+					
+					#s.pieces[s.empty_position()]=piece
+				route_pos=route_pos+1
+		return
+		
 	# Create players pieces
 	for i in range(16):
 		var player=self.players.get(int(i / self.max_players)) 

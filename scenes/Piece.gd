@@ -5,7 +5,7 @@ var vel : Vector3 = Vector3(0,-30,0)
 var id : int = 0
 var player: Player
 var route: Route
-var route_position: int = 0
+var route_position: int = 20# Al iniciar mejor que no sea la primera para que se va bien el debug y da igual
 var square_position: int = 0
 
 func _physics_process(_delta): 
@@ -88,8 +88,8 @@ func set_route(p):
 		
 ## Returns true if move was successful, else false
 func move_to_route_position(route_position):
-	var square_final=self.route.square_at((route_position))
-	var square_initial=self.route.square()
+	var square_final=self.route.square_at(route_position)
+	var square_initial=self.square()
 	
 	#Check if can move	
 	var new_square_position=square_final.empty_position()
@@ -101,6 +101,17 @@ func move_to_route_position(route_position):
 	square_final.pieces[new_square_position]=self
 	self.square_position=new_square_position
 	
+	self.route_position=route_position
+	
 	#Interface move
 	self.global_transform.origin=Globals.position4(square_final.id,new_square_position)	
+	self.change_scale_on_specials_squares()
+	
+#Para casillas estrechas
+func change_scale_on_specials_squares():
+	if self.player.game.max_players==4:
+		if self.square().id in [8,9,25,26,42,43,49,60]:
+			self.scale=Vector3(0.9,1,0.9)
+		else:
+			self.scale=Vector3(1,1,1)
 

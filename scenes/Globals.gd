@@ -6,6 +6,18 @@ enum eColors  {YELLOW, BLUE, RED, GREEN}
 func e_colors(max_players):
 	if max_players==4:
 		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
+		
+func colorn(e_color):
+	match e_color:
+		eColors.YELLOW:
+			return ColorN("yellow",1)
+		eColors.BLUE:
+			return ColorN("blue",1)
+		eColors.RED:
+			return ColorN("red",1)
+		eColors.GREEN:
+			return ColorN("green",1)
+	return eColors.RED
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():
@@ -34,7 +46,39 @@ func position4(square_id, square_position):
 		7:
 			return [Vector3(-4.9,h,-11.1), Vector3(-7.8,h,-11.1)][square_position]
 		8:
-			return [Vector3(-4.3,h,-7.9), Vector3(-6.9,h,-8.2)][square_position]
+			return [Vector3(-4.3,h,-8.1), Vector3(-6.6,h,-8.1)][square_position]
+		60:
+			return [Vector3(4.3,h,-8.1), Vector3(6.6,h,-8.1)][square_position]
+		61:
+			return [Vector3(4.9,h,-11.1), Vector3(7.8,h,-11.1)][square_position]
+		62:
+			return [Vector3(4.9,h,-14.2), Vector3(7.8,h,-14.2)][square_position]
+		63:
+			return [Vector3(4.9,h,-17.4), Vector3(7.8,h,-17.4)][square_position]
+		64:
+			return [Vector3(4.9,h,-20.6), Vector3(7.8,h,-20.6)][square_position]
+		65:
+			return [Vector3(4.9,h,-23.8), Vector3(7.8,h,-23.8)][square_position]
+		66:
+			return [Vector3(4.9,h,-27.0), Vector3(7.8,h,-27.0)][square_position]
+		67:
+			return [Vector3(4.9,h,-30.2), Vector3(7.8,h,-30.2)][square_position]
+		68:
+			return [Vector3(1.5,h,-30.2), Vector3(-1.4,h,-30.2)][square_position]
+		69:
+			return [Vector3(1.5,h,-27.0), Vector3(-1.4,h,-27.0)][square_position]
+		70:
+			return [Vector3(1.5,h,-23.8), Vector3(-1.4,h,-23.8)][square_position]
+		71:
+			return [Vector3(1.5,h,-20.6), Vector3(-1.4,h,-20.6)][square_position]
+		72:
+			return [Vector3(1.5,h,-17.4), Vector3(-1.4,h,-17.4)][square_position]
+		73:
+			return [Vector3(1.5,h,-14.2), Vector3(-1.4,h,-14.2)][square_position]
+		74:
+			return [Vector3(1.5,h,-11.1), Vector3(-1.4,h,-11.1)][square_position]
+		75:
+			return [Vector3(1.5,h,-8.0), Vector3(-1.4,h,-8.0)][square_position]
 		101:
 			return [Vector3(-21,h,-21+3.2), Vector3(-21+3,h,-21+3.2),Vector3(-21+6,h,-21+3.2),Vector3(-21+9,h,-21+3.2)][square_position]
 		102:

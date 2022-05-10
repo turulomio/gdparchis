@@ -7,6 +7,7 @@ var e_color
 var active : bool
 var pieces=[]
 var route: Route
+var game
 
 
 func _init(node_id):
@@ -40,4 +41,6 @@ func append_piece(o):
 func set_route(p):
 	self.route=p
 
+func set_game(g):
+	self.game=g
 
