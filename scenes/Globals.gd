@@ -49,6 +49,42 @@ func position4(square_id, square_position):
 			return [Vector3(-4.3,h,-8.1), Vector3(-6.6,h,-8.1)][square_position]
 			
 			
+		9:
+			return [Vector3(-8.1,h,-4.3), Vector3(-8.1,h,-6.6)][square_position]
+		10:
+			return [Vector3(-11.1,h,-4.9), Vector3(-11.1,h,-7.8)][square_position]
+		11:
+			return [Vector3(-14.2,h,-4.9), Vector3(-14.2,h,-7.8)][square_position]
+		12:
+			return [Vector3(-17.4,h,-4.9), Vector3(-17.4,h,-7.8)][square_position]
+		13:
+			return [Vector3(-20.6,h,-4.9), Vector3(-20.6,h,-7.8)][square_position]
+		14:
+			return [Vector3(-23.8,h,-4.9), Vector3(-23.8,h,-7.8)][square_position]
+		15:
+			return [Vector3(-27,h,-4.9), Vector3(-27,h,-7.8)][square_position]
+		16:
+			return [Vector3(-30.2,h,-4.9), Vector3(-30.2,h,-7.8)][square_position]
+		17:
+			return [Vector3(-30.2,h,1.5), Vector3(-30.2,h,-1.4)][square_position]
+			
+		18:
+			return [Vector3(-30.2,h,4.9), Vector3(-30.2,h,7.8)][square_position]
+		19:
+			return [Vector3(-27.0,h,4.9), Vector3(-27.0,h,7.8)][square_position]
+		20:
+			return [Vector3(-23.8,h,4.9), Vector3(-23.8,h,7.8)][square_position]
+		21:
+			return [Vector3(-20.6,h,4.9), Vector3(-20.6,h,7.8)][square_position]
+		22:
+			return [Vector3(-17.4,h,4.9), Vector3(-17.4,h,7.8)][square_position]
+		23:
+			return [Vector3(-14.2,h,4.9), Vector3(-14.2,h,7.8)][square_position]
+		24:
+			return [Vector3(-11.1,h,4.9), Vector3(-11.1,h,7.8)][square_position]
+			
+		25:
+			return [Vector3(-8.1,h,4.3), Vector3(-8.1,h,6.6)][square_position]
 		26:
 			return [Vector3(-4.3,h,8.1), Vector3(-6.6,h,8.1)][square_position]
 		27:
@@ -124,6 +160,26 @@ func position4(square_id, square_position):
 			return [Vector3(1.5,h,-8.0), Vector3(-1.4,h,-8.0)][square_position]		
 		
 		
+		
+		
+		77: # Blue ramp
+			return [Vector3(-27,h,1.5), Vector3(-27,h,-1.4)][square_position]
+		78:
+			return [Vector3(-23.8,h,1.5), Vector3(-23.8,h,-1.4)][square_position]
+		79:
+			return [Vector3(-20.6,h,1.5), Vector3(-20.6,h,-1.4)][square_position]
+		80:
+			return [Vector3(-17.4,h,1.5), Vector3(-17.4,h,-1.4)][square_position]
+		81:
+			return [Vector3(-14.2,h,1.5), Vector3(-14.2,h,-1.4)][square_position]
+		82:
+			return [Vector3(-11.1,h,1.5), Vector3(-11.1,h,-1.4)][square_position]
+		83:
+			return [Vector3(-8.0,h,1.5), Vector3(-8.0,h,-1.4)][square_position]
+		
+		
+		
+		
 		85: # Red ramp
 			return [Vector3(1.5,h,27.0), Vector3(-1.4,h,27.0)][square_position]
 		86:
@@ -138,6 +194,8 @@ func position4(square_id, square_position):
 			return [Vector3(1.5,h,11.1), Vector3(-1.4,h,11.1)][square_position]
 		91:
 			return [Vector3(1.5,h,8.0), Vector3(-1.4,h,8.0)][square_position]
+			
+		#Initials
 		101:
 			return [Vector3(-21,h,-21+3.2), Vector3(-21+3,h,-21+3.2),Vector3(-21+6,h,-21+3.2),Vector3(-21+9,h,-21+3.2)][square_position]
 		102:
