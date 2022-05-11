@@ -3,6 +3,9 @@ extends Node
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
 enum eColors  {YELLOW, BLUE, RED, GREEN}
 
+
+var debug=false #Shows all squares full with piececs
+
 func e_colors(max_players):
 	if max_players==4:
 		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]

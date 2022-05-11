@@ -5,7 +5,7 @@ var vel : Vector3 = Vector3(0,-30,0)
 var id : int = 0
 var player: Player
 var route: Route
-var route_position: int = 20# Al iniciar mejor que no sea la primera para que se vea bien el debug y da igual
+var route_position: int = -1# Al iniciar mejor que no sea la primera para que se vea bien el debug y da igual
 var square_position: int = 0
 
 func _physics_process(_delta): 
@@ -69,6 +69,8 @@ func set_id(node_id):
 			self.global_transform.origin=Globals.position4(104,3)
 	
 func square():
+	if self.route_position==-1:#Debug
+		return null
 	return self.route.square_at(self.route_position)
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
@@ -97,7 +99,8 @@ func move_to_route_position(_route_position):
 		return false
 		
 	#Logical move
-	square_initial.pieces[self.square_position]=null
+	if square_initial!=null: #Debug only
+		square_initial.pieces[self.square_position]=null
 	square_final.pieces[new_square_position]=self
 	self.square_position=new_square_position
 	

@@ -16,14 +16,13 @@ func get_object_under_mouse():
 	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
 	var space_state=get_world().direct_space_state
 	var selection=space_state.intersect_ray(ray_from,ray_to)
-	print(selection)
+	#print(selection)
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var piece_scene=load("res://scenes/Piece.tscn")
 	var dice_scene=load("res://scenes/Dice.tscn")
-	var debug=true	
 
 	
 	## Creating players
@@ -32,8 +31,8 @@ func _ready():
 	for p in self.players.values():
 		p.set_game(self)
 		var dice=dice_scene.instance()
-		dice.set_id(p.id)
 		self.add_child(dice)
+		dice.set_id(p.id)
 		p.set_dice(dice)
 	
 	## Creating squares
@@ -49,11 +48,10 @@ func _ready():
 	
 	
 	## DEBUG SHOWS ALL PIECES IN ALL SQUARES		
-	if debug==true:
+	if Globals.debug==true:
 		for route in self.routes.values():
 			var route_pos=0
 			for s in route.arr:
-				print(route_pos)
 				while s.empty_position()>=0:
 					var piece=piece_scene.instance()
 					self.add_child(piece)
@@ -61,9 +59,6 @@ func _ready():
 					piece.set_player(self.players.get(route.e_color))
 					piece.set_route(route)
 					piece.move_to_route_position(route_pos)
-					#piece.global_transform.origin=Globals.position4(s.id,s.empty_position())
-					
-					#s.pieces[s.empty_position()]=piece
 				route_pos=route_pos+1
 		return
 		
@@ -78,11 +73,7 @@ func _ready():
 		piece.set_id(i)
 		
 		player.set_route(route)
-		player.append_piece(piece) #Link piece to player bidirectional
-	
-	for p in players.d.values():
-		print (p.pieces)
-		
+		player.append_piece(piece) #Link piece to player bidirectional		
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

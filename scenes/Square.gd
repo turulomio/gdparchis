@@ -41,7 +41,6 @@ func _init(node_id):
 	
 	for _i in range(self.max_pieces()):
 		self.pieces.append(null)
-	print(self.pieces)
 func max_pieces():
 	if self.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.END]:
 		return 4
