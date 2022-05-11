@@ -46,27 +46,20 @@ func value_almost_zero(_value,precision=0.001):
 func _physics_process(_delta):
 	if self.value!=null and self.vector_is_almost_zero(self.angular_velocity) and self.vector_is_almost_zero(self.linear_velocity):
 		emit_signal("value_obtained")
-		print("Value set to ", self.value)
+		print("Dice " + str(self.id) + " gets a "+ str(self.value))
 		self.set_physics_process(false)
 	else:
 		if $RC1.is_colliding():
-			print(1,$RC1.get_collider())
 			self.value=6
-			
 		if $RC2.is_colliding():
-			print(2,$RC2.get_collider())
 			self.value=5
 		if $RC3.is_colliding():
-			print(3,$RC3.get_collider())
 			self.value=4
 		if $RC4.is_colliding():
-			print(4,$RC4.get_collider())
 			self.value=3
 		if $RC5.is_colliding():
-			print(5,$RC5.get_collider())
 			self.value=2
 		if $RC6.is_colliding():
-			print(6,$RC6.get_collider())
 			self.value=1
 		
 

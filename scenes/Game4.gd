@@ -85,7 +85,6 @@ func _process(_delta):
 			print(object.id)
 		if object.filename=="res://scenes/Dice.tscn":
 			object.launch()
-			print(object.id)
 
 		
 	if Input.is_action_just_pressed("zoom_in"):
