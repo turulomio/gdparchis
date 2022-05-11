@@ -101,3 +101,5 @@ func _process(_delta):
 		camera.global_transform.origin.y=camera.global_transform.origin.y-20
 	if Input.is_action_just_pressed("zoom_out"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+20
+	if Input.is_action_just_pressed("exit"):
+		get_tree().quit()

@@ -110,7 +110,7 @@ func move_to_route_position(_route_position):
 #Para casillas estrechas
 func change_scale_on_specials_squares():
 	if self.player.game.max_players==4:
-		if self.square().id in [8,9,25,26,42,43,49,60]:
+		if self.square().id in [8,9,25,26,42,43,59,60]:
 			self.scale=Vector3(0.8,1,0.8)
 		else:
 			self.scale=Vector3(1,1,1)
