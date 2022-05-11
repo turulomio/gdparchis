@@ -22,6 +22,7 @@ func get_object_under_mouse():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var piece_scene=load("res://scenes/Piece.tscn")
+	var dice_scene=load("res://scenes/.tscn")
 	var debug=true	
 
 	
@@ -30,6 +31,9 @@ func _ready():
 	self.players=PlayerManager.new(self.max_players)
 	for p in self.players.values():
 		p.set_game(self)
+		var dice=dice_scene.instance()
+		self.add_child(dice)
+		dice.global_transform.origin=Vector3(20,15,20)
 	
 	## Creating squares
 	self.squares=SquareManager.new()
@@ -40,6 +44,8 @@ func _ready():
 	self.routes={}
 	for e_color in Globals.e_colors(self.max_players):
 		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
+
+	
 	
 	## DEBUG SHOWS ALL PIECES IN ALL SQUARES		
 	if debug==true:
