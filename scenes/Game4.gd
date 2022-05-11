@@ -22,7 +22,7 @@ func get_object_under_mouse():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var piece_scene=load("res://scenes/Piece.tscn")
-	var dice_scene=load("res://scenes/.tscn")
+	var dice_scene=load("res://scenes/Dice.tscn")
 	var debug=true	
 
 	
@@ -32,8 +32,9 @@ func _ready():
 	for p in self.players.values():
 		p.set_game(self)
 		var dice=dice_scene.instance()
+		dice.set_id(p.id)
 		self.add_child(dice)
-		dice.global_transform.origin=Vector3(20,15,20)
+		p.set_dice(dice)
 	
 	## Creating squares
 	self.squares=SquareManager.new()
@@ -90,6 +91,9 @@ func _process(_delta):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
 			object.global_transform.origin.y=20
+			print(object.id)
+		if object.filename=="res://scenes/Dice.tscn":
+			object.launch()
 			print(object.id)
 
 		

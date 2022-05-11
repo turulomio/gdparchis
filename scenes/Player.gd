@@ -7,6 +7,7 @@ var e_color
 var active : bool
 var pieces=[]
 var route: Route
+var dice: Dice
 var game
 
 
@@ -43,4 +44,7 @@ func set_route(p):
 
 func set_game(g):
 	self.game=g
+	
+func set_dice(d):
+	self.dice=d
 
