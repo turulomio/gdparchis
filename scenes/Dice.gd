@@ -2,6 +2,8 @@ class_name Dice
 extends RigidBody
 var vel : Vector3 = Vector3(0,-30,0)
 var id: int
+var value=null
+signal value_obtained
 
 	
 ## Sets id, and initial properties and position
@@ -21,6 +23,8 @@ func set_position(h):
 			self.global_transform.origin=Vector3(14,h,-14)
 			
 func launch():
+	self.value=null
+	self.set_physics_process(true)
 	self.set_position(10)
 	randomize()
 
@@ -28,3 +32,42 @@ func launch():
 	var y = rand_range(-10,10)
 	var z = rand_range(-10,10)
 	set_angular_velocity(Vector3(x,y,z))
+	
+func vector_is_almost_zero(v,precision=0.001):
+	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
+		return true
+	return false
+	
+func value_almost_zero(_value,precision=0.001):
+	if abs(_value)<=precision:
+		return true
+	return false
+	
+func _physics_process(_delta):
+	if self.value!=null and self.vector_is_almost_zero(self.angular_velocity) and self.vector_is_almost_zero(self.linear_velocity):
+		emit_signal("value_obtained")
+		print("Value set to ", self.value)
+		self.set_physics_process(false)
+	else:
+		if $RC1.is_colliding():
+			print(1,$RC1.get_collider())
+			self.value=6
+			
+		if $RC2.is_colliding():
+			print(2,$RC2.get_collider())
+			self.value=5
+		if $RC3.is_colliding():
+			print(3,$RC3.get_collider())
+			self.value=4
+		if $RC4.is_colliding():
+			print(4,$RC4.get_collider())
+			self.value=3
+		if $RC5.is_colliding():
+			print(5,$RC5.get_collider())
+			self.value=2
+		if $RC6.is_colliding():
+			print(6,$RC6.get_collider())
+			self.value=1
+		
+
+	
