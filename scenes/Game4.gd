@@ -24,6 +24,7 @@ func _ready():
 	## Creating players
 	self.max_players=4
 	self.players=PlayerManager.new(self.max_players)
+	self.players.set_assistant($Assistant)
 	for p in self.players.values():
 		p.set_game(self)
 		var dice=dice_scene.instance()
@@ -71,6 +72,8 @@ func _ready():
 		player.set_route(route)
 		player.append_piece(piece) #Link piece to player bidirectional		
 
+	# Start game
+	self.players.change_current_player()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
