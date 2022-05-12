@@ -2,20 +2,46 @@ extends KinematicBody
 class_name Piece
 
 var vel : Vector3 = Vector3(0,-30,0)
+
+var animation_to=null
+var animation_step=0
 var id : int = 0
 var player: Player
 var route: Route
-var route_position: int = -1# Al iniciar mejor que no sea la primera para que se vea bien el debug y da igual
+var route_position: int 
 var square_position: int = 0
 
+var animation_num_steps=10
+
+
 func _physics_process(_delta): 
-	return move_and_slide(vel,Vector3.UP)
+	
+	if animation_to!=null:
+		self.animation_to.y=10
+		var current=self.global_transform.origin
+		var new_pos=(self.animation_to-current)*animation_step/self.animation_num_steps +current
+		self.animation_step=self.animation_step+1
+		self.global_transform.origin=new_pos
+		print(self.animation_step, new_pos, self.animation_to)
+		if self.animation_step==10:
+			self.global_transform.origin=self.animation_to
+			self.animation_step=0
+			self.animation_to=null
+	else:		
+	#self.global_transform.origin=Globals.position4(square_final.id,new_square_position)	
+		
+		return move_and_slide(vel,Vector3.UP)
 
 func _to_string():
 	return "[Piece: "+ str(self.id) + "]"
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
+	
+	if Globals.debug:
+		self.route_position=-1# Al iniciar mejor que no sea la primera para que se vea bien el debug y da igual
+	else:
+		self.route_position=0
 	self.id=node_id
 	
 	match(self.id):
@@ -69,8 +95,6 @@ func set_id(node_id):
 			self.global_transform.origin=Globals.position4(104,3)
 	
 func square():
-	if self.route_position==-1:#Debug
-		return null
 	return self.route.square_at(self.route_position)
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
@@ -89,25 +113,33 @@ func set_route(p):
 	self.route=p
 		
 ## Returns true if move was successful, else false
-func move_to_route_position(_route_position):
+func move_to_route_position(_route_position, animation=false):
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	
+	if square_final==null:
+		return false
+	
 	#Check if can move	
 	var new_square_position=square_final.empty_position()
-	if new_square_position ==null:
+	if new_square_position ==-1:
 		return false
 		
 	#Logical move
 	if square_initial!=null: #Debug only
 		square_initial.pieces[self.square_position]=null
+	
 	square_final.pieces[new_square_position]=self
 	self.square_position=new_square_position
 	
 	self.route_position=_route_position
 	
 	#Interface move
-	self.global_transform.origin=Globals.position4(square_final.id,new_square_position)	
+	if animation == false:
+		self.global_transform.origin=Globals.position4(square_final.id,new_square_position)	
+	else:
+		self.animation_to=Globals.position4(square_final.id,new_square_position)
+		self.animation_step=0
 	self.change_scale_on_specials_squares()
 	
 #Para casillas estrechas

@@ -10,6 +10,7 @@ var pieces =[]# Filled with null values to mantain positions
 
 func _to_string():
 	return "[Square: "+ str(self.id) + "]"
+	
 func _init(node_id):
 	self.id=node_id
 
@@ -41,10 +42,13 @@ func _init(node_id):
 	
 	for _i in range(self.max_pieces()):
 		self.pieces.append(null)
+
 func max_pieces():
 	if self.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.END]:
 		return 4
 	return 2
+
+
 
 ## Devuelve -1 si no encuentra sitio libre o la posicion
 func empty_position():

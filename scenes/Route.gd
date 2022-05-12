@@ -22,8 +22,9 @@ func get_route_square_ids(_max_players, _eColors):
 			return [103]+ range(39, 68+1) + range(1, 34+1) + range(85, 92+1)
 		elif _eColors==Globals.eColors.GREEN:
 			return [104]+ range(56, 68+1) + range(1, 51+1) + range(93, 100+1)
-			
-func square_at(route_position):
-	return self.arr[route_position]
-			
-		
+
+## -1 is used for debug
+func square_at(_route_position):
+	if _route_position <0 or _route_position>=self.size():
+		return null
+	return self.arr[_route_position]

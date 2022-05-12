@@ -1,9 +1,7 @@
 extends Spatial
 class_name Game4
 
-
 onready var camera =$Camera
-
 var players
 var pieces 
 var max_players
@@ -16,14 +14,12 @@ func get_object_under_mouse():
 	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
 	var space_state=get_world().direct_space_state
 	var selection=space_state.intersect_ray(ray_from,ray_to)
-	#print(selection)
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var piece_scene=load("res://scenes/Piece.tscn")
 	var dice_scene=load("res://scenes/Dice.tscn")
-
 	
 	## Creating players
 	self.max_players=4
@@ -78,11 +74,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("piece_click"):
+	if Input.is_action_just_pressed("right_click"):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
 			object.global_transform.origin.y=20
 			print(object.id)
+	if Input.is_action_just_pressed("left_click"):
+		var object=get_object_under_mouse()
+		if object.filename=="res://scenes/Piece.tscn":
+			object.move_to_route_position(object.route_position+5,true)
 		if object.filename=="res://scenes/Dice.tscn":
 			object.launch()
 
