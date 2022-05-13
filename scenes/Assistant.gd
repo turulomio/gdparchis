@@ -13,9 +13,9 @@ func _ready():
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
 func set_color(s):	
+	var image = load("res://images/wood.png")
+	
 	var new_material = SpatialMaterial.new()
+	new_material.albedo_texture = image
 	new_material.albedo_color = s
 	$MeshInstance.material_override=new_material
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

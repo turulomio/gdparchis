@@ -22,7 +22,7 @@ func _physics_process(_delta):
 		var new_pos=(self.animation_to-current)*animation_step/self.animation_num_steps +current
 		self.animation_step=self.animation_step+1
 		self.global_transform.origin=new_pos
-		print(self.animation_step, new_pos, self.animation_to)
+		#print(self.animation_step, new_pos, self.animation_to)
 		if self.animation_step==10:
 			self.global_transform.origin=self.animation_to
 			self.animation_step=0

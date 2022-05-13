@@ -9,6 +9,10 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
+var can_move_dice: bool = false
+var can_move_pieces: bool = false
+var dice_throws=[]
+var extra_moves=[]
 
 
 func _init(node_id):
@@ -47,4 +51,9 @@ func set_game(g):
 	
 func set_dice(d):
 	self.dice=d
+	
+func last_throw():
+	return self.dice_throws[self.dice_throws.size()-1]
 
+func squares_to_move():
+	return self.last_throw()

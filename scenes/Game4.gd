@@ -30,6 +30,7 @@ func _ready():
 		var dice=dice_scene.instance()
 		self.add_child(dice)
 		dice.set_id(p.id)
+		dice.set_player(p)
 		p.set_dice(dice)
 	
 	## Creating squares
@@ -76,18 +77,27 @@ func _ready():
 	self.players.change_current_player()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta):	
 	if Input.is_action_just_pressed("right_click"):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
 			object.global_transform.origin.y=20
 			print(object.id)
 	if Input.is_action_just_pressed("left_click"):
+		print(self.players.current, self.players.current.can_move_dice, self.players.current.can_move_pieces)
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
-			object.move_to_route_position(object.route_position+5,true)
+			if object.player==self.players.current and object.player.can_move_pieces:
+				object.move_to_route_position(object.route_position+self.players.current.squares_to_move(),true)
+			else:
+				$Click.play()
 		if object.filename=="res://scenes/Dice.tscn":
-			object.launch()
+			if object.player==self.players.current and object.player.can_move_dice:
+				object.launch()
+			else:
+				$Click.play()
+		if object.filename=="res://scenes/Assistant.tscn":
+			self.players.change_current_player()
 
 		
 	if Input.is_action_just_pressed("zoom_in"):
@@ -96,3 +106,5 @@ func _process(_delta):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+20
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
+	if Input.is_action_just_pressed("full_screen"):
+		OS.window_fullscreen = !OS.window_fullscreen
