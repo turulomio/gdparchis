@@ -26,9 +26,7 @@ func change_current_player():
 	elif self.current==d["3"]:
 		self.current = self.d["0"]
 	self.assistant.set_color(Globals.colorn(self.current.id))
-	self.current.can_move_dice=true
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
-	self.current.dice.value=null
-	self.current.dice.set_physics_process(true)
+	self.current.dice.prepare_to_launch()
 	

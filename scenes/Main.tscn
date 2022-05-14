@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://images/parchis4.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -26,10 +27,10 @@ current_file = "saves"
 current_path = "user://saves/saves"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 246.0
-margin_top = 174.0
-margin_right = 446.0
-margin_bottom = 242.0
+margin_left = 1078.0
+margin_top = 308.0
+margin_right = 1278.0
+margin_bottom = 558.0
 rect_scale = Vector2( 2.47677, 2.74072 )
 
 [node name="Players4" type="Button" parent="VBoxContainer"]
@@ -60,15 +61,33 @@ text = "Load game"
 clip_text = true
 expand_icon = true
 
-[node name="Exit" type="Button" parent="VBoxContainer"]
+[node name="Options" type="Button" parent="VBoxContainer"]
 margin_top = 72.0
 margin_right = 200.0
 margin_bottom = 92.0
 rect_pivot_offset = Vector2( 79, 10 )
+text = "Options"
+clip_text = true
+expand_icon = true
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+margin_top = 96.0
+margin_right = 200.0
+margin_bottom = 116.0
+rect_pivot_offset = Vector2( 79, 10 )
 text = "Exit"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 340.0
+margin_top = 260.0
+margin_right = 740.0
+margin_bottom = 660.0
+texture = ExtResource( 3 )
+expand = true
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="pressed" from="VBoxContainer/Players4All" to="." method="_on_Players4All_pressed"]
 [connection signal="pressed" from="VBoxContainer/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]

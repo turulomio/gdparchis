@@ -143,9 +143,7 @@ func on_clicked():
 		self.player.can_move_pieces=true
 		
 	elif self.player.can_move_dice_again():
-		self.player.can_move_dice=true
-		self.player.dice.value=null
-		self.player.dice.set_physics_process(true)
+		self.player.dice.prepare_to_launch()
 	else:
 		self.player.game.players.change_current_player()
 		
