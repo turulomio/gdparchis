@@ -33,6 +33,34 @@ func value_almost_zero(_value,precision=0.001):
 	if abs(_value)<=precision:
 		return true
 	return false
+	
+	
+func save_game(game):
+	var file=File.new()
+	file.open("user://savegame.save", File.WRITE)
+	var dict={}	
+	dict["max_players"]=game.players.max_players
+	dict["current"]=game.players.current.id
+	dict["fake_dice"]=[]
+	dict["players"]=[]
+	for p in game.players.values():
+		var dict_p={}
+		dict_p["id"]=p.id
+		dict_p["name"]=p.name
+		dict["players"].append(dict_p)
+		dict_p["pieces"]=[]
+		for piece in p.pieces:
+			var dict_piece={}
+			dict_piece["id"]=piece.id
+			dict_piece["route_position"]=piece.route_position
+			dict_piece["square_position"]=piece.square_position
+			dict_p["pieces"].append(dict_piece)
+	
+	
+	
+	file.store_line(to_json(dict))
+	file.close()
+	
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():

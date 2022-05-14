@@ -75,7 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Gdparchis"
-run/main_scene="res://scenes/Game4.tscn"
+run/main_scene="res://scenes/Main.tscn"
 
 [autoload]
 

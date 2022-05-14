@@ -1,4 +1,4 @@
-extends Spatial
+extends Control
 
 
 # Declare member variables here. Examples:
@@ -12,9 +12,15 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	$Camera.look_at($die.global_transform.origin,Vector3(0,1,0))
+#func _process(delta):
 
-func _input(event):
-	if Input.is_mouse_button_pressed(1):
-		get_tree().reload_current_scene()
+
+func _on_Exit_pressed():
+	
+		get_tree().quit()
+#	pass
+
+
+func _on_Players4_pressed():
+	get_tree().change_scene("res://scenes/Game4.tscn")
+	pass # Replace with function body.

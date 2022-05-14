@@ -74,6 +74,7 @@ func _ready():
 		player.append_piece(piece) #Link piece to player bidirectional		
 
 	# Start game
+	self.players.current=self.players.get(3)
 	self.players.change_current_player()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
