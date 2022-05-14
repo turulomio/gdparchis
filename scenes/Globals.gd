@@ -22,6 +22,18 @@ func colorn(e_color):
 			return ColorN("green",1)
 	return eColors.RED
 
+
+	
+func vector_is_almost_zero(v,precision=0.001):
+	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
+		return true
+	return false
+	
+func value_almost_zero(_value,precision=0.001):
+	if abs(_value)<=precision:
+		return true
+	return false
+
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():
 #	var mouse_pos=get_viewport().get_mouse_position()

@@ -2,3 +2,4 @@
 dist/
 images/*.import
 models/*.import
+sounds/*.import

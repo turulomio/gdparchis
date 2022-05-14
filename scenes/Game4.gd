@@ -84,16 +84,15 @@ func _process(_delta):
 			object.global_transform.origin.y=20
 			print(object.id)
 	if Input.is_action_just_pressed("left_click"):
-		print(self.players.current, self.players.current.can_move_dice, self.players.current.can_move_pieces)
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
 			if object.player==self.players.current and object.player.can_move_pieces:
-				object.move_to_route_position(object.route_position+self.players.current.squares_to_move(),true)
+				object.on_clicked()
 			else:
 				$Click.play()
 		if object.filename=="res://scenes/Dice.tscn":
 			if object.player==self.players.current and object.player.can_move_dice:
-				object.launch()
+				object.on_clicked()
 			else:
 				$Click.play()
 		if object.filename=="res://scenes/Assistant.tscn":

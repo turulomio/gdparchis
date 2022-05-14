@@ -1,6 +1,8 @@
 extends KinematicBody
 class_name Piece
 
+
+signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
 
 var animation_to=null
@@ -28,6 +30,8 @@ func _physics_process(_delta):
 		if self.animation_step==10:
 			self.global_transform.origin=self.animation_to
 			self.animation_step=0
+			self.player.can_move_pieces=false
+			emit_signal("piece_moved")
 			self.animation_to=null
 		
 		
@@ -118,24 +122,29 @@ func set_player(p):
 func set_route(p):
 	self.route=p
 		
-## Returns true if move was successful, else false
+func can_move_to_route_position(_route_position):
+	var square_final=self.route.square_at(_route_position)
+	
+	if square_final==null:
+		return false
+	#Check if can move	
+	var new_square_position=square_final.empty_position()
+	if new_square_position ==-1:
+		return false
+	return true
+		
+## Before this method always have to check if piece can move
 func move_to_route_position(_route_position, animation=false):
 	self.animation_waiting_grades=0
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	
-	if square_final==null:
-		return false
-	
-	#Check if can move	
-	var new_square_position=square_final.empty_position()
-	if new_square_position ==-1:
-		return false
 		
 	#Logical move
 	if square_initial!=null: #Debug only
 		square_initial.pieces[self.square_position]=null
 	
+	var new_square_position=square_final.empty_position()
 	square_final.pieces[new_square_position]=self
 	self.square_position=new_square_position
 	
@@ -157,3 +166,20 @@ func change_scale_on_specials_squares():
 		else:
 			self.scale=Vector3(1,1,1)
 
+
+func on_clicked():
+	if self.can_move_to_route_position(self.route_position+self.player.squares_to_move()):
+		self.move_to_route_position(self.route_position+self.player.squares_to_move(),true)
+		yield(self,"piece_moved")
+		
+	## Check if player can continue playing
+	if self.player.can_move_other_piece()==true:
+		self.player.can_move_pieces=true
+		
+	elif self.player.can_move_dice_again():
+		self.player.can_move_dice=true
+		self.player.dice.value=null
+		self.player.dice.set_physics_process(true)
+	else:
+		self.player.game.players.change_current_player()
+		

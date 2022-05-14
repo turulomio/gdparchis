@@ -57,3 +57,22 @@ func last_throw():
 
 func squares_to_move():
 	return self.last_throw()
+	
+## Returns if player is game current player
+func is_current():
+	if self == self.game.players.current:
+		return true
+	return false
+	
+func last_throw_was_a_six():
+	if self.dice_throws[self.dice_throws.size()-1]==6 and self.dice_throws.size()<3:
+		return true
+	return false
+	
+func can_move_other_piece():
+	return false
+	
+func can_move_dice_again():
+	if self.last_throw_was_a_six():
+		return true
+	return false

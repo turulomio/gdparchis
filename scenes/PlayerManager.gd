@@ -16,22 +16,19 @@ func set_assistant(_assistant):
 	self.assistant=_assistant
 
 func change_current_player():
-	print("Before",self.current)
-	if current==null:
+	if self.current==null:
 		self.current= self.d["0"]
-	else:
-		self.current.can_move_pieces=false
-	if current==d["0"]:
+	elif self.current==self.d["0"]:
 		self.current = self.d["1"]
-	if current==d["1"]:
+	elif self.current==d["1"]:
 		self.current = self.d["2"]
-	if current==d["2"]:
+	elif self.current==d["2"]:
 		self.current = self.d["3"]
-	if current==d["3"]:
+	elif self.current==d["3"]:
 		self.current = self.d["0"]
-	print("Afterr",self.current)
 	self.assistant.set_color(Globals.colorn(self.current.id))
 	self.current.can_move_dice=true
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
-	print("After can",self.current.can_move_dice,self.current.can_move_pieces)
+	self.current.dice.value=null
+	self.current.dice.set_physics_process(true)

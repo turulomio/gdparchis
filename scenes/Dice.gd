@@ -1,5 +1,6 @@
 class_name Dice
 extends RigidBody
+signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
 var id: int
 var value=null
@@ -40,47 +41,46 @@ func launch():
 	var z = rand_range(-10,10)
 	set_angular_velocity(Vector3(x,y,z))
 	
-	
-func vector_is_almost_zero(v,precision=0.001):
-	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
-		return true
-	return false
-	
-func value_almost_zero(_value,precision=0.001):
-	if abs(_value)<=precision:
-		return true
-	return false
+
 	
 func _physics_process(_delta):
-	if self.value!=null and self.vector_is_almost_zero(self.angular_velocity) and self.vector_is_almost_zero(self.linear_velocity):
+	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
 		print("Dice " + str(self.id) + " gets a "+ str(self.value))
 		self.set_physics_process(false)
 		self.player.dice_throws.append(self.value)
-		self.player.can_move_pieces=true
+		emit_signal("dice_got_value")
 		
-	elif self.player.game.players.current== self.player and self.player.can_move_dice== true:
+	elif self.player.is_current() and self.player.can_move_dice== true:
 		self.animation_waiting_grades=self.animation_waiting_grades+5
-		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
+		self.global_transform.origin.y=2+sin(deg2rad(self.animation_waiting_grades))/2
 		
 	elif self.animation_waiting_grades==0:
 		if $RC1.is_colliding():
 			self.value=6
-			$Dices.play()
+			#$Dices.play()
 		if $RC2.is_colliding():
 			self.value=5
-			$Dices.play()
+			#$Dices.play()
 		if $RC3.is_colliding():
 			self.value=4
-			$Dices.play()
+			#$Dices.play()
 		if $RC4.is_colliding():
 			self.value=3
-			$Dices.play()
+			#$Dices.play()
 		if $RC5.is_colliding():
 			self.value=2
-			$Dices.play()
+			#$Dices.play()
 		if $RC6.is_colliding():
 			self.value=1
-			$Dices.play()
+			#$Dices.play()
+			
+			
+func on_clicked():
+	self.animation_waiting_grades=0
+	self.launch()
+	yield(self, "dice_got_value")
+	self.player.can_move_pieces=true
+
 		
 
 	
