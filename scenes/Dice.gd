@@ -6,6 +6,7 @@ var id: int
 var value=null
 var player
 var animation_waiting_grades=0
+var has_touch=false
 
 	
 ## Sets id, and initial properties and position
@@ -35,10 +36,12 @@ func launch():
 	self.set_physics_process(true)
 	self.set_position(10)
 	randomize()
-
+	
 	var x = rand_range(-10,10)
 	var y = rand_range(-10,10)
 	var z = rand_range(-10,10)
+	print(x,y,z)
+	self.set_axis_velocity(Vector3(0,abs(x+y+x)/10,0))
 	set_angular_velocity(Vector3(x,y,z))
 	
 
@@ -57,26 +60,39 @@ func _physics_process(_delta):
 	elif self.animation_waiting_grades==0:
 		if $RC1.is_colliding():
 			self.value=6
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 		if $RC2.is_colliding():
 			self.value=5
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 		if $RC3.is_colliding():
 			self.value=4
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 		if $RC4.is_colliding():
 			self.value=3
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 		if $RC5.is_colliding():
 			self.value=2
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 		if $RC6.is_colliding():
 			self.value=1
-			#$Dices.play()
+			if self.has_touch==false:
+				$Touched.play()
+				self.has_touch=true
 
 func prepare_to_launch():
 	self.player.can_move_dice=true
 	self.value=null
+	self.has_touch=false
 	self.set_physics_process(true)
 	
 			
@@ -86,12 +102,16 @@ func on_clicked():
 	yield(self, "dice_got_value")
 	
 	if self.player.dice_throws_has_three_sixes() and self.player.last_piece_moved!=null:
-		$ThreeSix.play()		
-		self.player.last_piece_moved.move_to_route_position(0,20)
-		yield(self.player.last_piece_moved,"piece_moved")
-		self.player.game.players.change_current_player()
-		return
-	
+		if self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:
+			$ThreeSix.play()		
+			self.player.last_piece_moved.move_to_route_position(0,20)
+			yield(self.player.last_piece_moved,"piece_moved")
+			self.player.game.players.change_current_player()
+			return
+		else: #If it'snos in ramp
+			self.player.game.players.change_current_player()
+			return
+		
 	if self.player.can_some_piece_move():
 		self.player.can_move_pieces=true
 	else:

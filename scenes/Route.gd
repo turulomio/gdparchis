@@ -36,3 +36,21 @@ func square_at(_route_position):
 	
 func end_position():
 	return self.arr.size()-1
+	
+func is_there_barrier(from_position,to_position):
+	for square_position in range(from_position+1,to_position+1):#First doesn't count
+		var square = self.square_at(square_position)
+		print("Route.is_there_barrier",square_position,self.square_at(square_position),square.has_barrier())
+		if square.has_barrier():
+			return true
+	return false
+	
+func size():
+	return self.arr.size()
+	
+## Returns if is ramp valid for all max_players
+func is_ramp(_position_route):
+	if self.size()-1-8<_position_route and _position_route<self.size()-1:
+		return true
+	return false
+

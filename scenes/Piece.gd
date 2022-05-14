@@ -78,14 +78,26 @@ func can_move_to_route_position(_route_position):
 	var square_initial=self.square()
 	var square_final=self.route.square_at(_route_position)
 	##DEbe sacar si es un 5
-	if self.player.last_throw()==5 and self.player.are_all_pieces_out_of_home()==false and self.route.square_at(1).pieces.size()<2 and self.position_route!=0:
+	print(self.player.last_throw(), self.player.are_all_pieces_out_of_home(), self.route.square_at(1).pieces_count(),self.route_position)
+	if self.player.last_throw()==5 and self.player.are_all_pieces_out_of_home()==false and self.route.square_at(1).pieces_count()<2 and self.route_position!=0:
 		return false 
 	
 	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
 		return false
 	
+	# Check if went more far that end
 	if square_final==null:
 		return false
+		
+	# Check if there is a barrier and must open with a six
+	print("Check barrrir", self.player.last_throw(),self.player.some_piece_is_in_barrier(),self.square().has_barrier())
+	if self.player.last_throw()==6 and self.player.some_piece_is_in_barrier() and self.square().has_barrier()==false:
+		return false
+		
+	#Check if there is barrier
+	if self.route.is_there_barrier(self.route_position, _route_position):
+		return false
+		
 	#Check if can move	
 	var new_square_position=square_final.empty_position()
 	if new_square_position ==-1:
@@ -121,6 +133,9 @@ func change_scale_on_specials_squares():
 			self.scale=Vector3(1,1,1)
 
 func squares_to_move():
+	if self.player.extra_moves.size()>0:
+		return self.player.extra_moves[0]
+	
 	if self.square().type==Globals.eSquareTypes.START and self.player.last_throw()==5:
 		return 1
 	elif self.player.are_all_pieces_out_of_home() and self.player.last_throw()==6:
@@ -128,17 +143,54 @@ func squares_to_move():
 	else:
 		return self.player.last_throw()
 	
+## Returns true if after move has eaten
+func has_eaten():
+	## In square after move
+	var s=self.square()
+	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.NORMAL and s.pieces[0].player!=s.pieces[1].player:
+		return true
+		
+	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.FIRST and s.pieces[0].player!=s.pieces[1].player and self.player.e_color==s.color:
+		return true
+	return false
 
 func on_clicked():
 	if self.can_move_to_route_position(self.route_position+self.squares_to_move()):
 		self.move_to_route_position(self.route_position+self.squares_to_move(), 20)
 		yield(self,"piece_moved")
+		
+		#Must be before has_eaten
+		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
+			self.player.extra_moves.pop_front()
+		
+		if self.has_eaten():
+			$Eat.play()
+			yield($Eat,"finished")
+			var piece_eaten=self.square().piece_different_to_me(self)
+			piece_eaten.move_to_route_position(0, 20)
+			yield(piece_eaten,"piece_moved")
+			self.player.extra_moves.append(20)
+			
+			
+		
+		## After move
+		if self.player.has_won():
+			$Won.play()
+			yield($Won,"finished")
+			get_tree().change_scene("res://scenes/Main.tscn")
+			return
+			
+			
+		if self.square().type==Globals.eSquareTypes.END:
+			$EndRoute.play()
+			self.player.extra_moves.append(10)
+			
 		self.player.last_piece_moved=self
 	else: # Ha pulsado una ficha que no se puede mover
 		$Click.play()
 		return
-		
-	## Check if player can continue playing
+	
+	## Estos if son excluyentes
 	if self.player.can_move_other_piece()==true:
 		self.player.can_move_pieces=true
 		

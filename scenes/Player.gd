@@ -65,6 +65,8 @@ func dice_throws_has_three_sixes():
 	return false
 	
 func can_move_other_piece():
+	if self.extra_moves.size()>0:
+		return true
 	return false
 	
 func can_move_dice_again():
@@ -83,4 +85,16 @@ func can_some_piece_move():
 		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
 			return true
 	return false
+	
+func some_piece_is_in_barrier():
+	for p in self.pieces:
+		if p.square().has_barrier():
+			return true
+	return false
+
+func has_won():
+	for p in self.pieces:
+		if p.square().type!=Globals.eSquareTypes.END:
+			return false
+	return true
 	

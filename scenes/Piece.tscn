@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Piece.gd" type="Script" id=1]
 [ext_resource path="res://images/wood.png" type="Texture" id=2]
 [ext_resource path="res://sounds/click.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/meter.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/win.wav" type="AudioStream" id=5]
+[ext_resource path="res://sounds/comer.wav" type="AudioStream" id=6]
 
 [sub_resource type="CylinderMesh" id=4]
 
@@ -25,3 +28,12 @@ shape = SubResource( 3 )
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="EndRoute" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Won" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Eat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
