@@ -8,4 +8,4 @@ func _on_Return_pressed():
 
 
 func _on_CheckBox_toggled(button_pressed):
-	pass # Replace with function body.
+		OS.window_fullscreen = button_pressed

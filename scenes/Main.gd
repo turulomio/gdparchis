@@ -31,3 +31,11 @@ func _on_Options_pressed():
 
 func _on_CheckBox_toggled(button_pressed):
 		OS.window_fullscreen = button_pressed
+
+
+func _on_Main_gui_input(event):
+	if Input.is_action_just_pressed("exit"):
+		get_tree().change_scene("res://scenes/Main.tscn")
+	if Input.is_action_just_pressed("full_screen"):
+		OS.window_fullscreen = !OS.window_fullscreen
+

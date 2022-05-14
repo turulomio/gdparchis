@@ -82,6 +82,7 @@ _global_script_class_icons={
 
 config/name="Gdparchis"
 run/main_scene="res://scenes/Main.tscn"
+boot_splash/image="res://icon.png"
 
 [autoload]
 

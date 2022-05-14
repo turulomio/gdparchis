@@ -85,6 +85,7 @@ margin_bottom = 660.0
 texture = ExtResource( 3 )
 expand = true
 
+[connection signal="gui_input" from="." to="." method="_on_Main_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="pressed" from="VBoxContainer/Players4All" to="." method="_on_Players4All_pressed"]
