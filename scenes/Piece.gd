@@ -14,6 +14,7 @@ var route_position: int
 var square_position: int
 
 var animation_num_steps=10
+var animation_max_y=10
 
 
 var animation_waiting_grades=0
@@ -22,13 +23,15 @@ var animation_waiting_grades=0
 func _physics_process(_delta): 
 	
 	if animation_to!=null:
-		self.animation_to.y=10
 		var current=self.global_transform.origin
 		var new_pos
 		if self.animation_num_steps==0:
 			new_pos=self.animation_to
 		else:
+			#Sets step
 			new_pos=(self.animation_to-current)*self.animation_step/self.animation_num_steps +current
+			#Sets y with sin function
+			new_pos.y=self.animation_to.y+self.animation_max_y*sin(deg2rad(180*self.animation_step/self.animation_num_steps))
 		self.animation_step=self.animation_step+1
 		self.global_transform.origin=new_pos
 		if self.animation_step==self.animation_num_steps:
@@ -37,15 +40,12 @@ func _physics_process(_delta):
 			self.player.can_move_pieces=false
 			emit_signal("piece_moved")
 			self.animation_to=null
-			
-	if self.id<1000:
-		if self.player.game.players.current== self.player and self.player.can_move_pieces== true:
-			self.animation_waiting_grades=self.animation_waiting_grades+5
-			self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
-		elif self.animation_waiting_grades==0:
-			return move_and_slide(vel,Vector3.UP)
-	else: #This is used for Game4Objects
+	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true:
+		self.animation_waiting_grades=self.animation_waiting_grades+5
+		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
+	elif self.animation_waiting_grades==0:
 		return move_and_slide(vel,Vector3.UP)
+
 		
 
 func _to_string():
@@ -131,7 +131,7 @@ func squares_to_move():
 
 func on_clicked():
 	if self.can_move_to_route_position(self.route_position+self.squares_to_move()):
-		self.move_to_route_position(self.route_position+self.squares_to_move(), 10)
+		self.move_to_route_position(self.route_position+self.squares_to_move(), 20)
 		yield(self,"piece_moved")
 		self.player.last_piece_moved=self
 	else: # Ha pulsado una ficha que no se puede mover

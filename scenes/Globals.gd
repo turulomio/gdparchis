@@ -41,8 +41,13 @@ func save_game(game):
 	var dir= Directory.new()
 	if dir.dir_exists("user://saves/")==false:
 		dir.make_dir("user://saves/")
+		
+		
+	
+	var d=OS.get_datetime()
+	filename="%d%s%s %s%s%s players4.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second]
 	var file=File.new()
-	file.open("user://saves/savegame.save", File.WRITE)
+	file.open("user://saves/" + filename, File.WRITE)
 	var dict={}	
 	dict["max_players"]=game.players.max_players
 	dict["current"]=game.players.current.id
@@ -106,7 +111,7 @@ func load_game(filename):
 #	print(selection)
 #	return selection.collider
 func position4(square_id, square_position):
-	var h=40
+	var h=1.2
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.2), Vector3(-7.8,h,-30.2)][square_position]

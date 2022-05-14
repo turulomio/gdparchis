@@ -22,19 +22,16 @@ func _on_Exit_pressed():
 
 
 func _on_Load_pressed():
-	print("AHORA")
 	$FileDialog.popup()
 #	pass
 
 
 func _on_Players4_pressed():
 	get_tree().change_scene("res://scenes/Game4.tscn")
-	pass # Replace with function body.
 
 
 func _on_Players4All_pressed():
 	get_tree().change_scene("res://scenes/Game4Objects.tscn")
-	pass # Replace with function body.
 
 
 func _on_FileDialog_file_selected(path):

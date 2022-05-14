@@ -87,7 +87,7 @@ func on_clicked():
 	
 	if self.player.dice_throws_has_three_sixes() and self.player.last_piece_moved!=null:
 		$ThreeSix.play()		
-		self.player.last_piece_moved.move_to_route_position(0,10)
+		self.player.last_piece_moved.move_to_route_position(0,20)
 		yield(self.player.last_piece_moved,"piece_moved")
 		self.player.game.players.change_current_player()
 		return
