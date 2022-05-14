@@ -123,7 +123,14 @@ func set_route(p):
 	self.route=p
 		
 func can_move_to_route_position(_route_position):
+	var square_initial=self.square()
 	var square_final=self.route.square_at(_route_position)
+	##DEbe sacar si es un 5
+	if self.player.last_throw()==5 and self.player.are_all_pieces_out_of_home()==false and self.route.square_at(1).pieces.size()<2 and self.position_route!=0:
+		return false 
+	
+	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
+		return false
 	
 	if square_final==null:
 		return false
@@ -141,7 +148,7 @@ func move_to_route_position(_route_position, animation=false):
 	
 		
 	#Logical move
-	if square_initial!=null: #Debug only
+	if Globals.debug==false: #Debug only
 		square_initial.pieces[self.square_position]=null
 	
 	var new_square_position=square_final.empty_position()
@@ -166,11 +173,23 @@ func change_scale_on_specials_squares():
 		else:
 			self.scale=Vector3(1,1,1)
 
+func squares_to_move():
+	if self.square().type==Globals.eSquareTypes.START and self.player.last_throw()==5:
+		return 1
+	elif self.player.are_all_pieces_out_of_home() and self.player.last_throw()==6:
+		return 7
+	else:
+		return self.player.last_throw()
+	
 
 func on_clicked():
-	if self.can_move_to_route_position(self.route_position+self.player.squares_to_move()):
-		self.move_to_route_position(self.route_position+self.player.squares_to_move(),true)
+	if self.can_move_to_route_position(self.route_position+self.squares_to_move()):
+		self.move_to_route_position(self.route_position+self.squares_to_move(),true)
 		yield(self,"piece_moved")
+		self.player.last_piece_moved=self
+	else: # Ha pulsado una ficha que no se puede mover
+		$Click.play()
+		return
 		
 	## Check if player can continue playing
 	if self.player.can_move_other_piece()==true:

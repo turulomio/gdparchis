@@ -19,13 +19,13 @@ func set_player(_player):
 func set_position(h):
 	match(self.id):
 		0:
-			self.global_transform.origin=Vector3(-14,h,-14)
+			self.global_transform.origin=Vector3(-20,h,-25)
 		1:
-			self.global_transform.origin=Vector3(-14,h,14)
+			self.global_transform.origin=Vector3(-25,h,20)
 		2:
-			self.global_transform.origin=Vector3(14,h,14)
+			self.global_transform.origin=Vector3(20,h,25)
 		3:
-			self.global_transform.origin=Vector3(14,h,-14)
+			self.global_transform.origin=Vector3(25,h,-20)
 			
 			
 func launch():
@@ -73,13 +73,32 @@ func _physics_process(_delta):
 		if $RC6.is_colliding():
 			self.value=1
 			#$Dices.play()
-			
+
+func prepare_to_launch():
+	self.player.can_move_dice=true
+	self.value=null
+	self.set_physics_process(true)
+	
 			
 func on_clicked():
 	self.animation_waiting_grades=0
 	self.launch()
 	yield(self, "dice_got_value")
-	self.player.can_move_pieces=true
+	
+	if self.player.dice_throws_has_three_sixes() and self.player.last_piece_moved!=null:
+		$ThreeSix.play()		
+		self.player.last_piece_moved.move_to_route_position(0,true)
+		yield(self.player.last_piece_moved,"piece_moved")
+		self.player.game.players.change_current_player()
+		return
+	
+	if self.player.can_some_piece_move():
+		self.player.can_move_pieces=true
+	else:
+		if self.player.can_move_dice_again():
+			self.player.dice.prepare_to_launch()
+		else:
+			self.player.game.players.change_current_player()
 
 		
 
