@@ -3,6 +3,7 @@ extends ListManager
 
 var max_players: int
 var e_color
+var id
 func _init (_p_max_players, _e_color,_squares):
 	self.max_players=_p_max_players
 	self.e_color=_e_color
@@ -15,16 +16,23 @@ func _to_string():
 func get_route_square_ids(_max_players, _eColors):
 	if _max_players==4:
 		if _eColors==Globals.eColors.YELLOW:
+			self.id=0
 			return ([101]+range(5, 76+1))
 		elif _eColors==Globals.eColors.BLUE:
+			self.id=1
 			return [102]+ range(22, 68+1)+range(1, 17+1)+range(77, 84+1)
 		elif _eColors==Globals.eColors.RED:
+			self.id=2
 			return [103]+ range(39, 68+1) + range(1, 34+1) + range(85, 92+1)
 		elif _eColors==Globals.eColors.GREEN:
-			return [104]+ range(56, 68+1) + range(1, 51+1) + range(93, 100+1)
+			self.id=3
 
+			return [104]+ range(56, 68+1) + range(1, 51+1) + range(93, 100+1)
 ## -1 is used for debug
 func square_at(_route_position):
 	if _route_position <0 or _route_position>=self.size():
 		return null
 	return self.arr[_route_position]
+	
+func end_position():
+	return self.arr.size()-1

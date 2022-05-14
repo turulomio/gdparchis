@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/Game4.gd"
 }, {
+"base": "Spatial",
+"class": "Game4Objects",
+"language": "GDScript",
+"path": "res://scenes/Game4Objects.gd"
+}, {
 "base": "Reference",
 "class": "ListManager",
 "language": "GDScript",
@@ -63,6 +68,7 @@ _global_script_class_icons={
 "Dice": "",
 "DictionaryManager": "",
 "Game4": "",
+"Game4Objects": "",
 "ListManager": "",
 "Piece": "",
 "Player": "",
@@ -80,6 +86,12 @@ run/main_scene="res://scenes/Main.tscn"
 [autoload]
 
 Globals="*res://scenes/Globals.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/fullscreen=true
 
 [global]
 

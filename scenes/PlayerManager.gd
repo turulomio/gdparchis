@@ -9,8 +9,6 @@ var assistant
 
 func _init (number):
 	self.max_players=number
-	for i in range(self.max_players):
-		self.append(Player.new(i))
 		
 func set_assistant(_assistant):
 	self.assistant=_assistant

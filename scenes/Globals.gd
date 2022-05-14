@@ -3,23 +3,25 @@ extends Node
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
 enum eColors  {YELLOW, BLUE, RED, GREEN}
 
-
-var debug=false #Shows all squares full with piececs
+var game_data=null #Dictionary to load and init games
 
 func e_colors(max_players):
 	if max_players==4:
 		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
 		
 func colorn(e_color):
+	return ColorN(color_name(e_color),1)
+	
+func color_name(e_color):
 	match e_color:
 		eColors.YELLOW:
-			return ColorN("yellow",1)
+			return "yellow"
 		eColors.BLUE:
-			return ColorN("blue",1)
+			return "blue"
 		eColors.RED:
-			return ColorN("red",1)
+			return "red"
 		eColors.GREEN:
-			return ColorN("green",1)
+			return "green"
 	return eColors.RED
 
 
@@ -50,6 +52,7 @@ func save_game(game):
 		var dict_p={}
 		dict_p["id"]=p.id
 		dict_p["name"]=p.name
+		dict_p["plays"]=p.plays
 		dict["players"].append(dict_p)
 		dict_p["pieces"]=[]
 		for piece in p.pieces:
@@ -63,6 +66,34 @@ func save_game(game):
 	
 	file.store_line(to_json(dict))
 	file.close()
+	
+func new_game(max_players):
+	var dict={}	
+	dict["max_players"]=max_players
+	dict["current"]=0
+	dict["fake_dice"]=[]
+	dict["players"]=[]
+	for player_id in range(max_players):
+		var dict_p={}
+		dict_p["id"]=player_id
+		dict_p["name"]=color_name(player_id)
+		dict_p["plays"]=true
+		dict["players"].append(dict_p)
+		dict_p["pieces"]=[]
+		for i in range(4):
+			var dict_piece={}
+			dict_piece["id"]=(4*player_id)+i
+			dict_piece["route_position"]=0
+			dict_piece["square_position"]=i
+			dict_p["pieces"].append(dict_piece)
+	return dict
+	
+func load_game(filename):
+	var file=File.new()
+	file.open(filename, File.READ)
+	var data=parse_json(file.get_line())
+	file.close()
+	return data
 	
 
 # Lo calcule ayudandome de la función y con simetrías
