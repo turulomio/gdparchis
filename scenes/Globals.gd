@@ -36,8 +36,11 @@ func value_almost_zero(_value,precision=0.001):
 	
 	
 func save_game(game):
+	var dir= Directory.new()
+	if dir.dir_exists("user://saves/")==false:
+		dir.make_dir("user://saves/")
 	var file=File.new()
-	file.open("user://savegame.save", File.WRITE)
+	file.open("user://saves/savegame.save", File.WRITE)
 	var dict={}	
 	dict["max_players"]=game.players.max_players
 	dict["current"]=game.players.current.id
