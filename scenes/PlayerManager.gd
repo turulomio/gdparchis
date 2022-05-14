@@ -12,8 +12,8 @@ func _init (number):
 	for i in range(self.max_players):
 		self.append(Player.new(i))
 		
-func set_assistant(assistant):
-	self.assistant=assistant
+func set_assistant(_assistant):
+	self.assistant=_assistant
 
 func change_current_player():
 	print("Before",self.current)

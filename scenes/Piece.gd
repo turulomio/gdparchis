@@ -14,8 +14,10 @@ var square_position: int = 0
 var animation_num_steps=10
 
 
+var animation_waiting_grades=0
+
+
 func _physics_process(_delta): 
-	
 	if animation_to!=null:
 		self.animation_to.y=10
 		var current=self.global_transform.origin
@@ -27,9 +29,13 @@ func _physics_process(_delta):
 			self.global_transform.origin=self.animation_to
 			self.animation_step=0
 			self.animation_to=null
-	else:		
-	#self.global_transform.origin=Globals.position4(square_final.id,new_square_position)	
 		
+		
+	elif self.player.game.players.current== self.player and self.player.can_move_pieces== true:
+		self.animation_waiting_grades=self.animation_waiting_grades+5
+		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
+		
+	elif self.animation_waiting_grades==0:
 		return move_and_slide(vel,Vector3.UP)
 
 func _to_string():
@@ -114,6 +120,7 @@ func set_route(p):
 		
 ## Returns true if move was successful, else false
 func move_to_route_position(_route_position, animation=false):
+	self.animation_waiting_grades=0
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	

@@ -4,6 +4,7 @@ var vel : Vector3 = Vector3(0,-30,0)
 var id: int
 var value=null
 var player
+var animation_waiting_grades=0
 
 	
 ## Sets id, and initial properties and position
@@ -27,6 +28,7 @@ func set_position(h):
 			
 			
 func launch():
+	self.animation_waiting_grades=0
 	self.player.can_move_dice=false
 	self.value=null
 	self.set_physics_process(true)
@@ -55,7 +57,12 @@ func _physics_process(_delta):
 		self.set_physics_process(false)
 		self.player.dice_throws.append(self.value)
 		self.player.can_move_pieces=true
-	else:
+		
+	elif self.player.game.players.current== self.player and self.player.can_move_dice== true:
+		self.animation_waiting_grades=self.animation_waiting_grades+5
+		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
+		
+	elif self.animation_waiting_grades==0:
 		if $RC1.is_colliding():
 			self.value=6
 			$Dices.play()
