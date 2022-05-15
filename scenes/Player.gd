@@ -97,4 +97,12 @@ func has_won():
 		if p.square().type!=Globals.eSquareTypes.END:
 			return false
 	return true
+
+	
+
+func can_some_piece_move_to_first_square():
+	for p in self.pieces:
+		if p.must_move_to_first_square():
+			return true
+	return false
 	

@@ -17,10 +17,7 @@ func get_object_under_mouse():
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	var piece_scene=load("res://scenes/Piece.tscn")
-	var dice_scene=load("res://scenes/Dice.tscn")
-	
+func _ready():	
 	if Globals.game_data==null: #New game
 		Globals.game_data=Globals.new_game(4)
 	
@@ -50,7 +47,7 @@ func _ready():
 	
 	for p in self.players.values():
 		p.set_game(self)
-		var dice=dice_scene.instance()
+		var dice=Globals.SCENE_DICE.instance()
 		self.add_child(dice)
 		dice.set_id(p.id)
 		dice.set_player(p)
@@ -62,7 +59,7 @@ func _ready():
 		var square_position=0
 		for d_piece in d_player["pieces"]:
 			var route=self.routes[str(player.id)]
-			var piece=piece_scene.instance()
+			var piece=Globals.SCENE_PIECE.instance()
 			self.add_child(piece)
 			piece.set_id(d_piece["id"],player,route.end_position(),square_position)
 			square_position=square_position+1

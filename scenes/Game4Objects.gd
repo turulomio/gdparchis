@@ -18,9 +18,6 @@ func get_object_under_mouse():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var piece_scene=load("res://scenes/Piece.tscn")
-	var dice_scene=load("res://scenes/Dice.tscn")
-
 	
 	## Creating players
 	self.max_players=4
@@ -60,7 +57,7 @@ func _ready():
 			while s.empty_position()>=0:
 				print(self.players.d)
 				var player=self.players.get(route.id)
-				var piece=piece_scene.instance()
+				var piece=Globals.SCENE_PIECE.instance()
 				piece.set_id(id,player,s.id,s.empty_position())
 				id=id+1
 				
@@ -76,7 +73,7 @@ func game4objects_move_to_route_position(piece,_route_position, _animation_num_s
 	var square_final=piece.route.square_at(_route_position)
 	
 	var new_square_position=square_final.empty_position()
-	square_final.pieces[new_square_position]=piece
+	square_final.set_piece_at_square_position(new_square_position,piece)
 	piece.square_position=new_square_position
 	
 	piece.route_position=_route_position

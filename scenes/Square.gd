@@ -7,6 +7,7 @@ var type #eSquareTypes
 var color#: Globals.eColors
 var max_ 
 var pieces =[]# Filled with null values to mantain positions
+var last_piece_to_arrive
 
 func _to_string():
 	return "[Square: "+ str(self.id) + "]"
@@ -104,10 +105,31 @@ func empty_position():
 			return position
 	return -1
 	
-func piece_different_to_me(_piece):
+	
+## Muestra las casillas diferentes a mi player.
+## Pone primero [0] la ultime en llegar
+func piece_different_to_me_ordered(_player):
+	var pieces_different=[]
 	for p in self.pieces:
-		if p!=null and p!=_piece:
-			return p
-	return null
+		if p!=null and p.player!=_player:
+			pieces_different.append(p)
+		
+	if pieces_different.size()==0:
+		return null
+	if pieces_different.size()==2:
+		if pieces_different[0]==self.last_piece_to_arrive:#Esta ordenado
+			return pieces_different
+		else:
+			return [pieces_different[1],pieces_different[0]]
+	return pieces#Size 1
+	
+## Para meter piezas se debe usar esto para que se controle la
+## ultima ficha que entra
+## Esta función no ccomprueba nada ha debido usar empty_position antes
+## Tambien debe ser usada para poner null
+func set_piece_at_square_position(square_position,piece):
+	self.pieces[square_position]=piece
+	self.last_piece_to_arrive=piece
+	
 	
 	

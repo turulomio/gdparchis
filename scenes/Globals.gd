@@ -6,6 +6,11 @@ enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
 
+const IMAGE_WOOD = preload("res://images/wood.png")
+
+const SCENE_PIECE=preload("res://scenes/Piece.tscn")
+const SCENE_DICE=preload("res://scenes/Dice.tscn")
+
 var game_data=null #Dictionary to load and init games
 var settings
 

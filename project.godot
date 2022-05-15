@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/Game4Objects.gd"
 }, {
+"base": "Spatial",
+"class": "Game4Start",
+"language": "GDScript",
+"path": "res://scenes/Game4Start.gd"
+}, {
 "base": "Reference",
 "class": "ListManager",
 "language": "GDScript",
@@ -69,6 +74,7 @@ _global_script_class_icons={
 "DictionaryManager": "",
 "Game4": "",
 "Game4Objects": "",
+"Game4Start": "",
 "ListManager": "",
 "Piece": "",
 "Player": "",
@@ -82,7 +88,7 @@ _global_script_class_icons={
 
 config/name="Gdparchis"
 run/main_scene="res://scenes/Main.tscn"
-boot_splash/image="res://icon.png"
+boot_splash/image="res://images/piece_red.png"
 config/icon="res://images/piece_red.png"
 config/windows_native_icon="res://images/piece_red.ico"
 

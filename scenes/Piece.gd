@@ -18,9 +18,12 @@ var animation_max_y=10
 
 
 var animation_waiting_grades=0
-
+var minor_fps=1000
 
 func _physics_process(_delta): 
+	var fps=1/_delta
+	if minor_fps>fps:
+		minor_fps=fps
 	
 	if animation_to!=null:
 		var current=self.global_transform.origin
@@ -40,6 +43,7 @@ func _physics_process(_delta):
 			self.player.can_move_pieces=false
 			emit_signal("piece_moved")
 			self.animation_to=null
+			print("Minor fps ", minor_fps)
 	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true:
 		self.animation_waiting_grades=self.animation_waiting_grades+5
 		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
@@ -66,42 +70,52 @@ func square():
 	return self.route.square_at(self.route_position)
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-func set_color(s):
-	var image = load("res://images/wood.png")
-	
+func set_color(s):	
 	var new_material = SpatialMaterial.new()
-	new_material.albedo_texture = image
+	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = s
 	$MeshInstance.material_override=new_material
 			
 func can_move_to_route_position(_route_position):
 	var square_initial=self.square()
 	var square_final=self.route.square_at(_route_position)
-	##DEbe sacar si es un 5
-	print(self.player.last_throw(), self.player.are_all_pieces_out_of_home(), self.route.square_at(1).pieces_count(),self.route_position)
-	if self.player.last_throw()==5 and self.player.are_all_pieces_out_of_home()==false and self.route.square_at(1).pieces_count()<2 and self.route_position!=0:
-		return false 
 	
-	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
+	##DEbe sacar si es un 5
+	if self.must_move_to_first_square()==false and self.player.can_some_piece_move_to_first_square()==true:
+		print("Piece.can_move_to_route_position can_move_to_first becouse other can")
 		return false
 	
+	
+	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
+		print("Piece.can_move_to_route_position Solo sale con un 5")
+		return false
+
+	
+	
 	# Check if went more far that end
-	if square_final==null:
+	if square_final==null:		
+		print("Piece.can_move_to_route_position square_final null ")
 		return false
 		
 	# Check if there is a barrier and must open with a six
-	print("Check barrrir", self.player.last_throw(),self.player.some_piece_is_in_barrier(),self.square().has_barrier())
 	if self.player.last_throw()==6 and self.player.some_piece_is_in_barrier() and self.square().has_barrier()==false:
+		
+		print("Piece.can_move_to_route_position debe abrir barrera por 6 ")
 		return false
 		
 	#Check if there is barrier
 	if self.route.is_there_barrier(self.route_position, _route_position):
+		print("Piece.can_move_to_route_position Hay bbarrera en ruta ")
 		return false
 		
-	#Check if can move	
+	#Comprueba si hay  posición libre en casilla
 	var new_square_position=square_final.empty_position()
-	if new_square_position ==-1:
+	if self.must_move_to_first_square()==false and new_square_position ==-1:
+		
+		print("Piece.can_move_to_route_position No tiene posición libre en la casilla")
 		return false
+		
+	print("Piece.can_move_to_route_position Piece can move")
 	return true
 		
 ## Before this method always have to check if piece can move
@@ -111,11 +125,10 @@ func move_to_route_position(_route_position, _animation_num_steps=0):
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	
-		
-	square_initial.pieces[self.square_position]=null
+	square_initial.set_piece_at_square_position(self.square_position,null)
 	
 	var new_square_position=square_final.empty_position()
-	square_final.pieces[new_square_position]=self
+	square_final.set_piece_at_square_position(new_square_position,self)
 	self.square_position=new_square_position
 	
 	self.route_position=_route_position
@@ -144,7 +157,7 @@ func squares_to_move():
 		return self.player.last_throw()
 	
 ## Returns true if after move has eaten
-func has_eaten():
+func has_eaten_after_move():
 	## In square after move
 	var s=self.square()
 	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.NORMAL and s.pieces[0].player!=s.pieces[1].player:
@@ -154,22 +167,55 @@ func has_eaten():
 		return true
 	return false
 
+	
+## Returns true if before move has eaten
+## Para comer a veces se necesita comer antes del movimiento
+## Por ejemplo sacar un 5 con una casilla en START y habiendo dos ficheas distintas al usuario que sale
+## Devuelve null o la ficha a comer
+func has_eaten_before_move():
+	var square_initial=self.square()
+	var square_final=self.route.square_at(self.route_position+self.squares_to_move())#After move
+
+	if square_final.pieces_count()==2 and self.player.dice.value==5 and square_initial.type==Globals.eSquareTypes.START:
+		var ordered= square_final.piece_different_to_me_ordered(self.player)
+		if ordered!=null:
+			return ordered[0]
+	return null
+
 func on_clicked():
+	var has_eaten_before=false	
+	var has_eaten_after=false
 	if self.can_move_to_route_position(self.route_position+self.squares_to_move()):
+		
+
+		var eaten_before=self.has_eaten_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
+		print("Eaten_before",eaten_before)
+		if eaten_before!=null:
+			has_eaten_before=true
+			$Eat.play()
+			eaten_before.move_to_route_position(0, 20)
+			yield(eaten_before,"piece_moved")
+		
+		
 		self.move_to_route_position(self.route_position+self.squares_to_move(), 20)
 		yield(self,"piece_moved")
 		
-		#Must be before has_eaten
+		
+		#Must be before has_eaten, pero no before
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
 			self.player.extra_moves.pop_front()
-		
-		if self.has_eaten():
+			
+		if has_eaten_before==false and self.has_eaten_after_move():#Si come antes no come después
+			has_eaten_after=true
 			$Eat.play()
-			yield($Eat,"finished")
-			var piece_eaten=self.square().piece_different_to_me(self)
+			var piece_eaten=self.square().piece_different_to_me_ordered(self.player)[0]
 			piece_eaten.move_to_route_position(0, 20)
 			yield(piece_eaten,"piece_moved")
+			
+		#Muest be after move
+		if has_eaten_before==true or has_eaten_after==true:
 			self.player.extra_moves.append(20)
+			
 			
 			
 		
@@ -199,3 +245,19 @@ func on_clicked():
 	else:
 		self.player.game.players.change_current_player()
 		
+#Casilla First.Siempre que se mueve a FIRST es una obligación si se puede
+func must_move_to_first_square():
+	if self.route_position!=0:
+		return false
+	var square_first=self.route.square_at(1)
+	#Si tiene extra moves no está sacando un 5 si no moviendo
+	if self.player.extra_moves.size()==0 and  self.player.dice.value==5 and self.player.are_all_pieces_out_of_home()==false:
+		if square_first.pieces_count()<2:
+			return true
+		else:#2 de size
+			var ordered= square_first.piece_different_to_me_ordered(self)
+			if ordered==null: #Barrera mia
+				return false
+			else: #Otros jugadores
+				return true
+	return false

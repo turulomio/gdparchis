@@ -40,8 +40,7 @@ func end_position():
 func is_there_barrier(from_position,to_position):
 	for square_position in range(from_position+1,to_position+1):#First doesn't count
 		var square = self.square_at(square_position)
-		print("Route.is_there_barrier",square_position,self.square_at(square_position),square.has_barrier())
-		if square.has_barrier():
+		if square.has_barrier()==true:
 			return true
 	return false
 	
