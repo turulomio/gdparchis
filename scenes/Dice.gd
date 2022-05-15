@@ -102,14 +102,19 @@ func on_clicked():
 	self.launch()
 	yield(self, "dice_got_value")
 	
-	if self.player.dice_throws_has_three_sixes() and self.player.last_piece_moved!=null:
-		if self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:
+	var lpm=self.player.last_piece_moved
+	
+	if self.player.dice_throws_has_three_sixes() and lpm!=null:
+		if self.player.route.is_ramp(lpm.route_position)==true:
+			self.player.game.players.change_current_player()
+			return
+		elif lpm.can_move_to_route_position(lpm.route_position+lpm.squares_to_move())==false:
+			self.player.game.players.change_current_player()
+			return
+		elif self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:
 			$ThreeSix.play()		
 			self.player.last_piece_moved.move_to_route_position(0,20)
 			yield(self.player.last_piece_moved,"piece_moved")
-			self.player.game.players.change_current_player()
-			return
-		else: #If it'snos in ramp
 			self.player.game.players.change_current_player()
 			return
 		
