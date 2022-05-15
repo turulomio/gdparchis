@@ -81,7 +81,7 @@ func can_move_to_route_position(_route_position):
 	var square_final=self.route.square_at(_route_position)
 	
 	##DEbe sacar si es un 5
-	if self.must_move_to_first_square()==false and self.player.can_some_piece_move_to_first_square()==true:
+	if self.route.square_at(1).has_barrier_of_this_player(self.player)==false and  self.must_move_to_first_square()==false and self.player.can_some_piece_move_to_first_square()==true:
 		print("Piece.can_move_to_route_position can_move_to_first becouse other can")
 		return false
 	

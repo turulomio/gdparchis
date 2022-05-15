@@ -97,6 +97,11 @@ func has_barrier():
 		print("Square.has_barrier",self.pieces_count(),self.pieces[0].player,self.pieces[1].player,self)
 		return true
 	return false
+	
+func has_barrier_of_this_player(_player):
+	if self.has_barrier() and self.pieces[0].player==_player and self.pieces[1].player==_player:
+		return true
+	return false
 
 ## Devuelve -1 si no encuentra sitio libre o la posicion
 func empty_position():

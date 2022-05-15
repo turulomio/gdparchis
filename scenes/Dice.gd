@@ -41,7 +41,7 @@ func launch():
 	var y = rand_range(-10,10)
 	var z = rand_range(-10,10)
 	print(x,y,z)
-	self.transform.rotated(Vector3(1,1,1), rand_range(0,2*PI))
+	self.transform.rotated(Vector3(1,1,1).normalized(), rand_range(0,2*PI))
 	self.set_axis_velocity(Vector3(0,rand_range(0,10)/10,0))
 	set_angular_velocity(Vector3(x,y,z))
 	

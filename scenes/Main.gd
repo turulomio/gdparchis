@@ -11,6 +11,7 @@ func _on_Load_pressed():
 
 
 func _on_Players4_pressed():
+	Globals.game_data=null
 	get_tree().change_scene("res://scenes/Game4.tscn")
 
 
