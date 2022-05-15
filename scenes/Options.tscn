@@ -5,7 +5,9 @@
 [node name="Options" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -3.0
 margin_top = -2.0
+margin_right = -3.0
 margin_bottom = -2.0
 script = ExtResource( 1 )
 
@@ -25,24 +27,91 @@ current_file = "saves"
 current_path = "user://saves/saves"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 246.0
-margin_top = 174.0
-margin_right = 446.0
-margin_bottom = 424.0
+margin_left = 735.0
+margin_top = 265.0
+margin_right = 935.0
+margin_bottom = 515.0
 rect_scale = Vector2( 2.47677, 2.74072 )
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer"]
+[node name="FullScreen" type="CheckBox" parent="VBoxContainer"]
 margin_right = 200.0
 margin_bottom = 24.0
 text = "Full window mode"
 
-[node name="Return" type="Button" parent="VBoxContainer"]
+[node name="Sound" type="CheckBox" parent="VBoxContainer"]
 margin_top = 28.0
 margin_right = 200.0
-margin_bottom = 48.0
+margin_bottom = 52.0
+text = "Sound"
+
+[node name="AutomaticDice" type="CheckBox" parent="VBoxContainer"]
+margin_top = 56.0
+margin_right = 200.0
+margin_bottom = 80.0
+text = "Automatic dice"
+
+[node name="HBAutosaves" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 84.0
+margin_right = 200.0
+margin_bottom = 108.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBAutosaves"]
+margin_top = 5.0
+margin_right = 120.0
+margin_bottom = 19.0
+text = "Autosaves number"
+
+[node name="Autosaves" type="LineEdit" parent="VBoxContainer/HBAutosaves"]
+margin_left = 124.0
+margin_right = 182.0
+margin_bottom = 24.0
+text = "10"
+max_length = 3
+
+[node name="HBDifficulty" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 112.0
+margin_right = 200.0
+margin_bottom = 132.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBDifficulty"]
+margin_top = 3.0
+margin_right = 97.0
+margin_bottom = 17.0
+text = "Game difficulty"
+
+[node name="Difficulty" type="OptionButton" parent="VBoxContainer/HBDifficulty"]
+margin_left = 101.0
+margin_right = 130.0
+margin_bottom = 20.0
+
+[node name="HBLanguages" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 136.0
+margin_right = 200.0
+margin_bottom = 156.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBLanguages"]
+margin_top = 3.0
+margin_right = 59.0
+margin_bottom = 17.0
+text = "Language"
+
+[node name="Language" type="OptionButton" parent="VBoxContainer/HBLanguages"]
+margin_left = 63.0
+margin_right = 92.0
+margin_bottom = 20.0
+
+[node name="Return" type="Button" parent="VBoxContainer"]
+margin_top = 160.0
+margin_right = 200.0
+margin_bottom = 180.0
 rect_pivot_offset = Vector2( 79, 10 )
 text = "Return"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="toggled" from="VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="toggled" from="VBoxContainer/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="toggled" from="VBoxContainer/Sound" to="." method="_on_Sound_toggled"]
+[connection signal="toggled" from="VBoxContainer/AutomaticDice" to="." method="_on_AutomaticDice_toggled"]
+[connection signal="text_changed" from="VBoxContainer/HBAutosaves/Autosaves" to="." method="_on_Autosaves_text_changed"]
+[connection signal="item_selected" from="VBoxContainer/HBDifficulty/Difficulty" to="." method="_on_Difficulty_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/HBLanguages/Language" to="." method="_on_Language_item_selected"]
 [connection signal="pressed" from="VBoxContainer/Return" to="." method="_on_Return_pressed"]

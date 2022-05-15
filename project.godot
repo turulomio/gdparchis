@@ -83,6 +83,8 @@ _global_script_class_icons={
 config/name="Gdparchis"
 run/main_scene="res://scenes/Main.tscn"
 boot_splash/image="res://icon.png"
+config/icon="res://images/piece_red.png"
+config/windows_native_icon="res://images/piece_red.ico"
 
 [autoload]
 

@@ -2,8 +2,16 @@ extends Node
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
 enum eColors  {YELLOW, BLUE, RED, GREEN}
+enum eDifficulty {EASY,NORMAL,DIFFICULT}
+enum eLanguages {ENGLISH,SPANISH,FRENCH}
+const UUID_UTIL = preload('res://scenes/uuid.gd')
 
 var game_data=null #Dictionary to load and init games
+var settings
+
+func _init():
+	print("Singleton load")
+	load_settings()
 
 func e_colors(max_players):
 	if max_players==4:
@@ -36,16 +44,39 @@ func value_almost_zero(_value,precision=0.001):
 		return true
 	return false
 	
-	
 func save_game(game):
 	var dir= Directory.new()
 	if dir.dir_exists("user://saves/")==false:
 		dir.make_dir("user://saves/")
 		
+	#Removes innecesary autosaves
+	var files=[]
+	dir.open("user://saves/")
+	dir.list_dir_begin()
+	while true:
+		var file=dir.get_next()
+		if file=="":
+			break
+		else:
+			if "save" in file:
+				files.append(file)
+
+	dir.list_dir_end()
+	files.sort()
+	var to_remove=files.slice(0,files.size()-Globals.settings.autosaves)
+	for f in to_remove:
+		dir.remove("user://saves/"+f)
+		
+	
+	
+	
+	
+	#Create new autosave
+		
 		
 	
 	var d=OS.get_datetime()
-	filename="%d%s%s %s%s%s players4.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second]
+	filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
 	var file=File.new()
 	file.open("user://saves/" + filename, File.WRITE)
 	var dict={}	
@@ -66,9 +97,6 @@ func save_game(game):
 			dict_piece["route_position"]=piece.route_position
 			dict_piece["square_position"]=piece.square_position
 			dict_p["pieces"].append(dict_piece)
-	
-	
-	
 	file.store_line(to_json(dict))
 	file.close()
 	
@@ -100,6 +128,44 @@ func load_game(filename):
 	file.close()
 	return data
 	
+	
+func save_settings():
+	var file= File.new()
+	file.open("user://gdparchis.cfg" + filename, File.WRITE)
+	file.store_line(to_json(settings))
+	file.close()
+	print("Settings saved: ", settings)
+	
+func load_settings():
+	var file_save=File.new()
+	var file_load=File.new()
+	if file_save.file_exists("user://gdparchis.cfg")==false:
+		settings={}
+		settings["full_screen"]=false
+		settings["installation_uuid"]=generate_uuid()
+		settings["automatic_dice"]=false
+		settings["last_internet_update"]=null
+		settings["autosaves"]=10
+		settings["difficulty"]=eDifficulty.NORMAL
+		settings["language"]=eLanguages.ENGLISH
+		settings["sound"]=true
+		settings["statistics"]=true
+		save_settings()
+	else:
+		file_load.open("user://gdparchis.cfg", File.READ)
+		settings=parse_json(file_load.get_line())
+	file_load.close()
+	file_save.close()
+	
+	print("Settings loaded: ", settings)
+	OS.window_fullscreen = settings["full_screen"]
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"),not settings["sound"])
+
+
+
+func generate_uuid():
+	return UUID_UTIL.v4()
+
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():
