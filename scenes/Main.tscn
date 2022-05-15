@@ -102,6 +102,7 @@ expand = true
 [node name="Label" type="Label" parent="."]
 margin_right = 1925.0
 margin_bottom = 250.0
+custom_colors/font_color = Color( 0.145098, 0.133333, 0.133333, 1 )
 custom_fonts/font = ExtResource( 4 )
 text = "gdParchis"
 align = 1
