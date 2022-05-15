@@ -8,15 +8,15 @@ func _ready():
 	$VBoxContainer/AutomaticDice.pressed=Globals.settings["automatic_dice"]
 	$VBoxContainer/HBAutosaves/Autosaves.text=str(Globals.settings["autosaves"])
 	
-	
 	$VBoxContainer/HBDifficulty/Difficulty.add_item("Easy",Globals.eDifficulty.EASY)
 	$VBoxContainer/HBDifficulty/Difficulty.add_item("Normal",Globals.eDifficulty.NORMAL)
 	$VBoxContainer/HBDifficulty/Difficulty.add_item("Difficult",Globals.eDifficulty.DIFFICULT)
 	$VBoxContainer/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
 	
+	#Must have the same order than enumLanguage
 	$VBoxContainer/HBLanguages/Language.add_item("English", Globals.eLanguages.ENGLISH)
-	$VBoxContainer/HBLanguages/Language.add_item("French", Globals.eLanguages.FRENCH)
 	$VBoxContainer/HBLanguages/Language.add_item("Spanish", Globals.eLanguages.SPANISH)
+	$VBoxContainer/HBLanguages/Language.add_item("French", Globals.eLanguages.FRENCH)
 	$VBoxContainer/HBLanguages/Language.select(int(Globals.settings["language"]))
 	
 
@@ -42,6 +42,7 @@ func _on_Difficulty_item_selected(index):
 
 func _on_Language_item_selected(index):
 	Globals.settings["language"]=index
+	Globals.change_language(Globals.settings["language"])
 
 
 func _on_Sound_toggled(button_pressed):

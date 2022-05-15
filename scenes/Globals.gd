@@ -160,7 +160,15 @@ func load_settings():
 	print("Settings loaded: ", settings)
 	OS.window_fullscreen = settings["full_screen"]
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"),not settings["sound"])
+	change_language(settings["language"])
 
+func change_language(e_language):
+	if e_language==eLanguages.SPANISH:
+		TranslationServer.set_locale("es")
+	elif e_language==eLanguages.FRENCH:
+		TranslationServer.set_locale("fr")
+	elif e_language==eLanguages.ENGLISH:
+		TranslationServer.set_locale("en")
 
 
 func generate_uuid():
