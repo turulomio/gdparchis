@@ -162,9 +162,6 @@ func has_eaten_after_move():
 	var s=self.square()
 	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.NORMAL and s.pieces[0].player!=s.pieces[1].player:
 		return true
-		
-	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.FIRST and s.pieces[0].player!=s.pieces[1].player and self.player.e_color==s.color:
-		return true
 	return false
 
 	

@@ -43,7 +43,7 @@ func _ready():
 	self.players.set_assistant($Assistant)
 	for p in self.players.values():
 		p.set_game(self)
-		var dice=dice_scene.instance()
+		var dice=Globals.SCENE_DICE.instance()
 		self.add_child(dice)
 		dice.set_id(p.id)
 		dice.set_player(p)
@@ -55,7 +55,6 @@ func _ready():
 		var route_pos=0
 		for s in route.arr:
 			while s.empty_position()>=0:
-				print(self.players.d)
 				var player=self.players.get(route.id)
 				var piece=Globals.SCENE_PIECE.instance()
 				piece.set_id(id,player,s.id,s.empty_position())
