@@ -180,7 +180,7 @@ func has_eaten_before_move():
 	var square_final=self.route.square_at(self.route_position+self.squares_to_move())#After move
 
 	if square_final.pieces_count()==2 and self.player.dice.value==5 and square_initial.type==Globals.eSquareTypes.START:
-		var ordered= square_final.piece_different_to_me_ordered(self.player)
+		var ordered= square_final.pieces_different_to_me_ordered(self.player)
 		if ordered!=null:
 			return ordered[0]
 	return null
@@ -211,7 +211,7 @@ func on_clicked():
 		if has_eaten_before==false and self.has_eaten_after_move():#Si come antes no come después
 			has_eaten_after=true
 			$Eat.play()
-			var piece_eaten=self.square().piece_different_to_me_ordered(self.player)[0]
+			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
 			piece_eaten.move_to_route_position(0, 20)
 			yield(piece_eaten,"piece_moved")
 			
@@ -258,7 +258,7 @@ func must_move_to_first_square():
 		if square_first.pieces_count()<2:
 			return true
 		else:#2 de size
-			var ordered= square_first.piece_different_to_me_ordered(self)
+			var ordered= square_first.pieces_different_to_me_ordered(self)
 			if ordered==null: #Barrera mia
 				return false
 			else: #Otros jugadores

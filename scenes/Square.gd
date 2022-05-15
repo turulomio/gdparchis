@@ -112,7 +112,7 @@ func empty_position():
 	
 ## Muestra las casillas diferentes a mi player.
 ## Pone primero [0] la ultime en llegar
-func piece_different_to_me_ordered(_player):
+func pieces_different_to_me_ordered(_player):
 	var pieces_different=[]
 	for p in self.pieces:
 		if p!=null and p.player!=_player:
