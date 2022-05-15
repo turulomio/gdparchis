@@ -58,7 +58,7 @@ func save_game(game):
 		if file=="":
 			break
 		else:
-			if "save" in file:
+			if "autosave" in file:
 				files.append(file)
 
 	dir.list_dir_end()
@@ -67,14 +67,7 @@ func save_game(game):
 	for f in to_remove:
 		dir.remove("user://saves/"+f)
 		
-	
-	
-	
-	
 	#Create new autosave
-		
-		
-	
 	var d=OS.get_datetime()
 	filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
 	var file=File.new()

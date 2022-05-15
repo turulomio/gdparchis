@@ -71,8 +71,11 @@ func _ready():
 			piece.move_to_route_position(d_piece["route_position"],20)	
 
 	# Start game
-	self.players.current=self.players.get(3)
-	self.players.change_current_player()
+	self.players.current=self.players.get(str(d["current"]))
+	$Assistant.set_color(Globals.colorn(self.players.current.id))
+	self.players.current.can_move_pieces=false
+	self.players.current.dice_throws=[]
+	self.players.current.dice.prepare_to_launch()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):	

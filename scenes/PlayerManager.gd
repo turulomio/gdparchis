@@ -14,7 +14,6 @@ func set_assistant(_assistant):
 	self.assistant=_assistant
 
 func change_current_player():
-	Globals.save_game(self.current.game)
 	if self.current==null:
 		self.current= self.d["0"]
 	elif self.current==self.d["0"]:
@@ -29,4 +28,5 @@ func change_current_player():
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
 	self.current.dice.prepare_to_launch()
+	Globals.save_game(self.current.game)
 	
