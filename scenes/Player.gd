@@ -65,7 +65,7 @@ func dice_throws_has_three_sixes():
 	return false
 	
 func can_move_other_piece():
-	if self.extra_moves.size()>0:
+	if self.extra_moves.size()>0 and self.can_some_piece_move():
 		return true
 	return false
 	

@@ -94,7 +94,6 @@ func has_barrier():
 	if self.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.END]:
 		return false
 	if self.pieces_count()==2 and self.pieces[0].player==self.pieces[1].player:
-		print("Square.has_barrier",self.pieces_count(),self.pieces[0].player,self.pieces[1].player,self)
 		return true
 	return false
 	
