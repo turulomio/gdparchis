@@ -85,7 +85,7 @@ func can_move_to_route_position(_route_position):
 		print("Piece.can_move_to_route_position can_move_to_first becouse other can")
 		return false
 	
-	
+	#Solo sale con un 5
 	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
 		print("Piece.can_move_to_route_position Solo sale con un 5")
 		return false
@@ -98,8 +98,7 @@ func can_move_to_route_position(_route_position):
 		return false
 		
 	# Check if there is a barrier and must open with a six
-	if self.player.last_throw()==6 and self.player.some_piece_is_in_barrier() and self.square().has_barrier()==false:
-		
+	if self.player.last_throw()==6 and self.player.some_piece_is_in_barrier_of_my_player()==true and self.am_i_in_a_barrier_of_my_player()==false:
 		print("Piece.can_move_to_route_position debe abrir barrera por 6 ")
 		return false
 		
@@ -164,6 +163,13 @@ func has_eaten_after_move():
 		return true
 	return false
 
+	
+func am_i_in_a_barrier_of_my_player():
+	var s=self.square()
+	if s.has_barrier()==true:
+		if s.pieces[0].player==self.player and s.pieces[1].player==self.player:
+			return true
+	return false
 	
 ## Returns true if before move has eaten
 ## Para comer a veces se necesita comer antes del movimiento

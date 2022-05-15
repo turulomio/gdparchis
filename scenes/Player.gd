@@ -106,3 +106,9 @@ func can_some_piece_move_to_first_square():
 			return true
 	return false
 	
+
+func some_piece_is_in_barrier_of_my_player():
+	for p in self.pieces:
+		if p.am_i_in_a_barrier_of_my_player()==true:
+			return true
+	return false
