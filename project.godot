@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Game4Start",
 "language": "GDScript",
-"path": "res://scenes/Game4Start.gd"
+"path": "res://scenes/GameDiceStart.gd"
 }, {
 "base": "Reference",
 "class": "ListManager",

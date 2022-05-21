@@ -9,6 +9,7 @@ const UUID_UTIL = preload('res://scenes/uuid.gd')
 const IMAGE_WOOD = preload("res://images/wood.png")
 
 const SCENE_PIECE=preload("res://scenes/Piece.tscn")
+const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 const SCENE_DICE=preload("res://scenes/Dice.tscn")
 
 var game_data=null #Dictionary to load and init games
@@ -87,6 +88,7 @@ func save_game(game):
 		dict_p["id"]=p.id
 		dict_p["name"]=p.name
 		dict_p["plays"]=p.plays
+		dict_p["ia"]=p.ia
 		dict["players"].append(dict_p)
 		dict_p["pieces"]=[]
 		for piece in p.pieces:
@@ -109,6 +111,10 @@ func new_game(max_players):
 		dict_p["id"]=player_id
 		dict_p["name"]=color_name(player_id)
 		dict_p["plays"]=true
+		if player_id==0:
+			dict_p["ia"]=false
+		else:
+			dict_p["ia"]=true
 		dict["players"].append(dict_p)
 		dict_p["pieces"]=[]
 		for i in range(4):

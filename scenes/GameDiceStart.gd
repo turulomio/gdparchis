@@ -24,29 +24,16 @@ func _ready():
 	new_material.albedo_color = ColorN("white",1)
 	$Board4/MeshInstance.material_override=new_material
 	
-	if Globals.game_data==null: #New game
-		Globals.game_data=Globals.new_game(4)
-	
 	var d=Globals.game_data
-	print("DATA", d)
+	print("GAMEDicestart", d)
 	
 	## Creating players
-	self.max_players=4
+	self.max_players=d.max_players
 	
-	## Creating squares
-	self.squares=SquareManager.new()
-	for i in range(1,105):
-		self.squares.append(Square.new(i))
-
-	## Creating routes
-	self.routes={}
-	for e_color in Globals.e_colors(self.max_players):
-		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
 
 	self.players=PlayerManager.new(self.max_players)
 	for d_player in d["players"]:
 		var player=Player.new(d_player["id"],d_player["plays"])
-		player.set_route(self.routes[str(player.id)])
 		self.players.append(player)
 		
 	for p in self.players.values():
@@ -72,6 +59,11 @@ func _process(_delta):
 				object.on_clicked()
 			else:
 				$Click.play()
+				
+	
+	if Input.is_action_just_pressed("right_click"):
+		get_tree().change_scene("res://scenes/Game4.tscn")
+		
 
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene("res://scenes/Main.tscn")

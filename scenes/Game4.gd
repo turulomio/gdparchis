@@ -18,9 +18,8 @@ func get_object_under_mouse():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	if Globals.game_data==null: #New game
-		Globals.game_data=Globals.new_game(4)
 	
+	## Came from playersselection or load_directly
 	var d=Globals.game_data
 	print("DATA", d)
 	
