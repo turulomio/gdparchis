@@ -28,6 +28,8 @@ func change_current_player():
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
 	self.current.dice.prepare_to_launch()
+	if self.current.ia==true:
+		self.current.dice.on_clicked()
 	self.current.extra_moves=[]
 	Globals.save_game(self.current.game)
 	

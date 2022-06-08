@@ -114,3 +114,10 @@ func some_piece_is_in_barrier_of_my_player():
 		if p.am_i_in_a_barrier_of_my_player()==true:
 			return true
 	return false
+
+
+func ia_selects_piece_to_move():
+	for p in self.pieces:
+		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
+			return p
+	print("IA COUDN?T FIND A PIECE TO MOVE")

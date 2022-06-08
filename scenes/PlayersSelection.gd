@@ -29,7 +29,13 @@ func _on_Button_pressed():
 		Globals.game_data.players[i].name=child.get_player_name()
 		Globals.game_data.players[i].plays=child.get_plays()
 		Globals.game_data.players[i].ia=child.get_ia()
+		
 	print("AHORA")
 	print(Globals.game_data)
 		
 	get_tree().change_scene("res://scenes/GameDiceStart.tscn")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):	
+	if Input.is_action_just_pressed("exit"):
+		get_tree().change_scene("res://scenes/Main.tscn")
