@@ -6,49 +6,35 @@ signal piece_moved
 var floating_text=preload("res://scenes/FloatingText.tscn")
 var vel : Vector3 = Vector3(0,-30,0)
 
-var animation_to=null
-var animation_step=0
 var id : int =1000
 var player: Player
 var route: Route
 var route_position: int 
 var square_position: int
 
-var animation_num_steps=10
-var animation_max_y=10
+#animation movement
+var animation_positions=null #Will be an array of positions
+var animation_step=0
 
-
+#Animation waiting click
 var animation_waiting_grades=0
-var minor_fps=1000
 
 func _physics_process(_delta): 
-	var fps=1/_delta
-	if minor_fps>fps:
-		minor_fps=fps
-	
-	if animation_to!=null:
-		var current=self.global_transform.origin
-		var new_pos
-		if self.animation_num_steps==0:
-			new_pos=self.animation_to
-		else:
-			#Sets step
-			new_pos=(self.animation_to-current)*self.animation_step/self.animation_num_steps +current
-			#Sets y with sin function
-			new_pos.y=self.animation_to.y+self.animation_max_y*sin(deg2rad(180*self.animation_step/self.animation_num_steps))
+	if self.animation_positions!=null: ## Positions are defined
+		self.global_transform.origin=self.animation_positions[self.animation_step]
 		self.animation_step=self.animation_step+1
-		self.global_transform.origin=new_pos
-		if self.animation_step==self.animation_num_steps:
-			self.global_transform.origin=self.animation_to
-			self.animation_step=0
+		if self.animation_step==len(self.animation_positions):
+			self.animation_positions=null
 			self.player.can_move_pieces=false
+			self.animation_waiting_grades_reset()
 			emit_signal("piece_moved")
-			self.animation_to=null
-			print("Minor fps ", minor_fps)
-	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true:
+			
+	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true and self.animation_positions==null:
+		## Waiting click animation
 		self.animation_waiting_grades=self.animation_waiting_grades+5
 		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
-	elif self.animation_waiting_grades==0:
+
+	else:
 		return move_and_slide(vel,Vector3.UP)
 
 		
@@ -120,8 +106,6 @@ func can_move_to_route_position(_route_position):
 		
 ## Before this method always have to check if piece can move
 func move_to_route_position(_route_position, _animation_num_steps=0):
-	self.animation_waiting_grades=0
-	self.animation_num_steps=_animation_num_steps
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	
@@ -133,8 +117,8 @@ func move_to_route_position(_route_position, _animation_num_steps=0):
 	
 	self.route_position=_route_position
 	
-	self.animation_to=Globals.position4(square_final.id,new_square_position)
-	self.animation_step=0
+	self.animation_movement(Globals.position4(square_final.id,new_square_position),_animation_num_steps)
+	
 	self.change_scale_on_specials_squares()
 	
 #Para casillas estrechas
@@ -193,7 +177,6 @@ func on_clicked():
 		
 
 		var eaten_before=self.has_eaten_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
-		print("Eaten_before",eaten_before)
 		if eaten_before!=null:
 			has_eaten_before=true
 			$Eat.play()
@@ -273,3 +256,19 @@ func must_move_to_first_square():
 			else: #Otros jugadores
 				return true
 	return false
+
+func animation_waiting_grades_reset() -> void:
+	for p in self.player.pieces:
+		p.animation_waiting_grades=0
+		
+## Generate a list of animation movement positions
+func animation_movement(animation_to : Vector3, steps=10) -> void:
+	self.animation_step=0
+	var animation_max_y=5
+	self.animation_positions=[]
+	#Piece movement animation
+	for i in range(steps):
+		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
+		new_pos.y=animation_to.y+animation_max_y*sin(deg2rad(180*(i+1)/steps))
+		self.animation_positions.append(new_pos)
+	

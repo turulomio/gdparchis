@@ -67,7 +67,6 @@ func _ready():
 			
 ## Before this method always have to check if piece can move
 func game4objects_move_to_route_position(piece,_route_position, _animation_num_steps=60):
-	piece.animation_waiting_grades=0
 	piece.animation_num_steps=_animation_num_steps
 	var square_final=piece.route.square_at(_route_position)
 	
@@ -77,8 +76,8 @@ func game4objects_move_to_route_position(piece,_route_position, _animation_num_s
 	
 	piece.route_position=_route_position
 	
-	piece.animation_to=Globals.position4(square_final.id,new_square_position)
-	piece.animation_step=0
+	piece.animation_movement(Globals.position4(square_final.id,new_square_position))
+	
 	piece.change_scale_on_specials_squares()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -87,7 +86,6 @@ func _process(_delta):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
 			object.global_transform.origin.y=20
-			print(object.id)
 		if object.filename=="res://scenes/Dice.tscn":
 			object.launch()
 

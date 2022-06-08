@@ -189,10 +189,9 @@ func generate_uuid():
 #	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
-#	print(selection)
 #	return selection.collider
 func position4(square_id, square_position):
-	var h=1.2
+	var h=1.1105
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.2), Vector3(-7.8,h,-30.2)][square_position]

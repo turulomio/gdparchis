@@ -120,4 +120,4 @@ func ia_selects_piece_to_move():
 	for p in self.pieces:
 		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
 			return p
-	print("IA COUDN?T FIND A PIECE TO MOVE")
+	print("IA COUDN'T FIND A PIECE TO MOVE")

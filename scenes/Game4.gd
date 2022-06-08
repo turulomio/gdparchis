@@ -21,7 +21,6 @@ func _ready():
 	
 	## Came from playersselection or load_directly
 	var d=Globals.game_data
-	print("DATA", d)
 	
 	## Creating players
 	self.max_players=4
@@ -78,12 +77,7 @@ func _ready():
 		self.players.current.dice.on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):	
-	if Input.is_action_just_pressed("right_click"):
-		var object=get_object_under_mouse()
-		if object.filename=="res://scenes/Piece.tscn":
-			object.global_transform.origin.y=20
-			print(object.id)
+func _process(_delta):
 	if Input.is_action_just_pressed("left_click"):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
