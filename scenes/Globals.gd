@@ -21,8 +21,6 @@ var vector2_center=Vector2(window_width/2,window_height/2)
 func _init():
 	print("Singleton load")
 	load_settings()
-	print(window_width,window_height)
-	print(vector2_center)
 
 func e_colors(max_players):
 	if max_players==4:

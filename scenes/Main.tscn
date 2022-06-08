@@ -121,7 +121,6 @@ margin_bottom = 220.0
 rect_pivot_offset = Vector2( 79, 10 )
 text = "Exit"
 
-[connection signal="gui_input" from="." to="." method="_on_Main_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4All" to="." method="_on_Players4All_pressed"]
