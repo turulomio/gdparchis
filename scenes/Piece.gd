@@ -3,6 +3,7 @@ class_name Piece
 
 
 signal piece_moved
+var floating_text=preload("res://scenes/FloatingText.tscn")
 var vel : Vector3 = Vector3(0,-30,0)
 
 var animation_to=null
@@ -225,7 +226,11 @@ func on_clicked():
 		## After move
 		if self.player.has_won():
 			$Won.play()
+			var text=floating_text.instance()
+			text.text="Player %s starts" % self.player.name
+			self.add_child(text)
 			yield($Won,"finished")
+			yield(text,"text_disappear")
 			get_tree().change_scene("res://scenes/Main.tscn")
 			return
 			

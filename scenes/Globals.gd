@@ -14,10 +14,15 @@ const SCENE_DICE=preload("res://scenes/Dice.tscn")
 
 var game_data=null #Dictionary to load and init games
 var settings
+var	window_width=OS.get_screen_size().x
+var window_height=OS.get_screen_size().y
+var vector2_center=Vector2(window_width/2,window_height/2)
 
 func _init():
 	print("Singleton load")
 	load_settings()
+	print(window_width,window_height)
+	print(vector2_center)
 
 func e_colors(max_players):
 	if max_players==4:

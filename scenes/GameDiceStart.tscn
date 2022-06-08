@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Board4.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/GameDiceStart.gd" type="Script" id=2]
+[ext_resource path="res://scenes/FloatingText.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sounds/click.wav" type="AudioStream" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -26,3 +27,5 @@ physics_material_override = SubResource( 1 )
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0 )
 shadow_enabled = true
+
+[node name="FloatingText" parent="." instance=ExtResource( 3 )]

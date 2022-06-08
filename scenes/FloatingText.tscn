@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://themes/new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/FloatingText.gd" type="Script" id=2]
+
+[node name="FloatingText" type="Position2D"]
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -50.0
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 800, 100 )
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 0.945098, 0.486275, 0.427451, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "My text"
+align = 1
+valign = 1
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
