@@ -197,11 +197,11 @@ func on_clicked():
 		if eaten_before!=null:
 			has_eaten_before=true
 			$Eat.play()
-			eaten_before.move_to_route_position(0, 20)
+			eaten_before.move_to_route_position(0, 40)
 			yield(eaten_before,"piece_moved")
 		
 		
-		self.move_to_route_position(self.route_position+self.squares_to_move(), 20)
+		self.move_to_route_position(self.route_position+self.squares_to_move(), 40)
 		yield(self,"piece_moved")
 		
 		
@@ -213,7 +213,7 @@ func on_clicked():
 			has_eaten_after=true
 			$Eat.play()
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
-			piece_eaten.move_to_route_position(0, 20)
+			piece_eaten.move_to_route_position(0, 40)
 			yield(piece_eaten,"piece_moved")
 			
 		#Muest be after move

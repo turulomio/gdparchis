@@ -66,7 +66,7 @@ func _ready():
 				square_position=square_position+1
 
 				player.append_piece(piece) #Link piece to player bidirectional	
-				piece.move_to_route_position(d_piece["route_position"],20)	
+				piece.move_to_route_position(d_piece["route_position"],40)	
 
 	# Start game
 	self.players.current=self.players.get(str(d["current"]))
