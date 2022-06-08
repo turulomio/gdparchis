@@ -6,14 +6,14 @@
 [node name="PlayerOptions" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -1420.0
+margin_right = -1208.0
 margin_bottom = -952.0
 rect_min_size = Vector2( 500, 128 )
 script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
 margin_right = 128.0
@@ -24,9 +24,12 @@ stretch_mode = 1
 
 [node name="Name" type="TextEdit" parent="HBoxContainer"]
 margin_left = 132.0
+margin_top = 44.0
 margin_right = 332.0
-margin_bottom = 128.0
+margin_bottom = 84.0
 rect_min_size = Vector2( 200, 40 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Plays" type="CheckBox" parent="HBoxContainer"]
 margin_left = 336.0

@@ -19,6 +19,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7311, 5, -25.4102 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 47, 0 )
 doppler_tracking = 2
+far = 1000.0
 __meta__ = {
 "_edit_lock_": true
 }

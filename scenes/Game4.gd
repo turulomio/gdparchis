@@ -11,9 +11,10 @@ var routes
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
 	var ray_from=$Camera.project_ray_origin(mouse_pos)
-	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
+	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*2000
 	var space_state=get_world().direct_space_state
 	var selection=space_state.intersect_ray(ray_from,ray_to)
+	print(selection)
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
@@ -94,10 +95,14 @@ func _process(_delta):
 			self.players.change_current_player()
 
 		
-	if Input.is_action_just_pressed("zoom_in"):
-		camera.global_transform.origin.y=camera.global_transform.origin.y-20
-	if Input.is_action_just_pressed("zoom_out"):
-		camera.global_transform.origin.y=camera.global_transform.origin.y+20
+	if Input.is_action_just_pressed("orto_view"):
+		$Camera.look_at_from_position(Vector3(0,60,3),Vector3(0,3,0),Vector3.UP)
+	if Input.is_action_just_pressed("blue_view"):
+		$Camera.look_at_from_position(Vector3(-30,30,30),Vector3(0,3,0),Vector3.UP)
+	if Input.is_action_pressed("zoom_in"):
+		camera.global_transform.origin.y=camera.global_transform.origin.y-1
+	if Input.is_action_pressed("zoom_out"):
+		camera.global_transform.origin.y=camera.global_transform.origin.y+1
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):

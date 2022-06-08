@@ -66,8 +66,7 @@ func _ready():
 			route_pos=route_pos+1
 			
 ## Before this method always have to check if piece can move
-func game4objects_move_to_route_position(piece,_route_position, _animation_num_steps=60):
-	piece.animation_num_steps=_animation_num_steps
+func game4objects_move_to_route_position(piece,_route_position, _animation_num_steps=30):
 	var square_final=piece.route.square_at(_route_position)
 	
 	var new_square_position=square_final.empty_position()
@@ -76,7 +75,7 @@ func game4objects_move_to_route_position(piece,_route_position, _animation_num_s
 	
 	piece.route_position=_route_position
 	
-	piece.animation_movement(Globals.position4(square_final.id,new_square_position))
+	piece.animation_movement(Globals.position4(square_final.id,new_square_position),_animation_num_steps)
 	
 	piece.change_scale_on_specials_squares()
 

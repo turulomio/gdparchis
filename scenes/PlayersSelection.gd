@@ -14,7 +14,7 @@ func _ready():
 		po.set_player_name(p.name)
 		po.set_plays(p.plays)
 		po.set_ia(p.ia)
-		$VBoxContainer.add_child(po)
+		$VBoxContainerMain/VBoxContainer.add_child(po)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,8 +23,8 @@ func _ready():
 
 
 func _on_Button_pressed():
-	for i in range($VBoxContainer.get_child_count()):
-		var child=$VBoxContainer.get_child(i)
+	for i in range($VBoxContainerMain/VBoxContainer.get_child_count()):
+		var child=$VBoxContainerMain/VBoxContainer.get_child(i)
 		Globals.game_data.players[i].name=child.get_player_name()
 		Globals.game_data.players[i].plays=child.get_plays()
 		Globals.game_data.players[i].ia=child.get_ia()

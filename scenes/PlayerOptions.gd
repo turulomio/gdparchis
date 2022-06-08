@@ -10,7 +10,7 @@ func get_color_name():
 
 func set_color_name(s):	
 	self.color_name=s
-	$HBoxContainer/Icon.modulate.b=255
+	$HBoxContainer/Icon.modulate=ColorN(s)
 
 func get_player_name():
 	return self.player_name
