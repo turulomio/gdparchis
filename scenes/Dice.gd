@@ -55,7 +55,7 @@ func _physics_process(_delta):
 		
 	elif self.player.is_current() and self.player.can_move_dice== true:
 		self.animation_waiting_grades=self.animation_waiting_grades+5
-		self.global_transform.origin.y=2+sin(deg2rad(self.animation_waiting_grades))/2
+		self.global_transform.origin.y=2.5+sin(deg2rad(self.animation_waiting_grades))/2
 		
 	elif self.animation_waiting_grades==0:
 		if $RC1.is_colliding():

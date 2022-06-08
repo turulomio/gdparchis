@@ -22,5 +22,5 @@ skeleton = NodePath("")
 material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 65, 0, 0, 0, 1, 0, 0, 0, 65, 0, 0, 0 )
+transform = Transform( 32.5, 0, 0, 0, 0.1, 0, 0, 0, 32.5, 0, 0, 0 )
 shape = SubResource( 2 )

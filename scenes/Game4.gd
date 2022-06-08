@@ -1,7 +1,7 @@
 extends Spatial
 class_name Game4
 
-onready var camera =$Camera
+onready var camera = $Camera
 var players
 var pieces 
 var max_players
@@ -10,11 +10,14 @@ var routes
 
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
-	var ray_from=$Camera.project_ray_origin(mouse_pos)
-	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*2000
+	var ray_from=camera.project_ray_origin(mouse_pos)
+	var ray_to= ray_from + camera.project_ray_normal(mouse_pos)*100
 	var space_state=get_world().direct_space_state
+	print(space_state)
 	var selection=space_state.intersect_ray(ray_from,ray_to)
-	print(selection)
+	print(camera,selection)
+	if len(selection)==0:
+		return null
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
@@ -55,19 +58,20 @@ func _ready():
 
 	# Create players pieces
 	for d_player in d["players"]:
-		var player=self.players.get(d_player["id"])
 		var square_position=0
-		if player.plays:
+		var player=self.players.get(d_player["id"])
+		if player.plays:  
+
 			for d_piece in d_player["pieces"]:
 				var route=self.routes[str(player.id)]
 				var piece=Globals.SCENE_PIECE.instance()
 				self.add_child(piece)
 				piece.set_id(d_piece["id"],player,route.end_position(),square_position)
 				square_position=square_position+1
-
-				player.append_piece(piece) #Link piece to player bidirectional	
-				piece.move_to_route_position(d_piece["route_position"],40)	
-
+				player.append_piece(piece) #Link piece to player bidirectional
+				piece.move_to_route_position(d_piece["route_position"],8) 
+				yield(piece,"piece_moved")
+				
 	# Start game
 	self.players.current=self.players.get(str(d["current"]))
 	$Assistant.set_color(Globals.colorn(self.players.current.id))
@@ -81,6 +85,8 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("left_click"):
 		var object=get_object_under_mouse()
+		if object == null:
+			return
 		if object.filename=="res://scenes/Piece.tscn":
 			if object.player==self.players.current and object.player.can_move_pieces:
 				object.on_clicked()
@@ -96,9 +102,9 @@ func _process(_delta):
 
 		
 	if Input.is_action_just_pressed("orto_view"):
-		$Camera.look_at_from_position(Vector3(0,60,3),Vector3(0,3,0),Vector3.UP)
+		camera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.1),Vector3.UP)
 	if Input.is_action_just_pressed("blue_view"):
-		$Camera.look_at_from_position(Vector3(-30,30,30),Vector3(0,3,0),Vector3.UP)
+		camera.look_at_from_position(Vector3(-30,30,30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_pressed("zoom_in"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y-1
 	if Input.is_action_pressed("zoom_out"):
