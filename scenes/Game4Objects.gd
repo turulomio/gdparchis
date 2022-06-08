@@ -37,7 +37,7 @@ func _ready():
 	
 	self.players=PlayerManager.new(self.max_players)
 	for i in range(self.max_players):
-		var player=Player.new(i,true)
+		var player=Player.new(i,true,true)
 		player.set_route(self.routes[str(player.id)])
 		self.players.append(player)
 	self.players.set_assistant($Assistant)

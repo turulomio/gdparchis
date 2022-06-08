@@ -38,10 +38,10 @@ func _ready():
 
 	self.players=PlayerManager.new(self.max_players)
 	for d_player in d["players"]:
-		var player=Player.new(d_player["id"],d_player["plays"])
+		var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
 		player.set_route(self.routes[str(player.id)])
 		self.players.append(player)
-	
+		
 	self.players.set_assistant($Assistant)
 	
 	for p in self.players.values():

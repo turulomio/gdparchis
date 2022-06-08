@@ -13,12 +13,14 @@ var dice_throws=[]
 var extra_moves=[]
 var last_piece_moved=null
 var plays=true
+var ia=false
 
 
-func _init(_id,_plays):
+func _init(_id,_plays,_ia):
 	self.id=_id
 	self.e_color=_id
 	self.plays=_plays
+	self.ia=_ia
 
 	match(self.id):
 		0:

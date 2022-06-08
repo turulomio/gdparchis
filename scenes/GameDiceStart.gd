@@ -1,40 +1,18 @@
 extends Spatial
 class_name Game4Start
 
-onready var camera =$Camera
 var players
-var pieces 
-var max_players
-var squares
-var routes
-
-func get_object_under_mouse():
-	var mouse_pos=get_viewport().get_mouse_position()
-	var ray_from=$Camera.project_ray_origin(mouse_pos)
-	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
-	var space_state=get_world().direct_space_state
-	var selection=space_state.intersect_ray(ray_from,ray_to)
-	return selection.collider
+var dice_higher=0
+var winers=[]
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	
-	var new_material = SpatialMaterial.new()
-	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = ColorN("white",1)
-	$Board4/MeshInstance.material_override=new_material
-	
-	var d=Globals.game_data
-	print("GAMEDicestart", d)
-	
+func _ready():	
 	## Creating players
-	self.max_players=d.max_players
-	
-
-	self.players=PlayerManager.new(self.max_players)
-	for d_player in d["players"]:
-		var player=Player.new(d_player["id"],d_player["plays"])
-		self.players.append(player)
+	self.players=PlayerManager.new(Globals.game_data.max_players)
+	for d_player in Globals.game_data["players"]:
+		if d_player["plays"]==true:
+			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
+			self.players.append(player)
 		
 	for p in self.players.values():
 		p.set_game(self)
@@ -44,26 +22,44 @@ func _ready():
 		dice.set_player(p)
 		p.set_dice(dice)
 
+	var is_winer=null
+	while is_winer==null:
+		self.winers=[] #Player index
+		self.dice_higher=0
+		for p in self.players.values():
+			if p.plays==false:
+				continue
+			p.can_move_pieces=false
+			p.dice_throws=[]
+			p.extra_moves=[]
+			p.dice.prepare_to_launch()
+			p.dice.launch()
+			yield(p.dice, "dice_got_value")
+			if p.dice.value>self.dice_higher:
+				self.dice_higher=p.dice.value	
+			
+		#Search winners
+		for p in self.players.values():
+			if p.dice.value==dice_higher:
+				self.winers.append(p)
+				
+		is_winer=self.is_there_a_winer()
+				
 
-	# Start game
-	self.players.current=self.players.get(str(d["current"]))
-	self.players.current.dice_throws=[]
-	self.players.current.dice.prepare_to_launch()
-
+## Returns null if there is no winner or a winer player object
+func is_there_a_winer():
+	if len(self.winers)==1:
+		Globals.game_data["current"]=self.winers[0].id
+		get_tree().change_scene("res://scenes/Game4.tscn")
+		return true
+	else:
+		for p in self.players.values():
+			if not p in self.winers: 
+				p.plays=false
+				self.remove_child(p.dice)
+		return null
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):	
-	if Input.is_action_just_pressed("left_click"):
-		var object=get_object_under_mouse()
-		if object.filename=="res://scenes/Dice.tscn":
-			if object.player==self.players.current and object.player.can_move_dice:
-				object.on_clicked()
-			else:
-				$Click.play()
-				
-	
-	if Input.is_action_just_pressed("right_click"):
-		get_tree().change_scene("res://scenes/Game4.tscn")
-		
-
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene("res://scenes/Main.tscn")
