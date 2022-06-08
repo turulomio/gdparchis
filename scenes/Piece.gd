@@ -29,7 +29,7 @@ func _physics_process(_delta):
 			self.animation_waiting_grades_reset()
 			emit_signal("piece_moved")
 			
-	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true and self.animation_positions==null:
+	elif self.player.game.filename!="res://scenes/Game4Objects" and self.player.game.players.current== self.player and self.player.can_move_pieces== true and self.animation_positions==null and self.route_position!=self.route.end_position():
 		## Waiting click animation
 		self.animation_waiting_grades=self.animation_waiting_grades+5
 		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2

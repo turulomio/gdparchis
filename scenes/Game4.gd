@@ -67,8 +67,10 @@ func _ready():
 				var piece=Globals.SCENE_PIECE.instance()
 				self.add_child(piece)
 				piece.set_id(d_piece["id"],player,route.end_position(),square_position)
-				square_position=square_position+1
 				player.append_piece(piece) #Link piece to player bidirectional
+				square_position=square_position+1
+				piece.move_to_route_position(route.end_position(),1) 
+				yield(piece,"piece_moved")
 				piece.move_to_route_position(d_piece["route_position"],8) 
 				yield(piece,"piece_moved")
 				
