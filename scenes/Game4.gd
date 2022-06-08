@@ -74,6 +74,8 @@ func _ready():
 	self.players.current.can_move_pieces=false
 	self.players.current.dice_throws=[]
 	self.players.current.dice.prepare_to_launch()
+	if self.players.current.ia==true:
+		self.players.current.dice.on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):	
