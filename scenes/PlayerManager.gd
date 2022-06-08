@@ -24,6 +24,10 @@ func change_current_player():
 		self.current = self.d["3"]
 	elif self.current==d["3"]:
 		self.current = self.d["0"]
+		
+	if self.current.plays==false:
+		self.change_current_player()
+		
 	self.assistant.set_color(Globals.colorn(self.current.id))
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]

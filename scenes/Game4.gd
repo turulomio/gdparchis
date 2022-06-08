@@ -46,25 +46,27 @@ func _ready():
 	
 	for p in self.players.values():
 		p.set_game(self)
-		var dice=Globals.SCENE_DICE.instance()
-		self.add_child(dice)
-		dice.set_id(p.id)
-		dice.set_player(p)
-		p.set_dice(dice)
+		if p.plays==true:
+			var dice=Globals.SCENE_DICE.instance()
+			self.add_child(dice)
+			dice.set_id(p.id)
+			dice.set_player(p)
+			p.set_dice(dice)
 
 	# Create players pieces
 	for d_player in d["players"]:
 		var player=self.players.get(d_player["id"])
 		var square_position=0
-		for d_piece in d_player["pieces"]:
-			var route=self.routes[str(player.id)]
-			var piece=Globals.SCENE_PIECE.instance()
-			self.add_child(piece)
-			piece.set_id(d_piece["id"],player,route.end_position(),square_position)
-			square_position=square_position+1
+		if player.plays:
+			for d_piece in d_player["pieces"]:
+				var route=self.routes[str(player.id)]
+				var piece=Globals.SCENE_PIECE.instance()
+				self.add_child(piece)
+				piece.set_id(d_piece["id"],player,route.end_position(),square_position)
+				square_position=square_position+1
 
-			player.append_piece(piece) #Link piece to player bidirectional	
-			piece.move_to_route_position(d_piece["route_position"],20)	
+				player.append_piece(piece) #Link piece to player bidirectional	
+				piece.move_to_route_position(d_piece["route_position"],20)	
 
 	# Start game
 	self.players.current=self.players.get(str(d["current"]))
