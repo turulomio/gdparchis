@@ -35,5 +35,6 @@ func change_current_player():
 	if self.current.ia==true:
 		self.current.dice.on_clicked()
 	self.current.extra_moves=[]
-	Globals.save_game(self.current.game)
+	if self.current.plays and not self.current.ia:
+		Globals.save_game(self.current.game)
 	
