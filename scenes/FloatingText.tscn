@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://themes/new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://themes/Freshman.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/FloatingText.gd" type="Script" id=2]
 
 [node name="FloatingText" type="Position2D"]
