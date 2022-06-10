@@ -37,8 +37,8 @@ mode = 0
 access = 1
 filters = PoolStringArray( "*.save" )
 current_dir = "user://saves"
-current_file = "20220610 101034 autosave 4.save"
-current_path = "user://saves/20220610 101034 autosave 4.save"
+current_file = "20220610 102602 autosave 4.save"
+current_path = "user://saves/20220610 102602 autosave 4.save"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 anchor_right = 1.0
