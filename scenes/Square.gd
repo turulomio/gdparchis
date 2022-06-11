@@ -125,7 +125,7 @@ func pieces_different_to_me_ordered(_player):
 			return pieces_different
 		else:
 			return [pieces_different[1],pieces_different[0]]
-	return pieces#Size 1
+	return pieces_different#Size 1
 	
 ## Para meter piezas se debe usar esto para que se controle la
 ## ultima ficha que entra
