@@ -2,12 +2,13 @@ class_name Dice
 extends RigidBody
 signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
+var floating_text=preload("res://scenes/FloatingText.tscn")
 var id: int
 var value=null
 var player
 var animation_waiting_grades=0
 var has_touch=false
-
+var historical=[] #List to store all throws to get statistics
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
@@ -30,18 +31,20 @@ func set_position(h):
 			
 			
 func launch():
+	$RelaunchTimer.start(5)
+	randomize()
 	self.animation_waiting_grades=0
 	self.player.can_move_dice=false
 	self.value=null
 	self.set_physics_process(true)
-	self.set_position(10)
-	randomize()
+	self.set_position(rand_range(5,15))
+	
 	
 	var x = rand_range(-10,10)
 	var y = rand_range(-10,10)
 	var z = rand_range(-10,10)
-	self.transform.rotated(Vector3(z,0,y).normalized(), rand_range(0, PI/2))
-	self.set_axis_velocity(Vector3(0, rand_range(0,3) ,0))
+	self.transform.rotated(Vector3(x,y,z).normalized(), rand_range(0, 2*PI))
+	self.set_linear_velocity(Vector3(rand_range(0,3), rand_range(0,3) ,rand_range(0,3)))
 	set_angular_velocity(Vector3(x,y,z))
 	
 
@@ -49,8 +52,11 @@ func launch():
 func _physics_process(_delta):
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
 		print("Dice " + str(self.id) + " gets a "+ str(self.value))
+		$RelaunchTimer.stop()
 		self.set_physics_process(false)
 		self.player.dice_throws.append(self.value)
+		self.historical.append(self.value)
+		self.historical_report()
 		emit_signal("dice_got_value")
 		
 	elif self.player.is_current() and self.player.can_move_dice== true:
@@ -129,6 +135,28 @@ func on_clicked():
 		else:
 			self.player.game.players.change_current_player()
 
-		
 
-	
+func historical_report() -> void:
+	print("Dice %s:" % self.id)
+	print("  - 1: %d" % self.historical.count(1))
+	print("  - 2: %d" % self.historical.count(2))
+	print("  - 3: %d" % self.historical.count(3))
+	print("  - 4: %d" % self.historical.count(4))
+	print("  - 5: %d" % self.historical.count(5))
+	print("  - 6: %d" % self.historical.count(6))
+	var repetitions=0
+	for i in range(1,len(self.historical)):
+		if self.historical[i]==self.historical[i-1]:
+			repetitions+=1
+	print("  - Repetitions: %d" % repetitions)
+
+
+func _on_RelaunchTimer_timeout():
+	if $RelaunchTimer.is_stopped():
+		return
+	else:
+		self.transform.rotated(Vector3.ZERO, 0)
+		self.set_linear_velocity(Vector3(0,0,0))
+		self.set_angular_velocity(Vector3(0,0,0))
+		$FloatingText.set_text("Relaunching dice")
+		self.launch()

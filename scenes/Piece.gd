@@ -210,9 +210,8 @@ func on_clicked():
 		if self.player.has_won():
 			$Won.play()
 			var text=floating_text.instance()
-			text.text="Player %s starts" % self.player.name
+			text.text="Player %s wins" % self.player.name
 			self.add_child(text)
-			yield($Won,"finished")
 			yield(text,"text_disappear")
 			get_tree().change_scene("res://scenes/Main.tscn")
 			return
