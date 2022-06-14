@@ -68,6 +68,7 @@ func _physics_process(_delta):
 		
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
+		self.historical_report()
 		emit_signal("dice_got_value")
 		
 	elif self.player.is_current() and self.player.can_move_dice== true and self.value==null:
@@ -152,18 +153,20 @@ func on_clicked():
 
 
 func historical_report() -> void:
-	print("Dice %s:" % self.id)
-	print("  - 1: %d" % self.historical.count(1))
-	print("  - 2: %d" % self.historical.count(2))
-	print("  - 3: %d" % self.historical.count(3))
-	print("  - 4: %d" % self.historical.count(4))
-	print("  - 5: %d" % self.historical.count(5))
-	print("  - 6: %d" % self.historical.count(6))
-	var repetitions=0
-	for i in range(1,len(self.historical)):
-		if self.historical[i]==self.historical[i-1]:
-			repetitions+=1
-	print("  - Repetitions: %d" % repetitions)
+	if len(self.historical)>0:
+		print("Dice %s:" % self.id)
+		print("  - 1: %d (%.2f%%)" % [ self.historical.count(1), float(self.historical.count(1))/len(self.historical)*100 ])
+		print("  - 2: %d (%.2f%%)" % [ self.historical.count(2), float(self.historical.count(2))/len(self.historical)*100 ])
+		print("  - 3: %d (%.2f%%)" % [ self.historical.count(3), float(self.historical.count(3))/len(self.historical)*100 ])
+		print("  - 4: %d (%.2f%%)" % [ self.historical.count(4), float(self.historical.count(4))/len(self.historical)*100 ])
+		print("  - 5: %d (%.2f%%)" % [ self.historical.count(5), float(self.historical.count(5))/len(self.historical)*100 ])
+		print("  - 6: %d (%.2f%%)" % [ self.historical.count(6), float(self.historical.count(6))/len(self.historical)*100 ])
+		if len(self.historical)>1:
+			var repetitions=0
+			for i in range(1,len(self.historical)):
+				if self.historical[i]==self.historical[i-1]:
+					repetitions+=1
+			print("  - Repetitions: %d" % repetitions)
 
 
 func _on_RelaunchTimer_timeout():
