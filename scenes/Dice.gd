@@ -111,6 +111,10 @@ func prepare_to_launch():
 	self.value=null
 	self.has_touch=false
 	self.set_physics_process(true)
+	## If a piece hits dice during game and falls, needs to be repositioned
+	if self.global_transform.origin.y<0:
+		$FloatingText.set_text("Recovering dice",self.player.color)
+		self.set_position(5)
 	
 			
 func on_clicked():
