@@ -15,6 +15,7 @@ var historical=[] #List to store all throws to get statistics
 func set_id(node_id):
 	self.id=node_id
 	self.set_position(5)
+	self.set_value(4)
 		
 func set_player(_player):
 	self.player=_player
@@ -29,6 +30,22 @@ func set_position(h):
 			self.global_transform.origin=Vector3(20,h,25)
 		3:
 			self.global_transform.origin=Vector3(25,h,-20)
+			
+## Rotate dice to set value at the top of the dice
+func set_value(v:int) -> void:
+	match(v):
+		1:
+			self.global_rotate(Vector3(0,0,1), PI/2)
+		2:
+			self.global_rotate(Vector3(1,0,0), PI)
+		3:
+			self.global_rotate(Vector3(1,0,0), PI/2)
+		4:
+			self.global_rotate(Vector3(1,0,0), 3*PI/2)
+		5:
+			pass
+		6:
+			self.global_rotate(Vector3(0,0,1), 3*PI/2)
 			
 			
 func launch():
