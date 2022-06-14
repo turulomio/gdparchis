@@ -13,7 +13,6 @@ func get_object_under_mouse():
 	var ray_from=camera.project_ray_origin(mouse_pos)
 	var ray_to= ray_from + camera.project_ray_normal(mouse_pos)*100
 	var space_state=get_world().direct_space_state
-	print(space_state)
 	var selection=space_state.intersect_ray(ray_from,ray_to)
 	print(camera,selection)
 	if len(selection)==0:
@@ -61,7 +60,6 @@ func _ready():
 		var square_position=0
 		var player=self.players.get(d_player["id"])
 		if player.plays:  
-
 			for d_piece in d_player["pieces"]:
 				var route=self.routes[str(player.id)]
 				var piece=Globals.SCENE_PIECE.instance()
@@ -73,7 +71,7 @@ func _ready():
 				yield(piece,"piece_moved")
 				piece.move_to_route_position(d_piece["route_position"],8) 
 				yield(piece,"piece_moved")
-				
+
 	# Start game
 	self.players.current=self.players.get(str(d["current"]))
 	$Assistant.set_color(Globals.colorn(self.players.current.id))
@@ -112,6 +110,9 @@ func _process(_delta):
 	if Input.is_action_pressed("zoom_out"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+1
 	if Input.is_action_just_pressed("exit"):
+		for player in self.players.values():
+			player.dice.historical_report()
+		
 		get_tree().change_scene("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen

@@ -4,17 +4,18 @@ signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
 var floating_text=preload("res://scenes/FloatingText.tscn")
 var id: int
-var value=null
+var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
 var player
-var animation_waiting_grades=0
+var animation_waiting_grades=-1
 var has_touch=false
 var historical=[] #List to store all throws to get statistics
+
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
 	self.id=node_id
-	self.set_position(1)
-	
+	self.set_position(5)
+		
 func set_player(_player):
 	self.player=_player
 	
@@ -50,21 +51,30 @@ func launch():
 
 	
 func _physics_process(_delta):
+	if self.value==0:
+		return
+	
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
 		print("Dice " + str(self.id) + " gets a "+ str(self.value))
 		$RelaunchTimer.stop()
+		
 		self.set_physics_process(false)
+		## Fake dice
+		if len(Globals.game_data["fake_dice"])>0:
+			self.value=int(Globals.game_data["fake_dice"].pop_front())
+			$FloatingText.set_text("Fake dice: %d" % self.value, self.player.color)
+			yield($FloatingText,"text_disappear")
+		
+		
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
-		self.historical_report()
-		$FloatingText.set_text("%d" % self.value, self.player.color)
 		emit_signal("dice_got_value")
 		
-	elif self.player.is_current() and self.player.can_move_dice== true:
+	elif self.player.is_current() and self.player.can_move_dice== true and self.value==null:
 		self.animation_waiting_grades=self.animation_waiting_grades+5
 		self.global_transform.origin.y=2.5+sin(deg2rad(self.animation_waiting_grades))/2
 		
-	elif self.animation_waiting_grades==0:
+	elif self.animation_waiting_grades==0 and self.value==null:
 		if $RC1.is_colliding():
 			self.value=6
 			if self.has_touch==false:

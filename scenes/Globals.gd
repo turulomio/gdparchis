@@ -42,7 +42,6 @@ func color_name(e_color):
 			r= "green"
 		_:
 			r= "white"
-	print ("coor_name",e_color,r)
 	return r
 
 
