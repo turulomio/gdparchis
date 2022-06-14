@@ -1,7 +1,7 @@
 class_name Player
 var id : int
 var name : String
-var color
+var color: Color
 var e_color
 var pieces=[]
 var route: Route
@@ -19,6 +19,8 @@ var ia=false
 func _init(_id,_plays,_ia):
 	self.id=_id
 	self.e_color=_id
+	self.color=Globals.colorn(self.e_color)
+	print("player color",self.color,self.e_color)
 	self.plays=_plays
 	self.ia=_ia
 

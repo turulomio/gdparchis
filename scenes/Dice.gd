@@ -57,6 +57,7 @@ func _physics_process(_delta):
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
 		self.historical_report()
+		$FloatingText.set_text("%d" % self.value, self.player.color)
 		emit_signal("dice_got_value")
 		
 	elif self.player.is_current() and self.player.can_move_dice== true:
@@ -158,5 +159,5 @@ func _on_RelaunchTimer_timeout():
 		self.transform.rotated(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
-		$FloatingText.set_text("Relaunching dice")
+		$FloatingText.set_text("Recovering dice",self.player.color)
 		self.launch()

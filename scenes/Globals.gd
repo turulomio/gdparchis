@@ -30,16 +30,20 @@ func colorn(e_color):
 	return ColorN(color_name(e_color),1)
 	
 func color_name(e_color):
-	match e_color:
+	var r
+	match int(e_color):
 		eColors.YELLOW:
-			return "yellow"
+			r= "yellow"
 		eColors.BLUE:
-			return "blue"
+			r= "blue"
 		eColors.RED:
-			return "red"
+			r= "red"
 		eColors.GREEN:
-			return "green"
-	return eColors.RED
+			r= "green"
+		_:
+			r= "white"
+	print ("coor_name",e_color,r)
+	return r
 
 
 	
