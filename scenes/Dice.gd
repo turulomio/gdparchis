@@ -48,16 +48,16 @@ func simulate_value(v:int) -> void:
 			
 func launch():
 	$RelaunchTimer.start(5)
+	self.player.can_throw_dice=false
 	self.value=null
 	self.has_touch=false
-	self.player.can_throw_dice=false
-	self.set_physics_process(true)
 	
 	## Fake dice
 	if len(Globals.game_data["fake_dice"])>0:
 		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
 		self.simulate_value(fake)
-		self.set_position(15)
+		self.set_position(10)
+		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
 	else:
 		randomize()
 		self.simulate_value(int(rand_range(1,6.99)))
@@ -70,7 +70,7 @@ func launch():
 		self.transform.rotated(Vector3(x,y,z).normalized(), rand_range(0, 2*PI))
 		self.set_linear_velocity(Vector3(rand_range(0,3), rand_range(0,3) ,rand_range(0,3)))
 		set_angular_velocity(Vector3(x,y,z))
-	
+	self.set_physics_process(true)
 
 	
 func _physics_process(_delta):
