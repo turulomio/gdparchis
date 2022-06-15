@@ -77,7 +77,7 @@ func _ready():
 	$Assistant.set_color(Globals.colorn(self.players.current.id))
 	self.players.current.can_move_pieces=false
 	self.players.current.dice_throws=[]
-	self.players.current.dice.prepare_to_launch()
+	self.players.current.can_throw_dice=true
 	if self.players.current.ia==true:
 		self.players.current.dice.on_clicked()
 

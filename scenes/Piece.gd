@@ -7,7 +7,7 @@ var floating_text=preload("res://scenes/FloatingText.tscn")
 var vel : Vector3 = Vector3(0,-30,0)
 
 var id : int =1000
-var player: Player
+var player
 var route: Route
 var route_position: int 
 var square_position: int
@@ -233,7 +233,7 @@ func on_clicked():
 			self.player.ia_selects_piece_to_move().on_clicked()
 		
 	elif self.player.can_throw_dice_again():
-		self.player.dice.prepare_to_launch()
+		self.player.can_throw_dice=true
 		if self.player.ia==true:
 			self.player.dice.on_clicked()
 	else:

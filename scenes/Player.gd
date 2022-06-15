@@ -55,6 +55,11 @@ func set_can_throw_dice(v):
 		self.dice.TweenWaiting_start()
 	else:
 		self.dice.TweenWaiting_stop()
+		
+	## If a piece hits dice during game and falls, needs to be repositioned
+	if self.dice.global_transform.origin.y<0:
+		self.dice.get_node("FloatingText").set_text("Recovering dice",self.color)
+		self.dice.set_position(5)
 
 func get_can_throw_dice():
 	return can_throw_dice	

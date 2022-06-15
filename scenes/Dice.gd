@@ -2,7 +2,6 @@ class_name Dice
 extends RigidBody
 signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
-var floating_text=preload("res://scenes/FloatingText.tscn")
 var id: int
 var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
 var player
@@ -50,8 +49,10 @@ func simulate_value(v:int) -> void:
 func launch():
 	$RelaunchTimer.start(5)
 	self.value=null
+	self.has_touch=false
 	self.player.can_throw_dice=false
 	self.set_physics_process(true)
+	
 	## Fake dice
 	if len(Globals.game_data["fake_dice"])>0:
 		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
@@ -126,15 +127,7 @@ func _physics_process(_delta):
 				$Touched.play()
 				self.has_touch=true
 
-func prepare_to_launch():
-	self.player.can_throw_dice=true
-	self.value=null
-	self.has_touch=false
-	self.set_physics_process(true)
-	## If a piece hits dice during game and falls, needs to be repositioned
-	if self.global_transform.origin.y<0:
-		$FloatingText.set_text("Recovering dice",self.player.color)
-		self.set_position(5)
+
 	
 			
 func on_clicked():
@@ -164,7 +157,7 @@ func on_clicked():
 			self.player.ia_selects_piece_to_move().on_clicked()
 	else:
 		if self.player.can_throw_dice_again():
-			self.player.dice.prepare_to_launch()
+			self.player.can_throw_dice=true
 			if self.player.ia==true:
 				self.player.dice.on_clicked()
 		else:
@@ -196,7 +189,7 @@ func _on_RelaunchTimer_timeout():
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
 		$FloatingText.set_text("Recovering dice",self.player.color)
-		self.prepare_to_launch()
+		self.player.can_throw_dice
 		self.launch()
 
 func TweenWaiting_method(rad):

@@ -39,7 +39,7 @@ func _ready():
 			p.can_move_pieces=false
 			p.dice_throws=[]
 			p.extra_moves=[]
-			p.dice.prepare_to_launch()
+			p.can_throw_dice=true
 			p.dice.launch()
 			yield(p.dice, "dice_got_value")
 			if p.dice.value>self.dice_higher:
