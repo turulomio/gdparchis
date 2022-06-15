@@ -184,6 +184,15 @@ func change_language(e_language):
 func generate_uuid():
 	return UUID_UTIL.v4()
 
+## Returns decision probabilty according is difficulty
+func difficulty_probability():
+	if self.settings["difficulty"]==eDifficulty.EASY:
+		return 0.55
+	elif self.settings["difficulty"]==eDifficulty.NORMAL:
+		return 0.75
+	else:
+		return 0.95
+	
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():

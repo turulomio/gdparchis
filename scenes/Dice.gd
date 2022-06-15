@@ -41,7 +41,7 @@ func simulate_value(v:int) -> void:
 		4:
 			self.global_rotate(Vector3(1,0,0), 3*PI/2)
 		5:
-			pass
+			self.global_rotate(Vector3(0,0,0), PI)
 		6:
 			self.global_rotate(Vector3(0,0,1), 3*PI/2)
 			
