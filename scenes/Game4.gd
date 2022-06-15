@@ -93,7 +93,7 @@ func _process(_delta):
 			else:
 				$Click.play()
 		if object.filename=="res://scenes/Dice.tscn":
-			if object.player==self.players.current and object.player.can_move_dice:
+			if object.player==self.players.current and object.player.can_throw_dice:
 				object.on_clicked()
 			else:
 				$Click.play()

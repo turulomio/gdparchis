@@ -66,4 +66,7 @@ wait_time = 5.0
 [node name="FloatingText" parent="." instance=ExtResource( 5 )]
 visible = false
 
+[node name="TweenWaiting" type="Tween" parent="."]
+
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
+[connection signal="tween_all_completed" from="TweenWaiting" to="." method="_on_TweenWaiting_tween_all_completed"]

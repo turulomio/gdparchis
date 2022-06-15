@@ -7,7 +7,7 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
-var can_move_dice: bool = false
+var can_throw_dice = false setget set_can_throw_dice, get_can_throw_dice
 var can_move_pieces: bool = false
 var dice_throws=[]
 var extra_moves=[]
@@ -49,6 +49,17 @@ func set_game(g):
 func set_dice(d):
 	self.dice=d
 	
+func set_can_throw_dice(v):
+	can_throw_dice=v
+	if v==true:
+		self.dice.TweenWaiting_start()
+	else:
+		self.dice.TweenWaiting_stop()
+
+func get_can_throw_dice():
+	return can_throw_dice	
+
+	
 func last_throw():
 	return self.dice_throws[self.dice_throws.size()-1]
 
@@ -73,7 +84,7 @@ func can_move_other_piece():
 		return true
 	return false
 	
-func can_move_dice_again():
+func can_throw_dice_again():
 	if self.last_throw_was_a_six():
 		return true
 	return false

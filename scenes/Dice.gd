@@ -6,16 +6,15 @@ var floating_text=preload("res://scenes/FloatingText.tscn")
 var id: int
 var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
 var player
-var animation_waiting_grades=-1
 var has_touch=false
 var historical=[] #List to store all throws to get statistics
+
 
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
 	self.id=node_id
 	self.set_position(5)
-	self.set_value(4)
 		
 func set_player(_player):
 	self.player=_player
@@ -32,7 +31,7 @@ func set_position(h):
 			self.global_transform.origin=Vector3(25,h,-20)
 			
 ## Rotate dice to set value at the top of the dice
-func set_value(v:int) -> void:
+func simulate_value(v:int) -> void:
 	match(v):
 		1:
 			self.global_rotate(Vector3(0,0,1), PI/2)
@@ -50,26 +49,33 @@ func set_value(v:int) -> void:
 			
 func launch():
 	$RelaunchTimer.start(5)
-	randomize()
-	self.animation_waiting_grades=0
-	self.player.can_move_dice=false
 	self.value=null
+	self.player.can_throw_dice=false
 	self.set_physics_process(true)
-	self.set_position(rand_range(5,15))
-	
-	
-	var x = rand_range(-10,10)
-	var y = rand_range(-10,10)
-	var z = rand_range(-10,10)
-	self.transform.rotated(Vector3(x,y,z).normalized(), rand_range(0, 2*PI))
-	self.set_linear_velocity(Vector3(rand_range(0,3), rand_range(0,3) ,rand_range(0,3)))
-	set_angular_velocity(Vector3(x,y,z))
+	## Fake dice
+	if len(Globals.game_data["fake_dice"])>0:
+		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
+		self.simulate_value(fake)
+		self.set_position(15)
+	else:
+		randomize()
+		self.simulate_value(int(rand_range(1,6.99)))
+		self.set_position(rand_range(5,15))
+		
+		
+		var x = rand_range(-10,10)
+		var y = rand_range(-10,10)
+		var z = rand_range(-10,10)
+		self.transform.rotated(Vector3(x,y,z).normalized(), rand_range(0, 2*PI))
+		self.set_linear_velocity(Vector3(rand_range(0,3), rand_range(0,3) ,rand_range(0,3)))
+		set_angular_velocity(Vector3(x,y,z))
 	
 
 	
 func _physics_process(_delta):
 	if self.value==0:
-		return
+		 return
+
 	
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
 		print("Dice " + str(self.id) + " gets a "+ str(self.value))
@@ -78,21 +84,17 @@ func _physics_process(_delta):
 		self.set_physics_process(false)
 		## Fake dice
 		if len(Globals.game_data["fake_dice"])>0:
-			self.value=int(Globals.game_data["fake_dice"].pop_front())
-			$FloatingText.set_text("Fake dice: %d" % self.value, self.player.color)
-			yield($FloatingText,"text_disappear")
-		
+			 self.value=int(Globals.game_data["fake_dice"].pop_front())
+			 $FloatingText.set_text("Fake dice: %d" % self.value, self.player.color)
+			 yield($FloatingText,"text_disappear")
+
 		
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
 		self.historical_report()
 		emit_signal("dice_got_value")
-		
-	elif self.player.is_current() and self.player.can_move_dice== true and self.value==null:
-		self.animation_waiting_grades=self.animation_waiting_grades+5
-		self.global_transform.origin.y=2.5+sin(deg2rad(self.animation_waiting_grades))/2
-		
-	elif self.animation_waiting_grades==0 and self.value==null:
+
+	elif self.value==null:
 		if $RC1.is_colliding():
 			self.value=6
 			if self.has_touch==false:
@@ -125,7 +127,7 @@ func _physics_process(_delta):
 				self.has_touch=true
 
 func prepare_to_launch():
-	self.player.can_move_dice=true
+	self.player.can_throw_dice=true
 	self.value=null
 	self.has_touch=false
 	self.set_physics_process(true)
@@ -136,7 +138,7 @@ func prepare_to_launch():
 	
 			
 func on_clicked():
-	self.animation_waiting_grades=0
+	
 	self.launch()
 	yield(self, "dice_got_value")
 	
@@ -161,7 +163,7 @@ func on_clicked():
 		if self.player.ia==true:
 			self.player.ia_selects_piece_to_move().on_clicked()
 	else:
-		if self.player.can_move_dice_again():
+		if self.player.can_throw_dice_again():
 			self.player.dice.prepare_to_launch()
 			if self.player.ia==true:
 				self.player.dice.on_clicked()
@@ -194,4 +196,22 @@ func _on_RelaunchTimer_timeout():
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
 		$FloatingText.set_text("Recovering dice",self.player.color)
+		self.prepare_to_launch()
 		self.launch()
+
+func TweenWaiting_method(rad):
+	self.global_transform.origin.y=2.5+sin(rad)/2
+		
+
+func TweenWaiting_start():
+	$TweenWaiting.interpolate_method(self,"TweenWaiting_method", 0, 2*PI, 1)
+	self.set_physics_process(false)
+	$TweenWaiting.start()
+	
+func TweenWaiting_stop():
+	$TweenWaiting.stop_all()
+	self.set_physics_process(true)
+	
+
+func _on_TweenWaiting_tween_all_completed():
+	self.TweenWaiting_start()

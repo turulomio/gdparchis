@@ -232,7 +232,7 @@ func on_clicked():
 		if self.player.ia==true:
 			self.player.ia_selects_piece_to_move().on_clicked()
 		
-	elif self.player.can_move_dice_again():
+	elif self.player.can_throw_dice_again():
 		self.player.dice.prepare_to_launch()
 		if self.player.ia==true:
 			self.player.dice.on_clicked()

@@ -31,10 +31,10 @@ func change_current_player():
 	self.assistant.set_color(Globals.colorn(self.current.id))
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
+	self.current.extra_moves=[]
 	self.current.dice.prepare_to_launch()
 	if self.current.ia==true:
 		self.current.dice.on_clicked()
-	self.current.extra_moves=[]
 	if self.current.plays and not self.current.ia:
 		Globals.save_game(self.current.game)
 	
