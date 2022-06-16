@@ -25,11 +25,9 @@ func _on_Button_pressed():
 	]
 	
 	for i in range(Globals.game_data["max_players"]):
-		print(nodes[i].playername,nodes[i].plays,nodes[i].ia)
 		Globals.game_data.players[i].name=nodes[i].playername
 		Globals.game_data.players[i].plays=nodes[i].plays
 		Globals.game_data.players[i].ia=nodes[i].ia
-	print("AHORA",Globals.game_data)
 	get_tree().change_scene("res://scenes/GameDiceStart.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

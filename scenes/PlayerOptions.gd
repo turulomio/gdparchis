@@ -18,7 +18,6 @@ func set_color_name(s):
 
 
 func change_icon_and_name(color_name):
-	print( has_node("HBoxContainer/Icon"),has_node("HBoxContainer/PlayerName"))
 	if color_name=="Red":
 		set_playername("Redy")
 		if has_node("HBoxContainer/Icon"):

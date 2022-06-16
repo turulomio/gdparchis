@@ -37,3 +37,8 @@ stream = ExtResource( 5 )
 
 [node name="Eat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="TweenWaiting" type="Tween" parent="."]
+repeat = true
+playback_process_mode = 0
+playback/repeat = true

@@ -14,7 +14,6 @@ func get_object_under_mouse():
 	var ray_to= ray_from + camera.project_ray_normal(mouse_pos)*100
 	var space_state=get_world().direct_space_state
 	var selection=space_state.intersect_ray(ray_from,ray_to)
-	print(camera,selection)
 	if len(selection)==0:
 		return null
 	return selection.collider
@@ -111,7 +110,8 @@ func _process(_delta):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+1
 	if Input.is_action_just_pressed("exit"):
 		for player in self.players.values():
-			player.dice.historical_report()
+			if player.plays:
+				player.dice.historical_report()
 		
 		get_tree().change_scene("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):

@@ -67,6 +67,7 @@ wait_time = 5.0
 visible = false
 
 [node name="TweenWaiting" type="Tween" parent="."]
+repeat = true
+playback/repeat = true
 
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
-[connection signal="tween_all_completed" from="TweenWaiting" to="." method="_on_TweenWaiting_tween_all_completed"]

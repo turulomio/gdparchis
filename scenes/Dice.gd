@@ -205,7 +205,3 @@ func TweenWaiting_start():
 func TweenWaiting_stop():
 	$TweenWaiting.stop_all()
 	self.set_physics_process(true)
-	
-
-func _on_TweenWaiting_tween_all_completed():
-	self.TweenWaiting_start()

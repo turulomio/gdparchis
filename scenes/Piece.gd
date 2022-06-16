@@ -16,8 +16,7 @@ var square_position: int
 var animation_positions=null #Will be an array of positions
 var animation_step=0
 
-#Animation waiting click
-var animation_waiting_grades=0
+
 
 func _physics_process(_delta): 
 	if self.animation_positions!=null: ## Positions are defined
@@ -26,13 +25,7 @@ func _physics_process(_delta):
 		if self.animation_step==len(self.animation_positions):
 			self.animation_positions=null
 			self.player.can_move_pieces=false
-			self.animation_waiting_grades_reset()
 			emit_signal("piece_moved")
-			
-	elif self.player.game.players.current== self.player and self.player.ia==false and self.player.can_move_pieces== true and self.animation_positions==null and self.route_position!=self.route.end_position():
-		## Waiting click animation
-		self.animation_waiting_grades=self.animation_waiting_grades+5
-		self.global_transform.origin.y=1.2+sin(deg2rad(self.animation_waiting_grades))/2
 
 	else:
 		return move_and_slide(vel,Vector3.UP)
@@ -185,6 +178,7 @@ func on_clicked():
 		
 		
 		self.move_to_route_position(self.route_position+self.squares_to_move(), 40)
+		
 		yield(self,"piece_moved")
 		
 		
@@ -255,10 +249,6 @@ func must_move_to_first_square():
 			else: #Otros jugadores
 				return true
 	return false
-
-func animation_waiting_grades_reset() -> void:
-	for p in self.player.pieces:
-		p.animation_waiting_grades=0
 		
 ## Generate a list of animation movement positions
 func animation_movement(animation_to : Vector3, steps=10) -> void:
@@ -271,3 +261,12 @@ func animation_movement(animation_to : Vector3, steps=10) -> void:
 		new_pos.y=animation_to.y+animation_max_y*sin(deg2rad(180*(i+1)/steps))
 		self.animation_positions.append(new_pos)
 	
+func TweenWaiting_method(rad):
+	self.global_transform.origin.y=1.25+sin(rad)/2
+
+func TweenWaiting_start():
+	$TweenWaiting.interpolate_method(self,"TweenWaiting_method", 0, 2*PI, 1)
+	$TweenWaiting.start()
+	
+func TweenWaiting_stop():
+	$TweenWaiting.stop_all()

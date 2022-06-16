@@ -7,8 +7,8 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
-var can_throw_dice = false setget set_can_throw_dice, get_can_throw_dice
-var can_move_pieces: bool = false
+var can_throw_dice = false setget set_can_throw_dice
+var can_move_pieces = false setget set_can_move_pieces
 var dice_throws=[]
 var extra_moves=[]
 var last_piece_moved=null
@@ -61,9 +61,15 @@ func set_can_throw_dice(v):
 		self.dice.get_node("FloatingText").set_text("Recovering dice",self.color)
 		self.dice.set_position(5)
 
-func get_can_throw_dice():
-	return can_throw_dice	
-
+func set_can_move_pieces(b):
+	can_move_pieces=b
+	if b==true:
+		for p in self.pieces:
+			if self.ia==false and p.route_position!=p.route.end_position():
+				p.TweenWaiting_start()
+	else:
+		for p in self.pieces:
+			p.TweenWaiting_stop()
 	
 func last_throw():
 	print(self,self.dice_throws)
