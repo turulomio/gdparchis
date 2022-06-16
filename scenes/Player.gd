@@ -66,6 +66,7 @@ func get_can_throw_dice():
 
 	
 func last_throw():
+	print(self,self.dice_throws)
 	return self.dice_throws[self.dice_throws.size()-1]
 
 ## Returns if player is game current player

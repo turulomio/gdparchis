@@ -14,6 +14,7 @@ func set_assistant(_assistant):
 	self.assistant=_assistant
 
 func change_current_player():
+	print("CHANGING PLAYER", self.current)
 	if self.current==null:
 		self.current= self.d["0"]
 	elif self.current==self.d["0"]:
@@ -29,12 +30,13 @@ func change_current_player():
 		self.change_current_player()
 		
 	self.assistant.set_color(Globals.colorn(self.current.id))
+	self.current.last_piece_moved=null
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
 	self.current.extra_moves=[]
 	self.current.can_throw_dice=true
 	if self.current.ia==true:
 		self.current.dice.on_clicked()
-	if self.current.plays and not self.current.ia:
+	else:#Not ia
 		Globals.save_game(self.current.game)
 	

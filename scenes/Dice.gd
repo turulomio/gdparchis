@@ -89,8 +89,9 @@ func _physics_process(_delta):
 			 $FloatingText.set_text("Fake dice: %d" % self.value, self.player.color)
 			 yield($FloatingText,"text_disappear")
 
-		
+		print("ANTES",self.player.dice_throws)
 		self.player.dice_throws.append(self.value)
+		print("DESPUES",self.player.dice_throws)
 		self.historical.append(self.value)
 		self.historical_report()
 		emit_signal("dice_got_value")
