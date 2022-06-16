@@ -1,8 +1,6 @@
 extends Spatial
 class_name Game4Start
 
-
-var floating_text=preload("res://scenes/FloatingText.tscn")
 var players
 var dice_higher=0
 var winers=[]
@@ -10,9 +8,7 @@ var winers=[]
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	
-	var text=floating_text.instance()
-	text.text="Let's see who starts"
-	self.add_child(text)
+	$FloatingText.set_text("Let's see who starts")
 	
 	## Creating players
 	self.players=PlayerManager.new(Globals.game_data.max_players)
@@ -58,10 +54,8 @@ func is_there_a_winer():
 	if len(self.winers)==1:
 		Globals.game_data["current"]=self.winers[0].id
 		
-		var text=floating_text.instance()
-		text.text="Player %s starts" % self.winers[0].name
-		self.add_child(text)
-		yield(text,"text_disappear")
+		$FloatingText.set_text("Player %s starts" % self.winers[0].name, self.winers[0].color)
+		yield($FloatingText,"text_disappear")
 		
 		get_tree().change_scene("res://scenes/Game4.tscn")
 		return true

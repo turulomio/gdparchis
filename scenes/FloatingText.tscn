@@ -9,8 +9,6 @@ onready var label=get_node(\"Label\")
 onready var tween=get_node(\"Tween\" )
 
 signal text_disappear
-var text: String=\"\"
-var color: Color= Color(255,255,255,1)
 
 func _on_Tween_tween_all_completed():
 	emit_signal(\"text_disappear\")

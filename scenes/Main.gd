@@ -7,7 +7,6 @@ func _on_Exit_pressed():
 
 func _on_Load_pressed():
 	$FileDialog.popup()
-#	pass
 
 
 func _on_Players4_pressed():

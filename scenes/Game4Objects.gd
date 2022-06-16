@@ -84,9 +84,11 @@ func _process(_delta):
 	if Input.is_action_just_pressed("left_click"):
 		var object=get_object_under_mouse()
 		if object.filename=="res://scenes/Piece.tscn":
-			object.global_transform.origin.y=20
+			object.global_transform.origin.y=10
 		if object.filename=="res://scenes/Dice.tscn":
-			object.launch()
+			object.global_transform.origin.y=10
+			yield(object,"dice_got_value")
+			object.set_physics_process(true)
 
 		
 	if Input.is_action_just_pressed("zoom_in"):
