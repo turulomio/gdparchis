@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://images/parchis4.png" type="Texture" id=2]
 [ext_resource path="res://themes/FreshmanSmall.tres" type="Theme" id=3]
+[ext_resource path="res://images/exit.png" type="Texture" id=4]
 [ext_resource path="res://images/github.webp" type="Texture" id=5]
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=6]
+[ext_resource path="res://images/open.png" type="Texture" id=7]
+[ext_resource path="res://images/configure.png" type="Texture" id=8]
+[ext_resource path="res://images/game4.png" type="Texture" id=9]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -57,9 +61,11 @@ margin_right = 800.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 800, 100 )
 rect_pivot_offset = Vector2( 79, 10 )
+custom_colors/font_color_disabled = Color( 0.396078, 0.905882, 0.380392, 1 )
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "4 players board"
-icon = ExtResource( 2 )
+icon = ExtResource( 9 )
+flat = true
 clip_text = true
 expand_icon = true
 
@@ -83,6 +89,7 @@ rect_min_size = Vector2( 800, 100 )
 rect_pivot_offset = Vector2( 79, 10 )
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "Load game"
+icon = ExtResource( 7 )
 clip_text = true
 expand_icon = true
 
@@ -94,6 +101,7 @@ rect_min_size = Vector2( 800, 100 )
 rect_pivot_offset = Vector2( 79, 10 )
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "Settings"
+icon = ExtResource( 8 )
 clip_text = true
 expand_icon = true
 
@@ -117,6 +125,8 @@ rect_min_size = Vector2( 800, 100 )
 rect_pivot_offset = Vector2( 79, 10 )
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "Exit"
+icon = ExtResource( 4 )
+expand_icon = true
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]

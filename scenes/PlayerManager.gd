@@ -14,7 +14,6 @@ func set_assistant(_assistant):
 	self.assistant=_assistant
 
 func change_current_player():
-	print("CHANGING PLAYER", self.current)
 	if self.current==null:
 		self.current= self.d["0"]
 	elif self.current==self.d["0"]:
@@ -28,6 +27,7 @@ func change_current_player():
 		
 	if self.current.plays==false:
 		self.change_current_player()
+		return
 		
 	self.assistant.set_color(Globals.colorn(self.current.id))
 	self.current.last_piece_moved=null

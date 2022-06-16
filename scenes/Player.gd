@@ -72,7 +72,6 @@ func set_can_move_pieces(b):
 			p.TweenWaiting_stop()
 	
 func last_throw():
-	print(self,self.dice_throws)
 	return self.dice_throws[self.dice_throws.size()-1]
 
 ## Returns if player is game current player
