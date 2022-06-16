@@ -14,23 +14,9 @@ var square_position: int
 
 #animation movement
 var animation_positions=null #Will be an array of positions
-var animation_step=0
-
-
 
 func _physics_process(_delta): 
-	if self.animation_positions!=null: ## Positions are defined
-		self.global_transform.origin=self.animation_positions[self.animation_step]
-		self.animation_step=self.animation_step+1
-		if self.animation_step==len(self.animation_positions):
-			self.animation_positions=null
-			self.player.can_move_pieces=false
-			emit_signal("piece_moved")
-
-	else:
-		return move_and_slide(vel,Vector3.UP)
-
-		
+	return move_and_slide(vel,Vector3.UP)
 
 func _to_string():
 	return "[Piece: "+ str(self.id) + "]"
@@ -98,7 +84,7 @@ func can_move_to_route_position(_route_position):
 	return true
 		
 ## Before this method always have to check if piece can move
-func move_to_route_position(_route_position, _animation_num_steps=0):
+func move_to_route_position(_route_position, duration=0.4):
 	var square_final=self.route.square_at(_route_position)
 	var square_initial=self.square()
 	
@@ -110,8 +96,9 @@ func move_to_route_position(_route_position, _animation_num_steps=0):
 	
 	self.route_position=_route_position
 	
-	self.animation_movement(Globals.position4(square_final.id,new_square_position),_animation_num_steps)
 	
+	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
+	yield(self,"piece_moved")
 	self.change_scale_on_specials_squares()
 	
 #Para casillas estrechas
@@ -173,11 +160,11 @@ func on_clicked():
 		if eaten_before!=null:
 			has_eaten_before=true
 			$Eat.play()
-			eaten_before.move_to_route_position(0, 40)
+			eaten_before.move_to_route_position(0)
 			yield(eaten_before,"piece_moved")
 		
 		
-		self.move_to_route_position(self.route_position+self.squares_to_move(), 40)
+		self.move_to_route_position(self.route_position+self.squares_to_move())
 		
 		yield(self,"piece_moved")
 		
@@ -190,7 +177,7 @@ func on_clicked():
 			has_eaten_after=true
 			$Eat.play()
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
-			piece_eaten.move_to_route_position(0, 40)
+			piece_eaten.move_to_route_position(0)
 			yield(piece_eaten,"piece_moved")
 			
 		#Muest be after move
@@ -249,17 +236,7 @@ func must_move_to_first_square():
 			else: #Otros jugadores
 				return true
 	return false
-		
-## Generate a list of animation movement positions
-func animation_movement(animation_to : Vector3, steps=10) -> void:
-	self.animation_step=0
-	var animation_max_y=5
-	self.animation_positions=[]
-	#Piece movement animation
-	for i in range(steps):
-		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
-		new_pos.y=animation_to.y+animation_max_y*sin(deg2rad(180*(i+1)/steps))
-		self.animation_positions.append(new_pos)
+
 	
 func TweenWaiting_method(rad):
 	self.global_transform.origin.y=1.25+sin(rad)/2
@@ -270,3 +247,25 @@ func TweenWaiting_start():
 	
 func TweenWaiting_stop():
 	$TweenWaiting.stop_all()
+	
+		
+func TweenMoving_method(step):
+	self.global_transform.origin=self.animation_positions[step]
+
+
+func TweenMoving_start(animation_to: Vector3, duration):
+	self.player.can_move_pieces=false
+	var steps=20
+	var animation_max_y=5
+	self.animation_positions=[]
+	#Piece movement animation
+	for i in range(steps):
+		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
+		new_pos.y=animation_to.y+animation_max_y*sin(deg2rad(180*(i+1)/steps))
+		self.animation_positions.append(new_pos)
+	$TweenMoving.interpolate_method(self,"TweenMoving_method", 0, 19, duration)
+	$TweenMoving.start()
+	
+func _on_TweenMoving_tween_all_completed():
+	self.animation_positions=null
+	emit_signal("piece_moved")

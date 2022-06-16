@@ -147,7 +147,7 @@ func on_clicked():
 			return
 		elif self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:
 			$ThreeSix.play()		
-			self.player.last_piece_moved.move_to_route_position(0,40)
+			self.player.last_piece_moved.move_to_route_position(0)
 			yield(self.player.last_piece_moved,"piece_moved")
 			self.player.game.players.change_current_player()
 			return

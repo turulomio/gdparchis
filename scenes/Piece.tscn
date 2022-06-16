@@ -42,3 +42,8 @@ stream = ExtResource( 6 )
 repeat = true
 playback_process_mode = 0
 playback/repeat = true
+
+[node name="TweenMoving" type="Tween" parent="."]
+playback_process_mode = 0
+
+[connection signal="tween_all_completed" from="TweenMoving" to="." method="_on_TweenMoving_tween_all_completed"]

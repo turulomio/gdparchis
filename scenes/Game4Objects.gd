@@ -62,11 +62,11 @@ func _ready():
 				
 				self.add_child(piece)
 				piece.set_color(Globals.colorn(s.empty_position()))
-				game4objects_move_to_route_position(piece,route_pos)
+				game4objects_move_to_route_position(piece,route_pos,0)
 			route_pos=route_pos+1
 			
 ## Before this method always have to check if piece can move
-func game4objects_move_to_route_position(piece,_route_position, _animation_num_steps=30):
+func game4objects_move_to_route_position(piece,_route_position, duration):
 	var square_final=piece.route.square_at(_route_position)
 	
 	var new_square_position=square_final.empty_position()
@@ -75,7 +75,7 @@ func game4objects_move_to_route_position(piece,_route_position, _animation_num_s
 	
 	piece.route_position=_route_position
 	
-	piece.animation_movement(Globals.position4(square_final.id,new_square_position),_animation_num_steps)
+	piece.TweenMoving_start(Globals.position4(square_final.id,new_square_position), duration)
 	
 	piece.change_scale_on_specials_squares()
 
