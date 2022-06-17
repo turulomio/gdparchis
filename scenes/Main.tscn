@@ -78,8 +78,6 @@ rect_pivot_offset = Vector2( 79, 10 )
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
 text = "4 players board"
 flat = true
-clip_text = true
-expand_icon = true
 
 [node name="Players4All" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
 margin_top = 104.0
