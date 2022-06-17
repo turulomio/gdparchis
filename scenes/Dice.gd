@@ -86,8 +86,9 @@ func _physics_process(_delta):
 		## Fake dice
 		if len(Globals.game_data["fake_dice"])>0:
 			 self.value=int(Globals.game_data["fake_dice"].pop_front())
-			 $FloatingText.set_text("Fake dice: %d" % self.value, self.player.color)
-			 yield($FloatingText,"text_disappear")
+			 $FloatingText.show_text("Fake dice: %d" % self.value, self.player.color, false)
+		else:
+			 $FloatingText.show_text("Dice: %d" % self.value, self.player.color, false)
 
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
@@ -187,7 +188,7 @@ func _on_RelaunchTimer_timeout():
 		self.transform.rotated(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
-		$FloatingText.set_text("Recovering dice",self.player.color)
+		$FloatingText.show_text("Recovering dice",self.player.color, false)
 		self.player.can_throw_dice
 		self.launch()
 

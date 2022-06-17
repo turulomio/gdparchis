@@ -11,13 +11,13 @@ export(String, "Yellow", "Blue", "Red", "Green") var color_name setget set_color
 func set_color_name(s):	
 	color_name=s
 	if Engine.is_editor_hint(): #Solo se ejecuta como tool
-		change_icon_and_name(color_name)
+		change_icon_and_name()
 
 		set_plays(plays)
 		set_ia(ia)
 
 
-func change_icon_and_name(color_name):
+func change_icon_and_name():
 	if color_name=="Red":
 		set_playername("Redy")
 		if has_node("HBoxContainer/Icon"):
@@ -51,7 +51,7 @@ func set_ia(b):
 		$HBoxContainer/IA.pressed=b
 	
 func _ready():
-	change_icon_and_name(color_name)
+	change_icon_and_name()
 	set_plays(plays)
 	set_ia(ia)
 	set_playername(playername)

@@ -8,7 +8,7 @@ var winers=[]
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	
-	$FloatingText.set_text("Let's see who starts")
+	$FloatingText.show_text("Let's see who starts", Color(255,255,255,1), false)
 	
 	## Creating players
 	self.players=PlayerManager.new(Globals.game_data.max_players)
@@ -54,8 +54,7 @@ func is_there_a_winer():
 	if len(self.winers)==1:
 		Globals.game_data["current"]=self.winers[0].id
 		
-		$FloatingText.set_text("Player %s starts" % self.winers[0].name, self.winers[0].color)
-		yield($FloatingText,"text_disappear")
+		$FloatingText.show_text("Player %s starts" % self.winers[0].name, self.winers[0].color,true)
 		
 		get_tree().change_scene("res://scenes/Game4.tscn")
 		return true

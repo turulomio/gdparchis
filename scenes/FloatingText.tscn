@@ -1,31 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Position2D
-
-onready var label=get_node(\"Label\")
-onready var tween=get_node(\"Tween\" )
-
-signal text_disappear
-
-func _on_Tween_tween_all_completed():
-	emit_signal(\"text_disappear\")
-	self.visible=false
-
-
-func set_text(text,color=Color(255,255,255,1)):
-	$Label.add_color_override(\"font_color\", color)
-	self.visible=true
-	self.transform.origin=Globals.vector2_center
-	label.set_text(text)
-	tween.interpolate_property(self, 'scale',Vector2(0.5,0.5) ,Vector2(2,2),3,Tween.TRANS_LINEAR,Tween.EASE_OUT )
-	tween.start()
-"
+[ext_resource path="res://scenes/FloatingText.gd" type="Script" id=2]
 
 [node name="FloatingText" type="Position2D"]
-script = SubResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5

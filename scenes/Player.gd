@@ -58,7 +58,7 @@ func set_can_throw_dice(v):
 		
 	## If a piece hits dice during game and falls, needs to be repositioned
 	if self.dice.global_transform.origin.y<0:
-		self.dice.get_node("FloatingText").set_text("Recovering dice",self.color)
+		self.dice.get_node("FloatingText").show_text("Recovering dice",self.color,false)
 		self.dice.set_position(5)
 
 func set_can_move_pieces(b):

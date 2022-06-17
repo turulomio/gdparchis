@@ -63,11 +63,10 @@ stream = ExtResource( 4 )
 process_mode = 0
 wait_time = 5.0
 
-[node name="FloatingText" parent="." instance=ExtResource( 5 )]
-visible = false
-
 [node name="TweenWaiting" type="Tween" parent="."]
 repeat = true
 playback/repeat = true
+
+[node name="FloatingText" parent="." instance=ExtResource( 5 )]
 
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
