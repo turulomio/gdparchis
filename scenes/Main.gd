@@ -39,7 +39,6 @@ func _input(_event):
 		print("Exiting from gdParchis due to exit action")
 		get_tree().quit()
 
-
-
-func _on_Github_pressed():
-	OS.shell_open("https://github.com/turulomio/gdparchis/")
+func _on_Github_gui_input(_event):
+	if _event.is_action_pressed("left_click"):
+		OS.shell_open("https://github.com/turulomio/gdparchis/")
