@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Options.gd" type="Script" id=1]
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=2]
+[ext_resource path="res://images/france.png" type="Texture" id=3]
+[ext_resource path="res://images/uk.png" type="Texture" id=4]
+[ext_resource path="res://images/spain.png" type="Texture" id=5]
 
 [node name="Options" type="Control"]
 anchor_right = 1.0
@@ -75,14 +78,17 @@ text = "Game difficulty"
 
 [node name="Difficulty" type="OptionButton" parent="VBoxContainer/HBDifficulty"]
 margin_left = 478.0
-margin_right = 507.0
+margin_right = 652.0
 margin_bottom = 55.0
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
+text = "Easy"
+items = [ "Easy", null, false, 0, null, "Normal", null, false, 1, null, "Difficult", null, false, 2, null ]
+selected = 0
 
 [node name="HBLanguages" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 305.0
 margin_right = 790.0
-margin_bottom = 360.0
+margin_bottom = 361.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBLanguages"]
 margin_top = 3.0
@@ -93,14 +99,18 @@ text = "Language"
 
 [node name="Language" type="OptionButton" parent="VBoxContainer/HBLanguages"]
 margin_left = 282.0
-margin_right = 311.0
-margin_bottom = 55.0
+margin_right = 600.0
+margin_bottom = 56.0
 custom_colors/font_color = Color( 0, 0, 1, 1 )
+text = "Español"
+icon = ExtResource( 5 )
+items = [ "English", ExtResource( 4 ), false, 0, null, "Español", ExtResource( 5 ), false, 1, null, "French", ExtResource( 3 ), false, 2, null ]
+selected = 1
 
 [node name="Return" type="Button" parent="VBoxContainer"]
-margin_top = 364.0
+margin_top = 365.0
 margin_right = 790.0
-margin_bottom = 419.0
+margin_bottom = 420.0
 rect_pivot_offset = Vector2( 79, 10 )
 text = "Return"
 
