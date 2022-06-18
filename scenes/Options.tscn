@@ -27,8 +27,10 @@ alignment = 1
 margin_right = 895.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
+custom_colors/font_color_focus = Color( 0.968627, 1, 0, 1 )
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.968627, 1, 0, 1 )
+custom_constants/hseparation = 10
 text = "Full window mode"
 
 [node name="Sound" type="CheckBox" parent="VBoxContainer"]
@@ -38,6 +40,7 @@ margin_bottom = 204.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/font_color = Color( 0, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
+custom_constants/hseparation = 10
 text = "Sound"
 
 [node name="AutomaticDice" type="CheckBox" parent="VBoxContainer"]
@@ -47,6 +50,7 @@ margin_bottom = 308.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_constants/hseparation = 10
 text = "Automatic dice"
 
 [node name="HBAutosaves" type="HBoxContainer" parent="VBoxContainer"]
@@ -90,11 +94,15 @@ text = "Game difficulty  "
 [node name="Difficulty" type="OptionButton" parent="VBoxContainer/HBDifficulty"]
 margin_left = 521.0
 margin_top = 22.0
-margin_right = 695.0
+margin_right = 703.0
 margin_bottom = 77.0
 size_flags_vertical = 4
+custom_colors/font_color_disabled = Color( 0.968627, 1, 0, 1 )
+custom_colors/font_color_focus = Color( 0.968627, 1, 0, 1 )
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
+custom_colors/font_color_hover = Color( 0.968627, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.968627, 1, 0, 1 )
+custom_constants/hseparation = 10
 text = "Easy"
 align = 1
 items = [ "Easy", null, false, 0, null, "Normal", null, false, 1, null, "Difficult", null, false, 2, null ]
@@ -116,11 +124,15 @@ text = "Language  "
 [node name="Language" type="OptionButton" parent="VBoxContainer/HBLanguages"]
 margin_left = 325.0
 margin_top = 22.0
-margin_right = 643.0
+margin_right = 659.0
 margin_bottom = 78.0
 size_flags_vertical = 4
+custom_colors/font_color_disabled = Color( 0, 0, 1, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 1, 1 )
 custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
+custom_constants/hseparation = 10
 text = "Español"
 icon = ExtResource( 5 )
 align = 1
