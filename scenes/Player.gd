@@ -20,7 +20,6 @@ func _init(_id,_plays,_ia):
 	self.id=_id
 	self.e_color=_id
 	self.color=Globals.colorn(self.e_color)
-	print("player color",self.color,self.e_color)
 	self.plays=_plays
 	self.ia=_ia
 
@@ -58,7 +57,7 @@ func set_can_throw_dice(v):
 		
 	## If a piece hits dice during game and falls, needs to be repositioned
 	if self.dice.global_transform.origin.y<0:
-		self.dice.get_node("FloatingText").show_text("Recovering dice",self.color,false)
+		self.dice.get_node("FloatingText").show_text("Recovering dice",self.color)
 		self.dice.set_position(5)
 
 func set_can_move_pieces(b):

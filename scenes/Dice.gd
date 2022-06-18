@@ -33,17 +33,17 @@ func set_position(h):
 func simulate_value(v:int) -> void:
 	match(v):
 		1:
-			self.global_rotate(Vector3(0,0,1), PI/2)
+			self.global_rotate(Vector3(0,0,1).normalized(), PI/2)
 		2:
-			self.global_rotate(Vector3(1,0,0), PI)
+			self.global_rotate(Vector3(1,0,0).normalized(), PI)
 		3:
-			self.global_rotate(Vector3(1,0,0), PI/2)
+			self.global_rotate(Vector3(1,0,0).normalized(), PI/2)
 		4:
-			self.global_rotate(Vector3(1,0,0), 3*PI/2)
+			self.global_rotate(Vector3(1,0,0).normalized(), 3*PI/2)
 		5:
-			self.global_rotate(Vector3(0,0,0), PI)
+			self.global_rotate(Vector3(0,0,0).normalized(), PI)
 		6:
-			self.global_rotate(Vector3(0,0,1), 3*PI/2)
+			self.global_rotate(Vector3(0,0,1).normalized(), 3*PI/2)
 			
 			
 func launch():
@@ -52,6 +52,7 @@ func launch():
 	self.value=null
 	self.has_touch=false
 	
+	self.set_physics_process(true)
 	## Fake dice
 	if len(Globals.game_data["fake_dice"])>0:
 		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
@@ -60,17 +61,16 @@ func launch():
 		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
 	else:
 		randomize()
-		self.simulate_value(int(rand_range(1,6.99)))
+		print(int(rand_range(1,6.99)))
+		#self.simulate_value(int(rand_range(1,6.99)))
 		self.set_position(rand_range(5,15))
 		
 		
 		var x = rand_range(-10,10)
 		var y = rand_range(-10,10)
 		var z = rand_range(-10,10)
-		self.transform.rotated(Vector3(x,y,z).normalized(), rand_range(0, 2*PI))
-		self.set_linear_velocity(Vector3(rand_range(0,3), rand_range(0,3) ,rand_range(0,3)))
-		set_angular_velocity(Vector3(x,y,z))
-	self.set_physics_process(true)
+		self.set_linear_velocity(Vector3(rand_range(-3,3), rand_range(-3,3) ,rand_range(-3,3)))
+		self.set_angular_velocity(Vector3(x,y,z))
 
 	
 func _physics_process(_delta):
@@ -79,17 +79,18 @@ func _physics_process(_delta):
 
 	
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
-		print("Dice " + str(self.id) + " gets a "+ str(self.value))
+		var s="Dice " + str(self.id) + " gets a "+ str(self.value)
 		$RelaunchTimer.stop()
 		
 		self.set_physics_process(false)
 		## Fake dice
 		if len(Globals.game_data["fake_dice"])>0:
 			 self.value=int(Globals.game_data["fake_dice"].pop_front())
-			 $FloatingText.show_text("Fake dice: %d" % self.value, self.player.color, false)
+			 print("Fake dice: {0}".format([self.value]))
+			 $FloatingText.show_text("Fake dice: {0}".format([self.value]), self.player.color)
 		else:
-			 $FloatingText.show_text("Dice: %d" % self.value, self.player.color, false)
-
+			 $FloatingText.show_text(s, self.player.color)
+		yield($FloatingText, "text_disappear")
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
 		self.historical_report()
@@ -185,10 +186,10 @@ func _on_RelaunchTimer_timeout():
 	if $RelaunchTimer.is_stopped():
 		return
 	else:
-		self.transform.rotated(Vector3.ZERO, 0)
+		self.global_transform.rotated(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
-		$FloatingText.show_text("Recovering dice",self.player.color, false)
+		$FloatingText.show_text("Recovering dice",self.player.color)
 		self.player.can_throw_dice
 		self.launch()
 

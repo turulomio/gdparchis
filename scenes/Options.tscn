@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/Options.gd" type="Script" id=1]
-[ext_resource path="res://themes/FreshmanMiddle.tres" type="Theme" id=2]
+[ext_resource path="res://themes/Freshman.tres" type="Theme" id=2]
 
 [node name="Options" type="Control"]
 anchor_right = 1.0
@@ -14,94 +14,93 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -404.0
-margin_top = -293.0
-margin_right = -62.9999
-margin_bottom = -97.9999
-rect_scale = Vector2( 2.47677, 2.74072 )
+margin_left = -395.0
+margin_top = -209.5
+margin_right = 395.0
+margin_bottom = 209.5
 alignment = 1
 
 [node name="FullScreen" type="CheckBox" parent="VBoxContainer"]
-margin_right = 445.0
-margin_bottom = 33.0
+margin_right = 790.0
+margin_bottom = 57.0
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
 text = "Full window mode"
 
 [node name="Sound" type="CheckBox" parent="VBoxContainer"]
-margin_top = 37.0
-margin_right = 445.0
-margin_bottom = 70.0
+margin_top = 61.0
+margin_right = 790.0
+margin_bottom = 118.0
 custom_colors/font_color = Color( 0, 0, 1, 1 )
 text = "Sound"
 
 [node name="AutomaticDice" type="CheckBox" parent="VBoxContainer"]
-margin_top = 74.0
-margin_right = 445.0
-margin_bottom = 107.0
+margin_top = 122.0
+margin_right = 790.0
+margin_bottom = 179.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "Automatic dice"
 
 [node name="HBAutosaves" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 111.0
-margin_right = 445.0
-margin_bottom = 146.0
+margin_top = 183.0
+margin_right = 790.0
+margin_bottom = 242.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBAutosaves"]
 margin_top = 5.0
-margin_right = 299.0
-margin_bottom = 30.0
+margin_right = 548.0
+margin_bottom = 54.0
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "Autosaves number"
 
 [node name="Autosaves" type="LineEdit" parent="VBoxContainer/HBAutosaves"]
-margin_left = 303.0
-margin_right = 445.0
-margin_bottom = 35.0
+margin_left = 552.0
+margin_right = 790.0
+margin_bottom = 59.0
 custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
 text = "10"
 align = 1
 max_length = 3
 
 [node name="HBDifficulty" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 150.0
-margin_right = 445.0
-margin_bottom = 181.0
+margin_top = 246.0
+margin_right = 790.0
+margin_bottom = 301.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBDifficulty"]
 margin_top = 3.0
-margin_right = 260.0
-margin_bottom = 28.0
+margin_right = 474.0
+margin_bottom = 52.0
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
 text = "Game difficulty"
 
 [node name="Difficulty" type="OptionButton" parent="VBoxContainer/HBDifficulty"]
-margin_left = 264.0
-margin_right = 293.0
-margin_bottom = 31.0
+margin_left = 478.0
+margin_right = 507.0
+margin_bottom = 55.0
 custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
 
 [node name="HBLanguages" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 185.0
-margin_right = 445.0
-margin_bottom = 216.0
+margin_top = 305.0
+margin_right = 790.0
+margin_bottom = 360.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBLanguages"]
 margin_top = 3.0
-margin_right = 150.0
-margin_bottom = 28.0
+margin_right = 278.0
+margin_bottom = 52.0
 custom_colors/font_color = Color( 0, 0, 1, 1 )
 text = "Language"
 
 [node name="Language" type="OptionButton" parent="VBoxContainer/HBLanguages"]
-margin_left = 154.0
-margin_right = 183.0
-margin_bottom = 31.0
+margin_left = 282.0
+margin_right = 311.0
+margin_bottom = 55.0
 custom_colors/font_color = Color( 0, 0, 1, 1 )
 
 [node name="Return" type="Button" parent="VBoxContainer"]
-margin_top = 220.0
-margin_right = 445.0
-margin_bottom = 251.0
+margin_top = 364.0
+margin_right = 790.0
+margin_bottom = 419.0
 rect_pivot_offset = Vector2( 79, 10 )
 text = "Return"
 
