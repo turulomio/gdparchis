@@ -61,9 +61,8 @@ func launch():
 		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
 	else:
 		randomize()
-		print(int(rand_range(1,6.99)))
-		#self.simulate_value(int(rand_range(1,6.99)))
 		self.set_position(rand_range(5,15))
+		self.simulate_value(int(rand_range(1,6.99)))
 		
 		
 		var x = rand_range(-10,10)
@@ -80,6 +79,7 @@ func _physics_process(_delta):
 	
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
 		var s="Dice " + str(self.id) + " gets a "+ str(self.value)
+		print(s)
 		$RelaunchTimer.stop()
 		
 		self.set_physics_process(false)
@@ -88,15 +88,12 @@ func _physics_process(_delta):
 			 self.value=int(Globals.game_data["fake_dice"].pop_front())
 			 print("Fake dice: {0}".format([self.value]))
 			 $FloatingText.show_text("Fake dice: {0}".format([self.value]), self.player.color)
-		else:
-			 $FloatingText.show_text(s, self.player.color)
-		yield($FloatingText, "text_disappear")
+			 yield($FloatingText, "text_disappear")
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
-		self.historical_report()
 		emit_signal("dice_got_value")
 
-	elif self.value==null:
+	else:
 		if $RC1.is_colliding():
 			self.value=6
 			if self.has_touch==false:
@@ -186,7 +183,7 @@ func _on_RelaunchTimer_timeout():
 	if $RelaunchTimer.is_stopped():
 		return
 	else:
-		self.global_transform.rotated(Vector3.ZERO, 0)
+		self.global_rotate(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
 		$FloatingText.show_text("Recovering dice",self.player.color)

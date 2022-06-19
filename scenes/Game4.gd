@@ -68,7 +68,7 @@ func _ready():
 				square_position=square_position+1
 				piece.move_to_route_position(route.end_position(),0) 
 				yield(piece,"piece_moved")
-				piece.move_to_route_position(d_piece["route_position"], 0.15) 
+				piece.move_to_route_position(d_piece["route_position"], 0.05) 
 				yield(piece,"piece_moved")
 
 	# Start game

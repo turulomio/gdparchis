@@ -145,3 +145,5 @@ func ia_selects_piece_to_move():
 		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
 			return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
+
+
