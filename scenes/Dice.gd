@@ -31,19 +31,20 @@ func set_position(h):
 			
 ## Rotate dice to set value at the top of the dice
 func simulate_value(v:int) -> void:
+	self.global_rotate(Vector3(1,1,1).normalized(),0)
 	match(v):
 		1:
-			self.global_rotate(Vector3(0,0,1).normalized(), PI/2)
-		2:
 			self.global_rotate(Vector3(1,0,0).normalized(), PI)
+		2:
+			self.global_rotate(Vector3(0,0,1).normalized(), 3*PI/2)
 		3:
 			self.global_rotate(Vector3(1,0,0).normalized(), PI/2)
 		4:
 			self.global_rotate(Vector3(1,0,0).normalized(), 3*PI/2)
 		5:
-			self.global_rotate(Vector3(0,0,0).normalized(), PI)
+			self.global_rotate(Vector3(0,0,1).normalized(), PI/2)
 		6:
-			self.global_rotate(Vector3(0,0,1).normalized(), 3*PI/2)
+			self.global_rotate(Vector3(1,0,0).normalized(), 0)
 			
 			
 func launch():
