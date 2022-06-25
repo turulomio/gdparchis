@@ -77,7 +77,7 @@ func _ready():
 	self.players.current.can_move_pieces=false
 	self.players.current.dice_throws=[]
 	self.players.current.can_throw_dice=true
-	if self.players.current.ia==true:
+	if self.players.current.ia==true or Globals.settings["automatic"]==true:
 		self.players.current.dice.on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

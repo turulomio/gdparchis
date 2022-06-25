@@ -157,7 +157,7 @@ func on_clicked():
 	else:
 		if self.player.can_throw_dice_again():
 			self.player.can_throw_dice=true
-			if self.player.ia==true:
+			if self.player.ia==true or Globals.settings["automatic"]==true:
 				self.player.dice.on_clicked()
 		else:
 			self.player.game.players.change_current_player()
@@ -165,7 +165,7 @@ func on_clicked():
 
 func historical_report() -> void:
 	if len(self.historical)>0:
-		print("Dice %s:" % self.id)
+		print("Dice %s has been thrown %s times:" % [self.id, self.historical.size()])
 		print("  - 1: %d (%.2f%%)" % [ self.historical.count(1), float(self.historical.count(1))/len(self.historical)*100 ])
 		print("  - 2: %d (%.2f%%)" % [ self.historical.count(2), float(self.historical.count(2))/len(self.historical)*100 ])
 		print("  - 3: %d (%.2f%%)" % [ self.historical.count(3), float(self.historical.count(3))/len(self.historical)*100 ])

@@ -153,7 +153,7 @@ func load_settings():
 		settings={}
 		settings["full_screen"]=false
 		settings["installation_uuid"]=generate_uuid()
-		settings["automatic_dice"]=false
+		settings["automatic"]=false
 		settings["last_internet_update"]=null
 		settings["autosaves"]=10
 		settings["difficulty"]=eDifficulty.NORMAL

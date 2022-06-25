@@ -35,7 +35,7 @@ func change_current_player():
 	self.current.dice_throws=[]
 	self.current.extra_moves=[]
 	self.current.can_throw_dice=true
-	if self.current.ia==true:
+	if self.current.ia==true or Globals.settings["automatic"]==true:
 		self.current.dice.on_clicked()
 	else:#Not ia
 		Globals.save_game(self.current.game)

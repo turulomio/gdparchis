@@ -3,9 +3,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/FullScreen.pressed=Globals.settings["full_screen"]
-	$VBoxContainer/Sound.pressed=Globals.settings["sound"]
-	$VBoxContainer/AutomaticDice.pressed=Globals.settings["automatic_dice"]
+	$VBoxContainer/FullScreen.pressed=Globals.settings.get("full_screen",false)
+	$VBoxContainer/Sound.pressed=Globals.settings.get("sound",true)
+	$VBoxContainer/AutomaticDice.pressed=Globals.settings.get("automatic",false)
 	$VBoxContainer/HBAutosaves/Autosaves.text=str(Globals.settings["autosaves"])
 	
 	$VBoxContainer/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
@@ -22,7 +22,7 @@ func _on_FullScreen_toggled(button_pressed):
 	OS.window_fullscreen = button_pressed
 
 func _on_AutomaticDice_toggled(button_pressed):
-	Globals.settings["automatic_dice"]=button_pressed
+	Globals.settings["automatic"]=button_pressed
 
 
 func _on_Autosaves_text_changed(new_text):
