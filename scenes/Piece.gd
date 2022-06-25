@@ -12,9 +12,13 @@ var route: Route
 var route_position: int 
 var square_position: int
 ## turn status ts. Variables que se borran cada vez que se cambia de turno con player.reset_...
-var can_move=null  setget set_can_move,get_can_move #Null if it's not calculated or boolean  if it's calculated
-var can_eat=null  setget set_can_eat, get_can_eat #Null if it's not calculated or boolean  if it's calculated
-var threats_before=null  setget set_threats_before,get_threats_before #Null if it's not calculated or integer if it's calculated
+## Can move at squares_to move. Used to avoid calculating many times.
+var can_move_stm=null  setget set_can_move_stm,get_can_move_stm #Null if it's not calculated or boolean  if it's calculated
+var can_eat_before_stm=null  setget set_can_eat_before_stm, get_can_eat_after_stm #Null if it's not calculated or boolean  if it's calculated
+var can_eat_after_stm=null  setget set_can_eat_after_stm, get_can_eat_after_stm #Null if it's not calculated or boolean  if it's calculated
+var can_eat_stm=null  setget set_can_eat_stm, get_can_eat_stm #Null if it's not calculated or boolean  if it's calculated
+
+var threats_before=null  setget set_threats_before,get_threats_before #Null if it's not calculated or integer if it's calculated1
 var threats_after=null  setget set_threats_after,get_threats_after #Null if it's not calculated or integer if it's calculated
 
 #animation movement
@@ -125,14 +129,6 @@ func squares_to_move():
 	else:
 		return self.player.last_throw()
 	
-## Returns true if after move has eaten
-func has_eaten_after_move():
-	## In square after move
-	var s=self.square()
-	if s.pieces_count()==2 and s.type==Globals.eSquareTypes.NORMAL and s.pieces[0].player!=s.pieces[1].player:
-		return true
-	return false
-
 	
 func am_i_in_a_barrier_of_my_player():
 	var s=self.square()
@@ -145,7 +141,7 @@ func am_i_in_a_barrier_of_my_player():
 ## Para comer a veces se necesita comer antes del movimiento
 ## Por ejemplo sacar un 5 con una casilla en START y habiendo dos ficheas distintas al usuario que sale
 ## Devuelve null o la ficha a comer
-func has_eaten_before_move():
+func piece_to_eat_before_move():
 	var square_initial=self.square()
 	var square_final=self.route.square_at(self.route_position+self.squares_to_move())#After move
 
@@ -158,25 +154,22 @@ func has_eaten_before_move():
 func on_clicked():
 	var has_eaten_before=false	
 	var has_eaten_after=false
-	if self.can_move:
-		var eaten_before=self.has_eaten_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
-		if eaten_before!=null:
+	if self.can_move_stm:
+		if self.can_eat_before_stm:
+			var eaten_before=self.piece_to_eat_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
 			has_eaten_before=true
 			$Eat.play()
 			eaten_before.move_to_route_position(0)
 			yield(eaten_before,"piece_moved")
 		
-		
 		self.move_to_route_position(self.route_position+self.squares_to_move())
-		
-		yield(self,"piece_moved")
-		
+		yield(self,"piece_moved")		
 		
 		#Must be before has_eaten, pero no before
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
 			self.player.extra_moves.pop_front()
 			
-		if has_eaten_before==false and self.has_eaten_after_move():#Si come antes no come después
+		if has_eaten_before==false and can_eat_after_stm:#Si come antes no come después
 			has_eaten_after=true
 			$Eat.play()
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
@@ -274,22 +267,53 @@ func _on_TweenMoving_tween_all_completed():
 	self.animation_positions=null
 	emit_signal("piece_moved")
 ## getter of can_move
-func get_can_move():
-	if can_move == null:	
-		can_move=self.can_move_to_route_position(self.route_position+self.squares_to_move())
-	return can_move
+func get_can_move_stm():
+	if can_move_stm == null:	
+		can_move_stm=self.can_move_to_route_position(self.route_position+self.squares_to_move())
+	return can_move_stm
 
 #setter of can_move
-func set_can_move(value):
-	can_move=value
+func set_can_move_stm(value):
+	can_move_stm=value
 
-func get_can_eat():
-	if can_eat == null:
-		can_eat=false
-	return can_eat
+# Returns a boolean if can_eat_at_that_position
+func can_eat_at_route_position(_route_position):
+	if self.can_move_to_route_position(_route_position):
+		var square_initial=self.square()
+		var square_final=self.route.square_at(_route_position)
+		
+		if square_final.pieces_count()==1 and square_final.type==Globals.eSquareTypes.NORMAL and square_final.pieces_objects()[0].player!=self.player:
+			return true
+	return false
 
-func set_can_eat(value):
-	can_eat=value
+
+
+func get_can_eat_stm():
+	if can_eat_stm == null:
+		can_eat_stm=can_eat_before_stm or can_eat_after_stm
+	return can_eat_stm
+
+func get_can_eat_before_stm():
+	if can_eat_before_stm == null:
+		if piece_to_eat_before_move()==null:
+			can_eat_before_stm= false
+		else:
+			can_eat_before_stm=true
+	return can_eat_before_stm
+
+func get_can_eat_after_stm():
+	if can_eat_after_stm == null:
+		can_eat_after_stm=can_eat_at_route_position(self.route_position+self.squares_to_move())
+	return can_eat_after_stm
+
+func set_can_eat_stm(value):
+	can_eat_stm=value
+	
+func set_can_eat_before_stm(value):
+	can_eat_before_stm=value
+	
+func set_can_eat_after_stm(value):
+	can_eat_after_stm=value
 	
 func get_threats_before():
 	if threats_before == null:

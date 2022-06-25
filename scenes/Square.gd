@@ -135,5 +135,10 @@ func set_piece_at_square_position(square_position,piece):
 	self.pieces[square_position]=piece
 	self.last_piece_to_arrive=piece
 	
-	
-	
+## Due to pieces has null values, returns all not null values
+func pieces_objects():
+	var r=[]
+	for p in pieces:
+		if p!=null:
+			r.append(p)
+	return r

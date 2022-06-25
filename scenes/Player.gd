@@ -90,7 +90,7 @@ func dice_throws_has_three_sixes():
 	return false
 	
 func can_move_other_piece():
-	if self.extra_moves.size()>0 and self.can_some_piece_move():
+	if self.extra_moves.size()>0 and self.can_some_piece_move_stm():
 		return true
 	return false
 	
@@ -105,9 +105,9 @@ func are_all_pieces_out_of_home():
 			return false
 	return true
 
-func can_some_piece_move():
+func can_some_piece_move_stm():
 	for p in self.pieces:
-		if p.can_move:
+		if p.can_move_stm:
 			return true
 	return false
 	
@@ -142,18 +142,20 @@ func some_piece_is_in_barrier_of_my_player():
 func ia_selects_piece_to_move():
 	print(Globals.difficulty_probability())
 	for p in self.pieces:
-		if p.can_move:
+		if p.can_move_stm:
 			return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
 
 
 
-## Reset pieces turn status (can_move, can_eat). 
+## Reset pieces turn status (can_move, can_eat).  at dice movemient
 ## Should be set after piece move or player_change
 func reset_pieces_turn_status():
 	for p in self.pieces:
-		p.can_move=null
-		p.can_eat=null
+		p.can_move_stm=null
+		p.can_eat_stm=null
+		p.can_eat_before_stm=null
+		p.can_eat_after_stm=null
 		p.threats_before=null
 		p.threats_after=null
 
