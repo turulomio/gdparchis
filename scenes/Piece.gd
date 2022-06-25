@@ -239,7 +239,7 @@ func must_move_to_first_square():
 
 	
 func TweenWaiting_method(rad):
-	self.global_transform.origin.y=1.25+sin(rad)/2
+	self.global_transform.origin.y=1.75+sin(rad)/2
 
 func TweenWaiting_start():
 	$TweenWaiting.interpolate_method(self,"TweenWaiting_method", 0, 2*PI, 1)

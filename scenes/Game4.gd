@@ -101,9 +101,16 @@ func _process(_delta):
 
 		
 	if Input.is_action_just_pressed("orto_view"):
-		camera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.1),Vector3.UP)
+		camera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.001),Vector3.UP)
+		camera.global_rotate(Vector3(0,1,0),PI)
+	if Input.is_action_just_pressed("yellow_view"):
+		camera.look_at_from_position(Vector3(-30,50,-30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_just_pressed("blue_view"):
-		camera.look_at_from_position(Vector3(-30,30,30),Vector3(0,3,0),Vector3.UP)
+		camera.look_at_from_position(Vector3(-30,50,30),Vector3(0,3,0),Vector3.UP)
+	if Input.is_action_just_pressed("red_view"):
+		camera.look_at_from_position(Vector3(30,50,30),Vector3(0,3,0),Vector3.UP)
+	if Input.is_action_just_pressed("green_view"):
+		camera.look_at_from_position(Vector3(30,50,-30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_pressed("zoom_in"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y-1
 	if Input.is_action_pressed("zoom_out"):
