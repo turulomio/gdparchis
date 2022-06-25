@@ -89,7 +89,7 @@ func dice_throws_has_three_sixes():
 		return true
 	return false
 	
-func can_move_other_piece():
+func can_move_other_piece_stm():
 	if self.extra_moves.size()>0 and self.can_some_piece_move_stm():
 		return true
 	return false
@@ -106,10 +106,17 @@ func are_all_pieces_out_of_home():
 	return true
 
 func can_some_piece_move_stm():
+	if pieces_can_move_stm().size()>0:
+		return true
+	return false
+
+## Returns a list of pieces that this player can move
+func pieces_can_move_stm():
+	var r=[]
 	for p in self.pieces:
 		if p.can_move_stm:
-			return true
-	return false
+			r.append(p)
+	return r
 	
 func some_piece_is_in_barrier():
 	for p in self.pieces:

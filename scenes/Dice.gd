@@ -154,6 +154,10 @@ func on_clicked():
 		self.player.can_move_pieces=true
 		if self.player.ia==true:
 			self.player.ia_selects_piece_to_move().on_clicked()
+		else: #Self player.ia false
+			var pieces_can_move_stm=self.player.pieces_can_move_stm()
+			if pieces_can_move_stm.size()==1: #Mandatory movement
+				pieces_can_move_stm[0].on_clicked()
 	else:
 		if self.player.can_throw_dice_again():
 			self.player.can_throw_dice=true

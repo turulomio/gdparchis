@@ -205,10 +205,14 @@ func on_clicked():
 		return
 	
 	## Estos if son excluyentes
-	if self.player.can_move_other_piece()==true:
+	if self.player.can_move_other_piece_stm()==true:
 		self.player.can_move_pieces=true
 		if self.player.ia==true:
 			self.player.ia_selects_piece_to_move().on_clicked()
+		else: #player.ia falseç
+			var pieces_can_move_stm=self.player.pieces_can_move_stm()
+			if pieces_can_move_stm.size()==1: #Mandatory movement
+				pieces_can_move_stm[0].on_clicked()
 		
 	elif self.player.can_throw_dice_again():
 		self.player.can_throw_dice=true
