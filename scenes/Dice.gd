@@ -140,7 +140,7 @@ func on_clicked():
 		if self.player.route.is_ramp(lpm.route_position)==true:
 			self.player.game.players.change_current_player()
 			return
-		elif lpm.can_move_to_route_position(lpm.route_position+lpm.squares_to_move())==false:
+		elif lpm.can_move==false:
 			self.player.game.players.change_current_player()
 			return
 		elif self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:

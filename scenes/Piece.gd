@@ -11,6 +11,11 @@ var player
 var route: Route
 var route_position: int 
 var square_position: int
+## turn status ts. Variables que se borran cada vez que se cambia de turno con player.reset_...
+var can_move=null  setget set_can_move,get_can_move #Null if it's not calculated or boolean  if it's calculated
+var can_eat=null  setget set_can_eat, get_can_eat #Null if it's not calculated or boolean  if it's calculated
+var threats_before=null  setget set_threats_before,get_threats_before #Null if it's not calculated or integer if it's calculated
+var threats_after=null  setget set_threats_after,get_threats_after #Null if it's not calculated or integer if it's calculated
 
 #animation movement
 var animation_positions=null #Will be an array of positions
@@ -153,9 +158,7 @@ func has_eaten_before_move():
 func on_clicked():
 	var has_eaten_before=false	
 	var has_eaten_after=false
-	if self.can_move_to_route_position(self.route_position+self.squares_to_move()):
-		
-
+	if self.can_move:
 		var eaten_before=self.has_eaten_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
 		if eaten_before!=null:
 			has_eaten_before=true
@@ -203,6 +206,7 @@ func on_clicked():
 			self.player.extra_moves.append(10)
 			
 		self.player.last_piece_moved=self
+		self.player.reset_pieces_turn_status()
 	else: # Ha pulsado una ficha que no se puede mover
 		$Click.play()
 		return
@@ -269,3 +273,36 @@ func TweenMoving_start(animation_to: Vector3, duration):
 func _on_TweenMoving_tween_all_completed():
 	self.animation_positions=null
 	emit_signal("piece_moved")
+## getter of can_move
+func get_can_move():
+	if can_move == null:	
+		can_move=self.can_move_to_route_position(self.route_position+self.squares_to_move())
+	return can_move
+
+#setter of can_move
+func set_can_move(value):
+	can_move=value
+
+func get_can_eat():
+	if can_eat == null:
+		can_eat=false
+	return can_eat
+
+func set_can_eat(value):
+	can_eat=value
+	
+func get_threats_before():
+	if threats_before == null:
+		threats_before=0
+	return threats_before
+
+func set_threats_before(value):
+	threats_before=value
+	
+func get_threats_after():
+	if threats_after == null:
+		threats_after=0
+	return threats_after
+
+func set_threats_after(value):
+	threats_after=value

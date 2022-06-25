@@ -107,7 +107,7 @@ func are_all_pieces_out_of_home():
 
 func can_some_piece_move():
 	for p in self.pieces:
-		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
+		if p.can_move:
 			return true
 	return false
 	
@@ -142,8 +142,18 @@ func some_piece_is_in_barrier_of_my_player():
 func ia_selects_piece_to_move():
 	print(Globals.difficulty_probability())
 	for p in self.pieces:
-		if p.can_move_to_route_position(p.route_position+p.squares_to_move()):
+		if p.can_move:
 			return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
 
+
+
+## Reset pieces turn status (can_move, can_eat). 
+## Should be set after piece move or player_change
+func reset_pieces_turn_status():
+	for p in self.pieces:
+		p.can_move=null
+		p.can_eat=null
+		p.threats_before=null
+		p.threats_after=null
 
