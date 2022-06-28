@@ -155,7 +155,7 @@ func piece_to_eat_before_move():
 func on_clicked():
 	var has_eaten_before=false	
 	var has_eaten_after=false
-	print(self.can_move_stm,self.can_eat_before_stm)
+	print(self.can_move_stm,self.can_eat_before_stm,self.can_eat_after_stm)
 	if self.can_move_stm==true:
 		if self.can_eat_before_stm==true:
 			var eaten_before=self.piece_to_eat_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
@@ -171,7 +171,7 @@ func on_clicked():
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
 			self.player.extra_moves.pop_front()
 			
-		if has_eaten_before==false and can_eat_after_stm:#Si come antes no come después
+		if has_eaten_before==false and self.can_eat_after_stm==true:#Si come antes no come después
 			has_eaten_after=true
 			$Eat.play()
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
@@ -311,6 +311,7 @@ func get_can_eat_before_stm():
 func get_can_eat_after_stm():
 	if can_eat_after_stm == null:
 		can_eat_after_stm=can_eat_at_route_position(self.route_position+self.squares_to_move())
+	print("CAN_EAT_AFTER", can_eat_after_stm)
 	return can_eat_after_stm
 
 func set_can_eat_stm(value):
