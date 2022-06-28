@@ -35,7 +35,6 @@ func change_current_player():
 	self.current.dice_throws=[]
 	self.current.extra_moves=[]
 	self.current.can_throw_dice=true
-	self.current.reset_pieces_turn_status()
 	if self.current.ia==true:
 		self.current.dice.on_clicked()
 	else:#Not ia

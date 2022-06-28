@@ -11,15 +11,6 @@ var player
 var route: Route
 var route_position: int 
 var square_position: int
-## turn status ts. Variables que se borran cada vez que se cambia de turno con player.reset_...
-## Can move at squares_to move. Used to avoid calculating many times.
-var can_move_stm=null  setget set_can_move_stm,get_can_move_stm #Null if it's not calculated or boolean  if it's calculated
-var can_eat_before_stm=null  setget set_can_eat_before_stm, get_can_eat_before_stm #Null if it's not calculated or boolean  if it's calculated
-var can_eat_after_stm=null  setget set_can_eat_after_stm, get_can_eat_after_stm #Null if it's not calculated or boolean  if it's calculated
-var can_eat_stm=null  setget set_can_eat_stm, get_can_eat_stm #Null if it's not calculated or boolean  if it's calculated
-
-var threats_before=null  setget set_threats_before,get_threats_before #Null if it's not calculated or integer if it's calculated1
-var threats_after=null  setget set_threats_after,get_threats_after #Null if it's not calculated or integer if it's calculated
 
 #animation movement
 var animation_positions=null #Will be an array of positions
@@ -147,7 +138,6 @@ func piece_to_eat_before_move():
 
 	if square_final.pieces_count()==2 and self.player.dice.value==5 and square_initial.type==Globals.eSquareTypes.START:
 		var ordered= square_final.pieces_different_to_me_ordered(self.player)
-		print("PIECES DIFFERENT", ordered)
 		if ordered!=null:
 			return ordered[0]
 	return null
@@ -155,15 +145,16 @@ func piece_to_eat_before_move():
 func on_clicked():
 	var has_eaten_before=false	
 	var has_eaten_after=false
-	print(self.can_move_stm,self.can_eat_before_stm,self.can_eat_after_stm)
-	if self.can_move_stm==true:
-		if self.can_eat_before_stm==true:
+	#print(self.can_move_stm,self.can_eat_before_stm,self.can_eat_after_stm)
+	if self.can_move_stm()==true:
+		if self.can_eat_before_stm()==true:
 			var eaten_before=self.piece_to_eat_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
 			has_eaten_before=true
 			$Eat.play()
 			eaten_before.move_to_route_position(0)
 			yield(eaten_before,"piece_moved")
 		
+		print(self.route_position)
 		self.move_to_route_position(self.route_position+self.squares_to_move())
 		yield(self,"piece_moved")		
 		
@@ -171,7 +162,9 @@ func on_clicked():
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
 			self.player.extra_moves.pop_front()
 			
-		if has_eaten_before==false and self.can_eat_after_stm==true:#Si come antes no come después
+			
+		print(self.route_position)
+		if has_eaten_before==false and self.can_eat_at_route_position(self.route_position,true)==true:#Si come antes no come después. y lo hace ya en el nuevo route_position despues del movimiento
 			has_eaten_after=true
 			$Eat.play()
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
@@ -201,7 +194,6 @@ func on_clicked():
 			self.player.extra_moves.append(10)
 			
 		self.player.last_piece_moved=self
-		self.player.reset_pieces_turn_status()
 	else: # Ha pulsado una ficha que no se puede mover
 		$Click.play()
 		return
@@ -220,6 +212,9 @@ func on_clicked():
 		self.player.can_throw_dice=true
 		if self.player.ia==true:
 			self.player.dice.on_clicked()
+		else:#Not ia
+			if Globals.settings.get("automatic",true)==true:
+				self.player.dice.on_clicked()
 	else:
 		self.player.game.players.change_current_player()
 		
@@ -273,68 +268,30 @@ func _on_TweenMoving_tween_all_completed():
 	self.animation_positions=null
 	emit_signal("piece_moved")
 ## getter of can_move
-func get_can_move_stm():
-	if can_move_stm == null:	
-		can_move_stm=self.can_move_to_route_position(self.route_position+self.squares_to_move())
-	return can_move_stm
-
-#setter of can_move
-func set_can_move_stm(value):
-	can_move_stm=value
+func can_move_stm():
+	 return self.can_move_to_route_position(self.route_position+self.squares_to_move())
 
 # Returns a boolean if can_eat_at_that_position
-func can_eat_at_route_position(_route_position):
-	print("CANMOVEW",self.can_move_to_route_position(_route_position))
-	if self.can_move_to_route_position(_route_position):
-		var square_initial=self.square()
-		var square_final=self.route.square_at(_route_position)
-		print("AQUIN")
-		if square_final.pieces_count()==1 and square_final.type==Globals.eSquareTypes.NORMAL and square_final.pieces_objects()[0].player!=self.player:
+# @param check_after_movement, por defecto true, primero mueve y luego comprueba
+func can_eat_at_route_position(_route_position, check_after_movement):
+	var square=self.route.square_at(_route_position)
+	if check_after_movement==false and self.can_move_to_route_position(_route_position): #chequeo antes de mover y comprueba que3 mueve
+		if square.pieces_count()==1 and square.type==Globals.eSquareTypes.NORMAL and square.pieces_objects()[0].player!=self.player:
+			return true
+	else: #chequeo despues de mover
+		if square.pieces_count()==2 and square.type==Globals.eSquareTypes.NORMAL and square.pieces_different_to_me_ordered(self.player)!=null:
 			return true
 	return false
 
+func can_eat_before_stm():
+	if piece_to_eat_before_move()==null:
+		return false
+	else:
+		return true
 
+func threats_before():
+	return 0
 
-func get_can_eat_stm():
-	if can_eat_stm == null:
-		can_eat_stm=can_eat_before_stm or can_eat_after_stm
-	return can_eat_stm
-
-func get_can_eat_before_stm():
-	if can_eat_before_stm == null:
-		if piece_to_eat_before_move()==null:
-			can_eat_before_stm= false
-		else:
-			can_eat_before_stm=true
-	return can_eat_before_stm
-
-func get_can_eat_after_stm():
-	if can_eat_after_stm == null:
-		can_eat_after_stm=can_eat_at_route_position(self.route_position+self.squares_to_move())
-	print("CAN_EAT_AFTER", can_eat_after_stm)
-	return can_eat_after_stm
-
-func set_can_eat_stm(value):
-	can_eat_stm=value
 	
-func set_can_eat_before_stm(value):
-	can_eat_before_stm=value
-	
-func set_can_eat_after_stm(value):
-	can_eat_after_stm=value
-	
-func get_threats_before():
-	if threats_before == null:
-		threats_before=0
-	return threats_before
-
-func set_threats_before(value):
-	threats_before=value
-	
-func get_threats_after():
-	if threats_after == null:
-		threats_after=0
-	return threats_after
-
-func set_threats_after(value):
-	threats_after=value
+func threats_after():
+	return 0

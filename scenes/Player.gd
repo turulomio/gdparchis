@@ -79,10 +79,6 @@ func is_current():
 		return true
 	return false
 	
-func last_throw_was_a_six():
-	if self.dice_throws[self.dice_throws.size()-1]==6 and self.dice_throws.size()<3:
-		return true
-	return false
 	
 func dice_throws_has_three_sixes():
 	if self.dice_throws.size()==3 and self.dice_throws[0]==6 and self.dice_throws[1]==6 and self.dice_throws[2]==6:
@@ -95,7 +91,7 @@ func can_move_other_piece_stm():
 	return false
 	
 func can_throw_dice_again():
-	if self.last_throw_was_a_six():
+	if self.dice.value==6 and self.dice_throws.size()<3:
 		return true
 	return false
 	
@@ -114,7 +110,7 @@ func can_some_piece_move_stm():
 func pieces_can_move_stm():
 	var r=[]
 	for p in self.pieces:
-		if p.can_move_stm:
+		if p.can_move_stm():
 			r.append(p)
 	return r
 	
@@ -149,20 +145,9 @@ func some_piece_is_in_barrier_of_my_player():
 func ia_selects_piece_to_move():
 	print(Globals.difficulty_probability())
 	for p in self.pieces:
-		if p.can_move_stm:
+		if p.can_move_stm():
 			return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
 
 
-
-## Reset pieces turn status (can_move, can_eat).  at dice movemient
-## Should be set after piece move or player_change
-func reset_pieces_turn_status():
-	for p in self.pieces:
-		p.can_move_stm=null
-		p.can_eat_stm=null
-		p.can_eat_before_stm=null
-		p.can_eat_after_stm=null
-		p.threats_before=null
-		p.threats_after=null
 
