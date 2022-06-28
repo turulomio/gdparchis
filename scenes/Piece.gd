@@ -14,7 +14,7 @@ var square_position: int
 ## turn status ts. Variables que se borran cada vez que se cambia de turno con player.reset_...
 ## Can move at squares_to move. Used to avoid calculating many times.
 var can_move_stm=null  setget set_can_move_stm,get_can_move_stm #Null if it's not calculated or boolean  if it's calculated
-var can_eat_before_stm=null  setget set_can_eat_before_stm, get_can_eat_after_stm #Null if it's not calculated or boolean  if it's calculated
+var can_eat_before_stm=null  setget set_can_eat_before_stm, get_can_eat_before_stm #Null if it's not calculated or boolean  if it's calculated
 var can_eat_after_stm=null  setget set_can_eat_after_stm, get_can_eat_after_stm #Null if it's not calculated or boolean  if it's calculated
 var can_eat_stm=null  setget set_can_eat_stm, get_can_eat_stm #Null if it's not calculated or boolean  if it's calculated
 
@@ -147,6 +147,7 @@ func piece_to_eat_before_move():
 
 	if square_final.pieces_count()==2 and self.player.dice.value==5 and square_initial.type==Globals.eSquareTypes.START:
 		var ordered= square_final.pieces_different_to_me_ordered(self.player)
+		print("PIECES DIFFERENT", ordered)
 		if ordered!=null:
 			return ordered[0]
 	return null
@@ -154,8 +155,9 @@ func piece_to_eat_before_move():
 func on_clicked():
 	var has_eaten_before=false	
 	var has_eaten_after=false
-	if self.can_move_stm:
-		if self.can_eat_before_stm:
+	print(self.can_move_stm,self.can_eat_before_stm)
+	if self.can_move_stm==true:
+		if self.can_eat_before_stm==true:
 			var eaten_before=self.piece_to_eat_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
 			has_eaten_before=true
 			$Eat.play()
@@ -282,10 +284,11 @@ func set_can_move_stm(value):
 
 # Returns a boolean if can_eat_at_that_position
 func can_eat_at_route_position(_route_position):
+	print("CANMOVEW",self.can_move_to_route_position(_route_position))
 	if self.can_move_to_route_position(_route_position):
 		var square_initial=self.square()
 		var square_final=self.route.square_at(_route_position)
-		
+		print("AQUIN")
 		if square_final.pieces_count()==1 and square_final.type==Globals.eSquareTypes.NORMAL and square_final.pieces_objects()[0].player!=self.player:
 			return true
 	return false

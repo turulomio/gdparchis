@@ -40,6 +40,6 @@ func change_current_player():
 		self.current.dice.on_clicked()
 	else:#Not ia
 		Globals.save_game(self.current.game)
-		if Globals.settings["automatic"]==true:
+		if Globals.settings.get("automatic",true)==true:
 			self.current.dice.on_clicked()
 	
