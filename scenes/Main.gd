@@ -1,5 +1,9 @@
 extends Control
 
+# Called when the node enters the scene tree for the first time.
+func _ready():	
+	$CanvasLayer/Version.text="Version: {0}".format([Globals.VERSION])
+
 
 
 func _on_Exit_pressed():

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://themes/FreshmanMiddle.tres" type="Theme" id=2]
 [ext_resource path="res://themes/FreshmanSmall.tres" type="Theme" id=3]
 [ext_resource path="res://images/github.webp" type="Texture" id=5]
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=6]
@@ -21,13 +22,24 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -70.0
-margin_top = -70.0
-margin_right = -6.0
-margin_bottom = -6.0
+margin_left = -80.0
+margin_top = -80.0
+margin_right = -20.0
+margin_bottom = -20.0
 rect_min_size = Vector2( 64, 64 )
 texture = ExtResource( 5 )
 expand = true
+
+[node name="Version" type="Label" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -80.0
+margin_right = 200.0
+margin_bottom = -27.0
+theme = ExtResource( 2 )
+align = 1
+valign = 2
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_left = 0.5
