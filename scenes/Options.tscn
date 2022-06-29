@@ -17,14 +17,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -651.5
+margin_left = -502.0
 margin_top = -362.0
-margin_right = 651.5
+margin_right = 502.0
 margin_bottom = 362.0
 alignment = 1
 
 [node name="FullScreen" type="CheckBox" parent="VBoxContainer"]
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/font_color_disabled = Color( 0.968627, 1, 0, 1 )
@@ -38,7 +38,7 @@ text = "Full window mode"
 
 [node name="Sound" type="CheckBox" parent="VBoxContainer"]
 margin_top = 104.0
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 204.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/font_color_disabled = Color( 0, 0, 1, 1 )
@@ -52,7 +52,7 @@ text = "Sound"
 
 [node name="AutomaticDice" type="CheckBox" parent="VBoxContainer"]
 margin_top = 208.0
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 308.0
 rect_min_size = Vector2( 0, 100 )
 hint_tooltip = "The dice is automatically rolled\\
@@ -66,11 +66,11 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
 custom_constants/hseparation = 10
-text = "Automatic dice and mandatory movements"
+text = "Automatic dice and movements"
 
 [node name="HBAutosaves" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 312.0
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 412.0
 rect_min_size = Vector2( 0, 100 )
 
@@ -95,7 +95,7 @@ max_length = 3
 
 [node name="HBDifficulty" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 416.0
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 516.0
 rect_min_size = Vector2( 0, 100 )
 
@@ -126,7 +126,7 @@ selected = 0
 
 [node name="HBLanguages" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 520.0
-margin_right = 1303.0
+margin_right = 1004.0
 margin_bottom = 620.0
 rect_min_size = Vector2( 0, 100 )
 
@@ -157,9 +157,9 @@ items = [ "English", ExtResource( 4 ), false, 0, null, "Español", ExtResource( 
 selected = 1
 
 [node name="Return" type="Button" parent="VBoxContainer"]
-margin_left = 541.0
+margin_left = 392.0
 margin_top = 624.0
-margin_right = 761.0
+margin_right = 612.0
 margin_bottom = 724.0
 rect_min_size = Vector2( 200, 100 )
 rect_pivot_offset = Vector2( 79, 10 )
