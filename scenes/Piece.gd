@@ -181,7 +181,7 @@ func on_clicked():
 		if self.player.has_won():
 			$Won.play()
 			
-			$FloatingText.show_text("Player {0} wins".format([self.player.name]), self.player.color)
+			$FloatingText.show_text(tr("Player {0} wins").format([self.player.name]), self.player.color)
 			yield($FloatingText,"text_disappear")
 			get_tree().change_scene("res://scenes/Main.tscn")
 			return

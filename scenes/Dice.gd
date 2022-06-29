@@ -191,7 +191,7 @@ func _on_RelaunchTimer_timeout():
 		self.global_rotate(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
-		$FloatingText.show_text("Recovering dice",self.player.color)
+		$FloatingText.show_text(tr("Recovering dice"),self.player.color)
 		self.player.can_throw_dice
 		self.launch()
 

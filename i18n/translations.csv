@@ -8,11 +8,18 @@ Exit,Exit,Salir,Sortir
 Fake dice: {0},Fake dice: {0},Dado trucado: {0},Fake dice: {0}
 Full window mode,Full window mode,Modo de pantalla completa,Full window mode
 Game difficulty  ,Game difficulty  ,Dificultad del juego  ,Game difficulty  
+IA?,IA?,¿IA?,IA?
 Language  ,Language  ,Idioma  ,Language  
+Let's see who starts,Let's see who starts,Veamos quién empieza,Let's see who starts
 Load game,Load game,Cargar juego,Chargement du jeu
 Normal,Normal,Normal,Normal
+Player {0} starts,Player {0} starts,El jugador {0} comienza,Player {0} starts
+Player {0} wins,Player {0} wins,El jugador {0} gana,Player {0} wins
+Plays?,Plays?,¿Juega?,Plays?
+Recovering dice,Recovering dice,Recuperando el dado,Recovering dice
 Return,Return,Volver,Return
 Settings,Settings,Configuración,Paramètre
 Sound,Sound,Sonido,Sound
+Start game,Start game,Inicia el juego,Start game
 
 
