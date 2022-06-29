@@ -88,7 +88,7 @@ func _physics_process(_delta):
 		if len(Globals.game_data["fake_dice"])>0:
 			 self.value=int(Globals.game_data["fake_dice"].pop_front())
 			 print("Fake dice: {0}".format([self.value]))
-			 $FloatingText.show_text("Fake dice: {0}".format([self.value]), self.player.color)
+			 $FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player.color)
 			 yield($FloatingText, "text_disappear")
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)

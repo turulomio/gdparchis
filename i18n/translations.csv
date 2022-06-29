@@ -1,7 +1,18 @@
 key,en,es,fr
+4 players board,4 players board,Tablero de 4 jugadores,4 players board
+Automatic dice and movements,Automatic dice and movements,Dado y movimientos automáticos,Automatic dice and movements
+Autosaves number,Autosaves number,Número de autoguardados,Autosaves number
+Difficult,Difficult,Difícil,Difficult
+Easy,Easy,Fácil,Easy
 Exit,Exit,Salir,Sortir
-Hello,Hello,Hola,Hi
-Sound,Sound,Sonido,Sonidete
+Fake dice: {0},Fake dice: {0},Dado trucado: {0},Fake dice: {0}
+Full window mode,Full window mode,Modo de pantalla completa,Full window mode
+Game difficulty,Game difficulty,Dificultad del juego,Game difficulty
+Language,Language,Idioma,Language
 Load game,Load game,Cargar juego,Chargement du jeu
+Normal,Normal,Normal,Normal
+Return,Return,Volver,Return
 Settings,Settings,Configuración,Paramètre
+Sound,Sound,Sonido,Sound
+
 
