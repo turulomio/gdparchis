@@ -41,3 +41,19 @@ func _input(_event):
 func _on_Github_gui_input(_event):
 	if _event.is_action_pressed("left_click"):
 		OS.shell_open("https://github.com/turulomio/gdparchis/")
+
+
+func _on_Players4_mouse_entered():
+	$Click.play()
+
+
+func _on_Load_mouse_entered():
+	$Click.play()
+
+
+func _on_Options_mouse_entered():
+	$Click.play()
+
+
+func _on_Exit_mouse_entered():
+	$Click.play()

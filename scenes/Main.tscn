@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://themes/FreshmanMiddle.tres" type="Theme" id=2]
 [ext_resource path="res://themes/FreshmanSmall.tres" type="Theme" id=3]
+[ext_resource path="res://sounds/click.wav" type="AudioStream" id=4]
 [ext_resource path="res://images/github.webp" type="Texture" id=5]
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=6]
 
@@ -142,9 +143,16 @@ text = "Exit"
 flat = true
 expand_icon = true
 
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
 [connection signal="gui_input" from="CanvasLayer/Github" to="." method="_on_Github_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Load" to="." method="_on_Load_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
