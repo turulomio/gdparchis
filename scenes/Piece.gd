@@ -153,7 +153,6 @@ func on_clicked():
 			eaten_before.move_to_route_position(0)
 			yield(eaten_before,"piece_moved")
 		
-		print(self.route_position)
 		self.move_to_route_position(self.route_position+self.squares_to_move())
 		yield(self,"piece_moved")		
 		
@@ -161,8 +160,6 @@ func on_clicked():
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
 			self.player.extra_moves.pop_front()
 			
-			
-		print(self.route_position)
 		if has_eaten_before==false and self.can_eat_at_route_position(self.route_position,true)==true:#Si come antes no come después. y lo hace ya en el nuevo route_position despues del movimiento
 			has_eaten_after=true
 			$Eat.play()
@@ -287,15 +284,41 @@ func can_eat_before_stm():
 	else:
 		return true
 
-func threats_before():
-	var r=[]
-	if self.square().type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
-		return r
+## stalker it's a piece object, returns a dictionary
+## Show if a stalker piece thrreats current piece before movement
+func threats_before(stalker):
+	var square= self.square()
+
+	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
+		return false
+
 	if self.am_i_in_a_barrier_of_my_player():
-		return r
-	return r
+		return false
+		
+	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
+	var mysix
+
+	if stalker_pieces_all_out:
+		mysix=7
+	else:
+		mysix=6
+
+	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(self.stalker.square(),square) in [1,2,3,4,5,10,20,mysix]:
+		return true
+
+	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==square.color:
+		return true
+
+	return false
 	
+## stalker it's a piece object, returns a dictionary
+## Show if a stalker piece thrreats current piece after move squareares_to_move
 func threats_after():
-	var r=[]
-	return r
+	return false
+	
+func pieces_threat_it_before():
+	return []
+	
+func pieces_threat_it_after():
+	return []
 

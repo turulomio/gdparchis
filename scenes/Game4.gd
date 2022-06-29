@@ -7,6 +7,7 @@ var pieces
 var max_players
 var squares
 var routes
+var circle #Circle of square where  pieces can be eaten
 
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
@@ -32,6 +33,9 @@ func _ready():
 	for i in range(1,105):
 		self.squares.append(Square.new(i))
 
+	## Creating circle
+	self.circle=Circle.new(self.max_players,self.squares)
+	
 	## Creating routes
 	self.routes={}
 	for e_color in Globals.e_colors(self.max_players):
@@ -86,17 +90,17 @@ func _process(_delta):
 		var object=get_object_under_mouse()
 		if object == null:
 			return
-		if object.filename=="res://scenes/Piece.tscn":
+		if object is Piece:
 			if object.player==self.players.current and object.player.can_move_pieces:
 				object.on_clicked()
 			else:
 				$Click.play()
-		if object.filename=="res://scenes/Dice.tscn":
+		if object is Dice:
 			if object.player==self.players.current and object.player.can_throw_dice:
 				object.on_clicked()
 			else:
 				$Click.play()
-		if object.filename=="res://scenes/Assistant.tscn":
+		if object is Assistant:
 			self.players.change_current_player()
 
 		
@@ -123,3 +127,15 @@ func _process(_delta):
 		get_tree().change_scene("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen
+	if Input.is_action_just_pressed("right_click"):
+		var object=get_object_under_mouse()
+		if object == null:
+			return
+		if object is Piece:
+			if object.player==self.players.current and object.player.can_move_pieces:
+				print("Piece", str(object))
+				print("  + Can move: ", object.can_move_stm())
+				print("  + Can eat before: ", object.can_eat_before_stm())
+				print("  + Can eat after: ", object.can_eat_at_route_position(object.route_position+object.squares_to_move(),false))
+				print("  + Threats before: ", object.pieces_threat_it_before())
+				print("  + Threats before: ", object.pieces_threat_it_after())

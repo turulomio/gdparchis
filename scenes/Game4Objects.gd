@@ -27,6 +27,7 @@ func _ready():
 	for i in range(1,105):
 		self.squares.append(Square.new(i))
 
+
 	## Creating routes
 	self.routes={}
 	for e_color in Globals.e_colors(self.max_players):
@@ -83,9 +84,9 @@ func game4objects_move_to_route_position(piece,_route_position, duration):
 func _process(_delta):	
 	if Input.is_action_just_pressed("left_click"):
 		var object=get_object_under_mouse()
-		if object.filename=="res://scenes/Piece.tscn":
+		if object is Piece:
 			object.global_transform.origin.y=10
-		if object.filename=="res://scenes/Dice.tscn":
+		if object is Dice:
 			object.global_transform.origin.y=10
 			yield(object,"dice_got_value")
 			object.set_physics_process(true)

@@ -1,4 +1,5 @@
 extends StaticBody
+class_name Assistant
 
 
 # Declare member variables here. Examples:
