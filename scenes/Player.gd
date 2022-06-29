@@ -143,7 +143,15 @@ func some_piece_is_in_barrier_of_my_player():
 
 
 func ia_selects_piece_to_move():
-	print(Globals.difficulty_probability())
+	randomize()
+	#Find if can eat
+	for p in self.pieces:
+		#var attempt= rand_range(0,1)
+		var attempt=1
+		if p.can_move_stm() and p.can_eat_at_route_position(p.route_position+p.squares_to_move(),false) and attempt>Globals.difficulty_probability():
+			return p
+	
+	#Find a movable piece
 	for p in self.pieces:
 		if p.can_move_stm():
 			return p

@@ -3,7 +3,6 @@ class_name Piece
 
 
 signal piece_moved
-var floating_text=preload("res://scenes/FloatingText.tscn")
 var vel : Vector3 = Vector3(0,-30,0)
 
 var id : int =1000
@@ -181,10 +180,9 @@ func on_clicked():
 		## After move
 		if self.player.has_won():
 			$Won.play()
-			var text=floating_text.instance()
-			text.text="Player %s wins" % self.player.name
-			self.add_child(text)
-			yield(text,"text_disappear")
+			
+			$FloatingText.show_text("Player {0} wins".format([self.player.name]), self.player.color)
+			yield($FloatingText,"text_disappear")
 			get_tree().change_scene("res://scenes/Main.tscn")
 			return
 			
@@ -290,8 +288,14 @@ func can_eat_before_stm():
 		return true
 
 func threats_before():
-	return 0
-
+	var r=[]
+	if self.square().type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
+		return r
+	if self.am_i_in_a_barrier_of_my_player():
+		return r
+	return r
 	
 func threats_after():
-	return 0
+	var r=[]
+	return r
+

@@ -13,11 +13,6 @@ func _on_Players4_pressed():
 	Globals.game_data=Globals.new_game(4)
 	get_tree().change_scene("res://scenes/PlayersSelection.tscn")
 
-
-func _on_Players4All_pressed():
-	get_tree().change_scene("res://scenes/Game4Objects.tscn")
-
-
 func _on_FileDialog_file_selected(path):
 	var data=Globals.load_game(path)
 	if data["max_players"]==4:

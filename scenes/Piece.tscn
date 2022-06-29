@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/Piece.gd" type="Script" id=1]
 [ext_resource path="res://images/wood.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sounds/meter.wav" type="AudioStream" id=4]
 [ext_resource path="res://sounds/win.wav" type="AudioStream" id=5]
 [ext_resource path="res://sounds/comer.wav" type="AudioStream" id=6]
+[ext_resource path="res://scenes/FloatingText.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CylinderMesh" id=4]
 
@@ -45,5 +46,8 @@ playback/repeat = true
 
 [node name="TweenMoving" type="Tween" parent="."]
 playback_process_mode = 0
+
+[node name="FloatingText" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [connection signal="tween_all_completed" from="TweenMoving" to="." method="_on_TweenMoving_tween_all_completed"]
