@@ -132,10 +132,12 @@ func _process(_delta):
 		if object == null:
 			return
 		if object is Piece:
+			print("Piece", str(object), " ", object.player.name)
 			if object.player==self.players.current and object.player.can_move_pieces:
-				print("Piece", str(object))
 				print("  + Can move: ", object.can_move_stm())
 				print("  + Can eat before: ", object.can_eat_before_stm())
 				print("  + Can eat after: ", object.can_eat_at_route_position(object.route_position+object.squares_to_move(),false))
-				print("  + Threats before: ", object.pieces_threat_it_before())
-				print("  + Threats before: ", object.pieces_threat_it_after())
+			print("  + Threats before: ", object.threats_at(object.square()))
+				
+			if object.player==self.players.current and object.player.can_move_pieces:
+				print("  + Threats after: ", object.threats_at(object.route.square_at(object.route_position+object.squares_to_move())))

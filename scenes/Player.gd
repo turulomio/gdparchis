@@ -150,6 +150,13 @@ func ia_selects_piece_to_move():
 		var attempt=1
 		if p.can_move_stm() and p.can_eat_at_route_position(p.route_position+p.squares_to_move(),false) and attempt>Globals.difficulty_probability():
 			return p
+			
+	# Reduce risks
+	for p in self.pieces:
+		var square_final=p.route.square_at(p.route_position+p.squares_to_move()) #Could be null
+		if square_final and p.threats_at(p.square())>p.threats_at(square_final):
+			return p
+	
 	
 	#Find a movable piece
 	for p in self.pieces:

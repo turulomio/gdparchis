@@ -17,3 +17,6 @@ func keys():
 
 func get(id):
 	return self.d[str(id)]
+
+func has(id):
+	return self.d.has(str(id))

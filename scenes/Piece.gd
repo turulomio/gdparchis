@@ -47,39 +47,38 @@ func can_move_to_route_position(_route_position):
 	
 	##DEbe sacar si es un 5
 	if self.route.square_at(1).has_barrier_of_this_player(self.player)==false and  self.must_move_to_first_square()==false and self.player.can_some_piece_move_to_first_square()==true:
-		print("Piece.can_move_to_route_position can_move_to_first becouse other can")
+		#print("Piece.can_move_to_route_position can_move_to_first becouse other can")
 		return false
 	
 	#Solo sale con un 5
 	if square_initial.type==Globals.eSquareTypes.START and self.player.last_throw()!=5:
-		print("Piece.can_move_to_route_position Solo sale con un 5")
+		#print("Piece.can_move_to_route_position Solo sale con un 5")
 		return false
 
 	
 	
 	# Check if went more far that end
 	if square_final==null:		
-		print("Piece.can_move_to_route_position square_final null ")
+		#print("Piece.can_move_to_route_position square_final null ")
 		return false
 		
 	# Check if there is a barrier and must open with a six
 	if self.player.last_throw()==6 and self.player.some_piece_is_in_barrier_of_my_player()==true and self.am_i_in_a_barrier_of_my_player()==false:
-		print("Piece.can_move_to_route_position debe abrir barrera por 6 ")
+		#print("Piece.can_move_to_route_position debe abrir barrera por 6 ")
 		return false
 		
 	#Check if there is barrier
 	if self.route.is_there_barrier(self.route_position, _route_position):
-		print("Piece.can_move_to_route_position Hay bbarrera en ruta ")
+		#print("Piece.can_move_to_route_position Hay bbarrera en ruta ")
 		return false
 		
 	#Comprueba si hay  posición libre en casilla
 	var new_square_position=square_final.empty_position()
 	if self.must_move_to_first_square()==false and new_square_position ==-1:
-		
-		print("Piece.can_move_to_route_position No tiene posición libre en la casilla")
+		#print("Piece.can_move_to_route_position No tiene posición libre en la casilla")
 		return false
 		
-	print("Piece.can_move_to_route_position Piece can move")
+	#print("Piece.can_move_to_route_position Piece can move")
 	return true
 		
 ## Before this method always have to check if piece can move
@@ -284,15 +283,19 @@ func can_eat_before_stm():
 	else:
 		return true
 
-## stalker it's a piece object, returns a dictionary
-## Show if a stalker piece thrreats current piece before movement
-func threats_before(stalker):
-	var square= self.square()
 
+## Checks if a stalker piece threats me at a square
+func is_threating_me(stalker, square):
+	if stalker.square()==square:
+		return false
+		
+	if not self.player.game.circle.has(stalker.square().id):
+		return false
+	
 	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
 		return false
 
-	if self.am_i_in_a_barrier_of_my_player():
+	if square.has_barrier_of_this_player(self.player):
 		return false
 		
 	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
@@ -303,22 +306,21 @@ func threats_before(stalker):
 	else:
 		mysix=6
 
-	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(self.stalker.square(),square) in [1,2,3,4,5,10,20,mysix]:
+	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker.square(),square) in [1,2,3,4,5,10,20,mysix]:
 		return true
 
-	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==square.color:
+	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color):
 		return true
 
 	return false
 	
-## stalker it's a piece object, returns a dictionary
-## Show if a stalker piece thrreats current piece after move squareares_to_move
-func threats_after():
-	return false
-	
-func pieces_threat_it_before():
-	return []
-	
-func pieces_threat_it_after():
-	return []
 
+func threats_at(square):
+	var r=[]
+	for player in self.player.game.players.values():
+		if player==self.player: #Ignores piece player
+			continue
+		for stalker in player.pieces:
+			if self.is_threating_me(stalker, square):
+				r.append(stalker)
+	return r
