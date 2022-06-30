@@ -289,7 +289,7 @@ func is_threating_me(stalker, square):
 	if stalker.square()==square:
 		return false
 		
-	if not self.player.game.circle.has(stalker.square().id):
+	if not self.player.game.circle.is_square_in_circle(stalker.square()):
 		return false
 	
 	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:

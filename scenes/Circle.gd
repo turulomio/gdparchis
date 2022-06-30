@@ -16,6 +16,11 @@ func _init(_max_players:int, _squares:SquareManager):
 		self.append(self.squares.get(i))
 		
 	
+func is_square_in_circle(square):
+	if self.d.has(str(square.id)):
+		return true
+	return false
+	
 func square(square_origin,  displacement):
 		"""Calcula la casilla del circulo que tiene un desplazamiento positivo (hacia adelante) o negativo (hacia atras) 
 		de la casilla cuya posicion (id de la casilla) se ha dado como parametro"""
@@ -31,6 +36,12 @@ func square(square_origin,  displacement):
 		
 ## square_from must be before sqaure_to although has 68 as number
 func distance(square_from, square_to):
+	if not is_square_in_circle(square_from):
+		print("DISTANCE SQUARE FROM NOT IN CIRCLE")
+		return null
+	if not is_square_in_circle(square_to):
+		print("DISTANCE SQUARE TO NOT IN CIRCLE")
+		return null
 	if square_to.id>=square_from.id:
 		return square_to.id-square_from.id
 	else:
