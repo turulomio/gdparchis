@@ -126,14 +126,11 @@ func has_won():
 			return false
 	return true
 
-	
-
 func can_some_piece_move_to_first_square():
 	for p in self.pieces:
 		if p.must_move_to_first_square():
 			return true
 	return false
-	
 
 func some_piece_is_in_barrier_of_my_player():
 	for p in self.pieces:
@@ -144,24 +141,29 @@ func some_piece_is_in_barrier_of_my_player():
 
 func ia_selects_piece_to_move():
 	randomize()
-	#Find if can eat
+	
+	## Pieces can move
+	var pieces_can_move=[]
 	for p in self.pieces:
+		if p.can_move_stm():
+			pieces_can_move.append(p)
+			
+	for p in pieces_can_move:
 		#var attempt= rand_range(0,1)
 		var attempt=1
-		if p.can_move_stm() and p.can_eat_at_route_position(p.route_position+p.squares_to_move(),false) and attempt>Globals.difficulty_probability():
+		if p.can_eat_at_route_position(p.route_position+p.squares_to_move(),false) and attempt>Globals.difficulty_probability():
 			return p
-			
 	# Reduce risks
-	for p in self.pieces:
+	for p in pieces_can_move:
+		print(p.route_position, p.squares_to_move())
 		var square_final=p.route.square_at(p.route_position+p.squares_to_move()) #Could be null
-		if square_final and p.threats_at(p.square())>p.threats_at(square_final):
+		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
 			return p
 	
 	
 	#Find a movable piece
-	for p in self.pieces:
-		if p.can_move_stm():
-			return p
+	for p in pieces_can_move:
+		return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
 
 

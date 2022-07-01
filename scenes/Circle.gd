@@ -17,14 +17,14 @@ func _init(_max_players:int, _squares:SquareManager):
 		
 	
 func is_square_in_circle(square):
-	if self.d.has(str(square.id)):
+	if self.has(square.id):
 		return true
 	return false
 	
 func square(square_origin,  displacement):
-		"""Calcula la casilla del circulo que tiene un desplazamiento positivo (hacia adelante) o negativo (hacia atras) 
-		de la casilla cuya posicion (id de la casilla) se ha dado como parametro"""
-		if square_origin.id<1 or square_origin.id>self.number:   #Si no esta en el circulo
+		# Calcula la casilla del circulo que tiene un desplazamiento positivo (hacia adelante) o negativo (hacia atras) 
+		# de la casilla cuya posicion (id de la casilla) se ha dado como parametro
+		if square_origin.id>self.number:   #Si no esta en el circulo
 			return null
 			
 		var destiny=square_origin.id-1+displacement

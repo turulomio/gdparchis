@@ -18,12 +18,14 @@ func change_current_player():
 		self.current= self.d["0"]
 	elif self.current==self.d["0"]:
 		self.current = self.d["1"]
-	elif self.current==d["1"]:
+	elif self.current==self.d["1"]:
 		self.current = self.d["2"]
-	elif self.current==d["2"]:
+	elif self.current==self.d["2"]:
 		self.current = self.d["3"]
-	elif self.current==d["3"]:
+	elif self.current==self.d["3"]:
 		self.current = self.d["0"]
+		
+	print("Current player now is ", self.current.name)
 		
 	if self.current.plays==false:
 		self.change_current_player()

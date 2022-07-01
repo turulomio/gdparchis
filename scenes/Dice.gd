@@ -135,7 +135,6 @@ func on_clicked():
 	yield(self, "dice_got_value")
 	
 	var lpm=self.player.last_piece_moved
-	
 	if self.player.dice_throws_has_three_sixes() and lpm!=null:
 		if self.player.route.is_ramp(lpm.route_position)==true:
 			self.player.game.players.change_current_player()
@@ -153,7 +152,8 @@ func on_clicked():
 	if self.player.can_some_piece_move_stm():
 		self.player.can_move_pieces=true
 		if self.player.ia==true:
-			self.player.ia_selects_piece_to_move().on_clicked()
+			var p =self.player.ia_selects_piece_to_move()
+			p.on_clicked()
 		else: #Self player.ia false
 			var pieces_can_move_stm=self.player.pieces_can_move_stm()
 			if pieces_can_move_stm.size()==1: #Mandatory movement
@@ -192,7 +192,7 @@ func _on_RelaunchTimer_timeout():
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
 		$FloatingText.show_text(tr("Recovering dice"),self.player.color)
-		self.player.can_throw_dice
+		self.player.can_throw_dice=true
 		self.launch()
 
 func TweenWaiting_method(rad):
