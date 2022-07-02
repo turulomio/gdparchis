@@ -3,3 +3,6 @@
 Godot parchis
 
 It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) project to Godot 
+
+
+## Changelog
