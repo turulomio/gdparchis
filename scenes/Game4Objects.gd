@@ -41,7 +41,6 @@ func _ready():
 		var player=Player.new(i,true,true)
 		player.set_route(self.routes[str(player.id)])
 		self.players.append(player)
-	self.players.set_assistant($Assistant)
 	for p in self.players.values():
 		p.set_game(self)
 		var dice=Globals.SCENE_DICE.instance()

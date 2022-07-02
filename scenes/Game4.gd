@@ -47,7 +47,6 @@ func _ready():
 		player.set_route(self.routes[str(player.id)])
 		self.players.append(player)
 		
-	self.players.set_assistant($Assistant)
 	
 	for p in self.players.values():
 		p.set_game(self)
@@ -77,7 +76,6 @@ func _ready():
 
 	# Start game
 	self.players.current=self.players.get(str(d["current"]))
-	$Assistant.set_color(Globals.colorn(self.players.current.id))
 	self.players.current.can_move_pieces=false
 	self.players.current.dice_throws=[]
 	self.players.current.can_throw_dice=true
@@ -100,8 +98,6 @@ func _process(_delta):
 				object.on_clicked()
 			else:
 				$Click.play()
-		if object is Assistant:
-			self.players.change_current_player()
 
 		
 	if Input.is_action_just_pressed("orto_view"):
