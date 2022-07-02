@@ -6,3 +6,6 @@ It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) proj
 
 
 ## Changelog
+
+### 0.1.0 (2022-07-02)
+- First version

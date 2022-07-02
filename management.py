@@ -5,7 +5,7 @@ path.append("management/reusing")
 
 from argparse import ArgumentParser
 from github import download_from_github
-from file_functions import replace_in_file
+from file_functions import replace_in_file, replace_line_in_file_that_contains
 from os import remove, system
 
 
@@ -47,5 +47,9 @@ if args.procedure is True:
         print(f"{i+1}) {p}")
         
 if args.export is True:
+    replace_line_in_file_that_contains("export_presets.cfg", "application/file_version", f'application/file_version="{get_version()}"\n')
+    replace_line_in_file_that_contains("export_presets.cfg", "application/product_version", f'application/product_version="{get_version()}"\n')
+    replace_line_in_file_that_contains("export_presets.cfg", "application/file_description", f'application/file_description="https://github.com/turulomio/gdparchis/"\n')
     system(f"godot --no-window --export Linux/X11 dist/Linux/gdparchis-{get_version()}.Linux_x86_64")
     system(f"godot --no-window --export 'Windows Desktop' dist/Windows/gdparchis-{get_version()}.exe")
+
