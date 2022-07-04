@@ -196,6 +196,14 @@ func difficulty_probability():
 		return 0.95
 	
 
+func request_post(httprequest, url, dict_):
+	var headers = ["Content-Type: application/json"]
+
+	var	body = JSON.print(dict_)
+	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
+	if error != OK:
+		push_error(" An error occured in  the HTTP request")
+
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():
 #	var mouse_pos=get_viewport().get_mouse_position()

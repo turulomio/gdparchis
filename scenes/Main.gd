@@ -5,7 +5,6 @@ func _ready():
 	$CanvasLayer/Version.text="Version: {0}".format([Globals.VERSION])
 
 
-
 func _on_Exit_pressed():
 		get_tree().quit()
 
@@ -57,3 +56,17 @@ func _on_Options_mouse_entered():
 
 func _on_Exit_mouse_entered():
 	$Click.play()
+
+func _on_RequestPostInstallation_ready():	
+	print("Registering installation:")
+	var fields = {"uuid" : Globals.settings.get("installation_uuid",""), "ip" : "127.0.0.1","so":"Linux"}
+	Globals.request_post($RequestPostInstallation, "http://127.0.0.1:8000/installation/", fields)
+
+
+func _on_RequestPostInstallation_request_completed(result, response_code, headers, body):
+	if result==0:
+		var r=parse_json(body.get_string_from_utf8())
+		print ("  - ", r["success"],": ", r["detail"])
+	else:
+		print ("  -  Couldn't connect")
+

@@ -146,6 +146,8 @@ expand_icon = true
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 
+[node name="RequestPostInstallation" type="HTTPRequest" parent="."]
+
 [connection signal="gui_input" from="CanvasLayer/Github" to="." method="_on_Github_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
@@ -156,3 +158,5 @@ stream = ExtResource( 4 )
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="ready" from="RequestPostInstallation" to="." method="_on_RequestPostInstallation_ready"]
+[connection signal="request_completed" from="RequestPostInstallation" to="." method="_on_RequestPostInstallation_request_completed"]
