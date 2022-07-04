@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "StaticBody",
-"class": "Assistant",
-"language": "GDScript",
-"path": "res://scenes/Assistant.gd"
-}, {
 "base": "DictionaryManager",
 "class": "Circle",
 "language": "GDScript",
@@ -80,7 +75,6 @@ _global_script_classes=[ {
 "path": "res://scenes/SquareManager.gd"
 } ]
 _global_script_class_icons={
-"Assistant": "",
 "Circle": "",
 "Dice": "",
 "DictionaryManager": "",
@@ -100,8 +94,7 @@ _global_script_class_icons={
 
 config/name="Gdparchis"
 run/main_scene="res://scenes/Main.tscn"
-boot_splash/image="res://images/piece_red.png"
-boot_splash/fullsize=false
+boot_splash/image="res://images/splash.png"
 config/icon="res://images/piece_red.png"
 config/windows_native_icon="res://images/piece_red.ico"
 

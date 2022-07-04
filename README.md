@@ -3,3 +3,9 @@
 Godot parchis
 
 It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) project to Godot 
+
+
+## Changelog
+
+### 0.1.0 (2022-07-02)
+- First version

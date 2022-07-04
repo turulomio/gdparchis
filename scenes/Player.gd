@@ -152,17 +152,19 @@ func ia_selects_piece_to_move():
 		#var attempt= rand_range(0,1)
 		var attempt=1
 		if p.can_eat_at_route_position(p.route_position+p.squares_to_move(),false) and attempt>Globals.difficulty_probability():
+			print("Selected due to can eat")
 			return p
 	# Reduce risks
 	for p in pieces_can_move:
-		print(p.route_position, p.squares_to_move())
 		var square_final=p.route.square_at(p.route_position+p.squares_to_move()) #Could be null
 		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
+			print("Selected due to less threats")
 			return p
 	
 	
 	#Find a movable piece
 	for p in pieces_can_move:
+		print("Selected due to can move")
 		return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
 

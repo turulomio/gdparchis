@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/Game4Objects.gd" type="Script" id=1]
-[ext_resource path="res://scenes/Assistant.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Board4.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sounds/click.wav" type="AudioStream" id=4]
 
@@ -22,9 +21,6 @@ __meta__ = {
 [node name="Board4" parent="." instance=ExtResource( 3 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 physics_material_override = SubResource( 1 )
-
-[node name="Assistant" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.6284, 5, -25.4102 )
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

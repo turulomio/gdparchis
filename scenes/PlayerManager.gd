@@ -5,13 +5,10 @@ extends DictionaryManager
 var max_players=0
 
 var current=null
-var assistant
 
 func _init (number):
 	self.max_players=number
 		
-func set_assistant(_assistant):
-	self.assistant=_assistant
 
 func change_current_player():
 	if self.current==null:
@@ -31,7 +28,6 @@ func change_current_player():
 		self.change_current_player()
 		return
 		
-	self.assistant.set_color(Globals.colorn(self.current.id))
 	self.current.last_piece_moved=null
 	self.current.can_move_pieces=false
 	self.current.dice_throws=[]
