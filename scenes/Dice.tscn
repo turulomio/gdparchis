@@ -78,4 +78,7 @@ playback/repeat = true
 [node name="FloatingText" parent="." instance=ExtResource( 5 )]
 visible = false
 
+[node name="RequestGameFake" type="HTTPRequest" parent="."]
+
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
+[connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]

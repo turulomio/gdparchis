@@ -8,7 +8,15 @@ var current=null
 
 func _init (number):
 	self.max_players=number
-		
+	
+## Retiurns a list of players that play
+func players_that_play():
+	var r=[]
+	for p in self.values():
+		if p.plays==true:
+			r.append(p)
+	return r
+
 
 func change_current_player():
 	if self.current==null:
@@ -36,6 +44,7 @@ func change_current_player():
 	if self.current.ia==true:
 		self.current.dice.on_clicked()
 	else:#Not ia
+		print(self.current.game)
 		Globals.save_game(self.current.game)
 		if Globals.settings.get("automatic",true)==true:
 			self.current.dice.on_clicked()

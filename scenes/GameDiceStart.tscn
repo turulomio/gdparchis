@@ -29,3 +29,7 @@ transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.
 shadow_enabled = true
 
 [node name="FloatingText" parent="." instance=ExtResource( 3 )]
+
+[node name="RequestGameStart" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

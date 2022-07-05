@@ -50,4 +50,7 @@ playback_process_mode = 0
 [node name="FloatingText" parent="." instance=ExtResource( 7 )]
 visible = false
 
+[node name="RequestGameEnd" type="HTTPRequest" parent="."]
+
 [connection signal="tween_all_completed" from="TweenMoving" to="." method="_on_TweenMoving_tween_all_completed"]
+[connection signal="request_completed" from="RequestGameEnd" to="." method="_on_RequestGameEnd_request_completed"]

@@ -14,6 +14,9 @@ const SCENE_PIECE=preload("res://scenes/Piece.tscn")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 const SCENE_DICE=preload("res://scenes/Dice.tscn")
 
+#const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
+const APIROOT= "http://127.0.0.1:8000"
+
 var game_data=null #Dictionary to load and init games
 var settings
 var	window_width=OS.get_screen_size().x
@@ -91,6 +94,7 @@ func save_game(game):
 	dict["current"]=game.players.current.id
 	dict["fake_dice"]=[]
 	dict["players"]=[]
+	dict["game_uuid"]=Globals.game_data.game_uuid
 	for p in game.players.values():
 		var dict_p={}
 		dict_p["id"]=p.id
@@ -114,6 +118,7 @@ func new_game(max_players):
 	dict["current"]=0
 	dict["fake_dice"]=[]
 	dict["players"]=[]
+	dict["game_uuid"]=generate_uuid()
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
@@ -202,7 +207,14 @@ func request_post(httprequest, url, dict_):
 	var	body = JSON.print(dict_)
 	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
 	if error != OK:
-		push_error(" An error occured in  the HTTP request")
+		push_error(" An error occured in the POST request")
+func request_put(httprequest, url, dict_):
+	var headers = ["Content-Type: application/json"]
+
+	var	body = JSON.print(dict_)
+	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_PUT, body)
+	if error != OK:
+		push_error(" An error occured in the PUT request")
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():

@@ -141,6 +141,7 @@ func piece_to_eat_before_move():
 	return null
 
 func on_clicked():
+
 	var has_eaten_before=false	
 	var has_eaten_after=false
 	#print(self.can_move_stm,self.can_eat_before_stm,self.can_eat_after_stm)
@@ -179,6 +180,17 @@ func on_clicked():
 			
 			$FloatingText.show_text(tr("Player {0} wins").format([self.player.name]), self.player.color)
 			yield($FloatingText,"text_disappear")
+	
+				
+			## Registering end of game
+			print("Registering end of game:")	
+			var fields = {
+				"game_uuid": Globals.game_data.game_uuid,
+				"human_won": not self.player.ia,
+			}
+			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/game/", fields)
+			
+			
 			get_tree().change_scene("res://scenes/Main.tscn")
 			return
 			
@@ -325,3 +337,12 @@ func threats_at(square):
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
 	return r
+
+
+func _on_RequestGameEnd_request_completed(result, response_code, headers, body):
+	if result==0:
+		var r=parse_json(body.get_string_from_utf8())
+		print ("  - ", r["success"],": ", r["detail"])
+	else:
+		print ("  -  Couldn't connect")
+

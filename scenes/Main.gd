@@ -58,9 +58,9 @@ func _on_Exit_mouse_entered():
 	$Click.play()
 
 func _on_RequestPostInstallation_ready():	
-	print("Registering installation:")
-	var fields = {"uuid" : Globals.settings.get("installation_uuid",""), "ip" : "127.0.0.1","so":"Linux"}
-	Globals.request_post($RequestPostInstallation, "http://127.0.0.1:8000/installation/", fields)
+	print("Registering installation:")	
+	var fields = {"uuid" : Globals.settings.get("installation_uuid",""), "so":OS.get_name()}
+	Globals.request_post($RequestPostInstallation, Globals.APIROOT+"/installation/", fields)
 
 
 func _on_RequestPostInstallation_request_completed(result, response_code, headers, body):

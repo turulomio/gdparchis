@@ -9,6 +9,7 @@ var winers=[]
 func _ready():	
 	
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
+
 	
 	## Creating players
 	self.players=PlayerManager.new(Globals.game_data.max_players)
@@ -16,6 +17,18 @@ func _ready():
 		if d_player["plays"]==true:
 			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
 			self.players.append(player)
+		
+	## Registering game
+	print("Registering game:")	
+	var fields = {
+		"max_players":Globals.game_data.max_players,
+		"num_players": self.players.players_that_play().size(),
+		"installation_uuid": Globals.settings.get("installation_uuid"),
+		"game_uuid": Globals.game_data.game_uuid,
+		"version": Globals.VERSION,
+	}
+	Globals.request_post($RequestGameStart, Globals.APIROOT+"/game/", fields)
+		
 		
 	for p in self.players.values():
 		p.set_game(self)
@@ -53,10 +66,8 @@ func _ready():
 func is_there_a_winer():
 	if len(self.winers)==1:
 		Globals.game_data["current"]=self.winers[0].id
-		
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].name]), self.winers[0].color)
-
-		yield($FloatingText, "text_disappear")		
+		yield($FloatingText, "text_disappear")
 		get_tree().change_scene("res://scenes/Game4.tscn")
 		return true
 	else:
@@ -70,3 +81,11 @@ func is_there_a_winer():
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene("res://scenes/Main.tscn")
+
+func _on_RequestGameStart_request_completed(result, response_code, headers, body):
+	if result==0:
+		var r=parse_json(body.get_string_from_utf8())
+		print ("  - ", r["success"],": ", r["detail"])
+	else:
+		print ("  -  Couldn't connect")
+

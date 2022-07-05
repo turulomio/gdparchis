@@ -86,10 +86,21 @@ func _physics_process(_delta):
 		self.set_physics_process(false)
 		## Fake dice
 		if len(Globals.game_data["fake_dice"])>0:
-			 self.value=int(Globals.game_data["fake_dice"].pop_front())
-			 print("Fake dice: {0}".format([self.value]))
-			 $FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player.color)
-			 yield($FloatingText, "text_disappear")
+			self.value=int(Globals.game_data["fake_dice"].pop_front())
+			print("Fake dice: {0}".format([self.value]))
+
+			## Registering end of game
+			print("Registering fake of game:")
+			var fields = {
+				"game_uuid": Globals.game_data.game_uuid,
+				"faked": true,
+			}
+			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/game/", fields)
+
+			
+			
+			$FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player.color)
+			yield($FloatingText, "text_disappear")
 		self.player.dice_throws.append(self.value)
 		self.historical.append(self.value)
 		emit_signal("dice_got_value")
@@ -207,3 +218,13 @@ func TweenWaiting_start():
 func TweenWaiting_stop():
 	$TweenWaiting.stop_all()
 	self.set_physics_process(true)
+
+
+func _on_RequestGameFake_request_completed(result, response_code, headers, body):
+	if result==0:
+		var r=parse_json(body.get_string_from_utf8())
+		print ("  - ", r["success"],": ", r["detail"])
+	else:
+		print ("  -  Couldn't connect")
+
+
