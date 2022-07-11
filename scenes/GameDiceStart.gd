@@ -27,7 +27,7 @@ func _ready():
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
 	}
-	Globals.request_post($RequestGameStart, Globals.APIROOT+"/game/", fields)
+	Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
 		
 	for p in self.players.values():

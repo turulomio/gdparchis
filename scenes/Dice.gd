@@ -95,7 +95,7 @@ func _physics_process(_delta):
 				"game_uuid": Globals.game_data.game_uuid,
 				"faked": true,
 			}
-			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/game/", fields)
+			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/games/", fields)
 
 			
 			

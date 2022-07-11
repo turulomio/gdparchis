@@ -188,7 +188,7 @@ func on_clicked():
 				"game_uuid": Globals.game_data.game_uuid,
 				"human_won": not self.player.ia,
 			}
-			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/game/", fields)
+			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/games/", fields)
 			
 			
 			get_tree().change_scene("res://scenes/Main.tscn")

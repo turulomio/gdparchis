@@ -14,8 +14,8 @@ const SCENE_PIECE=preload("res://scenes/Piece.tscn")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 const SCENE_DICE=preload("res://scenes/Dice.tscn")
 
-#const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
-const APIROOT= "http://127.0.0.1:8000"
+const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
+#const APIROOT= "http://127.0.0.1:8000"
 
 var game_data=null #Dictionary to load and init games
 var settings
