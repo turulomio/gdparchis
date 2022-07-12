@@ -7,9 +7,12 @@ It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) proj
 
 ## Statistics
 
-- [Global statistcs](https://coolnewton.mooo.com/django_gdparchis/statistics/globals/)
+- [Global statistics](https://coolnewton.mooo.com/django_gdparchis/statistics/globals/)
 
 ## Changelog
+
+### 0.2.0 (2022-07-12)
+- Added request for anonymous statistics system
 
 ### 0.1.0 (2022-07-02)
 - First version

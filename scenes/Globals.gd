@@ -1,6 +1,6 @@
 extends Node 
-const VERSION="0.1.0"
-const VERSION_DATE="2022-07-02"
+const VERSION="0.2.0"
+const VERSION_DATE="2022-07-12"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
 enum eColors  {YELLOW, BLUE, RED, GREEN}
