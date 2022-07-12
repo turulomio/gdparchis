@@ -137,3 +137,7 @@ func _process(_delta):
 				
 			if object.player==self.players.current and object.player.can_move_pieces:
 				print("  + Threats after: ", object.threats_at(object.route.square_at(object.route_position+object.squares_to_move())))
+				
+		if object is Dice and OS.is_debug_build():
+			$Popup.set_text(object.historical_report())
+			
