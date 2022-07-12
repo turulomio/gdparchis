@@ -188,6 +188,7 @@ func on_clicked():
 				"game_uuid": Globals.game_data.game_uuid,
 				"human_won": not self.player.ia,
 			}
+			print(fields)
 			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/games/", fields)
 			
 			
