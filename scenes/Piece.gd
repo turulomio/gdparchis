@@ -190,6 +190,7 @@ func on_clicked():
 			}
 			print(fields)
 			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/games/", fields)
+			yield($RequestGameEnd,"request_completed")
 			
 			
 			get_tree().change_scene("res://scenes/Main.tscn")
