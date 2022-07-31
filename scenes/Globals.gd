@@ -19,9 +19,12 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 
 var game_data=null #Dictionary to load and init games
 var settings
-var	window_width=OS.get_screen_size().x
-var window_height=OS.get_screen_size().y
-var vector2_center=Vector2(window_width/2,window_height/2)
+
+func vector2_os_center() -> Vector2:
+	var	window_width=OS.get_screen_size().x
+	var window_height=OS.get_screen_size().y
+	return Vector2(window_width/2,window_height/2)
+
 
 func _init():
 	print("Singleton load")

@@ -150,6 +150,7 @@ func on_clicked():
 			var eaten_before=self.piece_to_eat_before_move() #Salida con 5 con dos fichas distintas, dbe haber hueco por eso come antes
 			has_eaten_before=true
 			$Eat.play()
+			$FloatingText.show_text(tr("{0}, I did it unintentionally").format([eaten_before.player.name]), self.player.color)
 			eaten_before.move_to_route_position(0)
 			yield(eaten_before,"piece_moved")
 		
@@ -162,11 +163,12 @@ func on_clicked():
 			
 		if has_eaten_before==false and self.can_eat_at_route_position(self.route_position,true)==true:#Si come antes no come después. y lo hace ya en el nuevo route_position despues del movimiento
 			has_eaten_after=true
-			$Eat.play()
+			$Eat.play()			
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
+			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player.name]), self.player.color)
 			piece_eaten.move_to_route_position(0)
 			yield(piece_eaten,"piece_moved")
-			
+
 		#Muest be after move
 		if has_eaten_before==true or has_eaten_after==true:
 			self.player.extra_moves.append(20)
