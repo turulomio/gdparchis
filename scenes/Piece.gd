@@ -303,10 +303,12 @@ func can_eat_before_stm():
 
 ## Checks if a stalker piece threats me at a square
 func is_threating_me(stalker, square):
-	if stalker.square()==square:
+	var stalker_square=stalker.square()
+	
+	if stalker_square==square:
 		return false
 		
-	if not self.player.game.circle.is_square_in_circle(stalker.square()):
+	if not self.player.game.circle.is_square_in_circle(stalker_square):
 		return false
 	
 	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
@@ -316,17 +318,25 @@ func is_threating_me(stalker, square):
 		return false
 		
 	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
-	var mysix
 
+
+	var mysix
 	if stalker_pieces_all_out:
 		mysix=7
 	else:
 		mysix=6
 
-	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker.square(),square) in [1,2,3,4,5,10,20,mysix]:
+	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker_square,square) in [1,2,3,4,10,20,mysix]:
 		return true
 
-	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color):
+	if stalker.route_position==1:
+		if stalker_pieces_all_out==true and self.player.game.circle.distance(stalker_square,square)==5:# Amenaza si sale un 5 y todas las fichas están fuera y esta en la primera casilla
+			return true
+	else:
+		if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker_square,square)==5:
+			return false
+
+	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color) and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player)==false:
 		return true
 
 	return false
