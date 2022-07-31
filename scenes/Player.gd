@@ -120,6 +120,12 @@ func some_piece_is_in_barrier():
 			return true
 	return false
 
+func can_some_piece_go_final_square_with_dice_movement():
+	for p in self.pieces:
+		if p.can_go_final_square_with_dice_movement():
+			return true
+	return false
+
 func has_won():
 	for p in self.pieces:
 		if p.square().type!=Globals.eSquareTypes.END:

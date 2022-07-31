@@ -140,6 +140,8 @@ func piece_to_eat_before_move():
 			return ordered[0]
 	return null
 
+	
+
 func on_clicked():
 
 	var has_eaten_before=false	
@@ -300,6 +302,27 @@ func can_eat_before_stm():
 	else:
 		return true
 
+## Returns if a piece can arrive to final square with 1,2,3,4,5 or 6,7
+func can_go_final_square_with_dice_movement():
+	if self.route_position+1==self.route.end_position():
+		return true
+	if self.route_position+2==self.route.end_position():
+		return true
+	if self.route_position+3==self.route.end_position():
+		return true
+	if self.route_position+4==self.route.end_position():
+		return true
+	if self.player.are_all_pieces_out_of_home():
+		if self.route_position+5==self.route.end_position():
+			return true
+		if self.route_position+7==self.route.end_position():
+			return true
+	else:
+		if self.route_position+6==self.route.end_position():
+			return true
+		
+	return false
+
 
 ## Checks if a stalker piece threats me at a square
 func is_threating_me(stalker, square):
@@ -307,8 +330,13 @@ func is_threating_me(stalker, square):
 	
 	if stalker_square==square:
 		return false
+	
+	if stalker.route.position_in_route(square)==-1:
+		return false
 		
-	if not self.player.game.circle.is_square_in_circle(stalker_square):
+	var distance=self.route.distance_between_squares(stalker_square,square)
+		
+	if distance==null:
 		return false
 	
 	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
@@ -326,15 +354,16 @@ func is_threating_me(stalker, square):
 	else:
 		mysix=6
 
-	if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker_square,square) in [1,2,3,4,10,20,mysix]:
+	if square.type in [Globals.eSquareTypes.NORMAL] and distance in [1,2,3,4,20,mysix]:
 		return true
 
-	if stalker.route_position==1:
-		if stalker_pieces_all_out==true and self.player.game.circle.distance(stalker_square,square)==5:# Amenaza si sale un 5 y todas las fichas están fuera y esta en la primera casilla
+	if stalker_pieces_all_out==true and square.type in [Globals.eSquareTypes.NORMAL] and distance==5:
+		return true
+
+	if stalker.player.can_some_piece_go_final_square_with_dice_movement():
+		if square.type in [Globals.eSquareTypes.NORMAL] and distance==10:
 			return true
-	else:
-		if square.type in [Globals.eSquareTypes.NORMAL] and self.player.game.circle.distance(stalker_square,square)==5:
-			return false
+
 
 	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color) and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player)==false:
 		return true

@@ -53,3 +53,18 @@ func is_ramp(_position_route):
 		return true
 	return false
 
+## Si no está en la ruta devuelve -1
+func position_in_route(square):
+	return self.arr.find(square)
+	
+	
+	
+## Calcula la distancia de mi posición en la ruta y la de la casilla pieza en mi ruta
+## Puedo ser positiva (delante), negativa(detras), 0 (en mi casilla) y none (no esta en mi ruta)
+func distance_between_squares(from, to):
+	var from_in_route=self.position_in_route(from)
+	var to_in_route=self.position_in_route(to)
+	if from_in_route==-1 or to_in_route==-1:
+		return null
+	return to_in_route-from_in_route
+	

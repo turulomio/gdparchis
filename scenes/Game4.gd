@@ -7,7 +7,6 @@ var pieces
 var max_players
 var squares
 var routes
-var circle #Circle of square where  pieces can be eaten
 
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
@@ -32,9 +31,6 @@ func _ready():
 	self.squares=SquareManager.new()
 	for i in range(1,105):
 		self.squares.append(Square.new(i))
-
-	## Creating circle
-	self.circle=Circle.new(self.max_players,self.squares)
 	
 	## Creating routes
 	self.routes={}
