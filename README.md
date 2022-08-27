@@ -11,6 +11,9 @@ It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) proj
 
 ## Changelog
 
+### 0.3.0 (2022-08-27)
+- Improving ui
+
 ### 0.2.0 (2022-07-12)
 - Added request for anonymous statistics system
 
