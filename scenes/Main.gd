@@ -70,3 +70,13 @@ func _on_RequestPostInstallation_request_completed(result, response_code, header
 	else:
 		print ("  -  Couldn't connect")
 
+
+
+func _on_StatisticsUser_gui_input(_event):
+	if _event.is_action_pressed("left_click"):
+		OS.shell_open("https://coolnewton.mooo.com/django_gdparchis/statistics/user/?uuid="+ Globals.settings.get("installation_uuid"))
+
+
+func _on_StatisticsGlobal_gui_input(_event):
+	if _event.is_action_pressed("left_click"):
+		OS.shell_open("https://coolnewton.mooo.com/django_gdparchis/statistics/globals/")

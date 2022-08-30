@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://themes/FreshmanMiddle.tres" type="Theme" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://sounds/click.wav" type="AudioStream" id=4]
 [ext_resource path="res://images/github.webp" type="Texture" id=5]
 [ext_resource path="res://themes/Freshman.tres" type="Theme" id=6]
+[ext_resource path="res://images/statistics_global.png" type="Texture" id=7]
+[ext_resource path="res://images/statistics_user.png" type="Texture" id=8]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -28,7 +30,36 @@ margin_top = -80.0
 margin_right = -20.0
 margin_bottom = -20.0
 rect_min_size = Vector2( 64, 64 )
+hint_tooltip = "Github project page"
 texture = ExtResource( 5 )
+expand = true
+
+[node name="StatisticsGlobal" type="TextureRect" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -956.0
+margin_top = -80.0
+margin_right = -892.0
+margin_bottom = -16.0
+rect_min_size = Vector2( 64, 64 )
+hint_tooltip = "Global statistics"
+texture = ExtResource( 7 )
+expand = true
+
+[node name="StatisticsUser" type="TextureRect" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1040.0
+margin_top = -80.0
+margin_right = -976.0
+margin_bottom = -16.0
+rect_min_size = Vector2( 64, 64 )
+hint_tooltip = "User statistics"
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Version" type="Label" parent="CanvasLayer"]
@@ -149,6 +180,8 @@ stream = ExtResource( 4 )
 [node name="RequestPostInstallation" type="HTTPRequest" parent="."]
 
 [connection signal="gui_input" from="CanvasLayer/Github" to="." method="_on_Github_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/StatisticsGlobal" to="." method="_on_StatisticsGlobal_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/StatisticsUser" to="." method="_on_StatisticsUser_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="mouse_entered" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
