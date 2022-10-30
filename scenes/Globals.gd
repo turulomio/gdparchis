@@ -21,8 +21,8 @@ var game_data=null #Dictionary to load and init games
 var settings
 
 func vector2_os_center() -> Vector2:
-	var	window_width=OS.get_screen_size().x
-	var window_height=OS.get_screen_size().y
+	var	window_width=DisplayServer.window_get_size().x
+	var window_height=DisplayServer.window_get_size().y
 	return Vector2(window_width/2,window_height/2)
 
 
@@ -34,23 +34,37 @@ func e_colors(max_players):
 	if max_players==4:
 		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
 		
-func colorn(e_color):
-	return ColorN(color_name(e_color),1)
+#func colorn(e_color):
+#	return ColorN(color_name(e_color),1)
 	
-func color_name(e_color):
-	var r
-	match int(e_color):
-		eColors.YELLOW:
-			r= "yellow"
-		eColors.BLUE:
-			r= "blue"
-		eColors.RED:
-			r= "red"
-		eColors.GREEN:
-			r= "green"
-		_:
-			r= "white"
-	return r
+#func color_name(e_color):
+#	var r
+#	match int(e_color):
+#		eColors.YELLOW:
+#			r= "yellow"
+#		eColors.BLUE:
+#			r= "blue"
+#		eColors.RED:
+#			r= "red"
+#		eColors.GREEN:
+#			r= "green"
+#		_:
+#			r= "white"
+#	return r
+
+func color_name(color):
+	if color==Color.YELLOW:
+		return "YELLOW"
+	elif color==Color.BLUE:
+		return "BLUE"
+	elif color==Color.RED:
+		return "RED"
+	elif color==Color.GREEN:
+		return "GREEN"
+	else:
+		return "WHITE"
+	
+
 
 
 	
@@ -65,10 +79,10 @@ func value_almost_zero(_value,precision=0.001):
 	return false
 	
 func save_game(game):
-	var dir= Directory.new()
-	if dir.dir_exists("user://saves/")==false:
+	var dir= DirAccess.open("user://saves/")
+	if not dir.dir_exists("user://saves/"):
 		dir.make_dir("user://saves/")
-		
+				
 	#Removes innecesary autosaves
 	var files=[]
 	dir.open("user://saves/")
@@ -83,21 +97,20 @@ func save_game(game):
 
 	dir.list_dir_end()
 	files.sort()
-	var to_remove=files.slice(0,files.size()-Globals.settings.autosaves)
+	var to_remove=files.slice(0,files.size()-self.settings.autosaves)
 	for f in to_remove:
 		dir.remove("user://saves/"+f)
 		
 	#Create new autosave
-	var d=OS.get_datetime()
-	filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
-	var file=File.new()
-	file.open("user://saves/" + filename, File.WRITE)
+	var d=Time.get_date_dict_from_system()
+	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
+	var file=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
 	var dict={}	
 	dict["max_players"]=game.players.max_players
 	dict["current"]=game.players.current.id
 	dict["fake_dice"]=[]
 	dict["players"]=[]
-	dict["game_uuid"]=Globals.game_data.game_uuid
+	dict["game_uuid"]=self.game_data.game_uuid
 	for p in game.players.values():
 		var dict_p={}
 		dict_p["id"]=p.id
@@ -112,7 +125,7 @@ func save_game(game):
 			dict_piece["route_position"]=piece.route_position
 			dict_piece["square_position"]=piece.square_position
 			dict_p["pieces"].append(dict_piece)
-	file.store_line(to_json(dict))
+	file.store_line(JSON.stringify(dict))
 	file.close()
 	
 func new_game(max_players):
@@ -142,24 +155,21 @@ func new_game(max_players):
 	return dict
 	
 func load_game(filename):
-	var file=File.new()
-	file.open(filename, File.READ)
-	var data=parse_json(file.get_line())
+	
+	var file=FileAccess.open(filename, FileAccess.READ)
+	var data=JSON.parse_string(file.get_line())
 	file.close()
 	return data
 	
 	
 func save_settings():
-	var file= File.new()
-	file.open("user://gdparchis.cfg" + filename, File.WRITE)
-	file.store_line(to_json(settings))
+	var file= FileAccess.open("user://gdparchis.cfg", FileAccess.WRITE)
+	file.store_line(JSON.stringify(settings))
 	file.close()
 	print("Settings saved: ", settings)
 	
 func load_settings():
-	var file_save=File.new()
-	var file_load=File.new()
-	if file_save.file_exists("user://gdparchis.cfg")==false:
+	if FileAccess.file_exists("user://gdparchis.cfg")==false:
 		settings={}
 		settings["full_screen"]=false
 		settings["installation_uuid"]=generate_uuid()
@@ -172,10 +182,9 @@ func load_settings():
 		settings["statistics"]=true
 		save_settings()
 	else:
-		file_load.open("user://gdparchis.cfg", File.READ)
-		settings=parse_json(file_load.get_line())
-	file_load.close()
-	file_save.close()
+		var file_load=FileAccess.open("user://gdparchis.cfg", FileAccess.READ)
+		settings=JSON.parse_string(file_load.get_line())
+		file_load.close()
 	
 	print("Settings loaded: ", settings)
 	OS.window_fullscreen = settings["full_screen"]
@@ -207,14 +216,14 @@ func difficulty_probability():
 func request_post(httprequest, url, dict_):
 	var headers = ["Content-Type: application/json"]
 
-	var	body = JSON.print(dict_)
+	var	body = JSON.stringify(dict_)
 	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
 	if error != OK:
 		push_error(" An error occured in the POST request")
 func request_put(httprequest, url, dict_):
 	var headers = ["Content-Type: application/json"]
 
-	var	body = JSON.print(dict_)
+	var	body = JSON.stringify(dict_)
 	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_PUT, body)
 	if error != OK:
 		push_error(" An error occured in the PUT request")

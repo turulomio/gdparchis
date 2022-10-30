@@ -87,7 +87,7 @@ func _process(_delta):
 			object.global_transform.origin.y=10
 		if object is Dice:
 			object.global_transform.origin.y=10
-			yield(object,"dice_got_value")
+			await(object,"dice_got_value")
 			object.set_physics_process(true)
 
 		

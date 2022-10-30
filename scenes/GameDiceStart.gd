@@ -50,7 +50,7 @@ func _ready():
 			p.extra_moves=[]
 			p.can_throw_dice=true
 			p.dice.launch()
-			yield(p.dice, "dice_got_value")
+			await(p.dice, "dice_got_value")
 			if p.dice.value>self.dice_higher:
 				self.dice_higher=p.dice.value	
 			
@@ -67,7 +67,7 @@ func is_there_a_winer():
 	if len(self.winers)==1:
 		Globals.game_data["current"]=self.winers[0].id
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].name]), self.winers[0].color)
-		yield($FloatingText, "text_disappear")
+		await($FloatingText, "text_disappear")
 		get_tree().change_scene("res://scenes/Game4.tscn")
 		return true
 	else:

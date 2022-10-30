@@ -1,4 +1,4 @@
-extends KinematicBody
+extends CharacterBody3D
 class_name Piece
 
 
@@ -15,7 +15,8 @@ var square_position: int
 var animation_positions=null #Will be an array of positions
 
 func _physics_process(_delta): 
-	return move_and_slide(vel,Vector3.UP)
+	#return move_and_slide(vel,Vector3.UP)
+	return move_and_slide()
 
 func _to_string():
 	return "[Piece: "+ str(self.id) + "]"
@@ -29,6 +30,9 @@ func set_id(_id,_player,_route_position, _square_position):
 	self.square_position=_square_position
 	self.set_color(Globals.colorn(self.player.id))
 	self.route=self.player.route
+	self.TweenWaiting=create_tween()
+	self.TweenMoving=create_tween()
+	self.FloatingText=create_tween()
 
 	
 func square():
@@ -96,7 +100,7 @@ func move_to_route_position(_route_position, duration=0.4):
 	
 	
 	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
-	yield(self,"piece_moved")
+	await self.piece_moved
 	self.change_scale_on_specials_squares()
 	
 #Para casillas estrechas
@@ -154,10 +158,10 @@ func on_clicked():
 			$Eat.play()
 			$FloatingText.show_text(tr("{0}, I did it unintentionally").format([eaten_before.player.name]), self.player.color)
 			eaten_before.move_to_route_position(0)
-			yield(eaten_before,"piece_moved")
+			await eaten_before.piece_moved
 		
 		self.move_to_route_position(self.route_position+self.squares_to_move())
-		yield(self,"piece_moved")		
+		await self.piece_moved
 		
 		#Must be before has_eaten, pero no before
 		if self.squares_to_move() in [10,20]:#Ya se ha movido luego lo quita
@@ -169,7 +173,7 @@ func on_clicked():
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player)[0]
 			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player.name]), self.player.color)
 			piece_eaten.move_to_route_position(0)
-			yield(piece_eaten,"piece_moved")
+			await piece_eaten.piece_moved
 
 		#Muest be after move
 		if has_eaten_before==true or has_eaten_after==true:
@@ -183,7 +187,7 @@ func on_clicked():
 			$Won.play()
 			
 			$FloatingText.show_text(tr("Player {0} wins").format([self.player.name]), self.player.color)
-			yield($FloatingText,"text_disappear")
+			await $FloatingText.text_disappear
 	
 				
 			## Registering end of game
@@ -194,7 +198,7 @@ func on_clicked():
 			}
 			print(fields)
 			Globals.request_put($RequestGameEnd, Globals.APIROOT+"/games/", fields)
-			yield($RequestGameEnd,"request_completed")
+			await $RequestGameEnd.request_completed
 			
 			
 			get_tree().change_scene("res://scenes/Main.tscn")
@@ -280,9 +284,10 @@ func TweenMoving_start(animation_to: Vector3, duration):
 func _on_TweenMoving_tween_all_completed():
 	self.animation_positions=null
 	emit_signal("piece_moved")
+
 ## getter of can_move
 func can_move_stm():
-	 return self.can_move_to_route_position(self.route_position+self.squares_to_move())
+	return self.can_move_to_route_position(self.route_position+self.squares_to_move())
 
 # Returns a boolean if can_eat_at_that_position
 # @param check_after_movement, por defecto true, primero mueve y luego comprueba
