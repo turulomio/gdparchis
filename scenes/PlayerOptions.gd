@@ -1,12 +1,12 @@
-tool
+@tool
 extends Control
 
 
-export(String) var playername="player" setget set_playername 
-export(bool) var plays=true setget set_plays
-export(bool) var ia=true setget set_ia
+@export var playername: String="player"  : set = set_playername
+@export var plays: bool= true : set = set_plays
+@export var ia:bool=true: set=set_ia
 # Editor will enumerate with string names.
-export(String, "Yellow", "Blue", "Red", "Green") var color_name setget set_color_name
+@export_enum("YELLOW", "BLUE", "RED", "GREEN") var color_name  : set =  set_color_name ## Estaba con string
 
 func set_color_name(s):	
 	color_name=s

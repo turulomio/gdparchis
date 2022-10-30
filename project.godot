@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "RigidBody3D",
+"class": &"Dice",
+"language": &"GDScript",
+"path": "res://scenes/Dice.gd"
+}, {
 "base": "RefCounted",
 "class": &"DictionaryManager",
 "language": &"GDScript",
@@ -45,6 +50,7 @@ _global_script_classes=[{
 "path": "res://scenes/SquareManager.gd"
 }]
 _global_script_class_icons={
+"Dice": "",
 "DictionaryManager": "",
 "ListManager": "",
 "Piece": "",
