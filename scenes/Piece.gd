@@ -40,10 +40,11 @@ func square():
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
 func set_color(s):	
-	var new_material = SpatialMaterial.new()
-	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = s
-	$MeshInstance.material_override=new_material
+	pass
+	#var new_material = SpatialMaterial.new()
+	#new_material.albedo_texture = Globals.IMAGE_WOOD
+	#new_material.albedo_color = s
+	#$MeshInstance.material_override=new_material
 			
 func can_move_to_route_position(_route_position):
 	var square_initial=self.square()
@@ -265,7 +266,8 @@ func TweenWaiting_stop():
 	
 		
 func TweenMoving_method(step):
-	self.global_transform.origin=self.animation_positions[step]
+	pass
+#	self.global_transform.origin=self.animation_positions[step]
 
 
 func TweenMoving_start(animation_to: Vector3, duration):
@@ -276,7 +278,7 @@ func TweenMoving_start(animation_to: Vector3, duration):
 	#Piece movement animation
 	for i in range(steps):
 		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
-		new_pos.y=animation_to.y+animation_max_y*sin(deg2rad(180*(i+1)/steps))
+		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps))
 		self.animation_positions.append(new_pos)
 	$TweenMoving.interpolate_method(self,"TweenMoving_method", 0, 19, duration)
 	$TweenMoving.start()
@@ -389,7 +391,7 @@ func threats_at(square):
 
 func _on_RequestGameEnd_request_completed(result, response_code, headers, body):
 	if result==0:
-		var r=parse_json(body.get_string_from_utf8())
+		var r=JSON.parse_string(body.get_string_from_utf8())
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")

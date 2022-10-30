@@ -62,14 +62,14 @@ func launch():
 		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
 	else:
 		randomize()
-		self.set_position(rand_range(5,15))
-		self.simulate_value(int(rand_range(1,6.99)))
+		self.set_position(randi_range(5,15))
+		self.simulate_value(int(randf_range(1,6.99)))
 		
 		
-		var x = rand_range(-10,10)
-		var y = rand_range(-10,10)
-		var z = rand_range(-10,10)
-		self.set_linear_velocity(Vector3(rand_range(-3,3), rand_range(-3,3) ,rand_range(-3,3)))
+		var x = randi_range(-10,10)
+		var y = randi_range(-10,10)
+		var z = randi_range(-10,10)
+		self.set_linear_velocity(Vector3(randi_range(-3,3), randi_range(-3,3) ,randi_range(-3,3)))
 		self.set_angular_velocity(Vector3(x,y,z))
 
 	
@@ -228,7 +228,7 @@ func TweenWaiting_stop():
 
 func _on_RequestGameFake_request_completed(result, response_code, headers, body):
 	if result==0:
-		var r=parse_json(body.get_string_from_utf8())
+		var r=JSON.parse_string(body.get_string_from_utf8())
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")
