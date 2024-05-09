@@ -13,12 +13,12 @@ var historical=[] #List to store all throws to get statistics
 ## Sets id, and initial properties and position
 func set_id(node_id):
 	self.id=node_id
-	self.set_position(5)
+	self.set_my_position(5)
 		
 func set_player(_player):
 	self.player=_player
 	
-func set_position(h):
+func set_my_position(h):
 	match(self.id):
 		0:
 			self.global_transform.origin=Vector3(-20,h,-25)
@@ -58,11 +58,11 @@ func launch():
 	if len(Globals.game_data["fake_dice"])>0:
 		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
 		self.simulate_value(fake)
-		self.set_position(10)
+		self.set_my_position(10)
 		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
 	else:
 		randomize()
-		self.set_position(randi_range(5,15))
+		self.set_my_position(randi_range(5,15))
 		self.simulate_value(int(randf_range(1,6.99)))
 		
 		

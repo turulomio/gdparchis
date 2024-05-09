@@ -1,181 +1,106 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://beipkxlx4nme8"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1"]
-[ext_resource type="Theme" path="res://themes/FreshmanMiddle.tres" id="2"]
-[ext_resource type="Theme" path="res://themes/FreshmanSmall.tres" id="3"]
+[ext_resource type="Theme" uid="uid://bvi01pkikc5q4" path="res://themes/FreshmanMiddle.tres" id="2"]
+[ext_resource type="Theme" uid="uid://gh07j4jcab8j" path="res://themes/FreshmanSmall.tres" id="3"]
 [ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
-[ext_resource type="Texture" uid="uid://bsy6ef0lfq4qo" path="res://images/github.webp" id="5"]
-[ext_resource type="Theme" path="res://themes/Freshman.tres" id="6"]
-[ext_resource type="Texture" uid="uid://d2ca6gtykl7kd" path="res://images/statistics_global.png" id="7"]
-[ext_resource type="Texture" uid="uid://d1bdf2xsc82kw" path="res://images/statistics_user.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://bsy6ef0lfq4qo" path="res://images/github.webp" id="5"]
+[ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="6"]
+[ext_resource type="Texture2D" uid="uid://d2ca6gtykl7kd" path="res://images/statistics_global.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://d1bdf2xsc82kw" path="res://images/statistics_user.png" id="8"]
 
 [node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 6 )
-script = ExtResource( 1 )
+theme = ExtResource("6")
+script = ExtResource("1")
 __meta__ = {
-"_edit_horizontal_guides_": [ 989.0 ]
+"_edit_horizontal_guides_": [989.0]
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Github" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -80.0
-margin_top = -80.0
-margin_right = -20.0
-margin_bottom = -20.0
-rect_min_size = Vector2( 64, 64 )
-hint_tooltip = "Github project page"
-texture = ExtResource( 5 )
-expand = true
+texture = ExtResource("5")
 
 [node name="StatisticsGlobal" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -956.0
-margin_top = -80.0
-margin_right = -892.0
-margin_bottom = -16.0
-rect_min_size = Vector2( 64, 64 )
-hint_tooltip = "Global statistics"
-texture = ExtResource( 7 )
-expand = true
+texture = ExtResource("7")
 
 [node name="StatisticsUser" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1040.0
-margin_top = -80.0
-margin_right = -976.0
-margin_bottom = -16.0
-rect_min_size = Vector2( 64, 64 )
-hint_tooltip = "User statistics"
-texture = ExtResource( 8 )
-expand = true
+texture = ExtResource("8")
 
 [node name="Version" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = -80.0
-margin_right = 200.0
-margin_bottom = -27.0
-theme = ExtResource( 2 )
-align = 1
-valign = 2
+theme = ExtResource("2")
 
 [node name="FileDialog" type="FileDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -242.5
-margin_top = -201.5
-margin_right = 242.5
-margin_bottom = 201.5
-theme = ExtResource( 3 )
-popup_exclusive = true
-window_title = "Abrir un Archivo"
-resizable = true
-mode = 0
+theme = ExtResource("3")
 access = 1
-filters = PoolStringArray( "*.save" )
-current_dir = "user://saves"
-current_file = "20220610 110644 autosave 4.save"
-current_path = "user://saves/20220610 110644 autosave 4.save"
+filters = PackedStringArray("*.save")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 light_mask = 2
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
-margin_left = 560.0
-margin_top = 334.0
-margin_right = 1360.0
-margin_bottom = 746.0
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/HBoxContainer"]
-margin_right = 800.0
-margin_bottom = 412.0
-rect_min_size = Vector2( 300, 0 )
+layout_mode = 2
 alignment = 1
 
 [node name="Players4" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
-margin_right = 800.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 800, 100 )
-rect_pivot_offset = Vector2( 79, 10 )
-custom_colors/font_color_disabled = Color( 0.968627, 1, 0, 1 )
-custom_colors/font_color_focus = Color( 0.968627, 1, 0, 1 )
-custom_colors/font_color = Color( 0.968627, 1, 0, 1 )
-custom_colors/font_color_hover = Color( 0.968627, 1, 0, 1 )
-custom_colors/font_color_pressed = Color( 0.968627, 1, 0, 1 )
+layout_mode = 2
 text = "4 players board"
 flat = true
 
 [node name="Load" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
-margin_top = 104.0
-margin_right = 800.0
-margin_bottom = 204.0
-rect_min_size = Vector2( 800, 100 )
-rect_pivot_offset = Vector2( 79, 10 )
-custom_colors/font_color_disabled = Color( 0, 0, 1, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 1, 1 )
-custom_colors/font_color = Color( 0, 0, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
+layout_mode = 2
 text = "Load game"
 flat = true
 clip_text = true
 expand_icon = true
 
 [node name="Options" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
-margin_top = 208.0
-margin_right = 800.0
-margin_bottom = 308.0
-rect_min_size = Vector2( 800, 100 )
-rect_pivot_offset = Vector2( 79, 10 )
-custom_colors/font_color_disabled = Color( 1, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+layout_mode = 2
 text = "Settings"
 flat = true
 clip_text = true
 expand_icon = true
 
 [node name="Exit" type="Button" parent="VBoxContainer2/HBoxContainer/VBoxContainer"]
-margin_top = 312.0
-margin_right = 800.0
-margin_bottom = 412.0
-rect_min_size = Vector2( 800, 100 )
-rect_pivot_offset = Vector2( 79, 10 )
-custom_colors/font_color_disabled = Color( 0.396078, 0.905882, 0.380392, 1 )
-custom_colors/font_color_focus = Color( 0.396078, 0.905882, 0.380392, 1 )
-custom_colors/font_color = Color( 0.396078, 0.905882, 0.380392, 1 )
-custom_colors/font_color_hover = Color( 0.396078, 0.905882, 0.380392, 1 )
-custom_colors/font_color_pressed = Color( 0.396078, 0.905882, 0.380392, 1 )
+layout_mode = 2
 text = "Exit"
 flat = true
 expand_icon = true
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 
 [node name="RequestPostInstallation" type="HTTPRequest" parent="."]
 
