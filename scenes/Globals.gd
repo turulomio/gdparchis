@@ -217,20 +217,20 @@ func difficulty_probability():
 		return 0.95
 	
 
-func request_post(httprequest, url, dict_):
-	var headers = ["Content-Type: application/json"]
-
-	var	body = JSON.stringify(dict_)
-	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
-	if error != OK:
-		push_error(" An error occured in the POST request")
-func request_put(httprequest, url, dict_):
-	var headers = ["Content-Type: application/json"]
-
-	var	body = JSON.stringify(dict_)
-	var error = httprequest.request(url,headers, true, HTTPClient.METHOD_PUT, body)
-	if error != OK:
-		push_error(" An error occured in the PUT request")
+#func request_post(httprequest, url, dict_):
+	#var headers = ["Content-Type: application/json"]
+#
+	#var	body = JSON.stringify(dict_)
+	#var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
+	#if error != OK:
+		#push_error(" An error occured in the POST request")
+#func request_put(httprequest, url, dict_):
+	#var headers = ["Content-Type: application/json"]
+#
+	#var	body = JSON.stringify(dict_)
+	#var error = httprequest.request(url,headers, true, HTTPClient.METHOD_PUT, body)
+	#if error != OK:
+		#push_error(" An error occured in the PUT request")
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():

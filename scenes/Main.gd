@@ -64,7 +64,7 @@ func _on_Exit_mouse_entered():
 func _on_RequestPostInstallation_ready():
 	print("Registering installation:")
 	var fields = {"uuid" : Globals.settings.get("installation_uuid",""), "so":OS.get_name()}
-	Globals.request_post($RequestPostInstallation, Globals.APIROOT+"/installations/", fields)
+	#Globals.request_post($RequestPostInstallation, Globals.APIROOT+"/installations/", fields)
 
 
 func _on_RequestPostInstallation_request_completed(result, response_code, headers, body):
