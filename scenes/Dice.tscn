@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://fcw6tuv4kh27"]
+
+[ext_resource type="PackedScene" uid="uid://dor4xbldippge" path="res://models/Dice.glb" id="1"]
+[ext_resource type="Script" path="res://scenes/Dice.gd" id="2"]
+[ext_resource type="AudioStream" uid="uid://clgklc326rc15" path="res://sounds/threesix.wav" id="3"]
+[ext_resource type="AudioStream" uid="uid://cqub2is8xbclh" path="res://sounds/roll.wav" id="4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e8as6"]
+
+[node name="Dice" type="RigidBody3D"]
+mass = 100.0
+script = ExtResource("2")
+
+[node name="Dice" parent="." instance=ExtResource("1")]
+transform = Transform3D(1.47, 0, 0, 0, 1.47, 0, 0, 0, 1.47, 0, 0, 0)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.47, 0, 0, 0, 1.47, 0, 0, 0, 1.47, 0, 0, 0)
+shape = SubResource("BoxShape3D_e8as6")
+
+[node name="RC1" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(0.231373, 0.133333, 0.8, 1)
+debug_shape_thickness = 5
+
+[node name="RC2" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(0.968627, 1, 0, 1)
+debug_shape_thickness = 5
+
+[node name="RC3" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(0.764706, 0.160784, 0.160784, 1)
+debug_shape_thickness = 5
+
+[node name="RC4" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(0.764706, 0.556863, 0.160784, 1)
+debug_shape_thickness = 5
+
+[node name="RC5" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(0.654902, 0.258824, 0.658824, 1)
+debug_shape_thickness = 5
+
+[node name="RC6" type="RayCast3D" parent="."]
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 1, 1, 1)
+debug_shape_thickness = 5
+
+[node name="ThreeSix" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3")
+
+[node name="Touched" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4")
+
+[node name="RelaunchTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="RequestGameFake" type="HTTPRequest" parent="."]
+
+[connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
+[connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]

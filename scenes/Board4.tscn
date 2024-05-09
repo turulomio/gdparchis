@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwx8q6okr3d2n"]
+
+[ext_resource type="Texture2D" uid="uid://itx62a3uypfb" path="res://images/parchis4.png" id="1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e53e6"]
+albedo_texture = ExtResource("1")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_67x75"]
+material = SubResource("StandardMaterial3D_e53e6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xeh0g"]
+
+[node name="Board4" type="RigidBody3D"]
+
+[node name="MeshInstance" type="MeshInstance3D" parent="."]
+transform = Transform3D(32.5, 0, 0, 0, 0.0999966, 0.26773, 0, -0.000823786, 32.4989, 0, 0, 0)
+mesh = SubResource("BoxMesh_67x75")
+skeleton = NodePath("")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(32.5, 0, 0, 0, 0.1, 0, 0, 0, 32.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_xeh0g")

@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://chhddmnj8hy4j"]
+
+[ext_resource type="Theme" path="res://themes/Freshman.tres" id="1"]
+[ext_resource type="Script" path="res://scenes/FloatingText.gd" id="2"]
+
+[node name="FloatingText" type="Position2D"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
+script = ExtResource("2")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+theme = ExtResource("1")
+text = "My text"
+
+[node name="Tween" type="Tween" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
+script = null
