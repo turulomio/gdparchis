@@ -29,7 +29,11 @@ func _on_Options_pressed():
 
 
 func _on_CheckBox_toggled(button_pressed):
-		OS.window_fullscreen = button_pressed
+	var current_mode = DisplayServer.window_get_mode(0)
+	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, 0)
 
 
 func _input(_event):

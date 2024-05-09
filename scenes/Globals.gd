@@ -187,7 +187,11 @@ func load_settings():
 		file_load.close()
 	
 	print("Settings loaded: ", settings)
-	OS.window_fullscreen = settings["full_screen"]
+	if settings["full_screen"]:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN,0)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED,0)
+		
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"),not settings["sound"])
 	change_language(settings["language"])
 
