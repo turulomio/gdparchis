@@ -16,9 +16,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource("6")
 script = ExtResource("1")
-__meta__ = {
-"_edit_horizontal_guides_": [989.0]
-}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

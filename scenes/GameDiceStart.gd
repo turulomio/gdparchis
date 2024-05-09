@@ -84,7 +84,7 @@ func _process(_delta):
 
 func _on_RequestGameStart_request_completed(result, response_code, headers, body):
 	if result==0:
-		var r=parse_json(body.get_string_from_utf8())
+		var r=JSON.parse(body.get_string_from_utf8())
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")

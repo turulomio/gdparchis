@@ -69,7 +69,7 @@ func _on_RequestPostInstallation_ready():
 
 func _on_RequestPostInstallation_request_completed(result, response_code, headers, body):
 	if result==0:
-		var r=parse_json(body.get_string_from_utf8())
+		var r=JSON.parse_string(body.get_string_from_utf8())
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")
