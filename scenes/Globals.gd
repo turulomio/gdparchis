@@ -20,6 +20,8 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 var game_data=null #Dictionary to load and init games
 var settings
 
+
+
 func vector2_os_center() -> Vector2:
 	var	window_width=DisplayServer.window_get_size().x
 	var window_height=DisplayServer.window_get_size().y
@@ -53,6 +55,8 @@ func e_colors(max_players):
 #	return r
 
 func color_name(color):
+	print(color)
+	print(Color.YELLOW)
 	if color==Color.YELLOW:
 		return "YELLOW"
 	elif color==Color.BLUE:
@@ -64,9 +68,6 @@ func color_name(color):
 	else:
 		return "WHITE"
 	
-
-
-
 	
 func vector_is_almost_zero(v,precision=0.001):
 	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
