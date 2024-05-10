@@ -56,7 +56,7 @@ func _ready():
 	# Create players pieces
 	for d_player in d["players"]:
 		var square_position=0
-		var player=self.players.get(d_player["id"])
+		var player=self.players.my_get(d_player["id"])
 		if player.plays:  
 			for d_piece in d_player["pieces"]:
 				var route=self.routes[str(player.id)]
@@ -71,7 +71,7 @@ func _ready():
 				await(piece,"piece_moved")
 
 	# Start game
-	self.players.current=self.players.get(str(d["current"]))
+	self.players.current=self.players.my_get(str(d["current"]))
 	self.players.current.can_move_pieces=false
 	self.players.current.dice_throws=[]
 	self.players.current.can_throw_dice=true

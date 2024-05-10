@@ -8,7 +8,7 @@ func _init (_p_max_players, _e_color,_squares):
 	self.max_players=_p_max_players
 	self.e_color=_e_color
 	for i in self.get_route_square_ids(self.max_players,self.e_color):
-		self.append(_squares.get(i))
+		self.append(_squares.my_get(i))
 
 func _to_string():
 	return "[Route: "+ str(self.e_color) + "]"

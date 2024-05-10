@@ -15,7 +15,7 @@ func values():
 func keys():
 	return self.d.keys()
 
-func get(id):
+func my_get(id):
 	return self.d.get(str(id), null)
 
 func has(id):

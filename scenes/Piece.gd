@@ -40,6 +40,7 @@ func square():
 	
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
 func set_color(s):	
+	s
 	pass
 	#var new_material = SpatialMaterial.new()
 	#new_material.albedo_texture = Globals.IMAGE_WOOD

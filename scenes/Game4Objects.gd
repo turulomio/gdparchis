@@ -55,7 +55,7 @@ func _ready():
 		var route_pos=0
 		for s in route.arr:
 			while s.empty_position()>=0:
-				var player=self.players.get(route.id)
+				var player=self.players.my_get(route.id)
 				var piece=Globals.SCENE_PIECE.instance()
 				piece.set_id(id,player,s.id,s.empty_position())
 				id=id+1
