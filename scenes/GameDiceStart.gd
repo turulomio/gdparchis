@@ -68,7 +68,7 @@ func is_there_a_winer():
 		Globals.game_data["current"]=self.winers[0].id
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].name]), self.winers[0].color)
 		await($FloatingText, "text_disappear")
-		get_tree().change_scene("res://scenes/Game4.tscn")
+		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
 		return true
 	else:
 		for p in self.players.values():
@@ -80,7 +80,7 @@ func is_there_a_winer():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file("res://scenes/Main.tscn")
 
 func _on_RequestGameStart_request_completed(result, response_code, headers, body):
 	if result==0:

@@ -28,10 +28,10 @@ func _on_Button_pressed():
 		Globals.game_data.players[i].name=nodes[i].playername
 		Globals.game_data.players[i].plays=nodes[i].plays
 		Globals.game_data.players[i].ia=nodes[i].ia
-	get_tree().change_scene("res://scenes/GameDiceStart.tscn")
+	get_tree().change_scene_to_file("res://scenes/GameDiceStart.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file("res://scenes/Main.tscn")
 

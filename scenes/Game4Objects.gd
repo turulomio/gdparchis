@@ -96,6 +96,6 @@ func _process(_delta):
 	if Input.is_action_just_pressed("zoom_out"):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+20
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen

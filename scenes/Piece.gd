@@ -202,7 +202,7 @@ func on_clicked():
 			await $RequestGameEnd.request_completed
 			
 			
-			get_tree().change_scene("res://scenes/Main.tscn")
+			get_tree().change_scene_to_file("res://scenes/Main.tscn")
 			return
 			
 			

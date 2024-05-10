@@ -3,9 +3,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/FullScreen.pressed=Globals.settings.get("full_screen",false)
-	$VBoxContainer/Sound.pressed=Globals.settings.get("sound",true)
-	$VBoxContainer/AutomaticDice.pressed=Globals.settings.get("automatic",false)
+	$VBoxContainer/FullScreen.set_pressed(Globals.settings.get("full_screen",false))
+	$VBoxContainer/Sound.set_pressed(Globals.settings.get("sound",true))
+	$VBoxContainer/AutomaticDice.set_pressed(Globals.settings.get("automatic",false))
 	$VBoxContainer/HBAutosaves/Autosaves.text=str(Globals.settings["autosaves"])
 	
 	$VBoxContainer/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
@@ -15,11 +15,16 @@ func _ready():
 
 func _on_Return_pressed():
 	Globals.save_settings()
-	get_tree().change_scene("res://scenes/Main.tscn")
+	get_tree().change_scene_to_file("res://scenes/Main.tscn")
 
 func _on_FullScreen_toggled(button_pressed):
-	Globals.settings["full_screen"]=button_pressed
-	OS.window_fullscreen = button_pressed
+	var current_mode = DisplayServer.window_get_mode(0)
+	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
+		Globals.settings["full_screen"]=false
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, 0)
+		Globals.settings["full_screen"]=true
 
 func _on_AutomaticDice_toggled(button_pressed):
 	Globals.settings["automatic"]=button_pressed

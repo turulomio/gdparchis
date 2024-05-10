@@ -116,7 +116,7 @@ func _process(_delta):
 			if player.plays:
 				player.dice.historical_report()
 		
-		get_tree().change_scene("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file("res://scenes/Main.tscn")
 	if Input.is_action_just_pressed("full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen
 	if Input.is_action_just_pressed("right_click"):

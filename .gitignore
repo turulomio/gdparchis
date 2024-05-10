@@ -7,3 +7,4 @@ sounds/*.import
 i18n/*.import
 icon.png.import
 .godot/
+*.blend1
