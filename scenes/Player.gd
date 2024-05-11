@@ -7,18 +7,15 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
-var can_throw_dice: bool = false: set = set_can_throw_dice, get=get_can_throw_dice
-var can_move_pieces: bool = false: set = set_can_move_pieces, get = get_can_move_pieces
+var can_throw_dice: bool = false: set = set_can_throw_dice
+var can_move_pieces: bool = false: set = set_can_move_pieces
 var dice_throws=[]
 var extra_moves=[]
 var last_piece_moved=null
 var plays=true
 var ia=false
 
-func get_can_throw_dice():
-	return self.can_throw_dice
-func get_can_move_pieces():
-	return self.can_move_pieces
+
 
 
 func _init(_id,_plays,_ia):
@@ -63,7 +60,7 @@ func set_can_throw_dice(v):
 	## If a piece hits dice during game and falls, needs to be repositioned
 	if self.dice.global_transform.origin.y<0:
 		self.dice.get_node("FloatingText").show_text(tr("Recovering dice"),self.color)
-		self.dice.set_position(5)
+		self.dice.set_my_position(5)
 
 
 func set_can_move_pieces(b):
