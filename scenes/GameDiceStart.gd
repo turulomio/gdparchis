@@ -14,8 +14,8 @@ func _ready():
 	## Creating players
 	self.players=PlayerManager.new(Globals.game_data.max_players)
 	for d_player in Globals.game_data["players"]:
+		print("PLAYER", d_player["id"],d_player["plays"],d_player["ia"])
 		if d_player["plays"]==true:
-			print(d_player["id"],d_player["plays"],d_player["ia"])
 			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
 			self.players.append(player)
 		
@@ -61,7 +61,7 @@ func _ready():
 			if p.dice.value==dice_higher:
 				self.winers.append(p)
 				
-		is_winer=self.is_there_a_winer()
+		is_winer=await self.is_there_a_winer()
 
 
 ## Returns null if there is no winner or a winer player object
@@ -86,7 +86,7 @@ func _process(_delta):
 
 func _on_RequestGameStart_request_completed(result, response_code, headers, body):
 	if result==0:
-		var r=JSON.parse(body.get_string_from_utf8())
+		var r=JSON.parse_string(body.get_string_from_utf8())
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")

@@ -1,4 +1,5 @@
 class_name Player
+extends Object
 var id : int
 var name : String
 var color: Color
@@ -7,13 +8,18 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
-var can_throw_dice = false setget set_can_throw_dice
-var can_move_pieces = false setget set_can_move_pieces
+var can_throw_dice = false setget set_can_throw_dice, get_can_throw_dice
+var can_move_pieces = false setget set_can_move_pieces, get_can_move_pieces
 var dice_throws=[]
 var extra_moves=[]
 var last_piece_moved=null
 var plays=true
 var ia=false
+
+func get_can_throw_dice():
+	return self.can_throw_dice
+func get_can_move_pieces():
+	return self.can_move_pieces
 
 
 func _init(_id,_plays,_ia):
@@ -59,6 +65,7 @@ func set_can_throw_dice(v):
 	if self.dice.global_transform.origin.y<0:
 		self.dice.get_node("FloatingText").show_text(tr("Recovering dice"),self.color)
 		self.dice.set_position(5)
+
 
 func set_can_move_pieces(b):
 	can_move_pieces=b
