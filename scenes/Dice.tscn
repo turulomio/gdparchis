@@ -13,6 +13,12 @@ script = ExtResource("2")
 
 [node name="Dice" parent="." instance=ExtResource("2_weyj7")]
 
+[node name="Light" parent="Dice" index="1"]
+visible = false
+
+[node name="Camera" parent="Dice" index="2"]
+visible = false
+
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.47, 0, 0, 0, 1.47, 0, 0, 0, 1.47, 0, 0, 0)
 shape = SubResource("BoxShape3D_e8as6")
@@ -60,3 +66,5 @@ wait_time = 5.0
 
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
 [connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]
+
+[editable path="Dice"]

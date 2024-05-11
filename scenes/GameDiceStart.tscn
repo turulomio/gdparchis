@@ -1,35 +1,48 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://byxwi24b2uqh7"]
 
-[ext_resource path="res://scenes/Board4.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/GameDiceStart.gd" type="Script" id=2]
-[ext_resource path="res://scenes/FloatingText.tscn" type="PackedScene" id=3]
-[ext_resource path="res://sounds/click.wav" type="AudioStream" id=4]
+[ext_resource type="PackedScene" uid="uid://dwx8q6okr3d2n" path="res://scenes/Board4.tscn" id="1"]
+[ext_resource type="Script" path="res://scenes/GameDiceStart.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
+[ext_resource type="PackedScene" uid="uid://fcw6tuv4kh27" path="res://scenes/Dice.tscn" id="5_7g8f2"]
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id="1"]
 
-[node name="GameDiceStart" type="Spatial"]
-script = ExtResource( 2 )
+[node name="GameDiceStart" type="Node3D"]
+script = ExtResource("2")
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 47, 0 )
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 47, 0)
 doppler_tracking = 2
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="Board4" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-physics_material_override = SubResource( 1 )
+[node name="Board4" parent="." instance=ExtResource("1")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+physics_material_override = SubResource("1")
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0 )
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0)
 shadow_enabled = true
 
-[node name="FloatingText" parent="." instance=ExtResource( 3 )]
-
 [node name="RequestGameStart" type="HTTPRequest" parent="."]
+
+[node name="FloatingText" parent="." instance=ExtResource("3")]
+
+[node name="Dice0" parent="." instance=ExtResource("5_7g8f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5761, 0.0499998, 10.6125)
+
+[node name="Dice1" parent="." instance=ExtResource("5_7g8f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6434, 0.0500004, -10.1214)
+id = 1
+
+[node name="Dice2" parent="." instance=ExtResource("5_7g8f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.429, 0.0500003, 10.5078)
+id = 2
+
+[node name="Dice3" parent="." instance=ExtResource("5_7g8f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8112, 0.0500005, -11.0662)
+id = 3
 
 [connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

@@ -1,5 +1,5 @@
 extends Node3D
-class_name Game4Start
+class_name GameDiceStart
 
 var players
 var dice_higher=0
@@ -29,14 +29,13 @@ func _ready():
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
 	}
-	Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
+	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
 		
 	for p in self.players.values():
 		p.set_game(self)
-		var dice=Globals.SCENE_DICE.instance()
-		self.add_child(dice)
-		dice.set_id(p.id)
+		var dice=get_node("Dice"+str(p.id))
+		print(dice)
 		dice.set_player(p)
 		p.set_dice(dice)
 

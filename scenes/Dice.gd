@@ -1,8 +1,9 @@
 class_name Dice
 extends RigidBody3D
+
 signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
-var id: int
+@export var id: int=0: set=set_id
 var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
 var player
 var has_touch=false
@@ -12,7 +13,7 @@ var historical=[] #List to store all throws to get statistics
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
-	self.id=node_id
+	id=node_id
 	self.set_my_position(5)
 		
 func set_player(_player):

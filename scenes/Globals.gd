@@ -35,8 +35,21 @@ func e_colors(max_players):
 	if max_players==4:
 		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
 		
-#func colorn(e_color):
-#	return ColorN(color_name(e_color),1)
+func colorn(e_color):
+	# En godot3 habia fguncion colorn
+	var r
+	match int(e_color):
+		eColors.YELLOW:
+			r= Color.YELLOW
+		eColors.BLUE:
+			r= Color.BLUE
+		eColors.RED:
+			r= Color.RED
+		eColors.GREEN:
+			r= Color.GREEN
+		_:
+			r = Color.WHITE
+	return r
 	
 func ecolor_name(e_color):
 	var r

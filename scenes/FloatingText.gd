@@ -1,22 +1,24 @@
-extends Position2D
+extends Marker2D
 
-onready var label=get_node("Label")
-onready var tween=get_node("Tween" )
+@onready var label=get_node("Label")
+
 
 signal text_disappear
 
+#func _ready():	
+	#self.tween= get_tree().create_tween()
 func _on_Tween_tween_all_completed():
 	emit_signal("text_disappear")
 	self.visible=false
 
 
 func show_text(text, color):
-	label.add_color_override("font_color", color)
+	label.set("theme_override_colors/font_color", color)
 	self.visible=true
 	self.transform.origin=self.vector2_viewport_center()
 	label.set_text(str(text))
-	tween.interpolate_property(self, 'scale',Vector2(0.5,0.5) ,Vector2(1.5,1.5),2.5,Tween.TRANS_LINEAR,Tween.EASE_OUT )
-	tween.start()
+	#self.tween.interpolate_property(self, 'scale',Vector2(0.5,0.5) ,Vector2(1.5,1.5),2.5,Tween.TRANS_LINEAR,Tween.EASE_OUT )
+	#self.tween.start()
 
 ## Returns the center of ther wiewport rect
 func vector2_viewport_center() -> Vector2:
