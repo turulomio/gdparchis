@@ -27,7 +27,7 @@ shadow_enabled = true
 
 [node name="FloatingText" parent="." instance=ExtResource("3")]
 visible = false
-position = Vector2(829.5, 488)
+position = Vector2(907.5, 488)
 scale = Vector2(1.5, 1.5)
 
 [node name="Dice0" parent="." instance=ExtResource("5_7g8f2")]

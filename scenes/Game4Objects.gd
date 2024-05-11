@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 class_name Game4Objects
 
-onready var camera =$Camera
+@onready var camera =$Camera
 var players
 var pieces 
 var max_players
@@ -12,8 +12,8 @@ func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
 	var ray_from=$Camera.project_ray_origin(mouse_pos)
 	var ray_to= ray_from + $Camera.project_ray_normal(mouse_pos)*1000
-	var space_state=get_world().direct_space_state
-	var selection=space_state.intersect_ray(ray_from,ray_to)
+	var space_state=get_world_3d().direct_space_state
+	var selection=space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from,ray_to))
 	return selection.collider
 
 # Called when the node enters the scene tree for the first time.
@@ -87,7 +87,7 @@ func _process(_delta):
 			object.global_transform.origin.y=10
 		if object is Dice:
 			object.global_transform.origin.y=10
-			await(object,"dice_got_value")
+			await object.dice_got_value
 			object.set_physics_process(true)
 
 		
@@ -97,5 +97,5 @@ func _process(_delta):
 		camera.global_transform.origin.y=camera.global_transform.origin.y+20
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene_to_file("res://scenes/Main.tscn")
-	if Input.is_action_just_pressed("full_screen"):
-		OS.window_fullscreen = !OS.window_fullscreen
+	#if Input.is_action_just_pressed("full_screen"):
+		#OS.window_fullscreen = !OS.window_fullscreen

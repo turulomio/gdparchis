@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 class_name Game4
 
-onready var camera = $Camera
+@onready var camera = $Camera
 var players
 var pieces 
 var max_players
@@ -12,8 +12,8 @@ func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
 	var ray_from=camera.project_ray_origin(mouse_pos)
 	var ray_to= ray_from + camera.project_ray_normal(mouse_pos)*100
-	var space_state=get_world().direct_space_state
-	var selection=space_state.intersect_ray(ray_from,ray_to)
+	var space_state=get_world_3d().direct_space_state
+	var selection=space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from,ray_to))
 	if len(selection)==0:
 		return null
 	return selection.collider
@@ -47,10 +47,9 @@ func _ready():
 	for p in self.players.values():
 		p.set_game(self)
 		if p.plays==true:
-			var dice=Globals.SCENE_DICE.instance()
-			self.add_child(dice)
-			dice.set_id(p.id)
+			var dice=get_node("Dice"+str(p.id))
 			dice.set_player(p)
+			dice.set_my_position(3)
 			p.set_dice(dice)
 
 	# Create players pieces
@@ -69,6 +68,14 @@ func _ready():
 				await piece.piece_moved()
 				piece.move_to_route_position(d_piece["route_position"], 0.05) 
 				await piece.piece_moved()
+
+
+		p.set_game(self)
+		var dice=get_node("Dice"+str(p.id))
+		dice.set_player(p)
+		dice.set_my_position(3)
+		p.set_dice(dice)
+
 
 	# Start game
 	self.players.current=self.players.my_get(str(d["current"]))
@@ -117,8 +124,8 @@ func _process(_delta):
 				player.dice.historical_report()
 		
 		get_tree().change_scene_to_file("res://scenes/Main.tscn")
-	if Input.is_action_just_pressed("full_screen"):
-		OS.window_fullscreen = !OS.window_fullscreen
+	#if Input.is_action_just_pressed("full_screen"):
+		#OS.window_fullscreen = !OS.window_fullscreen
 	if Input.is_action_just_pressed("right_click"):
 		var object=get_object_under_mouse()
 		if object == null:

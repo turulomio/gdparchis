@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnt8il78gpg7m"]
+
+[ext_resource type="Script" path="res://scenes/NewPlayer.gd" id="1_tqsj7"]
+[ext_resource type="PackedScene" uid="uid://fcw6tuv4kh27" path="res://scenes/Dice.tscn" id="2_d2ia2"]
+[ext_resource type="PackedScene" uid="uid://b4u8nm6s4x3x7" path="res://scenes/Piece.tscn" id="3_wrbd8"]
+
+[node name="NewPlayer" type="Node3D"]
+script = ExtResource("1_tqsj7")
+
+[node name="Dice" parent="." instance=ExtResource("2_d2ia2")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="Piece0" parent="." instance=ExtResource("3_wrbd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 3)
+
+[node name="Piece1" parent="." instance=ExtResource("3_wrbd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, -3)
+
+[node name="Piece2" parent="." instance=ExtResource("3_wrbd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, -3)
+
+[node name="Piece3" parent="." instance=ExtResource("3_wrbd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, 3)
