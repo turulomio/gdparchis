@@ -176,7 +176,7 @@ func on_clicked():
 			if self.player().ia==true or Globals.settings["automatic"]==true:
 				self.player().dice.on_clicked()
 		else:
-			self.player().game.players.change_current_player()
+			self.player().game().change_current_player()
 
 
 func historical_report() -> void:

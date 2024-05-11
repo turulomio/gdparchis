@@ -261,7 +261,7 @@ func must_move_to_first_square():
 		return false
 	var square_first=self.route().square_at(1)
 	#Si tiene extra moves no está sacando un 5 si no moviendo
-	if self.player().extra_moves.size()==0 and  self.player().dice.value==5 and self.player().are_all_pieces_out_of_home()==false:
+	if self.player().extra_moves.size()==0 and  self.player().dice().value==5 and self.player().are_all_pieces_out_of_home()==false:
 		if square_first.pieces_count()<2:
 			return true
 		else:#2 de size

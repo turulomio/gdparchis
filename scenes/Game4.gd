@@ -32,7 +32,7 @@ func _ready():
 	self.current_player.dice_throws=[]
 	self.current_player.can_throw_dice=true
 	if self.current_player.ia==true or Globals.settings.get("automatic", true)==true:
-		self.current_player.dice.on_clicked()
+		self.current_player.dice().on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -41,12 +41,12 @@ func _process(_delta):
 		if object == null:
 			return
 		if object is Piece:
-			if object.player==self.current_player and object.player.can_move_pieces:
+			if object.player()==self.current_player and object.player().can_move_pieces:
 				object.on_clicked()
 			else:
 				$Click.play()
 		if object is Dice:
-			if object.player==self.current_player and object.player.can_throw_dice:
+			if object.player()==self.current_player and object.player().can_throw_dice:
 				object.on_clicked()
 			else:
 				$Click.play()
@@ -95,33 +95,33 @@ func _process(_delta):
 			
 
 func change_current_player():
-	if self.current==null:
-		self.current= self.d["0"]
-	elif self.current==self.d["0"]:
-		self.current = self.d["1"]
-	elif self.current==self.d["1"]:
-		self.current = self.d["2"]
-	elif self.current==self.d["2"]:
-		self.current = self.d["3"]
-	elif self.current==self.d["3"]:
-		self.current = self.d["0"]
+	if self.current_player==null:
+		self.current_player= self.Board4Full.players()[0]
+	elif self.current_player==self.Board4Full.players()[0]:
+		self.current_player = self.Board4Full.players()[1]
+	elif self.current_player==self.Board4Full.players()[1]:
+		self.current_player = self.Board4Full.players()[2]
+	elif self.current_player==self.Board4Full.players()[2]:
+		self.current_player = self.Board4Full.players()[3]
+	elif self.current_player==self.Board4Full.players()[3]:
+		self.current_player = self.Board4Full.players()[0]
 		
-	print("Current player now is ", self.current.name)
+	print("Current player now is ", self.current_player.name)
 		
-	if self.current.plays==false:
+	if self.current_player.plays==false:
 		self.change_current_player()
 		return
 		
-	self.current.last_piece_moved=null
-	self.current.can_move_pieces=false
-	self.current.dice_throws=[]
-	self.current.extra_moves=[]
-	self.current.can_throw_dice=true
-	if self.current.ia==true:
-		self.current.dice.on_clicked()
+	self.current_player.last_piece_moved=null
+	self.current_player.can_move_pieces=false
+	self.current_player.dice_throws=[]
+	self.current_player.extra_moves=[]
+	self.current_player.can_throw_dice=true
+	if self.current_player.ia==true:
+		self.current_player.dice().on_clicked()
 	else:#Not ia
-		print(self.current.game)
-		Globals.save_game(self.current.game)
+		print(self.current_player.game())
+		Globals.save_game(self.current_player.game())
 		if Globals.settings.get("automatic",true)==true:
-			self.current.dice.on_clicked()
+			self.current_player.dice().on_clicked()
 	

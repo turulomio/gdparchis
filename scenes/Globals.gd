@@ -116,6 +116,7 @@ func save_game(game):
 		
 	#Create new autosave
 	var d=Time.get_date_dict_from_system()
+	print(d)
 	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
 	var file=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
 	var dict={}	
