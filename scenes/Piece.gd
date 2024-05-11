@@ -253,7 +253,7 @@ func on_clicked():
 			if Globals.settings.get("automatic",true)==true:
 				self.player().dice.on_clicked()
 	else:
-		self.player().game.players.change_current_player()
+		self.game().change_current_player()
 		
 #Casilla First.Siempre que se mueve a FIRST es una obligación si se puede
 func must_move_to_first_square():

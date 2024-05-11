@@ -97,7 +97,7 @@ func set_can_move_pieces(b):
 	can_move_pieces=b
 	if b==true:
 		for p in self.pieces():
-			if self.ia==false and p.route_position!=p.route.end_position():
+			if self.ia==false and p.route_position!=p.route().end_position():
 				p.TweenWaiting_start()
 	else:
 		for p in self.pieces():
@@ -108,7 +108,7 @@ func last_throw():
 
 ## Returns if player is game current player
 func is_current():
-	if self == self.game().players.current:
+	if self == self.game().current_player:
 		return true
 	return false
 	

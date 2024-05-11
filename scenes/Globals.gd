@@ -115,17 +115,17 @@ func save_game(game):
 		dir.remove("user://saves/"+f)
 		
 	#Create new autosave
-	var d=Time.get_date_dict_from_system()
+	var d=Time.get_datetime_dict_from_system()
 	print(d)
-	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.max_players]
+	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.Board4Full.max_players]
 	var file=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
 	var dict={}	
-	dict["max_players"]=game.players.max_players
-	dict["current"]=game.players.current.id
+	dict["max_players"]=game.Board4Full.max_players
+	dict["current"]=game.current_player.id
 	dict["fake_dice"]=[]
 	dict["players"]=[]
 	dict["game_uuid"]=self.game_data.game_uuid
-	for p in game.players.values():
+	for p in game.Board4Full.players():
 		var dict_p={}
 		dict_p["id"]=p.id
 		dict_p["name"]=p.name
@@ -133,7 +133,7 @@ func save_game(game):
 		dict_p["ia"]=p.ia
 		dict["players"].append(dict_p)
 		dict_p["pieces"]=[]
-		for piece in p.pieces:
+		for piece in p.pieces():
 			var dict_piece={}
 			dict_piece["id"]=piece.id
 			dict_piece["route_position"]=piece.route_position
