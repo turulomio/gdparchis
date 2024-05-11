@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 class_name Game4Start
 
 var players
@@ -6,7 +6,7 @@ var dice_higher=0
 var winers=[]
 
 # Called when the node enters the scene tree for the first time.
-func _ready():	
+func _ready():
 	
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
 
@@ -15,6 +15,7 @@ func _ready():
 	self.players=PlayerManager.new(Globals.game_data.max_players)
 	for d_player in Globals.game_data["players"]:
 		if d_player["plays"]==true:
+			print(d_player["id"],d_player["plays"],d_player["ia"])
 			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
 			self.players.append(player)
 		
@@ -50,7 +51,8 @@ func _ready():
 			p.extra_moves=[]
 			p.can_throw_dice=true
 			p.dice.launch()
-			await(p.dice, "dice_got_value")
+			await p.dice.dice_got_value()
+			print("DICE GOT",p.dice.value)
 			if p.dice.value>self.dice_higher:
 				self.dice_higher=p.dice.value	
 			
@@ -60,14 +62,14 @@ func _ready():
 				self.winers.append(p)
 				
 		is_winer=self.is_there_a_winer()
-				
+
 
 ## Returns null if there is no winner or a winer player object
 func is_there_a_winer():
 	if len(self.winers)==1:
 		Globals.game_data["current"]=self.winers[0].id
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].name]), self.winers[0].color)
-		await($FloatingText, "text_disappear")
+		await $FloatingText.text_disappear()
 		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
 		return true
 	else:

@@ -28,7 +28,7 @@ func _on_Options_pressed():
 	get_tree().change_scene_to_file("res://scenes/Options.tscn")
 
 
-func _on_CheckBox_toggled(button_pressed):
+func _on_CheckBox_toggled(_button_pressed):
 	var current_mode = DisplayServer.window_get_mode(0)
 	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)

@@ -43,12 +43,12 @@ func set_playername(s):
 func set_plays(b):
 	plays=b
 	if has_node("HBoxContainer/Plays"):
-		$HBoxContainer/Plays.pressed=b
+		$HBoxContainer/Plays.set_pressed(b)
 	
 func set_ia(b):
 	ia=b
 	if has_node("HBoxContainer/IA"):
-		$HBoxContainer/IA.pressed=b
+		$HBoxContainer/IA.set_pressed(b)
 	
 func _ready():
 	change_icon_and_name()

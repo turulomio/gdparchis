@@ -38,20 +38,20 @@ func e_colors(max_players):
 #func colorn(e_color):
 #	return ColorN(color_name(e_color),1)
 	
-#func color_name(e_color):
-#	var r
-#	match int(e_color):
-#		eColors.YELLOW:
-#			r= "yellow"
-#		eColors.BLUE:
-#			r= "blue"
-#		eColors.RED:
-#			r= "red"
-#		eColors.GREEN:
-#			r= "green"
-#		_:
-#			r= "white"
-#	return r
+func ecolor_name(e_color):
+	var r
+	match int(e_color):
+		eColors.YELLOW:
+			r= "yellow"
+		eColors.BLUE:
+			r= "blue"
+		eColors.RED:
+			r= "red"
+		eColors.GREEN:
+			r= "green"
+		_:
+			r= "white"
+	return r
 
 func color_name(color):
 	print(color)
@@ -136,9 +136,10 @@ func new_game(max_players):
 	dict["players"]=[]
 	dict["game_uuid"]=generate_uuid()
 	for player_id in range(max_players):
+		print(player_id)
 		var dict_p={}
 		dict_p["id"]=player_id
-		dict_p["name"]=color_name(player_id)
+		dict_p["name"]=ecolor_name(player_id)
 		dict_p["plays"]=true
 		if player_id==0:
 			dict_p["ia"]=false
