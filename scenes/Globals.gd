@@ -149,7 +149,6 @@ func new_game(max_players):
 	dict["players"]=[]
 	dict["game_uuid"]=generate_uuid()
 	for player_id in range(max_players):
-		print(player_id)
 		var dict_p={}
 		dict_p["id"]=player_id
 		dict_p["name"]=ecolor_name(player_id)

@@ -12,7 +12,6 @@ var historical=[] #List to store all throws to get statistics
 var tween_waiting
 
 func _ready():
-	print("DICE READY")
 	TweenWaiting_start()
 	
 ## Sets id, and initial properties and position
@@ -77,11 +76,7 @@ func launch():
 		self.set_linear_velocity(Vector3(randi_range(-3,3), randi_range(-3,3) ,randi_range(-3,3)))
 		self.set_angular_velocity(Vector3(x,y,z))
 
-	
-func _process(delta):
-	#print("_PROCESS DICE", delta)
-	self.rotation.y=PI*delta
-	
+
 func _physics_process(_delta):
 	if self.value==0:
 		return

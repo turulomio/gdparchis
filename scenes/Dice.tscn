@@ -9,6 +9,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_e8as6"]
 
 [node name="Dice" type="RigidBody3D"]
+transform = Transform3D(0.997166, 0, 0.0752384, 0, 1, 0, -0.0752384, 0, 0.997166, 0, 2.02054, 0)
 mass = 0.01
 script = ExtResource("2")
 
