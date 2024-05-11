@@ -4,27 +4,17 @@ extends RigidBody3D
 
 signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
-@export var id: int=0: set=set_id
 var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
-var player
 var has_touch=false
 var historical=[] #List to store all throws to get statistics
 var tween_waiting
 
-#func _ready():
-	#if Engine.is_editor_hint():
-		#TweenWaiting_start()
-	
-## Sets id, and initial properties and position
-func set_id(node_id):
-	id=node_id
-	self.set_my_position(5)
-		
-func set_player(_player):
-	self.player=_player
+
+func player():
+	return self.get_parent_node_3d()
 	
 func set_my_position(h):
-	match(self.id):
+	match(self.player().id):
 		0:
 			self.global_transform.origin=Vector3(-20,h,-25)
 		1:
@@ -54,7 +44,7 @@ func simulate_value(v:int) -> void:
 			
 func launch():
 	$RelaunchTimer.start(5)
-	self.player.can_throw_dice=false
+	self.player().can_throw_dice=false
 	self.value=null
 	self.has_touch=false
 	
@@ -84,7 +74,7 @@ func _physics_process(_delta):
 
 	
 	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
-		var s="Dice " + str(self.id) + " gets a "+ str(self.value)
+		var s="Dice " + str(self.player().id) + " gets a "+ str(self.value)
 		print(s)
 		$RelaunchTimer.stop()
 		
@@ -104,9 +94,9 @@ func _physics_process(_delta):
 
 			
 			
-			$FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player.color)
+			$FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player().color)
 			await $FloatingText.text_disappear
-		self.player.dice_throws.append(self.value)
+		self.player().dice_throws.append(self.value)
 		self.historical.append(self.value)
 		emit_signal("dice_got_value")
 
@@ -150,48 +140,48 @@ func on_clicked():
 	self.launch()
 	await self.dice_got_value
 	
-	var lpm=self.player.last_piece_moved
-	if self.player.dice_throws_has_three_sixes() and lpm!=null:
-		if self.player.route.is_ramp(lpm.route_position)==true:
-			self.player.game.players.change_current_player()	
-			$FloatingText.show_text(tr("Tree sixes: You're lucky you are in the final ramp"), self.player.color)
+	var lpm=self.player().last_piece_moved
+	if self.player().dice_throws_has_three_sixes() and lpm!=null:
+		if self.player().route.is_ramp(lpm.route_position)==true:
+			self.player().game.players.change_current_player()	
+			$FloatingText.show_text(tr("Tree sixes: You're lucky you are in the final ramp"), self.player().color)
 			await $FloatingText.text_disappear
 			return
 		elif lpm.can_move_stm()==false:
-			self.player.game.players.change_current_player()			
-			$FloatingText.show_text(tr("Tree sixes: You're lucky you can't move"), self.player.color)
+			self.player().game.players.change_current_player()			
+			$FloatingText.show_text(tr("Tree sixes: You're lucky you can't move"), self.player().color)
 			await $FloatingText.text_disappear
 			return
-		elif self.player.route.is_ramp(self.player.last_piece_moved.route_position)==false:
+		elif self.player().route.is_ramp(self.player().last_piece_moved.route_position)==false:
 			$ThreeSix.play()
-			self.player.last_piece_moved.move_to_route_position(0)
-			await self.player.last_piece_moved.piece_moved
-			$FloatingText.show_text(tr("Tree sixes: too fast too young"), self.player.color)
+			self.player().last_piece_moved.move_to_route_position(0)
+			await self.player().last_piece_moved.piece_moved
+			$FloatingText.show_text(tr("Tree sixes: too fast too young"), self.player().color)
 			await $FloatingText.text_disappear
-			self.player.game.players.change_current_player()
+			self.player().game.players.change_current_player()
 			return
 		
-	if self.player.can_some_piece_move_stm():
-		self.player.can_move_pieces=true
-		if self.player.ia==true:
-			var p =self.player.ia_selects_piece_to_move()
+	if self.player().can_some_piece_move_stm():
+		self.player().can_move_pieces=true
+		if self.player().ia==true:
+			var p =self.player().ia_selects_piece_to_move()
 			p.on_clicked()
 		else: #Self player.ia false
-			var pieces_can_move_stm=self.player.pieces_can_move_stm()
+			var pieces_can_move_stm=self.player().pieces_can_move_stm()
 			if pieces_can_move_stm.size()==1: #Mandatory movement
 				pieces_can_move_stm[0].on_clicked()
 	else:
-		if self.player.can_throw_dice_again():
-			self.player.can_throw_dice=true
-			if self.player.ia==true or Globals.settings["automatic"]==true:
-				self.player.dice.on_clicked()
+		if self.player().can_throw_dice_again():
+			self.player().can_throw_dice=true
+			if self.player().ia==true or Globals.settings["automatic"]==true:
+				self.player().dice.on_clicked()
 		else:
-			self.player.game.players.change_current_player()
+			self.player().game.players.change_current_player()
 
 
 func historical_report() -> void:
 	if len(self.historical)>0:
-		print("Dice %s has been thrown %s times:" % [self.id, self.historical.size()])
+		print("Dice %s has been thrown %s times:" % [self.player().id, self.historical.size()])
 		print("  - 1: %d (%.2f%%)" % [ self.historical.count(1), float(self.historical.count(1))/len(self.historical)*100 ])
 		print("  - 2: %d (%.2f%%)" % [ self.historical.count(2), float(self.historical.count(2))/len(self.historical)*100 ])
 		print("  - 3: %d (%.2f%%)" % [ self.historical.count(3), float(self.historical.count(3))/len(self.historical)*100 ])
@@ -213,8 +203,8 @@ func _on_RelaunchTimer_timeout():
 		self.global_rotate(Vector3.ZERO, 0)
 		self.set_linear_velocity(Vector3(0,0,0))
 		self.set_angular_velocity(Vector3(0,0,0))
-		$FloatingText.show_text(tr("Recovering dice"),self.player.color)
-		self.player.can_throw_dice=true
+		$FloatingText.show_text(tr("Recovering dice"),self.player().color)
+		self.player().can_throw_dice=true
 		self.launch()
 	
 

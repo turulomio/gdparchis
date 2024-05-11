@@ -13,17 +13,19 @@ func _ready():
 
 func _on_Tween_tween_all_completed():
 	emit_signal("text_disappear")
+	
+	print("Finished to show text")
 	self.visible=false
 
 
 func show_text(text, color):
+	print("Starting to show ", text, color)
 	label.set("theme_override_colors/font_color", color)
 	self.visible=true
 	self.transform.origin=self.vector2_viewport_center()
 	label.set_text(str(text))
 	self.tween=create_tween()
 	self.tween.tween_property($Label, 'scale' ,Vector2(1.5,1.5),2.5).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT )
-	self.visible=false
 	self.tween.tween_callback(self._on_Tween_tween_all_completed)
 	#self.tween.start()
 

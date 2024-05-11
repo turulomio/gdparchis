@@ -1,62 +1,37 @@
 extends Node3D
 class_name GameDiceStart
 
-var players
+
+@onready var Board4Full=$Board4Full
+
 var dice_higher=0
 var winers=[]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
-	$Board4.set_physics_process(false)
 
-	
 	## Creating players
-	self.players=PlayerManager.new(Globals.game_data.max_players)
-	for d_player in Globals.game_data.players:
-		if d_player["plays"]==true:
-			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
-			self.players.append(player)
-		
-	## Registering game
-	print("Registering game:")	
-	var fields = {
-		"max_players":Globals.game_data.max_players,
-		"num_players": self.players.players_that_play().size(),
-		"installation_uuid": Globals.settings.get("installation_uuid"),
-		"game_uuid": Globals.game_data.game_uuid,
-		"version": Globals.VERSION,
-	}
-	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
-		
-		
-	for p in self.players.values():
-		p.set_game(self)
-		var dice=get_node("Dice"+str(p.id))
-		dice.set_player(p)
-		dice.set_my_position(3)
-		p.set_dice(dice)
-
+	Globals.game_load_glogals_game_data(self)
 	var is_winer=null
 	while is_winer==null:
 		self.winers=[] #Player index
 		self.dice_higher=0
-		for p in self.players.values():
-			if p.plays==false:
-				continue
+		for p in Board4Full.players_than_plays():
 			p.can_move_pieces=false
 			p.dice_throws=[]
 			p.extra_moves=[]
 			p.can_throw_dice=true
-			p.dice.launch()
+			p.dice().set_my_position(5)
+			p.dice().launch()
 			
-			await p.dice.dice_got_value
-			if p.dice.value>self.dice_higher:
-				self.dice_higher=p.dice.value	
+			await p.dice().dice_got_value
+			if p.dice().value>self.dice_higher:
+				self.dice_higher=p.dice().value	
 			
 		#Search winners
-		for p in self.players.values():
-			if p.dice.value==dice_higher:
+		for p in Board4Full.players():
+			if p.dice().value==dice_higher:
 				self.winers.append(p)
 				
 		is_winer=await self.is_there_a_winer()
@@ -71,10 +46,9 @@ func is_there_a_winer():
 		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
 		return true
 	else:
-		for p in self.players.values():
+		for p in Board4Full.players():
 			if not p in self.winers: 
 				p.plays=false
-				self.remove_child(p.dice)
 		return null
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

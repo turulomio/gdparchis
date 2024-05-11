@@ -15,9 +15,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 3)
 
 [node name="Piece1" parent="." instance=ExtResource("3_wrbd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, -3)
+id = 1
 
 [node name="Piece2" parent="." instance=ExtResource("3_wrbd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, -3)
+id = 2
 
 [node name="Piece3" parent="." instance=ExtResource("3_wrbd8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, 3)

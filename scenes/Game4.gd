@@ -2,11 +2,9 @@ extends Node3D
 class_name Game4
 
 @onready var camera = $Camera
-var players
-var pieces 
-var max_players
-var squares
-var routes
+@onready var Board4Full=$Board4Full
+var current_player
+
 
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
@@ -23,67 +21,18 @@ func _ready():
 	
 	## Came from playersselection or load_directly
 	var d=Globals.game_data
-	
-	## Creating players
-	self.max_players=4
-	
-	## Creating squares
-	self.squares=SquareManager.new()
-	for i in range(1,105):
-		self.squares.append(Square.new(i))
-	
-	## Creating routes
-	self.routes={}
-	for e_color in Globals.e_colors(self.max_players):
-		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
 
-	self.players=PlayerManager.new(self.max_players)
-	for d_player in d["players"]:
-		var player=Player.new(int(d_player["id"]),d_player["plays"],d_player["ia"])
-		player.set_route(self.routes[str(player.id)])
-		self.players.append(player)
-		
-	
-	for p in self.players.values():
-		p.set_game(self)
-		if p.plays==true:
-			var dice=get_node("Dice"+str(p.id))
-			dice.set_player(p)
-			dice.set_my_position(3)
-			p.set_dice(dice)
+	Globals.game_load_glogals_game_data(self)
 
-	# Create players pieces
-	for d_player in d["players"]:
-		var square_position=0
-		var player=self.players.my_get(d_player["id"])
-		if player.plays:  
-			for d_piece in d_player["pieces"]:
-				var route=self.routes[str(player.id)]
-				var piece=Globals.SCENE_PIECE.instance()
-				self.add_child(piece)
-				piece.set_id(d_piece["id"],player,route.end_position(),square_position)
-				player.append_piece(piece) #Link piece to player bidirectional
-				square_position=square_position+1
-				piece.move_to_route_position(route.end_position(),0) 
-				await piece.piece_moved()
-				piece.move_to_route_position(d_piece["route_position"], 0.05) 
-				await piece.piece_moved()
-
-
-		p.set_game(self)
-		var dice=get_node("Dice"+str(p.id))
-		dice.set_player(p)
-		dice.set_my_position(3)
-		p.set_dice(dice)
 
 
 	# Start game
-	self.players.current=self.players.my_get(str(d["current"]))
-	self.players.current.can_move_pieces=false
-	self.players.current.dice_throws=[]
-	self.players.current.can_throw_dice=true
-	if self.players.current.ia==true or Globals.settings.get("automatic", true)==true:
-		self.players.current.dice.on_clicked()
+	self.current_player=self.Board4Full.players()[d["current"]]
+	self.current_player.can_move_pieces=false
+	self.current_player.dice_throws=[]
+	self.current_player.can_throw_dice=true
+	if self.current_player.ia==true or Globals.settings.get("automatic", true)==true:
+		self.current_player.dice.on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -92,12 +41,12 @@ func _process(_delta):
 		if object == null:
 			return
 		if object is Piece:
-			if object.player==self.players.current and object.player.can_move_pieces:
+			if object.player==self.current_player and object.player.can_move_pieces:
 				object.on_clicked()
 			else:
 				$Click.play()
 		if object is Dice:
-			if object.player==self.players.current and object.player.can_throw_dice:
+			if object.player==self.current_player and object.player.can_throw_dice:
 				object.on_clicked()
 			else:
 				$Click.play()
@@ -132,15 +81,47 @@ func _process(_delta):
 			return
 		if object is Piece:
 			print("Piece", str(object), " ", object.player.name)
-			if object.player==self.players.current and object.player.can_move_pieces:
+			if object.player==self.current_player and object.player.can_move_pieces:
 				print("  + Can move: ", object.can_move_stm())
 				print("  + Can eat before: ", object.can_eat_before_stm())
 				print("  + Can eat after: ", object.can_eat_at_route_position(object.route_position+object.squares_to_move(),false))
 			print("  + Threats before: ", object.threats_at(object.square()))
 				
-			if object.player==self.players.current and object.player.can_move_pieces:
+			if object.player==self.current_player and object.player.can_move_pieces:
 				print("  + Threats after: ", object.threats_at(object.route.square_at(object.route_position+object.squares_to_move())))
 				
 		if object is Dice and OS.is_debug_build():
 			$Popup.set_text(object.historical_report())
 			
+
+func change_current_player():
+	if self.current==null:
+		self.current= self.d["0"]
+	elif self.current==self.d["0"]:
+		self.current = self.d["1"]
+	elif self.current==self.d["1"]:
+		self.current = self.d["2"]
+	elif self.current==self.d["2"]:
+		self.current = self.d["3"]
+	elif self.current==self.d["3"]:
+		self.current = self.d["0"]
+		
+	print("Current player now is ", self.current.name)
+		
+	if self.current.plays==false:
+		self.change_current_player()
+		return
+		
+	self.current.last_piece_moved=null
+	self.current.can_move_pieces=false
+	self.current.dice_throws=[]
+	self.current.extra_moves=[]
+	self.current.can_throw_dice=true
+	if self.current.ia==true:
+		self.current.dice.on_clicked()
+	else:#Not ia
+		print(self.current.game)
+		Globals.save_game(self.current.game)
+		if Globals.settings.get("automatic",true)==true:
+			self.current.dice.on_clicked()
+	

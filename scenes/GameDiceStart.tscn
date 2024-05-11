@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://byxwi24b2uqh7"]
+[gd_scene load_steps=5 format=3 uid="uid://byxwi24b2uqh7"]
 
-[ext_resource type="PackedScene" uid="uid://dwx8q6okr3d2n" path="res://scenes/Board4.tscn" id="1"]
 [ext_resource type="Script" path="res://scenes/GameDiceStart.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="3"]
 [ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
-[ext_resource type="PackedScene" uid="uid://fcw6tuv4kh27" path="res://scenes/Dice.tscn" id="5_7g8f2"]
+[ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4Full.tscn" id="4_87ycm"]
 
 [node name="GameDiceStart" type="Node3D"]
 script = ExtResource("2")
@@ -15,9 +14,6 @@ stream = ExtResource("4")
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 47, 0)
 doppler_tracking = 2
-
-[node name="Board4" parent="." instance=ExtResource("1")]
-transform = Transform3D(-2, 0, -3.01992e-07, 0, 1, 0, 3.01992e-07, 0, -2, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0)
@@ -30,19 +26,7 @@ visible = false
 position = Vector2(907.5, 488)
 scale = Vector2(1.5, 1.5)
 
-[node name="Dice0" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(0.998392, 0, 0.0566928, 0, 1, 0, -0.0566928, 0, 0.998392, -20, 2.1216, -25)
-
-[node name="Dice1" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 5, 20)
-id = 1
-
-[node name="Dice2" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 25)
-id = 2
-
-[node name="Dice3" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, -20)
-id = 3
+[node name="Board4Full" parent="." instance=ExtResource("4_87ycm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

@@ -488,3 +488,55 @@ func position4(square_id, square_position):
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
+
+
+
+func game_load_glogals_game_data(gameobject):
+	# ALL Game scenes have board4full y cargan de Globals gamedata
+	
+	
+	print(gameobject.Board4Full)
+	print(gameobject.Board4Full.players())
+	for d_player in Globals.game_data.players:
+		var i=d_player["id"]
+		gameobject.Board4Full.players()[i].plays=d_player["plays"]
+		
+	## Registering game
+	print("Registering game:")	
+	var fields = {
+		"max_players":Globals.game_data.max_players,
+		"num_players": gameobject.Board4Full.players_than_plays().size(),
+		"installation_uuid": Globals.settings.get("installation_uuid"),
+		"game_uuid": Globals.game_data.game_uuid,
+		"version": Globals.VERSION,
+	}
+	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
+		
+		
+	for p in gameobject.Board4Full.players():
+		print(p.id)
+		print("Players game ", p.game())
+		print("Players dice ", p.dice())
+		print("Players dice and player", p.dice().player())
+		p.dice().set_my_position(3)
+			# Create players pieces
+	print(Globals.game_data)
+	for d_player in Globals.game_data.players:
+		var square_position=0
+		var player=gameobject.Board4Full.players()[d_player["id"]]
+		if player.plays:  
+			var i=0
+			for d_piece in d_player["pieces"]:
+				#var piece=Globals.SCENE_PIECE.instance()
+				#self.add_child(piece)
+				var piece=player.pieces()[i]
+				#Sets at the end
+				piece.route_position=player.route.end_position()
+				piece.square_position=square_position
+				#player.append_piece(piece) #Link piece to player bidirectional
+				square_position=square_position+1
+				piece.move_to_route_position(player.route.end_position(),0) 
+				await piece.piece_moved
+				piece.move_to_route_position(d_piece["route_position"], 0.05) 
+				await piece.piece_moved
+	
