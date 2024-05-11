@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1o5wtrh2qa8b"]
 
 [ext_resource type="Script" path="res://scenes/Board4.gd" id="1_jfs5m"]
-[ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/NewPlayer.tscn" id="2_8i2pk"]
+[ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/Player.tscn" id="2_obu4h"]
 [ext_resource type="PackedScene" uid="uid://ei7c7rx78hmb" path="res://models/Board.blend" id="3_3u5ny"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ra5d6"]
@@ -11,21 +11,21 @@ size = Vector3(65, 0.2, 65)
 script = ExtResource("1_jfs5m")
 show_pieces = false
 
-[node name="NewPlayer0" parent="." instance=ExtResource("2_8i2pk")]
+[node name="Player0" parent="." instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 5, 2.08165e-12)
 show_pieces = false
 
-[node name="NewPlayer1" parent="." instance=ExtResource("2_8i2pk")]
+[node name="Player1" parent="." instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 10, 2.08165e-12)
 id = 1
 show_pieces = false
 
-[node name="NewPlayer2" parent="." instance=ExtResource("2_8i2pk")]
+[node name="Player2" parent="." instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 15, 2.08165e-12)
 id = 2
 show_pieces = false
 
-[node name="NewPlayer3" parent="." instance=ExtResource("2_8i2pk")]
+[node name="Player3" parent="." instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 20, 2.08165e-12)
 id = 3
 show_pieces = false

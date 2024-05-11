@@ -1,10 +1,10 @@
 @tool
 extends Node3D
 
-@onready var NewPlayer0=$NewPlayer0
-@onready var NewPlayer1=$NewPlayer1
-@onready var NewPlayer2=$NewPlayer2
-@onready var NewPlayer3=$NewPlayer3
+@onready var Player0=$Player0
+@onready var Player1=$Player1
+@onready var Player2=$Player2
+@onready var Player3=$Player3
 
 var squares
 var routes
@@ -39,7 +39,7 @@ func set_show_pieces(value):
 		player.set_show_pieces(value)
 
 func players():
-	return [NewPlayer0, NewPlayer1,NewPlayer2,NewPlayer3]
+	return [Player0, Player1,Player2,Player3]
 
 func players_than_plays():
 	var r=[]
