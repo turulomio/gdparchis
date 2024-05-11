@@ -39,7 +39,7 @@ func set_show_pieces(value):
 		player.set_show_pieces(value)
 
 func players():
-	return [Player0, Player1,Player2,Player3]
+	return [Player0, Player1, Player2, Player3]
 
 func players_than_plays():
 	var r=[]

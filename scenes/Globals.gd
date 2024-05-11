@@ -492,10 +492,6 @@ func position4(square_id, square_position):
 
 func game_load_glogals_game_data(gameobject):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata
-	
-	
-	print(gameobject.Board4)
-	print(gameobject.Board4.players())
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
 		gameobject.Board4.players()[i].plays=d_player["plays"]
@@ -513,10 +509,6 @@ func game_load_glogals_game_data(gameobject):
 		
 		
 	for p in gameobject.Board4.players():
-		print(p.id)
-		print("Players game ", p.game())
-		print("Players dice ", p.dice())
-		print("Players dice and player", p.dice().player())
 		p.dice().set_my_position(3)
 			# Create players pieces
 	print(Globals.game_data)

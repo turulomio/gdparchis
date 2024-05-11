@@ -117,9 +117,9 @@ func move_to_route_position(_route_position, duration=0.4):
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
 		if self.square().id in [8,9,25,26,42,43,59,60]:
-			self.scale=Vector3(0.8,1,0.8)
-		else:
 			self.scale=Vector3(1,1,1)
+		else:
+			self.scale=Vector3(2,2,2)
 
 func squares_to_move():
 	if self.player().extra_moves.size()>0:
