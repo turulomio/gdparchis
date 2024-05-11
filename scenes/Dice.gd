@@ -1,3 +1,4 @@
+@tool
 class_name Dice
 extends RigidBody3D
 
@@ -8,8 +9,11 @@ var value=0#To avoid failling values must be 0, null to start getting value, 1-6
 var player
 var has_touch=false
 var historical=[] #List to store all throws to get statistics
+var tween_waiting
 
-
+func _ready():
+	print("DICE READY")
+	TweenWaiting_start()
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):
@@ -73,6 +77,10 @@ func launch():
 		self.set_linear_velocity(Vector3(randi_range(-3,3), randi_range(-3,3) ,randi_range(-3,3)))
 		self.set_angular_velocity(Vector3(x,y,z))
 
+	
+func _process(delta):
+	#print("_PROCESS DICE", delta)
+	self.rotation.y=PI*delta
 	
 func _physics_process(_delta):
 	if self.value==0:
@@ -212,18 +220,20 @@ func _on_RelaunchTimer_timeout():
 		$FloatingText.show_text(tr("Recovering dice"),self.player.color)
 		self.player.can_throw_dice=true
 		self.launch()
+	
 
 func TweenWaiting_method(rad):
-	self.global_transform.origin.y=2.5+sin(rad)/2
-		
+	self.position.y=2.5+sin(rad)/2
 
-func TweenWaiting_start():
-	$TweenWaiting.interpolate_method(self,"TweenWaiting_method", 0, 2*PI, 1)
-	self.set_physics_process(false)
-	$TweenWaiting.start()
+func TweenWaiting_start():  
+	self.set_physics_process(false)	
+	self.tween_waiting = create_tween()
+	self.tween_waiting.set_loops()
+	self.tween_waiting.tween_method(TweenWaiting_method, 0, 2*PI, 2)
 	
 func TweenWaiting_stop():
-	$TweenWaiting.stop_all()
+	#$TweenWaiting.stop_all() 
+	self.tween_waiting.kill()
 	self.set_physics_process(true)
 
 

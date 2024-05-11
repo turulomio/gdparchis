@@ -51,7 +51,8 @@ func _ready():
 			p.extra_moves=[]
 			p.can_throw_dice=true
 			p.dice.launch()
-			await p.dice.dice_got_value()
+			
+			await p.dice.dice_got_value
 			print("DICE GOT",p.dice.value)
 			if p.dice.value>self.dice_higher:
 				self.dice_higher=p.dice.value	

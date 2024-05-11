@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://fcw6tuv4kh27"]
+[gd_scene load_steps=7 format=3 uid="uid://fcw6tuv4kh27"]
 
 [ext_resource type="Script" path="res://scenes/Dice.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cwsvmnwskq4w8" path="res://models/Dice.blend" id="2_weyj7"]
 [ext_resource type="AudioStream" uid="uid://clgklc326rc15" path="res://sounds/threesix.wav" id="3"]
 [ext_resource type="AudioStream" uid="uid://cqub2is8xbclh" path="res://sounds/roll.wav" id="4"]
+[ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="5_p4vs8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e8as6"]
 
 [node name="Dice" type="RigidBody3D"]
-mass = 100.0
+mass = 0.01
 script = ExtResource("2")
 
 [node name="Dice" parent="." instance=ExtResource("2_weyj7")]
@@ -63,6 +64,8 @@ stream = ExtResource("4")
 wait_time = 5.0
 
 [node name="RequestGameFake" type="HTTPRequest" parent="."]
+
+[node name="FloatingText" parent="." instance=ExtResource("5_p4vs8")]
 
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
 [connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]
