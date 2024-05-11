@@ -18,16 +18,18 @@ extends Control
 func _on_Button_pressed():
 	
 	var nodes =[
-		$VBoxContainerMain/VBoxContainer/PoYellow,
-		$VBoxContainerMain/VBoxContainer/PoBlue,
-		$VBoxContainerMain/VBoxContainer/PoRed,
-		$VBoxContainerMain/VBoxContainer/PoGreen
+		$PoYellow,
+		$PoBlue,
+		$PoRed,
+		$PoGreen
 	]
-	
+	print(Globals)
+	print("Max players",Globals.game_data["max_players"])
 	for i in range(Globals.game_data["max_players"]):
 		Globals.game_data.players[i].name=nodes[i].playername
 		Globals.game_data.players[i].plays=nodes[i].plays
 		Globals.game_data.players[i].ia=nodes[i].ia
+	print(Globals.game_data.players)
 	get_tree().change_scene_to_file("res://scenes/GameDiceStart.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

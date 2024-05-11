@@ -1,5 +1,4 @@
 class_name Player
-extends Object
 var id : int
 var name : String
 var color: Color
@@ -8,8 +7,8 @@ var pieces=[]
 var route: Route
 var dice: Dice
 var game
-var can_throw_dice = false setget set_can_throw_dice, get_can_throw_dice
-var can_move_pieces = false setget set_can_move_pieces, get_can_move_pieces
+var can_throw_dice: bool = false: set = set_can_throw_dice, get=get_can_throw_dice
+var can_move_pieces: bool = false: set = set_can_move_pieces, get = get_can_move_pieces
 var dice_throws=[]
 var extra_moves=[]
 var last_piece_moved=null

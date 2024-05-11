@@ -8,12 +8,13 @@ var winers=[]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+	print(Globals.game_data.players)
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
 
 	
 	## Creating players
 	self.players=PlayerManager.new(Globals.game_data.max_players)
-	for d_player in Globals.game_data["players"]:
+	for d_player in Globals.game_data.players:
 		print("PLAYER", d_player["id"],d_player["plays"],d_player["ia"])
 		if d_player["plays"]==true:
 			var player=Player.new(d_player["id"],d_player["plays"],d_player["ia"])
