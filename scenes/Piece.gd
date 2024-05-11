@@ -19,9 +19,10 @@ func set_id(value):
 	id=value
 	
 func _ready():
-	
+	pass
 # https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-#func set_color(s):
+func set_color():
+	print(self.player().id, self.player().color)
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = self.player().color

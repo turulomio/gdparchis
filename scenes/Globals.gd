@@ -523,12 +523,13 @@ func game_load_glogals_game_data(gameobject):
 	for d_player in Globals.game_data.players:
 		var square_position=0
 		var player=gameobject.Board4.players()[d_player["id"]]
-		if player.plays:  
-			var i=0
-			for d_piece in d_player["pieces"]:
+		var i=0
+		for d_piece in d_player["pieces"]:
+			var piece=player.pieces()[i]
+			if player.plays:  
 				#var piece=Globals.SCENE_PIECE.instance()
 				#self.add_child(piece)
-				var piece=player.pieces()[i]
+				piece.set_color()
 				#Sets at the end
 				piece.route_position=player.route.end_position()
 				piece.square_position=square_position
@@ -538,4 +539,8 @@ func game_load_glogals_game_data(gameobject):
 				await piece.piece_moved
 				piece.move_to_route_position(d_piece["route_position"], 0.05) 
 				await piece.piece_moved
+			else:
+				piece.visible=false
+			i+=1
+				
 	
