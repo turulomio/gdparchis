@@ -21,7 +21,6 @@ var game_data=null #Dictionary to load and init games
 var settings
 
 
-
 func vector2_os_center() -> Vector2:
 	var	window_width=DisplayServer.window_get_size().x
 	var window_height=DisplayServer.window_get_size().y

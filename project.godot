@@ -144,6 +144,10 @@ green_view={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://i18n/translations.en.translation", "res://i18n/translations.es.translation", "res://i18n/translations.fr.translation")
+
 [locale]
 
 locale_filter=[0, ["en", "es", "fr"]]

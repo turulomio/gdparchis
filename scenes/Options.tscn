@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2q0p36nflj0m"]
+[gd_scene load_steps=6 format=3 uid="uid://c2q0p36nflj0m"]
 
 [ext_resource type="Script" path="res://scenes/Options.gd" id="1"]
 [ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://o6qb4s4u3m2v" path="res://images/uk.png" id="3_mqnaa"]
+[ext_resource type="Texture2D" uid="uid://caxu6i7ahqnan" path="res://images/spain.png" id="4_qf5of"]
+[ext_resource type="Texture2D" uid="uid://dwewd2n3uych4" path="res://images/france.png" id="5_o4d7o"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -57,6 +60,13 @@ text = "Game difficulty  "
 layout_mode = 2
 size_flags_vertical = 4
 flat = true
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Difficult"
+popup/item_2/id = 2
 
 [node name="HBLanguages" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -69,6 +79,17 @@ text = "Language  "
 layout_mode = 2
 size_flags_vertical = 4
 flat = true
+item_count = 3
+selected = 0
+popup/item_0/text = "English"
+popup/item_0/icon = ExtResource("3_mqnaa")
+popup/item_0/id = 0
+popup/item_1/text = "Spanish"
+popup/item_1/icon = ExtResource("4_qf5of")
+popup/item_1/id = 1
+popup/item_2/text = "French"
+popup/item_2/icon = ExtResource("5_o4d7o")
+popup/item_2/id = 2
 
 [node name="Return" type="Button" parent="VBoxContainer"]
 layout_mode = 2
