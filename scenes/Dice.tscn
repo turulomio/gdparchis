@@ -9,7 +9,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_e8as6"]
 
 [node name="Dice" type="RigidBody3D"]
-transform = Transform3D(0.997166, 0, 0.0752384, 0, 1, 0, -0.0752384, 0, 0.997166, 0, 2.02054, 0)
+transform = Transform3D(0.997166, 0, 0.0752384, 0, 1, 0, -0.0752384, 0, 0.997166, 0, 2.57056, 0)
 mass = 0.01
 script = ExtResource("2")
 
@@ -67,6 +67,8 @@ wait_time = 5.0
 [node name="RequestGameFake" type="HTTPRequest" parent="."]
 
 [node name="FloatingText" parent="." instance=ExtResource("5_p4vs8")]
+visible = false
+position = Vector2(829.5, 488)
 
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
 [connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]

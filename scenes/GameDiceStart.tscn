@@ -17,7 +17,7 @@ transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 47, 0)
 doppler_tracking = 2
 
 [node name="Board4" parent="." instance=ExtResource("1")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-2, 0, -3.01992e-07, 0, 1, 0, 3.01992e-07, 0, -2, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0)
@@ -26,20 +26,23 @@ shadow_enabled = true
 [node name="RequestGameStart" type="HTTPRequest" parent="."]
 
 [node name="FloatingText" parent="." instance=ExtResource("3")]
+visible = false
+position = Vector2(829.5, 488)
+scale = Vector2(1.5, 1.5)
 
 [node name="Dice0" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(0.998392, 0, 0.0566928, 0, 1, 0, -0.0566928, 0, 0.998392, -10.5761, 2.57056, 10.6125)
+transform = Transform3D(0.998392, 0, 0.0566928, 0, 1, 0, -0.0566928, 0, 0.998392, -20, 2.1216, -25)
 
 [node name="Dice1" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.57056, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 5, 20)
 id = 1
 
 [node name="Dice2" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.57056, 25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 25)
 id = 2
 
 [node name="Dice3" parent="." instance=ExtResource("5_7g8f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.57056, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, -20)
 id = 3
 
 [connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

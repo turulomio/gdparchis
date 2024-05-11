@@ -8,6 +8,7 @@ var winers=[]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
+	$Board4.set_physics_process(false)
 
 	
 	## Creating players
@@ -33,6 +34,7 @@ func _ready():
 		p.set_game(self)
 		var dice=get_node("Dice"+str(p.id))
 		dice.set_player(p)
+		dice.set_my_position(3)
 		p.set_dice(dice)
 
 	var is_winer=null
@@ -49,7 +51,6 @@ func _ready():
 			p.dice.launch()
 			
 			await p.dice.dice_got_value
-			print("DICE GOT",p.dice.value)
 			if p.dice.value>self.dice_higher:
 				self.dice_higher=p.dice.value	
 			

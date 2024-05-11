@@ -11,8 +11,9 @@ var has_touch=false
 var historical=[] #List to store all throws to get statistics
 var tween_waiting
 
-func _ready():
-	TweenWaiting_start()
+#func _ready():
+	#if Engine.is_editor_hint():
+		#TweenWaiting_start()
 	
 ## Sets id, and initial properties and position
 func set_id(node_id):

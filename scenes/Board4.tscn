@@ -12,9 +12,11 @@ material = SubResource("StandardMaterial3D_e53e6")
 [sub_resource type="BoxShape3D" id="BoxShape3D_xeh0g"]
 
 [node name="Board4" type="RigidBody3D"]
+can_sleep = false
+freeze = true
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
-transform = Transform3D(32.5, 0, 0, 0, 0.0999966, 0.26773, 0, -0.000823786, 32.4989, 0, 0, 0)
+transform = Transform3D(32.5, 0, 0, 0, 0.1, 0, 0, 0, 32.5, 0, 0, 0)
 mesh = SubResource("BoxMesh_67x75")
 skeleton = NodePath("")
 
