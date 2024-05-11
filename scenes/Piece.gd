@@ -248,10 +248,10 @@ func on_clicked():
 	elif self.player().can_throw_dice_again():
 		self.player().can_throw_dice=true
 		if self.player().ia==true:
-			self.player().dice.on_clicked()
+			self.player().dice().on_clicked()
 		else:#Not ia
 			if Globals.settings.get("automatic",true)==true:
-				self.player().dice.on_clicked()
+				self.player().dice().on_clicked()
 	else:
 		self.game().change_current_player()
 		
