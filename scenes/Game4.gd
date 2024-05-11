@@ -2,7 +2,7 @@ extends Node3D
 class_name Game4
 
 @onready var camera = $Camera
-@onready var Board4Full=$Board4Full
+@onready var Board4=$Board4
 var current_player
 
 
@@ -27,7 +27,7 @@ func _ready():
 
 
 	# Start game
-	self.current_player=self.Board4Full.players()[d["current"]]
+	self.current_player=self.Board4.players()[d["current"]]
 	self.current_player.can_move_pieces=false
 	self.current_player.dice_throws=[]
 	self.current_player.can_throw_dice=true
@@ -96,15 +96,15 @@ func _process(_delta):
 
 func change_current_player():
 	if self.current_player==null:
-		self.current_player= self.Board4Full.players()[0]
-	elif self.current_player==self.Board4Full.players()[0]:
-		self.current_player = self.Board4Full.players()[1]
-	elif self.current_player==self.Board4Full.players()[1]:
-		self.current_player = self.Board4Full.players()[2]
-	elif self.current_player==self.Board4Full.players()[2]:
-		self.current_player = self.Board4Full.players()[3]
-	elif self.current_player==self.Board4Full.players()[3]:
-		self.current_player = self.Board4Full.players()[0]
+		self.current_player= self.Board4.players()[0]
+	elif self.current_player==self.Board4.players()[0]:
+		self.current_player = self.Board4.players()[1]
+	elif self.current_player==self.Board4.players()[1]:
+		self.current_player = self.Board4.players()[2]
+	elif self.current_player==self.Board4.players()[2]:
+		self.current_player = self.Board4.players()[3]
+	elif self.current_player==self.Board4.players()[3]:
+		self.current_player = self.Board4.players()[0]
 		
 	print("Current player now is ", self.current_player.name)
 		

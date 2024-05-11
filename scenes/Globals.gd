@@ -117,15 +117,15 @@ func save_game(game):
 	#Create new autosave
 	var d=Time.get_datetime_dict_from_system()
 	print(d)
-	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.Board4Full.max_players]
+	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.Board4.max_players]
 	var file=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
 	var dict={}	
-	dict["max_players"]=game.Board4Full.max_players
+	dict["max_players"]=game.Board4.max_players
 	dict["current"]=game.current_player.id
 	dict["fake_dice"]=[]
 	dict["players"]=[]
 	dict["game_uuid"]=self.game_data.game_uuid
-	for p in game.Board4Full.players():
+	for p in game.Board4.players():
 		var dict_p={}
 		dict_p["id"]=p.id
 		dict_p["name"]=p.name
@@ -493,20 +493,20 @@ func position4(square_id, square_position):
 
 
 func game_load_glogals_game_data(gameobject):
-	# ALL Game scenes have board4full y cargan de Globals gamedata
+	# ALL Game scenes have Board4 y cargan de Globals gamedata
 	
 	
-	print(gameobject.Board4Full)
-	print(gameobject.Board4Full.players())
+	print(gameobject.Board4)
+	print(gameobject.Board4.players())
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
-		gameobject.Board4Full.players()[i].plays=d_player["plays"]
+		gameobject.Board4.players()[i].plays=d_player["plays"]
 		
 	## Registering game
 	print("Registering game:")	
 	var fields = {
 		"max_players":Globals.game_data.max_players,
-		"num_players": gameobject.Board4Full.players_than_plays().size(),
+		"num_players": gameobject.Board4.players_than_plays().size(),
 		"installation_uuid": Globals.settings.get("installation_uuid"),
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
@@ -514,7 +514,7 @@ func game_load_glogals_game_data(gameobject):
 	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
 		
-	for p in gameobject.Board4Full.players():
+	for p in gameobject.Board4.players():
 		print(p.id)
 		print("Players game ", p.game())
 		print("Players dice ", p.dice())
@@ -524,7 +524,7 @@ func game_load_glogals_game_data(gameobject):
 	print(Globals.game_data)
 	for d_player in Globals.game_data.players:
 		var square_position=0
-		var player=gameobject.Board4Full.players()[d_player["id"]]
+		var player=gameobject.Board4.players()[d_player["id"]]
 		if player.plays:  
 			var i=0
 			for d_piece in d_player["pieces"]:

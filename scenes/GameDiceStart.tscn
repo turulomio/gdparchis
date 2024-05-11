@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/GameDiceStart.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="3"]
 [ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
-[ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4Full.tscn" id="4_87ycm"]
+[ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4.tscn" id="4_87ycm"]
 
 [node name="GameDiceStart" type="Node3D"]
 script = ExtResource("2")
@@ -26,7 +26,7 @@ visible = false
 position = Vector2(907.5, 488)
 scale = Vector2(1.5, 1.5)
 
-[node name="Board4Full" parent="." instance=ExtResource("4_87ycm")]
+[node name="Board4" parent="." instance=ExtResource("4_87ycm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]
