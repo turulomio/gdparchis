@@ -15,8 +15,17 @@ var TweenMoving
 var TweenWaiting
 
 func set_id(value):
+	print("Id and color")
 	id=value
 	
+func _ready():
+	
+# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
+#func set_color(s):
+	var new_material = StandardMaterial3D.new()
+	new_material.albedo_texture = Globals.IMAGE_WOOD
+	new_material.albedo_color = self.player().color
+	$MeshInstance.material_override=new_material
 
 func player():
 	return self.get_parent_node_3d()
@@ -41,29 +50,9 @@ func _physics_process(_delta):
 func _to_string():
 	return "[Piece: "+ str(self.id) + "]"
 	
-## Sets id, and initial properties and position
-func old_set_id(_id,_player,_route_position, _square_position):
-	self.route_position=_route_position
-	self.id=_id
-	self.route_position=_route_position
-	self.square_position=_square_position
-	self.set_color(Globals.colorn(self.player().id))
-	self.TweenWaiting=create_tween()
-	self.TweenMoving=create_tween()
-	self.FloatingText=create_tween()
-
-	
 func square():
 	return self.route().square_at(self.route_position)
 	
-# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-func set_color(s):	
-	s
-	pass
-	#var new_material = SpatialMaterial.new()
-	#new_material.albedo_texture = Globals.IMAGE_WOOD
-	#new_material.albedo_color = s
-	#$MeshInstance.material_override=new_material
 			
 func can_move_to_route_position(_route_position):
 	var square_initial=self.square()

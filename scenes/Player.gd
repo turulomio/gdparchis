@@ -12,7 +12,6 @@ extends Node3D
 @onready var Piece3=$Piece3
 var fancy_name : String
 var color: Color
-var e_color
 var route: Route
 var can_throw_dice: bool = false: set = set_can_throw_dice
 var can_move_pieces: bool = false: set = set_can_move_pieces
@@ -45,7 +44,18 @@ func _to_string():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	## ID is set on _init and on editor
-	print("Newplayer ", self.id)
+	match self.id:
+		0:
+			self.color= Color.YELLOW
+		1:
+			self.color= Color.BLUE
+		2:
+			self.color= Color.RED
+		3:
+			self.color= Color.GREEN
+		_:
+			self.color = Color.WHITE
+	
 	
 func game():
 	var r=self.get_parent_node_3d().get_parent_node_3d()

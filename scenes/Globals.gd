@@ -67,8 +67,6 @@ func ecolor_name(e_color):
 	return r
 
 func color_name(color):
-	print(color)
-	print(Color.YELLOW)
 	if color==Color.YELLOW:
 		return "YELLOW"
 	elif color==Color.BLUE:
