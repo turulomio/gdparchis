@@ -503,7 +503,7 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 					piece.route_position=player.route.end_position()
 					piece.square_position=square_position
 					square_position=square_position+1
-					piece.move_to_route_position(player.route.end_position(),0) 
+					#piece.move_to_route_position(player.route.end_position(),0) 
 					piece.move_to_route_position(d_piece["route_position"], 2)
 
 					

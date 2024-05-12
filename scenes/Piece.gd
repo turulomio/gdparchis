@@ -398,10 +398,10 @@ func is_threating_me(stalker, square):
 
 func threats_at(square):
 	var r=[]
-	for player_ in self.player().game.players.values():
+	for player_ in self.player().board().players():
 		if player_==self.player(): #Ignores piece player
 			continue
-		for stalker in player_.pieces:
+		for stalker in player_.pieces():
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
 	return r

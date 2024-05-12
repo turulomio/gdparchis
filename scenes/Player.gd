@@ -36,8 +36,11 @@ func initialize(id,show_pieces):
 		piece.initialize(i,self.color)
 		piece.visible=self.show_pieces
 	
+func board():
+	return self.get_parent_node_3d()
+	
 func game():
-	var r=self.get_parent_node_3d().get_parent_node_3d()
+	var r=self.board().get_parent_node_3d()
 	print("Game of" , self, r)
 	return r
 
