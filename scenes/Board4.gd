@@ -1,45 +1,40 @@
-@tool
-extends Node3D
 
+extends Node3D
+class_name Board4
+
+@onready var Board=$Board
 @onready var Player0=$Player0
 @onready var Player1=$Player1
 @onready var Player2=$Player2
 @onready var Player3=$Player3
 
 var squares
-var routes
 var max_players: int=4
 
 # Node that joins board, pieces and dices for 4 max players
 
-@export var show_pieces: bool=true: set=set_show_pieces #With id I should have everything to calculate data
+var show_pieces
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	## Creating squares
-	self.squares=SquareManager.new()
-	for i in range(1,105):
-		self.squares.append(Square.new(i))
-	
-	## Creating routes
-	self.routes={}
-	for e_color in Globals.e_colors(self.max_players):
-		self.routes[str(e_color)]=Route.new(self.max_players, e_color, self.squares)
-	for player in self.players():
-		player.set_route(self.routes[str(player.id)])
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
 	pass
 	
+func initialize(show_pieces):
+	self.show_pieces=show_pieces
+	## Creating squares dictionary. We normally access by square id
+	self.squares={}
+	for i in range(1,105):
+		self.squares[i]=Square.new(i)
+		
+	for i in range(self.max_players):
+		var player=self.players()[i]
+		player.initialize(i,show_pieces)
+		player.set_route(Route.new(self.max_players, player.id, self.squares))
+
 func set_show_pieces(value):
 	show_pieces=value
-	await self.ready ## Necesita esperar que los nodos hijos estén preparados
-	for player in self.players():
-		player.set_show_pieces(value)
 
 func players():
-	return [Player0, Player1, Player2, Player3]
+	return get_tree().get_nodes_in_group("players")
 
 func players_than_plays():
 	var r=[]

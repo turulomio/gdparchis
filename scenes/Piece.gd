@@ -1,32 +1,32 @@
+
 extends CharacterBody3D
 class_name Piece
 
-
 signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
+@onready var MeshInstance=$MeshInstance
 
-@export var id: int=0: set=set_id #With id I should have everything to calculate data
+var id:int
+var color: Color
 var route_position: int 
 var square_position: int
 
 #animation movement
-var animation_positions=null #Will be an array of positions
-var TweenMoving
+#var animation_positions=null #Will be an array of positions
 var TweenWaiting
 
-func set_id(value):
-	print("Id and color")
-	id=value
-	
 func _ready():
-	pass
-# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-func set_color():
-	print(self.player().id, self.player().color)
+	#print("Start Piece ready",self.is_node_ready())
+	await self.ready
+	#print("Finish Piece ready")
+	
+func initialize(id, color):
+	self.id=id
+	self.color=color
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = self.player().color
-	$MeshInstance.material_override=new_material
+	new_material.albedo_color = self.color
+	MeshInstance.material_override=new_material
 
 func player():
 	return self.get_parent_node_3d()
@@ -105,14 +105,35 @@ func move_to_route_position(_route_position, duration=0.4):
 	var new_square_position=square_final.empty_position()
 	square_final.set_piece_at_square_position(new_square_position,self)
 	self.square_position=new_square_position
+	self.route_position=_route_position	
 	
-	self.route_position=_route_position
 	
-	
-	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
-	await self.piece_moved
+	#TWeen moving
+	var animation_to=Globals.position4(square_final.id,new_square_position)
+	self.player().can_move_pieces=false
+	var steps_number=20
+	var animation_max_y=5
+	var steps=[]
+	#Piece movement animation
+	for i in range(steps_number):
+		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps_number + self.global_transform.origin
+		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps_number))
+		steps.append(new_pos)
+		
+	print("STarting tweenmoving", self.player(),self)
+	var TweenMoving= get_tree().create_tween()
+	TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
+	await TweenMoving.finished
+	emit_signal("piece_moved")
+	print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
-	
+
+		
+func TweenMoving_method(step,steps):
+	self.global_transform.origin=steps[step]
+
+
+
 #Para casillas estrechas
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
@@ -282,30 +303,7 @@ func TweenWaiting_stop():
 	TweenWaiting=null
 	self.set_physics_process(true)
 	
-		
-func TweenMoving_method(step):
-	self.global_transform.origin=self.animation_positions[step]
 
-
-func TweenMoving_start(animation_to: Vector3, duration):
-	self.player().can_move_pieces=false
-	var steps=20
-	var animation_max_y=5
-	self.animation_positions=[]
-	#Piece movement animation
-	for i in range(steps):
-		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
-		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps))
-		self.animation_positions.append(new_pos)
-		
-	TweenMoving= create_tween()
-	TweenMoving.tween_method(TweenMoving_method, 0, 19, duration)	
-	TweenMoving.tween_callback(self._on_TweenMoving_tween_all_completed)
-	
-func _on_TweenMoving_tween_all_completed():
-	TweenMoving.kill()
-	self.animation_positions=null
-	emit_signal("piece_moved")
 
 ## getter of can_move
 func can_move_stm():
@@ -392,7 +390,7 @@ func is_threating_me(stalker, square):
 			return true
 
 
-	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color) and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player())==false:
+	if square.type==Globals.eSquareTypes.FIRST and stalker.player().color==square.color and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player())==false:
 		return true
 
 	return false
@@ -400,10 +398,10 @@ func is_threating_me(stalker, square):
 
 func threats_at(square):
 	var r=[]
-	for player_ in self.player().game.players.values():
+	for player_ in self.player().board().players():
 		if player_==self.player(): #Ignores piece player
 			continue
-		for stalker in player_.pieces:
+		for stalker in player_.pieces():
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
 	return r

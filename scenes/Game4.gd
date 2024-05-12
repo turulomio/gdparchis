@@ -18,13 +18,11 @@ func get_object_under_mouse():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	
+	print("LOADING GAME4")
 	## Came from playersselection or load_directly
 	var d=Globals.game_data
 
-	Globals.game_load_glogals_game_data(self)
-
-
+	Globals.game_load_glogals_game_data(self,true)
 
 	# Start game
 	self.current_player=self.Board4.players()[d["current"]]

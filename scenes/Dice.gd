@@ -1,4 +1,4 @@
-@tool
+
 class_name Dice
 extends RigidBody3D
 
@@ -95,7 +95,7 @@ func _physics_process(_delta):
 			
 			
 			$FloatingText.show_text(tr("Fake dice: {0}").format([self.value]), self.player().color)
-			await $FloatingText.text_disappear
+			#await $FloatingText.text_disappear
 		self.player().dice_throws.append(self.value)
 		self.historical.append(self.value)
 		emit_signal("dice_got_value")

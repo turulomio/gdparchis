@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/Popup.tscn" id="2"]
 [ext_resource type="Script" path="res://scenes/Game4.gd" id="3"]
-[ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="4"]
 [ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4.tscn" id="4_asd23"]
 
 [node name="Game4" type="Node3D"]
@@ -24,4 +24,3 @@ shadow_enabled = true
 
 [node name="Board4" parent="." instance=ExtResource("4_asd23")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-show_pieces = true

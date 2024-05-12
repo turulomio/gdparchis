@@ -1,16 +1,17 @@
-@tool
+
+#Para depurar @tyool reiniciar en consola godot --editor y se ven logs
+
 extends Node3D
-
-@export var id: int=0: set=set_id #With id I should have everything to calculate data
-@export var show_pieces: bool=true: set=set_show_pieces #
-
+class_name Player
 
 @onready var Dice=$Dice
 @onready var Piece0=$Piece0
 @onready var Piece1=$Piece1
 @onready var Piece2=$Piece2
 @onready var Piece3=$Piece3
-var fancy_name : String
+var id: int 
+var show_pieces:bool
+
 var color: Color
 var route: Route
 var can_throw_dice: bool = false: set = set_can_throw_dice
@@ -21,44 +22,25 @@ var last_piece_moved=null
 var plays=true
 var ia=false
 
-#
-#func _init(_id,_plays,_ia):
-	#self.id=_id
-	#self.e_color=_id
-	#self.color=Globals.colorn(self.e_color)
-	#self.plays=_plays
-	#self.ia=_ia
-#
-	#match(self.id):
-		#0:
-			#self.name="Yellowy"
-		#1:
-			#self.name="Bluey"
-		#2:
-			#self.name="Redy"
-		#3:
-			#self.name="Greeny"
-
 func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	## ID is set on _init and on editor
-	match self.id:
-		0:
-			self.color= Color.YELLOW
-		1:
-			self.color= Color.BLUE
-		2:
-			self.color= Color.RED
-		3:
-			self.color= Color.GREEN
-		_:
-			self.color = Color.WHITE
+
+func initialize(id,show_pieces):
+	self.id=id
+	self.show_pieces=show_pieces
+	self.color=Globals.ePlayer2Color(self.id)
+	self.name=Globals.ePlayerDefaultName(self.id)
+	for i in range(self.pieces().size()):
+		var piece=self.pieces()[i]
+		piece.initialize(i,self.color)
+		piece.visible=self.show_pieces
 	
+func board():
+	return self.get_parent_node_3d()
 	
 func game():
-	var r=self.get_parent_node_3d().get_parent_node_3d()
+	var r=self.board().get_parent_node_3d()
 	print("Game of" , self, r)
 	return r
 
@@ -69,21 +51,14 @@ func dice():
 func _process(delta):
 	pass
 
-func set_id(value):
-	id=value
-	
-
-func set_show_pieces(value):
-	show_pieces=value
-	# If false hides all pieces
-	$Piece0.visible=value
-	$Piece1.visible=value
-	$Piece2.visible=value
-	$Piece3.visible=value
-	
 func pieces():
+	# No se puede utlizar el grupo porque en pieces añade todas las piezas del tree
 	# REturns a list of players pieces
-	return [$Piece0,$Piece1,$Piece2,$Piece3]
+	var r= []
+	for children in self.get_children():
+		if children is Piece:
+			r.append(children)
+	return r
 	
 
 
@@ -205,7 +180,7 @@ func ia_selects_piece_to_move():
 			return p
 	# Reduce risks
 	for p in pieces_can_move:
-		var square_final=p.route.square_at(p.route_position+p.squares_to_move()) #Could be null
+		var square_final=p.player().route.square_at(p.route_position+p.squares_to_move()) #Could be null
 		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
 			print("Selected due to less threats")
 			return p

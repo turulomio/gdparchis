@@ -1,21 +1,15 @@
 extends Node 
-const VERSION="0.3.0"
-const VERSION_DATE="2022-08-26"
+const VERSION="0.9.99"
+const VERSION_DATE="2024-05-12"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum eColors  {YELLOW, BLUE, RED, GREEN}
+enum ePlayer {YELLOW, BLUE, RED, GREEN}  # 0,1,2,3
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
-
 const IMAGE_WOOD = preload("res://images/wood.png")
-
-const SCENE_PIECE=preload("res://scenes/Piece.tscn")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
-const SCENE_DICE=preload("res://scenes/Dice.tscn")
-
 const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
-#const APIROOT= "http://127.0.0.1:8000"
 
 var game_data=null #Dictionary to load and init games
 var settings
@@ -31,53 +25,31 @@ func _init():
 	print("Singleton load")
 	load_settings()
 
-func e_colors(max_players):
-	if max_players==4:
-		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
-		
-func colorn(e_color):
-	# En godot3 habia fguncion colorn
-	var r
-	match int(e_color):
-		eColors.YELLOW:
-			r= Color.YELLOW
-		eColors.BLUE:
-			r= Color.BLUE
-		eColors.RED:
-			r= Color.RED
-		eColors.GREEN:
-			r= Color.GREEN
+func ePlayer2Color(player_id):
+	match player_id:
+		0:
+			return Color.YELLOW
+		1:
+			return Color.BLUE
+		2:
+			return Color.RED
+		3:
+			return Color.GREEN
 		_:
-			r = Color.WHITE
-	return r
+			return Color.WHITE
 	
-func ecolor_name(e_color):
+func ePlayerDefaultName(player_id):
 	var r
-	match int(e_color):
-		eColors.YELLOW:
-			r= "yellow"
-		eColors.BLUE:
-			r= "blue"
-		eColors.RED:
-			r= "red"
-		eColors.GREEN:
-			r= "green"
-		_:
-			r= "white"
+	match player_id:
+		ePlayer.YELLOW:
+			r= "Yellowy"
+		ePlayer.BLUE:
+			r= "Bluey"
+		ePlayer.RED:
+			r= "Redy"
+		ePlayer.GREEN:
+			r= "Greeny"
 	return r
-
-func color_name(color):
-	if color==Color.YELLOW:
-		return "YELLOW"
-	elif color==Color.BLUE:
-		return "BLUE"
-	elif color==Color.RED:
-		return "RED"
-	elif color==Color.GREEN:
-		return "GREEN"
-	else:
-		return "WHITE"
-	
 	
 func vector_is_almost_zero(v,precision=0.001):
 	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
@@ -150,7 +122,7 @@ func new_game(max_players):
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
-		dict_p["name"]=ecolor_name(player_id)
+		dict_p["name"]=ePlayerDefaultName(player_id)
 		dict_p["plays"]=true
 		if player_id==0:
 			dict_p["ia"]=false
@@ -487,14 +459,15 @@ func position4(square_id, square_position):
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
-
-
-
-func game_load_glogals_game_data(gameobject):
+func game_load_glogals_game_data(gameobject,show_pieces):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata
+	gameobject.Board4.initialize(show_pieces)
+	
+	
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
 		gameobject.Board4.players()[i].plays=d_player["plays"]
+		gameobject.Board4.players()[i].ia=d_player["ia"]
 		
 	## Registering game
 	print("Registering game:")	
@@ -507,32 +480,31 @@ func game_load_glogals_game_data(gameobject):
 	}
 	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
+	for player in gameobject.Board4.players():
+		for piece in player.pieces():
+			print("SHOULD", player, piece, "number_pieces", player.pieces().size())
+	print(gameobject.Board4.players())
+	#assert(false)
 		
-	for p in gameobject.Board4.players():
-		p.dice().set_my_position(3)
-			# Create players pieces
+		
 	print(Globals.game_data)
-	for d_player in Globals.game_data.players:
+	for player_id in range(gameobject.Board4.players().size()):
+		var player=gameobject.Board4.players()[player_id]
+		player.dice().set_my_position(3)
+		var d_player=Globals.game_data.players[player_id]
 		var square_position=0
-		var player=gameobject.Board4.players()[d_player["id"]]
-		var i=0
-		for d_piece in d_player["pieces"]:
-			var piece=player.pieces()[i]
-			if player.plays:  
-				#var piece=Globals.SCENE_PIECE.instance()
-				#self.add_child(piece)
-				piece.set_color()
-				#Sets at the end
-				piece.route_position=player.route.end_position()
-				piece.square_position=square_position
-				#player.append_piece(piece) #Link piece to player bidirectional
-				square_position=square_position+1
-				piece.move_to_route_position(player.route.end_position(),0) 
-				await piece.piece_moved
-				piece.move_to_route_position(d_piece["route_position"], 0.05) 
-				await piece.piece_moved
-			else:
-				piece.visible=false
-			i+=1
-				
-	
+		if show_pieces:
+			for i in range(d_player["pieces"].size()):
+				var d_piece=d_player["pieces"][i]
+				print(d_piece)
+				var piece=player.pieces()[i]
+				if player.plays:
+					#Sets at the end
+					piece.route_position=player.route.end_position()
+					piece.square_position=square_position
+					square_position=square_position+1
+					#piece.move_to_route_position(player.route.end_position(),0) 
+					piece.move_to_route_position(d_piece["route_position"], 2)
+
+					
+	print(gameobject.Board4.players())

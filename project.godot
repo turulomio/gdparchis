@@ -81,7 +81,7 @@ window/size/fullscreen=true
 
 [global]
 
-view=false
+view=true
 web=true
 
 [input]

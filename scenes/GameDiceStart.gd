@@ -3,16 +3,18 @@ class_name GameDiceStart
 
 
 @onready var Board4=$Board4
+@onready var FloatingText=$FloatingText
 
 var dice_higher=0
 var winers=[]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("LOADING GAMEDICESTART")
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
 
 	## Creating players
-	Globals.game_load_glogals_game_data(self)
+	Globals.game_load_glogals_game_data(self,false)
 	var is_winer=null
 	while is_winer==null:
 		self.winers=[] #Player index

@@ -1,4 +1,4 @@
-@tool
+
 extends Marker2D
 
 @onready var label=get_node("Label")
