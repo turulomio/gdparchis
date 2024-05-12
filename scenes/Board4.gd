@@ -1,7 +1,7 @@
-@tool
 extends Node3D
 class_name Board4
 
+@onready var Board=$Board
 @onready var Player0=$Player0
 @onready var Player1=$Player1
 @onready var Player2=$Player2

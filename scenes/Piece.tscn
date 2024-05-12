@@ -20,7 +20,7 @@ height = 0.2
 
 [node name="Piece" type="CharacterBody3D"]
 script = ExtResource("1")
-color = Color(0.214036, 0.613639, 0.650385, 1)
+color = Color(0.882623, 0.249113, 0.688462, 1)
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
 layers = 6

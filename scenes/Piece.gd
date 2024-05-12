@@ -1,3 +1,4 @@
+@tool
 extends CharacterBody3D
 class_name Piece
 
@@ -15,6 +16,7 @@ var vel : Vector3 = Vector3(0,-30,0)
 	set(value):
 		# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
 		color=value #With id I should have everything to calculate data
+		update_color()
 
 var route_position: int 
 var square_position: int
