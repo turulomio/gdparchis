@@ -132,9 +132,6 @@ func _physics_process(_delta):
 				$Touched.play()
 				self.has_touch=true
 
-
-	
-			
 func on_clicked():
 	
 	self.launch()

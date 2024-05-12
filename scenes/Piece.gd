@@ -96,7 +96,9 @@ func can_move_to_route_position(_route_position):
 	return true
 		
 ## Before this method always have to check if piece can move
-func move_to_route_position(_route_position, duration=0.4):
+func move_to_route_position(_route_position, duration=0.5, max_height=5):
+	#duration=5
+	#max_height=20
 	var square_final=self.route().square_at(_route_position)
 	var square_initial=self.square()
 	
@@ -109,20 +111,24 @@ func move_to_route_position(_route_position, duration=0.4):
 	
 	
 	#TWeen moving
+	self.player().can_move_pieces=false	
+	
+	var animation_from:Vector3=self.global_transform.origin
 	var animation_to=Globals.position4(square_final.id,new_square_position)
-	self.player().can_move_pieces=false
-	var steps_number=20
-	var animation_max_y=5
-	var steps=[]
-	#Piece movement animation
-	for i in range(steps_number):
-		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps_number + self.global_transform.origin
-		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps_number))
-		steps.append(new_pos)
+	var animation_diff=animation_to-animation_from
+	var animation_middle=animation_from+animation_diff/2
+	animation_middle.y=max_height
 		
 	print("STarting tweenmoving", self.player(),self)
+	self.global_transform.origin.y=0
 	var TweenMoving= get_tree().create_tween()
-	TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
+	TweenMoving.set_parallel(true)
+	TweenMoving.tween_property(self,"location:y",5,duration/2)
+	TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2)
+	TweenMoving.chain()
+	TweenMoving.set_parallel(true)
+	TweenMoving.tween_property(self,"location.y",0.2,duration/2)
+	TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2)
 	await TweenMoving.finished
 	emit_signal("piece_moved")
 	print("Stoping tweenmoving", self.player(),self)
@@ -138,7 +144,7 @@ func TweenMoving_method(step,steps):
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
 		if self.square().id in [8,9,25,26,42,43,59,60]:
-			self.scale=Vector3(1,1,1)
+			self.scale=Vector3(1.5,1.5,1.5)
 		else:
 			self.scale=Vector3(2,2,2)
 
