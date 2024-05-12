@@ -49,8 +49,13 @@ func _process(delta):
 	pass
 
 func pieces():
+	# No se puede utlizar el grupo porque en pieces añade todas las piezas del tree
 	# REturns a list of players pieces
-	return get_tree().get_nodes_in_group("pieces")
+	var r= []
+	for children in self.get_children():
+		if children is Piece:
+			r.append(children)
+	return r
 	
 
 
@@ -172,7 +177,7 @@ func ia_selects_piece_to_move():
 			return p
 	# Reduce risks
 	for p in pieces_can_move:
-		var square_final=p.route.square_at(p.route_position+p.squares_to_move()) #Could be null
+		var square_final=p.player().route.square_at(p.route_position+p.squares_to_move()) #Could be null
 		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
 			print("Selected due to less threats")
 			return p

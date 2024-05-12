@@ -482,7 +482,7 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 		
 	for player in gameobject.Board4.players():
 		for piece in player.pieces():
-			print("SHOULD", player, piece)
+			print("SHOULD", player, piece, "number_pieces", player.pieces().size())
 	print(gameobject.Board4.players())
 	#assert(false)
 		
