@@ -14,11 +14,14 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 var game_data=null #Dictionary to load and init games
 var settings
 
-
-func vector2_os_center() -> Vector2:
+func vector2_window()-> Vector2:
 	var	window_width=DisplayServer.window_get_size().x
 	var window_height=DisplayServer.window_get_size().y
-	return Vector2(window_width/2.0,window_height/2.0)
+	return Vector2(window_width,window_height)
+	
+
+func vector2_os_center() -> Vector2:
+	return vector2_window()/2.0
 
 
 func _init():
