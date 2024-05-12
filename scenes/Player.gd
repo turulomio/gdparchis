@@ -9,15 +9,8 @@ class_name Player
 @onready var Piece1=$Piece1
 @onready var Piece2=$Piece2
 @onready var Piece3=$Piece3
-@export var id: int=0: 
-	set(value):
-		#NO IMOPORTA NO SE VEA
-		id=value #With id I should have everything to calculate data
-
-@export var show_pieces: bool=true: 
-	set(value):
-		show_pieces=value
-
+var id: int 
+var show_pieces:bool
 
 var color: Color
 var route: Route
@@ -32,18 +25,16 @@ var ia=false
 func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	#print("Player ready starting")
-	## ID is set on _init and on editor
+
+func initialize(id,show_pieces):
+	self.id=id
+	self.show_pieces=show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
 	self.name=Globals.ePlayerDefaultName(self.id)
-	for piece in self.pieces():
+	for i in range(self.pieces().size()):
+		var piece=self.pieces()[i]
+		piece.initialize(i,self.color)
 		piece.visible=self.show_pieces
-		piece.color=color
-		if piece.visible:
-			piece.update_color()
-	
-	print ("Ready player finished")
 	
 func game():
 	var r=self.get_parent_node_3d().get_parent_node_3d()

@@ -14,7 +14,7 @@ func _ready():
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
 
 	## Creating players
-	Globals.game_load_glogals_game_data(self)
+	Globals.game_load_glogals_game_data(self,false)
 	var is_winer=null
 	while is_winer==null:
 		self.winers=[] #Player index

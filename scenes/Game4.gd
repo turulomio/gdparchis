@@ -22,7 +22,7 @@ func _ready():
 	## Came from playersselection or load_directly
 	var d=Globals.game_data
 
-	Globals.game_load_glogals_game_data(self)
+	Globals.game_load_glogals_game_data(self,true)
 
 	# Start game
 	self.current_player=self.Board4.players()[d["current"]]

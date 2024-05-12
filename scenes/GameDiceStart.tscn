@@ -28,6 +28,5 @@ scale = Vector2(1.5, 1.5)
 
 [node name="Board4" parent="." instance=ExtResource("4_87ycm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-show_pieces = false
 
 [connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

@@ -2,21 +2,12 @@
 extends CharacterBody3D
 class_name Piece
 
-
 signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
 @onready var MeshInstance=$MeshInstance
 
-@export var id: int=0: 
-	set(value):
-		id=value #With id I should have everything to calculate data
-		
-@export var color: Color=Color.WHITE: 
-	#No consigo que se refleje porque si añado update_color no esta ready y sino le doy no lo hace, pero luego al montarla si
-	set(value):
-		# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-		color=value #With id I should have everything to calculate data
-
+var id:int
+var color: Color
 var route_position: int 
 var square_position: int
 
@@ -27,21 +18,15 @@ var TweenWaiting
 func _ready():
 	#print("Start Piece ready",self.is_node_ready())
 	await self.ready
-	self.update_color()
 	#print("Finish Piece ready")
 	
-	
-func _init():
-	## Ya posee el id y el color. Es como si cargara los atributos por código, quizar con _static_init que no coge valores dentro
-	self.update_color()
-	
-func update_color():
+func initialize(id, color):
+	self.id=id
+	self.color=color
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = color
-	if $MeshInstance:
-		$MeshInstance.material_override=new_material
-	print("Changed piece color", self.player(),self, color)
+	new_material.albedo_color = self.color
+	MeshInstance.material_override=new_material
 
 func player():
 	return self.get_parent_node_3d()
@@ -140,6 +125,7 @@ func move_to_route_position(_route_position, duration=0.4):
 	TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
 	await TweenMoving.finished
 	emit_signal("piece_moved")
+	print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
 
 		

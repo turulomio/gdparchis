@@ -459,9 +459,9 @@ func position4(square_id, square_position):
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
-func game_load_glogals_game_data(gameobject):
+func game_load_glogals_game_data(gameobject,show_pieces):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata
-	gameobject.Board4.initialize()
+	gameobject.Board4.initialize(show_pieces)
 	
 	
 	for d_player in Globals.game_data.players:
@@ -493,7 +493,7 @@ func game_load_glogals_game_data(gameobject):
 		player.dice().set_my_position(3)
 		var d_player=Globals.game_data.players[player_id]
 		var square_position=0
-		if gameobject.Board4.show_pieces:
+		if show_pieces:
 			for i in range(d_player["pieces"].size()):
 				var d_piece=d_player["pieces"][i]
 				print(d_piece)

@@ -13,25 +13,22 @@ var max_players: int=4
 
 # Node that joins board, pieces and dices for 4 max players
 
-@export var show_pieces: bool=true: 
-	set(value):
-		show_pieces=value #With id I should have everything to calculate data
+var show_pieces
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 	
-func initialize():
-	for player in self.players():
-			player.show_pieces=self.show_pieces
+func initialize(show_pieces):
+	self.show_pieces=show_pieces
 	## Creating squares dictionary. We normally access by square id
 	self.squares={}
 	for i in range(1,105):
 		self.squares[i]=Square.new(i)
-	
-	## Creating routes
-	for player in self.players():
-			player.set_route(Route.new(self.max_players, player.id, self.squares))
 		
+	for i in range(self.max_players):
+		var player=self.players()[i]
+		player.initialize(i,show_pieces)
+		player.set_route(Route.new(self.max_players, player.id, self.squares))
 
 func set_show_pieces(value):
 	show_pieces=value
