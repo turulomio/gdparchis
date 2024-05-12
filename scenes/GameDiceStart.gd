@@ -10,6 +10,7 @@ var winers=[]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("LOADING GAMEDICESTART")
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255,255,255,1))
 
 	## Creating players

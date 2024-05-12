@@ -22,7 +22,6 @@ var square_position: int
 
 #animation movement
 #var animation_positions=null #Will be an array of positions
-var TweenMoving
 var TweenWaiting
 
 func _ready():
@@ -123,17 +122,9 @@ func move_to_route_position(_route_position, duration=0.4):
 	self.square_position=new_square_position
 	self.route_position=_route_position	
 	
-	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
-	await self.TweenMoving.finished
-	await self.piece_moved
-	self.change_scale_on_specials_squares()
-
-		
-func TweenMoving_method(step,steps):
-	self.global_transform.origin=steps[step]
-
-
-func TweenMoving_start(animation_to: Vector3, duration):
+	
+	#TWeen moving
+	var animation_to=Globals.position4(square_final.id,new_square_position)
 	self.player().can_move_pieces=false
 	var steps_number=20
 	var animation_max_y=5
@@ -145,14 +136,15 @@ func TweenMoving_start(animation_to: Vector3, duration):
 		steps.append(new_pos)
 		
 	print("STarting tweenmoving", self.player(),self)
-	self.TweenMoving= get_tree().create_tween()
-	self.TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
-	self.TweenMoving.tween_callback(self.TweenMoving_stop)
-
-func TweenMoving_stop():
-	print("Stoping tweenmoving", self.player(), self)
-	self.TweenMoving=null
+	var TweenMoving= get_tree().create_tween()
+	TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
+	await TweenMoving.finished
 	emit_signal("piece_moved")
+	self.change_scale_on_specials_squares()
+
+		
+func TweenMoving_method(step,steps):
+	self.global_transform.origin=steps[step]
 
 
 
