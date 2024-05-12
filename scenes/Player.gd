@@ -33,16 +33,16 @@ func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("Player ready starting")
+	#print("Player ready starting")
 	## ID is set on _init and on editor
-	print("EWPLAYER2color en player readey",Globals.ePlayer2Color(self.id))
-	for piece in self.pieces():
-		print("Player pieces in player ready", piece.is_node_ready())
-		piece.color=color
-		piece.update_color()
-	
 	self.color=Globals.ePlayer2Color(self.id)
 	self.name=Globals.ePlayerDefaultName(self.id)
+	for piece in self.pieces():
+		piece.visible=self.show_pieces
+		piece.color=color
+		if piece.visible:
+			piece.update_color()
+	
 	print ("Ready player finished")
 	
 func game():

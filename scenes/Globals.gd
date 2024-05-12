@@ -492,17 +492,12 @@ func game_load_glogals_game_data(gameobject):
 		for d_piece in d_player["pieces"]:
 			var piece=player.pieces()[i]
 			if player.plays:
-				piece.update_color()
 				#Sets at the end
 				piece.route_position=player.route.end_position()
 				piece.square_position=square_position
 				square_position=square_position+1
 				piece.move_to_route_position(player.route.end_position(),0) 
-				await piece.piece_moved
-				piece.move_to_route_position(d_piece["route_position"], 0.05) 
-				await piece.piece_moved
-			else:
-				piece.visible=false
+				piece.move_to_route_position(d_piece["route_position"], 0.05)
 			i+=1
 				
 	

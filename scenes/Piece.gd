@@ -22,7 +22,7 @@ var route_position: int
 var square_position: int
 
 #animation movement
-var animation_positions=null #Will be an array of positions
+#var animation_positions=null #Will be an array of positions
 var TweenMoving
 var TweenWaiting
 
@@ -124,14 +124,41 @@ func move_to_route_position(_route_position, duration=0.4):
 	var new_square_position=square_final.empty_position()
 	square_final.set_piece_at_square_position(new_square_position,self)
 	self.square_position=new_square_position
+	self.route_position=_route_position	
 	
-	self.route_position=_route_position
-	
-	
-	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
+	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)	
 	await self.piece_moved
 	self.change_scale_on_specials_squares()
-	
+
+		
+func TweenMoving_method(step,steps):
+	self.global_transform.origin=steps[step]
+
+
+func TweenMoving_start(animation_to: Vector3, duration):
+	self.player().can_move_pieces=false
+	var steps_number=20
+	var animation_max_y=5
+	var steps=[]
+	#Piece movement animation
+	for i in range(steps_number):
+		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps_number + self.global_transform.origin
+		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps_number))
+		steps.append(new_pos)
+		
+	print("STarting tweenmoving")
+	self.TweenMoving= create_tween()
+	self.TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, 2)
+	self.TweenMoving.tween_callback(self.TweenMoving_stop)
+	await self.TweenMoving.finished
+
+func TweenMoving_stop():
+	print("Stoping tweenmoving")
+	self.TweenMoving=null
+	emit_signal("piece_moved")
+
+
+
 #Para casillas estrechas
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
@@ -301,28 +328,7 @@ func TweenWaiting_stop():
 	TweenWaiting=null
 	self.set_physics_process(true)
 	
-		
-func TweenMoving_method(step):
-	self.global_transform.origin=self.animation_positions[step]
 
-
-func TweenMoving_start(animation_to: Vector3, duration):
-	self.player().can_move_pieces=false
-	var steps=20
-	var animation_max_y=5
-	self.animation_positions=[]
-	#Piece movement animation
-	for i in range(steps):
-		var new_pos=(animation_to-self.global_transform.origin)*(i+1)/steps + self.global_transform.origin
-		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps))
-		self.animation_positions.append(new_pos)
-		
-	TweenMoving= create_tween()
-	TweenMoving.tween_method(TweenMoving_method, 0, 19, duration)
-	await TweenMoving.finished
-	TweenMoving.kill()
-	self.animation_positions=null
-	emit_signal("piece_moved")
 
 ## getter of can_move
 func can_move_stm():

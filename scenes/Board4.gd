@@ -13,7 +13,9 @@ var max_players: int=4
 
 # Node that joins board, pieces and dices for 4 max players
 
-@export var show_pieces: bool=true: set=set_show_pieces #With id I should have everything to calculate data
+@export var show_pieces: bool=true: 
+	set(value):
+		show_pieces=value #With id I should have everything to calculate data
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
