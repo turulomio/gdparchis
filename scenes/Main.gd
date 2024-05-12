@@ -3,6 +3,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	$Version.text="Version: {0}".format([Globals.VERSION])
+	get_tree().get_root().size_changed.connect(resize) 
 
 
 func _on_Exit_pressed():
@@ -84,3 +85,9 @@ func _on_StatisticsUser_gui_input(_event):
 func _on_StatisticsGlobal_gui_input(_event):
 	if _event.is_action_pressed("left_click"):
 		OS.shell_open("https://coolnewton.mooo.com/django_gdparchis/statistics/globals/")
+
+
+func resize():
+	print($VBoxContainer.size)
+	$VBoxContainer.size=DisplayServer.window_get_size()
+	print($VBoxContainer.size)
