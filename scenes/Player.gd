@@ -59,7 +59,7 @@ func _process(delta):
 
 func pieces():
 	# REturns a list of players pieces
-	return [$Piece0,$Piece1,$Piece2,$Piece3]
+	return get_tree().get_nodes_in_group("pieces")
 	
 
 

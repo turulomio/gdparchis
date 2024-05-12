@@ -29,7 +29,6 @@ var TweenWaiting
 func _ready():
 	#print("Start Piece ready",self.is_node_ready())
 	await self.ready
-	print(MeshInstance,$MeshInstance,$MeshInstance.is_node_ready())
 	self.update_color()
 	#print("Finish Piece ready")
 	
@@ -37,6 +36,7 @@ func _ready():
 func _init():
 	## Ya posee el id y el color. Es como si cargara los atributos por código, quizar con _static_init que no coge valores dentro
 	print("Piece init",id,color,self.is_node_ready())
+	self.update_color()
 	
 func update_color():
 	print("Updating color")
@@ -318,10 +318,8 @@ func TweenMoving_start(animation_to: Vector3, duration):
 		self.animation_positions.append(new_pos)
 		
 	TweenMoving= create_tween()
-	TweenMoving.tween_method(TweenMoving_method, 0, 19, duration)	
-	TweenMoving.tween_callback(self._on_TweenMoving_tween_all_completed)
-	
-func _on_TweenMoving_tween_all_completed():
+	TweenMoving.tween_method(TweenMoving_method, 0, 19, duration)
+	await TweenMoving.finished
 	TweenMoving.kill()
 	self.animation_positions=null
 	emit_signal("piece_moved")

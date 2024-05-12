@@ -10,16 +10,16 @@ script = ExtResource("1_5gs0c")
 [node name="Dice" parent="." instance=ExtResource("2_miqth")]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
-[node name="Piece0" parent="." instance=ExtResource("3_3s03h")]
+[node name="Piece0" parent="." groups=["pieces"] instance=ExtResource("3_3s03h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 3)
 
-[node name="Piece1" parent="." instance=ExtResource("3_3s03h")]
+[node name="Piece1" parent="." groups=["pieces"] instance=ExtResource("3_3s03h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, -3)
 id = 1
 
-[node name="Piece2" parent="." instance=ExtResource("3_3s03h")]
+[node name="Piece2" parent="." groups=["pieces"] instance=ExtResource("3_3s03h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, -3)
 id = 2
 
-[node name="Piece3" parent="." instance=ExtResource("3_3s03h")]
+[node name="Piece3" parent="." groups=["pieces"] instance=ExtResource("3_3s03h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2.08165e-12, 3)

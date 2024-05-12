@@ -24,8 +24,6 @@ func _ready():
 
 	Globals.game_load_glogals_game_data(self)
 
-
-
 	# Start game
 	self.current_player=self.Board4.players()[d["current"]]
 	self.current_player.can_move_pieces=false

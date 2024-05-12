@@ -467,6 +467,7 @@ func game_load_glogals_game_data(gameobject):
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
 		gameobject.Board4.players()[i].plays=d_player["plays"]
+		gameobject.Board4.players()[i].ia=d_player["ia"]
 		
 	## Registering game
 	print("Registering game:")	
@@ -490,14 +491,11 @@ func game_load_glogals_game_data(gameobject):
 		var i=0
 		for d_piece in d_player["pieces"]:
 			var piece=player.pieces()[i]
-			if player.plays:  
-				#var piece=Globals.SCENE_PIECE.instance()
-				#self.add_child(piece)
-				#piece.set_color()
+			if player.plays:
+				piece.update_color()
 				#Sets at the end
 				piece.route_position=player.route.end_position()
 				piece.square_position=square_position
-				#player.append_piece(piece) #Link piece to player bidirectional
 				square_position=square_position+1
 				piece.move_to_route_position(player.route.end_position(),0) 
 				await piece.piece_moved
