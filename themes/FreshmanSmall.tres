@@ -4,3 +4,4 @@
 
 [resource]
 default_font = ExtResource("1")
+default_font_size = 24
