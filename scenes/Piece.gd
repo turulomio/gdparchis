@@ -146,14 +146,14 @@ func TweenMoving_start(animation_to: Vector3, duration):
 		new_pos.y=animation_to.y+animation_max_y*sin( deg_to_rad(180*(i+1)/steps_number))
 		steps.append(new_pos)
 		
-	print("STarting tweenmoving")
-	self.TweenMoving= create_tween()
-	self.TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, 2)
+	print("STarting tweenmoving", self.player(),self)
+	self.TweenMoving= get_tree().create_tween()
+	self.TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
 	self.TweenMoving.tween_callback(self.TweenMoving_stop)
 	await self.TweenMoving.finished
 
 func TweenMoving_stop():
-	print("Stoping tweenmoving")
+	print("Stoping tweenmoving", self.player(), self)
 	self.TweenMoving=null
 	emit_signal("piece_moved")
 

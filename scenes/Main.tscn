@@ -132,6 +132,7 @@ theme = ExtResource("3")
 ok_button_text = "Abrir"
 file_mode = 0
 access = 1
+root_subfolder = "saves/"
 filters = PackedStringArray("*.save")
 
 [node name="Click" type="AudioStreamPlayer" parent="."]

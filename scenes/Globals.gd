@@ -481,23 +481,22 @@ func game_load_glogals_game_data(gameobject):
 	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
 		
-	for p in gameobject.Board4.players():
-		p.dice().set_my_position(3)
-			# Create players pieces
 	print(Globals.game_data)
-	for d_player in Globals.game_data.players:
+	for player in gameobject.Board4.players():
+		player.dice().set_my_position(3)
+		var d_player=Globals.game_data.players[player.id]
 		var square_position=0
-		var player=gameobject.Board4.players()[d_player["id"]]
 		var i=0
-		for d_piece in d_player["pieces"]:
-			var piece=player.pieces()[i]
-			if player.plays:
-				#Sets at the end
-				piece.route_position=player.route.end_position()
-				piece.square_position=square_position
-				square_position=square_position+1
-				piece.move_to_route_position(player.route.end_position(),0) 
-				piece.move_to_route_position(d_piece["route_position"], 0.05)
-			i+=1
-				
+		if gameobject.Board4.show_pieces:
+			for d_piece in d_player["pieces"]:
+				var piece=player.pieces()[i]
+				if player.plays:
+					#Sets at the end
+					piece.route_position=player.route.end_position()
+					piece.square_position=square_position
+					square_position=square_position+1
+					#piece.move_to_route_position(player.route.end_position(),0) 
+					piece.move_to_route_position(d_piece["route_position"], 0.05)
+				i+=1
+					
 	
