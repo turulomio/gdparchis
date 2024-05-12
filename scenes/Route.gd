@@ -9,26 +9,23 @@ var arr=[]
 func _init (_p_max_players, player_id,_squares):
 	self.max_players=_p_max_players
 	self.player_id=player_id
-	for i in self.get_route_square_ids():
-		arr.append(_squares.my_get(i))
+	
+	for i in self._get_route_square_ids():
+		arr.append(_squares[i])
 
 func _to_string():
 	return "[Route: "+ str(self.e_color) + "]"
 
-func get_route_square_ids():
+func _get_route_square_ids():
 	# Returns a list with all squares_ids of a player roout
 	if self.max_players==4:
-		if player_id==Globals.ePlayer.YELLOW:
-			self.id=0
+		if self.player_id==Globals.ePlayer.YELLOW:
 			return ([101]+range(5, 76+1))
-		elif player_id==Globals.ePlayer.BLUE:
-			self.id=1
+		elif self.player_id==Globals.ePlayer.BLUE:
 			return [102]+ range(22, 68+1)+range(1, 17+1)+range(77, 84+1)
-		elif player_id==Globals.ePlayer.RED:
-			self.id=2
+		elif self.player_id==Globals.ePlayer.RED:
 			return [103]+ range(39, 68+1) + range(1, 34+1) + range(85, 92+1)
-		elif player_id==Globals.ePlayer.GREEN:
-			self.id=3
+		elif self.player_id==Globals.ePlayer.GREEN:
 			return [104]+ range(56, 68+1) + range(1, 51+1) + range(93, 100+1)
 
 ## -1 is used for debug

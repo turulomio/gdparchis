@@ -1,4 +1,4 @@
-@tool
+
 extends CharacterBody3D
 class_name Piece
 
@@ -27,11 +27,11 @@ var TweenMoving
 var TweenWaiting
 
 func _ready():
-	print("Start Piece ready",self.is_node_ready())
+	#print("Start Piece ready",self.is_node_ready())
 	await self.ready
 	print(MeshInstance,$MeshInstance,$MeshInstance.is_node_ready())
 	self.update_color()
-	print("Finish Piece ready")
+	#print("Finish Piece ready")
 	
 	
 func _init():
@@ -43,7 +43,8 @@ func update_color():
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = color
-	$MeshInstance.material_override=new_material
+	if $MeshInstance:
+		$MeshInstance.material_override=new_material
 	print("Changed piede color", color)
 
 func player():

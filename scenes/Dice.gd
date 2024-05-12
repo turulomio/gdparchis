@@ -1,4 +1,4 @@
-@tool
+
 class_name Dice
 extends RigidBody3D
 

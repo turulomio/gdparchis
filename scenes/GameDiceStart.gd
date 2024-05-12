@@ -3,6 +3,7 @@ class_name GameDiceStart
 
 
 @onready var Board4=$Board4
+@onready var FloatingText=$FloatingText
 
 var dice_higher=0
 var winers=[]

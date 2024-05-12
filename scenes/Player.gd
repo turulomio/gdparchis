@@ -1,4 +1,6 @@
-#@tool
+
+#Para depurar @tyool reiniciar en consola godot --editor y se ven logs
+
 extends Node3D
 class_name Player
 
@@ -34,13 +36,13 @@ func _ready():
 	print("Player ready starting")
 	## ID is set on _init and on editor
 	print("EWPLAYER2color en player readey",Globals.ePlayer2Color(self.id))
-	self.color=Globals.ePlayer2Color(self.id)
-	self.name=Globals.ePlayerDefaultName(self.id)
 	for piece in self.pieces():
 		print("Player pieces in player ready", piece.is_node_ready())
 		piece.color=color
 		piece.update_color()
 	
+	self.color=Globals.ePlayer2Color(self.id)
+	self.name=Globals.ePlayerDefaultName(self.id)
 	print ("Ready player finished")
 	
 func game():

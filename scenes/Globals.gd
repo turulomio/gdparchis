@@ -461,7 +461,7 @@ func position4(square_id, square_position):
 
 func game_load_glogals_game_data(gameobject):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata
-	gameobject.Board4.set_board()
+	gameobject.Board4.initialize()
 	
 	
 	for d_player in Globals.game_data.players:

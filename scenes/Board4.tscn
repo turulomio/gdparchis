@@ -28,16 +28,19 @@ visible = false
 [node name="Camera" parent="Board/BoardBlend" index="2"]
 visible = false
 
-[node name="Player1" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4023, 0.1, 8.37042)
-
-[node name="Player2" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.79895, 0.100001, 25.6469)
-
-[node name="Player3" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0854, 0.1, 18.5319)
-
-[node name="Player0" parent="." instance=ExtResource("2_obu4h")]
+[node name="Player0" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5323, 0.100002, -5.04571)
+
+[node name="Player1" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4023, 0.1, 8.37042)
+id = 1
+
+[node name="Player2" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.79895, 0.100001, 25.6469)
+id = 2
+
+[node name="Player3" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0854, 0.1, 18.5319)
+id = 3
 
 [editable path="Board/BoardBlend"]
