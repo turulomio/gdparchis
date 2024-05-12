@@ -68,9 +68,9 @@ func _process(_delta):
 	if Input.is_action_pressed("zoom_out"):
 		OrCamera.global_transform.origin.y=OrCamera.global_transform.origin.y+1
 	if Input.is_action_just_pressed("exit"):
-		for player in self.players.values():
+		for player in self.board().players():
 			if player.plays:
-				player.dice.historical_report()
+				player.dice().historical_report()
 		
 		get_tree().change_scene_to_file("res://scenes/Main.tscn")
 	#if Input.is_action_just_pressed("full_screen"):

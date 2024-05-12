@@ -96,7 +96,7 @@ func can_move_to_route_position(_route_position):
 	return true
 		
 ## Before this method always have to check if piece can move
-func move_to_route_position(_route_position, duration=0.5, max_height=5):
+func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	#duration=5
 	#max_height=20
 	var square_final=self.route().square_at(_route_position)
