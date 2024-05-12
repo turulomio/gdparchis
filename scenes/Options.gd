@@ -3,6 +3,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_tree().get_root().size_changed.connect(self.resize) 
 	$VBoxContainer/FullScreen.set_pressed(Globals.settings.get("full_screen",false))
 	$VBoxContainer/Sound.set_pressed(Globals.settings.get("sound",true))
 	$VBoxContainer/AutomaticDice.set_pressed(Globals.settings.get("automatic",false))
@@ -25,6 +26,14 @@ func _on_FullScreen_toggled(button_pressed):
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, 0)
 		Globals.settings["full_screen"]=true
+	self.resize()
+	
+
+func resize():
+	print($VBoxContainer.size)
+	$VBoxContainer.size=DisplayServer.window_get_size()
+	print($VBoxContainer.size)
+
 
 func _on_AutomaticDice_toggled(button_pressed):
 	Globals.settings["automatic"]=button_pressed
