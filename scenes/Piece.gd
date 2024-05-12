@@ -96,9 +96,9 @@ func can_move_to_route_position(_route_position):
 	return true
 		
 ## Before this method always have to check if piece can move
-func move_to_route_position(_route_position, duration=1, max_height=5):
-	duration=5
-	max_height=20
+func move_to_route_position(_route_position, duration=0.5, max_height=5):
+	#duration=5
+	#max_height=20
 	var square_final=self.route().square_at(_route_position)
 	var square_initial=self.square()
 	
@@ -123,11 +123,11 @@ func move_to_route_position(_route_position, duration=1, max_height=5):
 	self.global_transform.origin.y=0
 	var TweenMoving= get_tree().create_tween()
 	TweenMoving.set_parallel(true)
-	TweenMoving.tween_property(self,"location:y",max_height,duration/2)
+	TweenMoving.tween_property(self,"location:y",5,duration/2)
 	TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2)
 	TweenMoving.chain()
 	TweenMoving.set_parallel(true)
-	TweenMoving.tween_property(self,"location:y",0.2,duration/2)
+	TweenMoving.tween_property(self,"location.y",0.2,duration/2)
 	TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2)
 	await TweenMoving.finished
 	emit_signal("piece_moved")
