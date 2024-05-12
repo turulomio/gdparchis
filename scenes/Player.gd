@@ -4,11 +4,11 @@
 extends Node3D
 class_name Player
 
-@onready var Dice=$Dice
-@onready var Piece0=$Piece0
-@onready var Piece1=$Piece1
-@onready var Piece2=$Piece2
-@onready var Piece3=$Piece3
+@onready var _Dice=$Dice
+#@onready var _Piece0=$Piece0
+#@onready var _Piece1=$Piece1
+#@onready var _Piece2=$Piece2
+#@onready var _Piece3=$Piece3
 var id: int 
 var show_pieces:bool
 
@@ -26,9 +26,9 @@ func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
 
-func initialize(id,show_pieces):
-	self.id=id
-	self.show_pieces=show_pieces
+func initialize(_id, _show_pieces):
+	self.id=_id
+	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
 	self.name=Globals.ePlayerDefaultName(self.id)
 	for i in range(self.pieces().size()):
@@ -41,15 +41,11 @@ func board():
 	
 func game():
 	var r=self.board().get_parent_node_3d()
-	print("Game of" , self, r)
+	#print("Game of" , self, r)
 	return r
 
 func dice():
-	return Dice
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	return _Dice
 
 func pieces():
 	# No se puede utlizar el grupo porque en pieces añade todas las piezas del tree

@@ -20,9 +20,9 @@ func _ready():
 	await self.ready
 	#print("Finish Piece ready")
 	
-func initialize(id, color):
-	self.id=id
-	self.color=color
+func initialize(id_, color_):
+	self.id=id_
+	self.color=color_
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = self.color
@@ -118,20 +118,16 @@ func move_to_route_position(_route_position, duration=0.5, max_height=5):
 	var animation_diff=animation_to-animation_from
 	var animation_middle=animation_from+animation_diff/2
 	animation_middle.y=max_height
+	animation_to.y=0.2
 		
-	print("STarting tweenmoving", self.player(),self)
+	#print("STarting tweenmoving", self.player(),self)
 	self.global_transform.origin.y=0
 	var TweenMoving= get_tree().create_tween()
-	TweenMoving.set_parallel(true)
-	TweenMoving.tween_property(self,"location:y",5,duration/2)
 	TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2)
-	TweenMoving.chain()
-	TweenMoving.set_parallel(true)
-	TweenMoving.tween_property(self,"location.y",0.2,duration/2)
 	TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2)
 	await TweenMoving.finished
 	emit_signal("piece_moved")
-	print("Stoping tweenmoving", self.player(),self)
+	#print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
 
 		
@@ -318,12 +314,12 @@ func can_move_stm():
 # Returns a boolean if can_eat_at_that_position
 # @param check_after_movement, por defecto true, primero mueve y luego comprueba
 func can_eat_at_route_position(_route_position, check_after_movement):
-	var square=self.route().square_at(_route_position)
+	var square_=self.route().square_at(_route_position)
 	if check_after_movement==false and self.can_move_to_route_position(_route_position): #chequeo antes de mover y comprueba que3 mueve
-		if square.pieces_count()==1 and square.type==Globals.eSquareTypes.NORMAL and square.pieces_objects()[0].player!=self.player():
+		if square_.pieces_count()==1 and square_.type==Globals.eSquareTypes.NORMAL and square_.pieces_objects()[0].player!=self.player():
 			return true
 	else: #chequeo despues de mover
-		if square.pieces_count()==2 and square.type==Globals.eSquareTypes.NORMAL and square.pieces_different_to_me_ordered(self.player())!=null:
+		if square_.pieces_count()==2 and square_.type==Globals.eSquareTypes.NORMAL and square_.pieces_different_to_me_ordered(self.player())!=null:
 			return true
 	return false
 
@@ -356,24 +352,24 @@ func can_go_final_square_with_dice_movement():
 
 
 ## Checks if a stalker piece threats me at a square
-func is_threating_me(stalker, square):
+func is_threating_me(stalker, _square):
 	var stalker_square=stalker.square()
 	
-	if stalker_square==square:
+	if stalker_square==_square:
 		return false
 	
-	if stalker.route.position_in_route(square)==-1:
+	if stalker.route.position_in_route(_square)==-1:
 		return false
 		
-	var distance=self.route().distance_between_squares(stalker_square,square)
+	var distance=self.route().distance_between_squares(stalker_square,_square)
 		
 	if distance==null:
 		return false
 	
-	if square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
+	if _square.type in [Globals.eSquareTypes.START,Globals.eSquareTypes.RAMP,Globals.eSquareTypes.SECURE,Globals.eSquareTypes.END]:
 		return false
 
-	if square.has_barrier_of_this_player(self.player()):
+	if _square.has_barrier_of_this_player(self.player()):
 		return false
 		
 	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
@@ -385,18 +381,18 @@ func is_threating_me(stalker, square):
 	else:
 		mysix=6
 
-	if square.type in [Globals.eSquareTypes.NORMAL] and distance in [1,2,3,4,20,mysix]:
+	if _square.type in [Globals.eSquareTypes.NORMAL] and distance in [1,2,3,4,20,mysix]:
 		return true
 
-	if stalker_pieces_all_out==true and square.type in [Globals.eSquareTypes.NORMAL] and distance==5:
+	if stalker_pieces_all_out==true and _square.type in [Globals.eSquareTypes.NORMAL] and distance==5:
 		return true
 
 	if stalker.player.can_some_piece_go_final_square_with_dice_movement():
-		if square.type in [Globals.eSquareTypes.NORMAL] and distance==10:
+		if _square.type in [Globals.eSquareTypes.NORMAL] and distance==10:
 			return true
 
 
-	if square.type==Globals.eSquareTypes.FIRST and stalker.player().color==square.color and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player())==false:
+	if _square.type==Globals.eSquareTypes.FIRST and stalker.player().color==_square.color and _square.pieces_count()==2 and _square.has_barrier_of_this_player(self.player())==false:
 		return true
 
 	return false

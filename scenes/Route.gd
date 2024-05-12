@@ -6,9 +6,9 @@ class_name Route
 var max_players: int
 var player_id
 var arr=[]
-func _init (_p_max_players, player_id,_squares):
+func _init (_p_max_players, _player_id,_squares):
 	self.max_players=_p_max_players
-	self.player_id=player_id
+	self.player_id=_player_id
 	
 	for i in self._get_route_square_ids():
 		arr.append(_squares[i])

@@ -1,15 +1,17 @@
 extends Node3D
 class_name Game4
 
-@onready var camera = $Camera
-@onready var Board4=$Board4
+@onready var OrCamera = $Camera
+@onready var OrBoard=$Board4
 var current_player
 
+func board():
+	return $Board4
 
 func get_object_under_mouse():
 	var mouse_pos=get_viewport().get_mouse_position()
-	var ray_from=camera.project_ray_origin(mouse_pos)
-	var ray_to= ray_from + camera.project_ray_normal(mouse_pos)*100
+	var ray_from=OrCamera.project_ray_origin(mouse_pos)
+	var ray_to= ray_from + OrCamera.project_ray_normal(mouse_pos)*100
 	var space_state=get_world_3d().direct_space_state
 	var selection=space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from,ray_to))
 	if len(selection)==0:
@@ -25,7 +27,7 @@ func _ready():
 	Globals.game_load_glogals_game_data(self,true)
 
 	# Start game
-	self.current_player=self.Board4.players()[d["current"]]
+	self.current_player=self.board().players()[d["current"]]
 	self.current_player.can_move_pieces=false
 	self.current_player.dice_throws=[]
 	self.current_player.can_throw_dice=true
@@ -51,20 +53,20 @@ func _process(_delta):
 
 		
 	if Input.is_action_just_pressed("orto_view"):
-		camera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.001),Vector3.UP)
-		camera.global_rotate(Vector3(0,1,0),PI)
+		OrCamera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.001),Vector3.UP)
+		OrCamera.global_rotate(Vector3(0,1,0),PI)
 	if Input.is_action_just_pressed("yellow_view"):
-		camera.look_at_from_position(Vector3(-30,50,-30),Vector3(0,3,0),Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(-30,50,-30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_just_pressed("blue_view"):
-		camera.look_at_from_position(Vector3(-30,50,30),Vector3(0,3,0),Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(-30,50,30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_just_pressed("red_view"):
-		camera.look_at_from_position(Vector3(30,50,30),Vector3(0,3,0),Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(30,50,30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_just_pressed("green_view"):
-		camera.look_at_from_position(Vector3(30,50,-30),Vector3(0,3,0),Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(30,50,-30),Vector3(0,3,0),Vector3.UP)
 	if Input.is_action_pressed("zoom_in"):
-		camera.global_transform.origin.y=camera.global_transform.origin.y-1
+		OrCamera.global_transform.origin.y=OrCamera.global_transform.origin.y-1
 	if Input.is_action_pressed("zoom_out"):
-		camera.global_transform.origin.y=camera.global_transform.origin.y+1
+		OrCamera.global_transform.origin.y=OrCamera.global_transform.origin.y+1
 	if Input.is_action_just_pressed("exit"):
 		for player in self.players.values():
 			if player.plays:
@@ -94,15 +96,15 @@ func _process(_delta):
 
 func change_current_player():
 	if self.current_player==null:
-		self.current_player= self.Board4.players()[0]
-	elif self.current_player==self.Board4.players()[0]:
-		self.current_player = self.Board4.players()[1]
-	elif self.current_player==self.Board4.players()[1]:
-		self.current_player = self.Board4.players()[2]
-	elif self.current_player==self.Board4.players()[2]:
-		self.current_player = self.Board4.players()[3]
-	elif self.current_player==self.Board4.players()[3]:
-		self.current_player = self.Board4.players()[0]
+		self.current_player= self.board().players()[0]
+	elif self.current_player==self.board().players()[0]:
+		self.current_player = self.board().players()[1]
+	elif self.current_player==self.board().players()[1]:
+		self.current_player = self.board().players()[2]
+	elif self.current_player==self.board().players()[2]:
+		self.current_player = self.board().players()[3]
+	elif self.current_player==self.board().players()[3]:
+		self.current_player = self.board().players()[0]
 		
 	print("Current player now is ", self.current_player.name)
 		
@@ -118,7 +120,7 @@ func change_current_player():
 	if self.current_player.ia==true:
 		self.current_player.dice().on_clicked()
 	else:#Not ia
-		print(self.current_player.game())
+		#print(self.current_player.game())
 		Globals.save_game(self.current_player.game())
 		if Globals.settings.get("automatic",true)==true:
 			self.current_player.dice().on_clicked()

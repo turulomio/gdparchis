@@ -8,6 +8,8 @@ class_name GameDiceStart
 var dice_higher=0
 var winers=[]
 
+func board():
+	return $Board4
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("LOADING GAMEDICESTART")
@@ -19,7 +21,7 @@ func _ready():
 	while is_winer==null:
 		self.winers=[] #Player index
 		self.dice_higher=0
-		for p in Board4.players_than_plays():
+		for p in board().players_than_plays():
 			p.can_move_pieces=false
 			p.dice_throws=[]
 			p.extra_moves=[]
@@ -32,7 +34,7 @@ func _ready():
 				self.dice_higher=p.dice().value	
 			
 		#Search winners
-		for p in Board4.players():
+		for p in board().players():
 			if p.dice().value==dice_higher:
 				self.winers.append(p)
 				
@@ -48,7 +50,7 @@ func is_there_a_winer():
 		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
 		return true
 	else:
-		for p in Board4.players():
+		for p in board().players():
 			if not p in self.winers: 
 				p.plays=false
 		return null
