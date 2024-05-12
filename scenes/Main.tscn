@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1"]
 [ext_resource type="Theme" uid="uid://gh07j4jcab8j" path="res://themes/FreshmanSmall.tres" id="3"]
-[ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
-[ext_resource type="Texture2D" uid="uid://bsy6ef0lfq4qo" path="res://images/github.webp" id="5"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="4"]
+[ext_resource type="Texture2D" uid="uid://x67uxeb3pi34" path="res://images/github.webp" id="5"]
 [ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="6"]
-[ext_resource type="Texture2D" uid="uid://d2ca6gtykl7kd" path="res://images/statistics_global.png" id="7"]
-[ext_resource type="Texture2D" uid="uid://d1bdf2xsc82kw" path="res://images/statistics_user.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://cjibyldgparho" path="res://images/statistics_global.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://b1s2tvltqjxa5" path="res://images/statistics_user.png" id="8"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
