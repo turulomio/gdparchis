@@ -4,8 +4,18 @@ class_name Piece
 
 signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
+@onready var MeshInstance=$MeshInstance
 
-@export var id: int=0: set=set_id #With id I should have everything to calculate data
+@export var id: int=0: 
+	set(value):
+		id=value #With id I should have everything to calculate data
+		
+@export var color: Color=Color.WHITE: 
+	#No consigo que se refleje porque si añado update_color no esta ready y sino le doy no lo hace, pero luego al montarla si
+	set(value):
+		# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
+		color=value #With id I should have everything to calculate data
+
 var route_position: int 
 var square_position: int
 
@@ -14,19 +24,25 @@ var animation_positions=null #Will be an array of positions
 var TweenMoving
 var TweenWaiting
 
-func set_id(value):
-	print("Id and color")
-	id=value
-	
 func _ready():
-	pass
-# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
-func set_color():
-	print(self.player().id, self.player().color)
+	print("Start Piece ready",self.is_node_ready())
+	await self.ready
+	print(MeshInstance,$MeshInstance,$MeshInstance.is_node_ready())
+	self.update_color()
+	print("Finish Piece ready")
+	
+	
+func _init():
+	## Ya posee el id y el color. Es como si cargara los atributos por código, quizar con _static_init que no coge valores dentro
+	print("Piece init",id,color,self.is_node_ready())
+	
+func update_color():
+	print("Updating color")
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = self.player().color
+	new_material.albedo_color = color
 	$MeshInstance.material_override=new_material
+	print("Changed piede color", color)
 
 func player():
 	return self.get_parent_node_3d()
@@ -392,7 +408,7 @@ func is_threating_me(stalker, square):
 			return true
 
 
-	if square.type==Globals.eSquareTypes.FIRST and stalker.player.color==Globals.colorn(square.color) and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player())==false:
+	if square.type==Globals.eSquareTypes.FIRST and stalker.player().color==square.color and square.pieces_count()==2 and square.has_barrier_of_this_player(self.player())==false:
 		return true
 
 	return false

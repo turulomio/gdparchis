@@ -17,7 +17,7 @@ func _to_string():
 
 func get_route_square_ids():
 	# Returns a list with all squares_ids of a player roout
-	if _max_players==4:
+	if self.max_players==4:
 		if player_id==Globals.ePlayer.YELLOW:
 			self.id=0
 			return ([101]+range(5, 76+1))

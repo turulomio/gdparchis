@@ -4,7 +4,7 @@ class_name Square
 
 var id : int 
 var type #eSquareTypes
-var color#: Globals.eColors
+var color#: Color
 var max_ 
 var pieces =[]# Filled with null values to mantain positions
 var last_piece_to_arrive
@@ -18,16 +18,16 @@ func _init(node_id):
 	match(self.id):
 		5:
 			self.type=Globals.eSquareTypes.FIRST
-			self.color=Globals.eColors.YELLOW
+			self.color=Color.YELLOW
 		22:
 			self.type=Globals.eSquareTypes.FIRST
-			self.color=Globals.eColors.BLUE
+			self.color=Color.BLUE
 		39:
 			self.type=Globals.eSquareTypes.FIRST
-			self.color=Globals.eColors.RED
+			self.color=Color.RED
 		56:
 			self.type=Globals.eSquareTypes.FIRST
-			self.color=Globals.eColors.GREEN
+			self.color=Color.GREEN
 			
 		12:
 			self.type=Globals.eSquareTypes.SECURE
@@ -48,28 +48,28 @@ func _init(node_id):
 		
 		76:
 			self.type=Globals.eSquareTypes.END
-			self.color=Globals.eColors.YELLOW
+			self.color=Color.YELLOW
 		84:
 			self.type=Globals.eSquareTypes.END
-			self.color=Globals.eColors.BLUE
+			self.color=Color.BLUE
 		92:
 			self.type=Globals.eSquareTypes.END
-			self.color=Globals.eColors.RED
+			self.color=Color.RED
 		100:
 			self.type=Globals.eSquareTypes.END
-			self.color=Globals.eColors.GREEN
+			self.color=Color.GREEN
 		101:
 			self.type=Globals.eSquareTypes.START
-			self.color=Globals.eColors.YELLOW
+			self.color=Color.YELLOW
 		102:
 			self.type=Globals.eSquareTypes.START
-			self.color=Globals.eColors.BLUE
+			self.color=Color.BLUE
 		103:
 			self.type=Globals.eSquareTypes.START
-			self.color=Globals.eColors.RED
+			self.color=Color.RED
 		104:
 			self.type=Globals.eSquareTypes.START
-			self.color=Globals.eColors.GREEN
+			self.color=Color.GREEN
 		_:
 			self.type=Globals.eSquareTypes.NORMAL
 			

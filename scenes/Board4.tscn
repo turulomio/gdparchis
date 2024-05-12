@@ -2,33 +2,13 @@
 
 [ext_resource type="Script" path="res://scenes/Board4.gd" id="1_jfs5m"]
 [ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/Player.tscn" id="2_obu4h"]
-[ext_resource type="PackedScene" uid="uid://ei7c7rx78hmb" path="res://models/Board.blend" id="3_3u5ny"]
+[ext_resource type="PackedScene" uid="uid://2t4s377rchda" path="res://models/Board.blend" id="3_3u5ny"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ra5d6"]
 size = Vector3(65, 0.2, 65)
 
-[node name="Board4Full" type="Node3D"]
+[node name="Board4" type="Node3D"]
 script = ExtResource("1_jfs5m")
-show_pieces = false
-
-[node name="Player0" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 5, 2.08165e-12)
-show_pieces = false
-
-[node name="Player1" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 10, 2.08165e-12)
-id = 1
-show_pieces = false
-
-[node name="Player2" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 15, 2.08165e-12)
-id = 2
-show_pieces = false
-
-[node name="Player3" parent="." instance=ExtResource("2_obu4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 20, 2.08165e-12)
-id = 3
-show_pieces = false
 
 [node name="Board" type="RigidBody3D" parent="."]
 transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
@@ -47,5 +27,17 @@ visible = false
 
 [node name="Camera" parent="Board/BoardBlend" index="2"]
 visible = false
+
+[node name="Player1" parent="." instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4023, 0.1, 8.37042)
+
+[node name="Player2" parent="." instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.79895, 0.100001, 25.6469)
+
+[node name="Player3" parent="." instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0854, 0.1, 18.5319)
+
+[node name="Player0" parent="." instance=ExtResource("2_obu4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5323, 0.100002, -5.04571)
 
 [editable path="Board/BoardBlend"]

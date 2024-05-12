@@ -1,16 +1,22 @@
 @tool
 extends Node3D
-
-@export var id: int=0: set=set_id #With id I should have everything to calculate data
-@export var show_pieces: bool=true: set=set_show_pieces #
-
+class_name Player
 
 @onready var Dice=$Dice
 @onready var Piece0=$Piece0
 @onready var Piece1=$Piece1
 @onready var Piece2=$Piece2
 @onready var Piece3=$Piece3
-var fancy_name : String
+@export var id: int=0: 
+	set(value):
+		#NO IMOPORTA NO SE VEA
+		id=value #With id I should have everything to calculate data
+
+@export var show_pieces: bool=true: 
+	set(value):
+		show_pieces=value
+
+
 var color: Color
 var route: Route
 var can_throw_dice: bool = false: set = set_can_throw_dice
@@ -25,10 +31,17 @@ func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("Player ready starting")
 	## ID is set on _init and on editor
+	print("EWPLAYER2color en player readey",Globals.ePlayer2Color(self.id))
 	self.color=Globals.ePlayer2Color(self.id)
 	self.name=Globals.ePlayerDefaultName(self.id)
+	for piece in self.pieces():
+		print("Player pieces in player ready", piece.is_node_ready())
+		piece.color=color
+		piece.update_color()
 	
+	print ("Ready player finished")
 	
 func game():
 	var r=self.get_parent_node_3d().get_parent_node_3d()
@@ -42,18 +55,6 @@ func dice():
 func _process(delta):
 	pass
 
-func set_id(value):
-	id=value
-	
-
-func set_show_pieces(value):
-	show_pieces=value
-	# If false hides all pieces
-	$Piece0.visible=value
-	$Piece1.visible=value
-	$Piece2.visible=value
-	$Piece3.visible=value
-	
 func pieces():
 	# REturns a list of players pieces
 	return [$Piece0,$Piece1,$Piece2,$Piece3]

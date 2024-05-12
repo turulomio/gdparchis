@@ -461,6 +461,9 @@ func position4(square_id, square_position):
 
 func game_load_glogals_game_data(gameobject):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata
+	gameobject.Board4.set_board()
+	
+	
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
 		gameobject.Board4.players()[i].plays=d_player["plays"]
@@ -490,7 +493,7 @@ func game_load_glogals_game_data(gameobject):
 			if player.plays:  
 				#var piece=Globals.SCENE_PIECE.instance()
 				#self.add_child(piece)
-				piece.set_color()
+				#piece.set_color()
 				#Sets at the end
 				piece.route_position=player.route.end_position()
 				piece.square_position=square_position

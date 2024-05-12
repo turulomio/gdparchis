@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/GameDiceStart.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="3"]
-[ext_resource type="AudioStream" uid="uid://nucfia4mja3e" path="res://sounds/click.wav" id="4"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="4"]
 [ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4.tscn" id="4_87ycm"]
 
 [node name="GameDiceStart" type="Node3D"]
@@ -23,7 +23,7 @@ shadow_enabled = true
 
 [node name="FloatingText" parent="." instance=ExtResource("3")]
 visible = false
-position = Vector2(907.5, 488)
+position = Vector2(994, 488.5)
 scale = Vector2(1.5, 1.5)
 
 [node name="Board4" parent="." instance=ExtResource("4_87ycm")]
