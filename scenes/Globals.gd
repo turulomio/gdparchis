@@ -1,21 +1,15 @@
 extends Node 
-const VERSION="0.3.0"
-const VERSION_DATE="2022-08-26"
+const VERSION="0.9.99"
+const VERSION_DATE="2024-05-12"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum eColors  {YELLOW, BLUE, RED, GREEN}
+enum ePlayer {YELLOW, BLUE, RED, GREEN}  # 0,1,2,3
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
-
 const IMAGE_WOOD = preload("res://images/wood.png")
-
-const SCENE_PIECE=preload("res://scenes/Piece.tscn")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
-const SCENE_DICE=preload("res://scenes/Dice.tscn")
-
 const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
-#const APIROOT= "http://127.0.0.1:8000"
 
 var game_data=null #Dictionary to load and init games
 var settings
@@ -31,53 +25,31 @@ func _init():
 	print("Singleton load")
 	load_settings()
 
-func e_colors(max_players):
-	if max_players==4:
-		return [eColors.YELLOW,eColors.BLUE,eColors.RED,eColors.GREEN]
-		
-func colorn(e_color):
-	# En godot3 habia fguncion colorn
-	var r
-	match int(e_color):
-		eColors.YELLOW:
-			r= Color.YELLOW
-		eColors.BLUE:
-			r= Color.BLUE
-		eColors.RED:
-			r= Color.RED
-		eColors.GREEN:
-			r= Color.GREEN
+func ePlayer2Color(player_id):
+	match player_id:
+		0:
+			return Color.YELLOW
+		1:
+			return Color.BLUE
+		2:
+			return Color.RED
+		3:
+			return Color.GREEN
 		_:
-			r = Color.WHITE
-	return r
+			return Color.WHITE
 	
-func ecolor_name(e_color):
+func ePlayerDefaultName(player_id):
 	var r
-	match int(e_color):
-		eColors.YELLOW:
-			r= "yellow"
-		eColors.BLUE:
-			r= "blue"
-		eColors.RED:
-			r= "red"
-		eColors.GREEN:
-			r= "green"
-		_:
-			r= "white"
+	match player_id:
+		ePlayer.YELLOW:
+			r= "Yellowy"
+		ePlayer.BLUE:
+			r= "Bluey"
+		ePlayer.RED:
+			r= "Redy"
+		ePlayer.GREEN:
+			r= "Greeny"
 	return r
-
-func color_name(color):
-	if color==Color.YELLOW:
-		return "YELLOW"
-	elif color==Color.BLUE:
-		return "BLUE"
-	elif color==Color.RED:
-		return "RED"
-	elif color==Color.GREEN:
-		return "GREEN"
-	else:
-		return "WHITE"
-	
 	
 func vector_is_almost_zero(v,precision=0.001):
 	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
@@ -150,7 +122,7 @@ func new_game(max_players):
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
-		dict_p["name"]=ecolor_name(player_id)
+		dict_p["name"]=ePlayerDefaultName(player_id)
 		dict_p["plays"]=true
 		if player_id==0:
 			dict_p["ia"]=false
@@ -486,9 +458,6 @@ func position4(square_id, square_position):
 			return [Vector3(17.5,h,-11.7), Vector3(17.5,h,-14.7),Vector3(17.5,h,-17.7),Vector3(17.5,h,-20.7)][square_position]
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
-
-
-
 
 func game_load_glogals_game_data(gameobject):
 	# ALL Game scenes have Board4 y cargan de Globals gamedata

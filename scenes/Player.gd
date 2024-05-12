@@ -21,40 +21,13 @@ var last_piece_moved=null
 var plays=true
 var ia=false
 
-#
-#func _init(_id,_plays,_ia):
-	#self.id=_id
-	#self.e_color=_id
-	#self.color=Globals.colorn(self.e_color)
-	#self.plays=_plays
-	#self.ia=_ia
-#
-	#match(self.id):
-		#0:
-			#self.name="Yellowy"
-		#1:
-			#self.name="Bluey"
-		#2:
-			#self.name="Redy"
-		#3:
-			#self.name="Greeny"
-
 func _to_string():
 	return "[Player: "+ str(self.id) + "]"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	## ID is set on _init and on editor
-	match self.id:
-		0:
-			self.color= Color.YELLOW
-		1:
-			self.color= Color.BLUE
-		2:
-			self.color= Color.RED
-		3:
-			self.color= Color.GREEN
-		_:
-			self.color = Color.WHITE
+	self.color=Globals.ePlayer2Color(self.id)
+	self.name=Globals.ePlayerDefaultName(self.id)
 	
 	
 func game():
