@@ -21,10 +21,7 @@ func _ready():
 	pass
 	
 func initialize():
-	print("BOARD READY FINISH", self.is_node_ready())
-	print(players())
 	for player in self.players():
-			print("READY PLAYER", player)
 			player.show_pieces=self.show_pieces
 	## Creating squares dictionary. We normally access by square id
 	self.squares={}

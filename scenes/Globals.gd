@@ -480,23 +480,31 @@ func game_load_glogals_game_data(gameobject):
 	}
 	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
+	for player in gameobject.Board4.players():
+		for piece in player.pieces():
+			print("SHOULD", player, piece)
+	print(gameobject.Board4.players())
+	#assert(false)
+		
 		
 	print(Globals.game_data)
-	for player in gameobject.Board4.players():
+	for player_id in range(gameobject.Board4.players().size()):
+		var player=gameobject.Board4.players()[player_id]
 		player.dice().set_my_position(3)
-		var d_player=Globals.game_data.players[player.id]
+		var d_player=Globals.game_data.players[player_id]
 		var square_position=0
-		var i=0
 		if gameobject.Board4.show_pieces:
-			for d_piece in d_player["pieces"]:
+			for i in range(d_player["pieces"].size()):
+				var d_piece=d_player["pieces"][i]
+				print(d_piece)
 				var piece=player.pieces()[i]
 				if player.plays:
 					#Sets at the end
 					piece.route_position=player.route.end_position()
 					piece.square_position=square_position
 					square_position=square_position+1
-					#piece.move_to_route_position(player.route.end_position(),0) 
-					piece.move_to_route_position(d_piece["route_position"], 0.05)
-				i+=1
+					piece.move_to_route_position(player.route.end_position(),0) 
+					piece.move_to_route_position(d_piece["route_position"], 2)
+
 					
-	
+	print(gameobject.Board4.players())

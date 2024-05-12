@@ -16,7 +16,6 @@ var vel : Vector3 = Vector3(0,-30,0)
 	set(value):
 		# https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png
 		color=value #With id I should have everything to calculate data
-		update_color()
 
 var route_position: int 
 var square_position: int
@@ -35,17 +34,15 @@ func _ready():
 	
 func _init():
 	## Ya posee el id y el color. Es como si cargara los atributos por código, quizar con _static_init que no coge valores dentro
-	print("Piece init",id,color,self.is_node_ready())
 	self.update_color()
 	
 func update_color():
-	print("Updating color")
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = color
 	if $MeshInstance:
 		$MeshInstance.material_override=new_material
-	print("Changed piede color", color)
+	print("Changed piece color", self.player(),self, color)
 
 func player():
 	return self.get_parent_node_3d()
@@ -126,7 +123,8 @@ func move_to_route_position(_route_position, duration=0.4):
 	self.square_position=new_square_position
 	self.route_position=_route_position	
 	
-	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)	
+	self.TweenMoving_start(Globals.position4(square_final.id,new_square_position),duration)
+	await self.TweenMoving.finished
 	await self.piece_moved
 	self.change_scale_on_specials_squares()
 
@@ -150,7 +148,6 @@ func TweenMoving_start(animation_to: Vector3, duration):
 	self.TweenMoving= get_tree().create_tween()
 	self.TweenMoving.tween_method(self.TweenMoving_method.bind(steps), 0, steps_number -1, duration)
 	self.TweenMoving.tween_callback(self.TweenMoving_stop)
-	await self.TweenMoving.finished
 
 func TweenMoving_stop():
 	print("Stoping tweenmoving", self.player(), self)
