@@ -18,8 +18,8 @@ var show_pieces
 func _ready():
 	pass
 	
-func initialize(show_pieces):
-	self.show_pieces=show_pieces
+func initialize(_show_pieces):
+	self.show_pieces=_show_pieces
 	## Creating squares dictionary. We normally access by square id
 	self.squares={}
 	for i in range(1,105):
@@ -27,7 +27,7 @@ func initialize(show_pieces):
 		
 	for i in range(self.max_players):
 		var player=self.players()[i]
-		player.initialize(i,show_pieces)
+		player.initialize(i,self.show_pieces)
 		player.set_route(Route.new(self.max_players, player.id, self.squares))
 
 func set_show_pieces(value):

@@ -18,7 +18,7 @@ var settings
 func vector2_os_center() -> Vector2:
 	var	window_width=DisplayServer.window_get_size().x
 	var window_height=DisplayServer.window_get_size().y
-	return Vector2(window_width/2,window_height/2)
+	return Vector2(window_width/2.0,window_height/2.0)
 
 
 func _init():
@@ -68,7 +68,7 @@ func save_game(game):
 				
 	#Removes innecesary autosaves
 	var files=[]
-	dir.open("user://saves/")
+	dir=DirAccess.open("user://saves/")
 	dir.list_dir_begin()
 	while true:
 		var file=dir.get_next()
@@ -86,16 +86,15 @@ func save_game(game):
 		
 	#Create new autosave
 	var d=Time.get_datetime_dict_from_system()
-	print(d)
-	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.Board4.max_players]
-	var file=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
+	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.board().max_players]
+	var file_new=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
 	var dict={}	
-	dict["max_players"]=game.Board4.max_players
+	dict["max_players"]=game.board().max_players
 	dict["current"]=game.current_player.id
 	dict["fake_dice"]=[]
 	dict["players"]=[]
 	dict["game_uuid"]=self.game_data.game_uuid
-	for p in game.Board4.players():
+	for p in game.board().players():
 		var dict_p={}
 		dict_p["id"]=p.id
 		dict_p["name"]=p.name
@@ -109,8 +108,8 @@ func save_game(game):
 			dict_piece["route_position"]=piece.route_position
 			dict_piece["square_position"]=piece.square_position
 			dict_p["pieces"].append(dict_piece)
-	file.store_line(JSON.stringify(dict))
-	file.close()
+	file_new.store_line(JSON.stringify(dict))
+	file_new.close()
 	
 func new_game(max_players):
 	var dict={}	
@@ -460,43 +459,43 @@ func position4(square_id, square_position):
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
 func game_load_glogals_game_data(gameobject,show_pieces):
-	# ALL Game scenes have Board4 y cargan de Globals gamedata
-	gameobject.Board4.initialize(show_pieces)
+	# ALL Game scenes have board() y cargan de Globals gamedata
+	gameobject.board().initialize(show_pieces)
 	
 	
 	for d_player in Globals.game_data.players:
 		var i=d_player["id"]
-		gameobject.Board4.players()[i].plays=d_player["plays"]
-		gameobject.Board4.players()[i].ia=d_player["ia"]
+		gameobject.board().players()[i].plays=d_player["plays"]
+		gameobject.board().players()[i].ia=d_player["ia"]
 		
 	## Registering game
 	print("Registering game:")	
 	var fields = {
 		"max_players":Globals.game_data.max_players,
-		"num_players": gameobject.Board4.players_than_plays().size(),
+		"num_players": gameobject.board().players_than_plays().size(),
 		"installation_uuid": Globals.settings.get("installation_uuid"),
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
 	}
 	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
 		
-	for player in gameobject.Board4.players():
-		for piece in player.pieces():
-			print("SHOULD", player, piece, "number_pieces", player.pieces().size())
-	print(gameobject.Board4.players())
+	#for player in gameobject.board().players():
+		#for piece in player.pieces():
+			#print("SHOULD", player, piece, "number_pieces", player.pieces().size())
+	#print(gameobject.board().players())
 	#assert(false)
 		
 		
 	print(Globals.game_data)
-	for player_id in range(gameobject.Board4.players().size()):
-		var player=gameobject.Board4.players()[player_id]
+	for player_id in range(gameobject.board().players().size()):
+		var player=gameobject.board().players()[player_id]
 		player.dice().set_my_position(3)
 		var d_player=Globals.game_data.players[player_id]
 		var square_position=0
 		if show_pieces:
 			for i in range(d_player["pieces"].size()):
 				var d_piece=d_player["pieces"][i]
-				print(d_piece)
+				#print(d_piece)
 				var piece=player.pieces()[i]
 				if player.plays:
 					#Sets at the end
@@ -509,4 +508,4 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 					await piece.piece_moved
 
 					
-	print(gameobject.Board4.players())
+	#print(gameobject.board().players())
