@@ -24,7 +24,7 @@ var last_piece_moved=null
 var plays=true
 var ia=false
 
-var fancy_name#Name seems the name of the class
+var playername#Name seems the name of the class
 
 func _to_string():
 	return "[Player: "+ str(self.id) + "]"
@@ -32,7 +32,7 @@ func _to_string():
 func initialize(_show_pieces):
 	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
-	self.fancy_name=Globals.ePlayerDefaultName(self.id)
+	self.playername=Globals.ePlayerDefaultName(self.id)
 	self.dice().set_my_position(5)	
 	for piece in self.pieces():
 		piece.initialize(self.color)

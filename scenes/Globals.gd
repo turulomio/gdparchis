@@ -90,7 +90,7 @@ func save_game(game):
 	for p in game.board().players():
 		var dict_p={}
 		dict_p["id"]=p.id
-		dict_p["name"]=p.name
+		dict_p["playername"]=p.playername
 		dict_p["plays"]=p.plays
 		dict_p["ia"]=p.ia
 		dict["players"].append(dict_p)
@@ -114,7 +114,7 @@ func new_game(max_players):
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
-		dict_p["name"]=ePlayerDefaultName(player_id)
+		dict_p["playername"]=ePlayerDefaultName(player_id)
 		dict_p["plays"]=true
 		if player_id==0:
 			dict_p["ia"]=false
@@ -455,7 +455,7 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 		var player=gameobject.board().get_player_by_id(d_player["id"])
 		player.plays=d_player["plays"]
 		player.ia=d_player["ia"]		
-		# player.fancy_name=d_player["name"]		
+		player.playername=d_player["playername"]		
 		for d_piece in d_player["pieces"]:
 			if show_pieces:
 				var piece=gameobject.board().get_piece_by_player_id_and_id(player.id,d_piece["id"])
