@@ -21,12 +21,12 @@ func _ready():
 	while is_winer==null:
 		self.winers=[] #Player index
 		self.dice_higher=0
-		for p in board().players_than_plays():
+		for p in self.board().players_than_plays():
+			print(p,self.board().players_than_plays())
 			p.can_move_pieces=false
 			p.dice_throws=[]
 			p.extra_moves=[]
 			p.can_throw_dice=true
-			p.dice().set_my_position(5)
 			p.dice().launch()
 			
 			await p.dice().dice_got_value
@@ -34,7 +34,7 @@ func _ready():
 				self.dice_higher=p.dice().value	
 			
 		#Search winners
-		for p in board().players():
+		for p in self.board().players():
 			if p.dice().value==dice_higher:
 				self.winers.append(p)
 				
@@ -50,7 +50,7 @@ func is_there_a_winer():
 		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
 		return true
 	else:
-		for p in board().players():
+		for p in self.board().players():
 			if not p in self.winers: 
 				p.plays=false
 		return null

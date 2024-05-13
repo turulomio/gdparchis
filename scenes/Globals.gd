@@ -226,8 +226,7 @@ func difficulty_probability():
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
-func position4(square_id, square_position):
-	var h=2
+func position4(square_id, square_position,h=2):
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]
@@ -480,35 +479,15 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
 	}
-	#Globals.request_post($RequestGameStart, Globals.APIROOT+"/games/", fields)
-		
-	#for player in gameobject.board().players():
-		#for piece in player.pieces():
-			#print("SHOULD", player, piece, "number_pieces", player.pieces().size())
-	#print(gameobject.board().players())
-	#assert(false)
-		
 		
 	print(Globals.game_data)
-	for player_id in range(gameobject.board().players().size()):
-		var player=gameobject.board().players()[player_id]
-		player.dice().set_my_position(3)
-		var d_player=Globals.game_data.players[player_id]
-		var square_position=0
-		if show_pieces:
-			for i in range(d_player["pieces"].size()):
-				var d_piece=d_player["pieces"][i]
-				#print(d_piece)
-				var piece=player.pieces()[i]
+	for d_player in gameobject.board().players():
+		var player=gameobject.board().get_player_by_id(d_player["id"])
+		for d_piece in d_player["pieces"]:
+			if show_pieces:
+				var piece=gameobject.board().get_piece_by_total_id(d_piece["id"])
+				print(d_piece,piece.player(),piece)
 				if player.plays:
-					#Sets at the end
-					piece.route_position=player.route().end_position()
-					piece.square_position=square_position
-					square_position=square_position+1
-					piece.move_to_route_position(player.route().end_position(),0.1) 
-					await piece.piece_moved
 					piece.move_to_route_position(d_piece["route_position"], 0.5)
 					await piece.piece_moved
 
-					
-	#print(gameobject.board().players())

@@ -206,7 +206,7 @@ func _on_RelaunchTimer_timeout():
 	
 
 func TweenWaiting_method(rad):
-	self.position.y=2.5+sin(rad)/2
+	self.global_transform.origin.y=2.5+sin(rad)/2
 
 func TweenWaiting_start():  
 	self.set_physics_process(false)	

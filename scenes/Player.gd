@@ -31,10 +31,11 @@ func initialize(_id, _show_pieces):
 	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
 	self.name=Globals.ePlayerDefaultName(self.id)
+	self.dice().set_my_position(5)	
 	for i in range(self.pieces().size()):
 		var piece=self.pieces()[i]
 		piece.initialize(i,self.color)
-		piece.visible=self.show_pieces			
+		piece.visible=self.show_pieces		
 	
 func board():
 	return self.get_parent_node_3d()

@@ -101,33 +101,30 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	#max_height=20
 	var square_final=self.route().square_at(_route_position)
 	var square_initial=self.square()
+	var square_position_initial=self.square_position
+	var square_position_final=square_final.empty_position()
 	
-	square_initial.set_piece_at_square_position(self.square_position,null)
-	
-	
-	var new_square_position=square_final.empty_position()
-	square_final.set_piece_at_square_position(new_square_position,self)
-	print("square_position", self, self.player,self.square_position,new_square_position)
-	self.square_position=new_square_position
+	square_initial.set_piece_at_square_position(square_position_initial,null)
+	square_final.set_piece_at_square_position(square_position_final,self)
+	self.square_position=square_position_final
 	self.route_position=_route_position	
 	
 	
 	#TWeen moving
 	self.player().can_move_pieces=false	
-	
-	var animation_from:Vector3=self.global_transform.origin
-	var animation_to=Globals.position4(square_final.id,new_square_position)
-	var animation_diff=animation_to-animation_from
-	var animation_middle=animation_from+animation_diff/2
-	animation_middle.y=max_height
-	animation_to.y=0.2
-		
-	#print("STarting tweenmoving", self.player(),self)
-	self.global_transform.origin.y=0
-	var TweenMoving= get_tree().create_tween()
-	TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2)
-	TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2)
-	await TweenMoving.finished
+	if duration>0:
+		#var animation_from:Vector3=self.global_transform.origin
+		var animation_from=Globals.position4(square_initial.id, square_position_initial)
+		var animation_to=Globals.position4(square_final.id, square_position_final)
+		var animation_diff=animation_to-animation_from
+		var animation_middle=animation_from+animation_diff/2.0
+		animation_middle.y=max_height
+			
+		#print("STarting tweenmoving", self.player(),self)
+		var TweenMoving= get_tree().create_tween()
+		TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2.0)
+		TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2.0)
+		await TweenMoving.finished
 	emit_signal("piece_moved")
 	#print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
