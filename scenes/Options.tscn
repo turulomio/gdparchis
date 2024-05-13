@@ -11,14 +11,15 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -15.0
-offset_bottom = -4.0
+offset_right = 1.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2")
 script = ExtResource("1")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,23 +27,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -402.5
-offset_top = -236.0
+offset_top = -212.0
 offset_right = 402.5
-offset_bottom = 236.0
+offset_bottom = 212.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
 [node name="FullScreen" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Full window mode"
 
 [node name="Sound" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
 text = "Sound"
 
 [node name="AutomaticDice" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Automatic dice and movements"
 
 [node name="HBAutosaves" type="HBoxContainer" parent="VBoxContainer"]
@@ -50,6 +54,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HBAutosaves"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "Autosaves number  "
 
 [node name="Autosaves" type="LineEdit" parent="VBoxContainer/HBAutosaves"]
@@ -63,6 +68,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HBDifficulty"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Game difficulty  "
 
 [node name="Difficulty" type="OptionButton" parent="VBoxContainer/HBDifficulty"]
@@ -82,6 +88,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/HBLanguages"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
 text = "Language  "
 
 [node name="Language" type="OptionButton" parent="VBoxContainer/HBLanguages"]
@@ -104,6 +111,7 @@ popup/item_2/id = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Return"
 flat = true
 
