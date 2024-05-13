@@ -48,8 +48,8 @@ func _physics_process(_delta):
 	#return move_and_slide(vel,Vector3.UP)
 	return move_and_slide()
 
-func _to_string():
-	return "[Piece: "+ str(self.id) + "]"
+# func _to_string():
+# 	return "[Piece: "+ str(self.id) + "]"
 	
 func square():
 	return self.route().square_at(self.route_position)

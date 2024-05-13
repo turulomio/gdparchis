@@ -466,9 +466,18 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 	
 	
 	for d_player in Globals.game_data.players:
-		var i=d_player["id"]
-		gameobject.board().players()[i].plays=d_player["plays"]
-		gameobject.board().players()[i].ia=d_player["ia"]
+		var player=gameobject.board().get_player_by_id(d_player["id"])
+		player.plays=d_player["plays"]
+		player.ia=d_player["ia"]		
+		# player.fancy_name=d_player["name"]		
+		for d_piece in d_player["pieces"]:
+			if show_pieces:
+				var piece=gameobject.board().get_piece_by_total_id(d_piece["id"])
+				print(d_piece,piece.player(),piece)
+				if player.plays:
+					piece.move_to_route_position(d_piece["route_position"], 0.5)
+					await piece.piece_moved
+
 		
 	## Registering game
 	print("Registering game:")	
@@ -479,15 +488,6 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 		"game_uuid": Globals.game_data.game_uuid,
 		"version": Globals.VERSION,
 	}
-		
-	print(Globals.game_data)
-	for d_player in gameobject.board().players():
-		var player=gameobject.board().get_player_by_id(d_player["id"])
-		for d_piece in d_player["pieces"]:
-			if show_pieces:
-				var piece=gameobject.board().get_piece_by_total_id(d_piece["id"])
-				print(d_piece,piece.player(),piece)
-				if player.plays:
-					piece.move_to_route_position(d_piece["route_position"], 0.5)
-					await piece.piece_moved
 
+
+	print(Globals.game_data)

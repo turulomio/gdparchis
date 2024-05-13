@@ -22,15 +22,17 @@ var last_piece_moved=null
 var plays=true
 var ia=false
 
-func _to_string():
-	return "[Player: "+ str(self.id) + "]"
+var fancy_name#Name seems the name of the class
+
+# func _to_string():
+# 	return "[Player: "+ str(self.id) + " " + str(self)+"]"
 # Called when the node enters the scene tree for the first time.
 
 func initialize(_id, _show_pieces):
 	self.id=_id
 	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
-	self.name=Globals.ePlayerDefaultName(self.id)
+	self.fancy_name=Globals.ePlayerDefaultName(self.id)
 	self.dice().set_my_position(5)	
 	for i in range(self.pieces().size()):
 		var piece=self.pieces()[i]

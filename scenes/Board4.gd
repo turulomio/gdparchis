@@ -25,9 +25,14 @@ func initialize(_show_pieces):
 	for i in range(1,105):
 		self.squares[i]=Square.new(i)
 		
+
 	for i in range(self.max_players):
 		var player=self.players()[i]
-		player.initialize(i,self.show_pieces)
+		print(player,i)
+		player.initialize(i,self.show_pieces)#Debeb inicializarse todos primeros
+
+
+	for player in self.players():
 		player.set_route(Route.new(self.max_players, player.id, self.squares))
 		#Sets pieces at final square
 		for piece in player.pieces():
@@ -43,8 +48,13 @@ func set_show_pieces(value):
 	show_pieces=value
 
 func players():
-	var r= get_tree().get_nodes_in_group("players")
-	assert(r[0]==r[1],"Parece que players son iguales ")
+	var r= []
+	for children in self.get_children():
+		if children is Player:
+			r.append(children)
+	return r
+
+
 
 func players_than_plays():
 	var r=[]
