@@ -206,7 +206,7 @@ func on_clicked():
 			has_eaten_after=true
 			$Eat.play()			
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player())[0]
-			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player.name]), self.player().color)
+			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player().name]), self.player().color)
 			piece_eaten.move_to_route_position(0)
 			await piece_eaten.piece_moved
 
