@@ -6,10 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://biqviqmioicos" path="res://sounds/roll.wav" id="4"]
 [ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="5_p4vs8"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_e8as6"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_juspc"]
 
 [node name="Dice" type="RigidBody3D"]
-transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 3, 2.08165e-12)
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 mass = 0.01
 script = ExtResource("2")
 
@@ -22,8 +22,8 @@ visible = false
 visible = false
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.47, 0, 0, 0, 1.47, 0, 0, 0, 1.47, 0, 0, 0)
-shape = SubResource("BoxShape3D_e8as6")
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_juspc")
 
 [node name="RC1" type="RayCast3D" parent="."]
 target_position = Vector3(2.08165e-12, -1.1, 2.08165e-12)
