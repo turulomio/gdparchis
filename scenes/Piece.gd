@@ -1,5 +1,4 @@
-
-extends CharacterBody3D
+extends RigidBody3D
 class_name Piece
 
 @export var id: int: 
@@ -46,12 +45,12 @@ func total_id():
 	# Returns the total id 0-16 in board4
 	return self.player().id*4+self.id
 	
-func _physics_process(_delta): 
-	#return move_and_slide(vel,Vector3.UP)
-	return move_and_slide()
+#func _physics_process(_delta): 
+	##return move_and_slide(vel,Vector3.UP)
+	#return move_and_slide()
 
-# func _to_string():
-# 	return "[Piece: "+ str(self.id) + "]"
+func _to_string():
+	return "[Piece: "+ str(self.id) + "]"
 	
 func square():
 	return self.route().square_at(self.route_position)
@@ -119,10 +118,10 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	# 	self.change_scale_on_specials_squares()
 	# 	return
 
-	print("Moviendo", self.player(), " ", self, " ", square_final, " ", square_position_initial, " ", square_final, " ",square_position_final)
+	print("Moviendo ", self.player(), " ", self, " ", square_initial, " ", square_position_initial, " ", square_final, " ",square_position_final)
 	
 	#TWeen moving
-	self.player().can_move_pieces=false	
+	self.player().can_move_pieces=false
 	if duration>0:
 		#var animation_from:Vector3=self.global_transform.origin
 		var animation_from=Globals.position4(square_initial.id, square_position_initial)
@@ -136,9 +135,9 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 		TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2.0)
 		TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2.0)
 		await TweenMoving.finished
+	self.change_scale_on_specials_squares()
 	emit_signal("piece_moved")
 	#print("Stoping tweenmoving", self.player(),self)
-	self.change_scale_on_specials_squares()
 
 #Para casillas estrechas
 func change_scale_on_specials_squares():
@@ -184,7 +183,6 @@ func piece_to_eat_before_move():
 	
 
 func on_clicked():
-
 	var has_eaten_before=false	
 	var has_eaten_after=false
 	#print(self.can_move_stm,self.can_eat_before_stm,self.can_eat_after_stm)
@@ -208,7 +206,7 @@ func on_clicked():
 			has_eaten_after=true
 			$Eat.play()			
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player())[0]
-			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player.name]), self.player().color)
+			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player().name]), self.player().color)
 			piece_eaten.move_to_route_position(0)
 			await piece_eaten.piece_moved
 
@@ -301,13 +299,14 @@ func TweenWaiting_start():
 	TweenWaiting= create_tween()
 	TweenWaiting.set_loops()
 	TweenWaiting.tween_method(TweenWaiting_method, 0, 2*PI, 2)
+	TweenWaiting.tween_callback(TweenWaiting_stop)
 	
 func TweenWaiting_stop():
+	self.set_physics_process(true)
 	if self.visible==false :
 		return
-	self.set_physics_process(true)
 	if TweenWaiting:
-		#TweenWaiting.kill()
+		TweenWaiting.kill()
 		TweenWaiting=null
 	
 

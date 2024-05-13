@@ -115,7 +115,7 @@ func empty_position():
 func pieces_different_to_me_ordered(_player):
 	var pieces_different=[]
 	for p in self.pieces:
-		if p!=null and p.player!=_player:
+		if p!=null and p.player()!=_player:
 			pieces_different.append(p)
 		
 	if pieces_different.size()==0:

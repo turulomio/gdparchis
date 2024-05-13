@@ -26,9 +26,8 @@ var ia=false
 
 var fancy_name#Name seems the name of the class
 
-# func _to_string():
-# 	return "[Player: "+ str(self.id) + " " + str(self)+"]"
-# Called when the node enters the scene tree for the first time.
+func _to_string():
+	return "[Player: "+ str(self.id) + "]"
 
 func initialize(_show_pieces):
 	self.show_pieces=_show_pieces
