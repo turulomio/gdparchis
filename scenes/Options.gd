@@ -24,7 +24,7 @@ func _on_FullScreen_toggled(_button_pressed):
 	self.resize()
 	
 func resize():
-	$VBoxContainer.size=DisplayServer.window_get_size()
+	self.size=DisplayServer.window_get_size()
 
 func _on_AutomaticDice_toggled(button_pressed):
 	Globals.settings["automatic"]=button_pressed
