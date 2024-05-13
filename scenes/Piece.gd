@@ -2,11 +2,14 @@
 extends CharacterBody3D
 class_name Piece
 
+@export var id: int: 
+	set(value):
+		id=value
+
 signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
 @onready var MeshInstance=$MeshInstance
 
-var id:int
 var color: Color
 var route_position: int 
 var square_position: int
@@ -14,19 +17,18 @@ var square_position: int
 #animation movement
 #var animation_positions=null #Will be an array of positions
 var TweenWaiting
-
-func _ready():
-	#print("Start Piece ready",self.is_node_ready())
-	await self.ready
-	#print("Finish Piece ready")
 	
-func initialize(id_, color_):
-	self.id=id_
+func initialize( color_):
 	self.color=color_
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = self.color
 	MeshInstance.material_override=new_material
+
+func set_final_position(_route_position, _square_position,square_id):
+	self.route_position=_route_position
+	self.square_position=_square_position
+	self.global_transform.origin=Globals.position4(square_id,self.square_position)
 
 func player():
 	return self.get_parent_node_3d()
@@ -38,7 +40,7 @@ func game():
 	return self.board().get_parent_node_3d()
 	
 func route():
-	return self.player().route
+	return self.player().route()
 	
 func total_id():
 	# Returns the total id 0-16 in board4
@@ -48,8 +50,8 @@ func _physics_process(_delta):
 	#return move_and_slide(vel,Vector3.UP)
 	return move_and_slide()
 
-func _to_string():
-	return "[Piece: "+ str(self.id) + "]"
+# func _to_string():
+# 	return "[Piece: "+ str(self.id) + "]"
 	
 func square():
 	return self.route().square_at(self.route_position)
@@ -101,48 +103,50 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	#max_height=20
 	var square_final=self.route().square_at(_route_position)
 	var square_initial=self.square()
+	var square_position_initial=self.square_position
+
 	
-	square_initial.set_piece_at_square_position(self.square_position,null)
-	
-	var new_square_position=square_final.empty_position()
-	square_final.set_piece_at_square_position(new_square_position,self)
-	self.square_position=new_square_position
+	square_initial.set_piece_at_square_position(square_position_initial,null)
+	var square_position_final=square_final.empty_position()
+	square_final.set_piece_at_square_position(square_position_final,self)
+	self.square_position=square_position_final
 	self.route_position=_route_position	
 	
+	# if square_final==square_initial and square_position_final==square_position_initial:#Casos al inicio de los juegos
+	# 	print("No se mueve por ser el mismo destino", self.player(), self, square_initial,square_position_initial)
+	# 	self.player().can_move_pieces=false	
+	# 	emit_signal("piece_moved")
+	# 	self.change_scale_on_specials_squares()
+	# 	return
+
+	print("Moviendo", self.player(), " ", self, " ", square_final, " ", square_position_initial, " ", square_final, " ",square_position_final)
 	
 	#TWeen moving
 	self.player().can_move_pieces=false	
-	
-	var animation_from:Vector3=self.global_transform.origin
-	var animation_to=Globals.position4(square_final.id,new_square_position)
-	var animation_diff=animation_to-animation_from
-	var animation_middle=animation_from+animation_diff/2
-	animation_middle.y=max_height
-	animation_to.y=0.2
-		
-	#print("STarting tweenmoving", self.player(),self)
-	self.global_transform.origin.y=0
-	var TweenMoving= get_tree().create_tween()
-	TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2)
-	TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2)
-	await TweenMoving.finished
+	if duration>0:
+		#var animation_from:Vector3=self.global_transform.origin
+		var animation_from=Globals.position4(square_initial.id, square_position_initial)
+		var animation_to=Globals.position4(square_final.id, square_position_final)
+		var animation_diff=animation_to-animation_from
+		var animation_middle=animation_from+animation_diff/2.0
+		animation_middle.y=max_height
+			
+		#print("STarting tweenmoving", self.player(),self)
+		var TweenMoving= get_tree().create_tween()
+		TweenMoving.tween_property(self,"global_transform:origin",animation_middle,duration/2.0)
+		TweenMoving.tween_property(self,"global_transform:origin",animation_to,duration/2.0)
+		await TweenMoving.finished
 	emit_signal("piece_moved")
 	#print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
-
-		
-func TweenMoving_method(step,steps):
-	self.global_transform.origin=steps[step]
-
-
 
 #Para casillas estrechas
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
 		if self.square().id in [8,9,25,26,42,43,59,60]:
-			self.scale=Vector3(1.5,1.5,1.5)
+			self.scale=Vector3(0.75	, 0.75, 0.75)
 		else:
-			self.scale=Vector3(2,2,2)
+			self.scale=Vector3(1,1,1)
 
 func squares_to_move():
 	if self.player().extra_moves.size()>0:
@@ -159,7 +163,7 @@ func squares_to_move():
 func am_i_in_a_barrier_of_my_player():
 	var s=self.square()
 	if s.has_barrier()==true:
-		if s.pieces[0].player==self.player() and s.pieces[1].player==self.player():
+		if s.pieces[0].player()==self.player() and s.pieces[1].player()==self.player():
 			return true
 	return false
 	
@@ -299,11 +303,12 @@ func TweenWaiting_start():
 	TweenWaiting.tween_method(TweenWaiting_method, 0, 2*PI, 2)
 	
 func TweenWaiting_stop():
-	if self.visible==false or TweenWaiting==null:
+	if self.visible==false :
 		return
-	TweenWaiting.kill()
-	TweenWaiting=null
 	self.set_physics_process(true)
+	if TweenWaiting:
+		#TweenWaiting.kill()
+		TweenWaiting=null
 	
 
 
@@ -358,7 +363,7 @@ func is_threating_me(stalker, _square):
 	if stalker_square==_square:
 		return false
 	
-	if stalker.route.position_in_route(_square)==-1:
+	if stalker.route().position_in_route(_square)==-1:
 		return false
 		
 	var distance=self.route().distance_between_squares(stalker_square,_square)
@@ -372,7 +377,7 @@ func is_threating_me(stalker, _square):
 	if _square.has_barrier_of_this_player(self.player()):
 		return false
 		
-	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
+	var stalker_pieces_all_out=stalker.player().are_all_pieces_out_of_home()
 
 
 	var mysix
@@ -387,7 +392,7 @@ func is_threating_me(stalker, _square):
 	if stalker_pieces_all_out==true and _square.type in [Globals.eSquareTypes.NORMAL] and distance==5:
 		return true
 
-	if stalker.player.can_some_piece_go_final_square_with_dice_movement():
+	if stalker.player().can_some_piece_go_final_square_with_dice_movement():
 		if _square.type in [Globals.eSquareTypes.NORMAL] and distance==10:
 			return true
 

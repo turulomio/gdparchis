@@ -9,11 +9,13 @@ class_name Player
 #@onready var _Piece1=$Piece1
 #@onready var _Piece2=$Piece2
 #@onready var _Piece3=$Piece3
-var id: int 
+@export var id: int: 
+	set(value):
+		id=value
 var show_pieces:bool
 
 var color: Color
-var route: Route
+var _route: Route
 var can_throw_dice: bool = false: set = set_can_throw_dice
 var can_move_pieces: bool = false: set = set_can_move_pieces
 var dice_throws=[]
@@ -22,19 +24,20 @@ var last_piece_moved=null
 var plays=true
 var ia=false
 
-func _to_string():
-	return "[Player: "+ str(self.id) + "]"
+var fancy_name#Name seems the name of the class
+
+# func _to_string():
+# 	return "[Player: "+ str(self.id) + " " + str(self)+"]"
 # Called when the node enters the scene tree for the first time.
 
-func initialize(_id, _show_pieces):
-	self.id=_id
+func initialize(_show_pieces):
 	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
-	self.name=Globals.ePlayerDefaultName(self.id)
-	for i in range(self.pieces().size()):
-		var piece=self.pieces()[i]
-		piece.initialize(i,self.color)
-		piece.visible=self.show_pieces
+	self.fancy_name=Globals.ePlayerDefaultName(self.id)
+	self.dice().set_my_position(5)	
+	for piece in self.pieces():
+		piece.initialize(self.color)
+		piece.visible=self.show_pieces		
 	
 func board():
 	return self.get_parent_node_3d()
@@ -56,10 +59,11 @@ func pieces():
 			r.append(children)
 	return r
 	
-
+func route():
+	return self._route
 
 func set_route(p):
-	self.route=p
+	self._route=p
 	
 func set_can_throw_dice(v):
 	can_throw_dice=v
@@ -176,7 +180,7 @@ func ia_selects_piece_to_move():
 			return p
 	# Reduce risks
 	for p in pieces_can_move:
-		var square_final=p.player().route.square_at(p.route_position+p.squares_to_move()) #Could be null
+		var square_final=p.player().route().square_at(p.route_position+p.squares_to_move()) #Could be null
 		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
 			print("Selected due to less threats")
 			return p

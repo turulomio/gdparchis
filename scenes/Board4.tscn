@@ -33,11 +33,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -5, 2.08165e-12)
 
 [node name="Player1" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -10, 2.08165e-12)
+id = 1
 
 [node name="Player2" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -15, 2.08165e-12)
+id = 2
 
 [node name="Player3" parent="." groups=["players"] instance=ExtResource("2_obu4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -20, 2.08165e-12)
+id = 3
 
 [editable path="Board/BoardBlend"]
