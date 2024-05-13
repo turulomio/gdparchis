@@ -12,7 +12,7 @@ offset_right = 648.0
 offset_bottom = 66.0
 theme = ExtResource("3")
 script = ExtResource("2")
-playername = ""
+playername = "Yellowy"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
