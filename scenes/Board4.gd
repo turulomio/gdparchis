@@ -31,14 +31,10 @@ func initialize(_show_pieces):
 		player.initialize(self.show_pieces)#Debeb inicializarse todos primeros
 		player.set_route(Route.new(self.max_players, player.id, self.squares))
 		#Sets pieces at final square
+		var square_position=0
 		for piece in player.pieces():
-			piece.move_to_route_position(player.route().end_position(), 0)
-			await piece.piece_moved
-			#piece.global_transform.origin=Globals.position4(player.route().square_at(player.route().end_position()).id,piece_position)
-			#piece_position+=1
-					#square_position=square_position+1
-					#piece.move_to_route_position(player.route.end_position(),0.1) 
-					#await piece.piece_moved
+			piece.set_final_position(player.route().end_position(), square_position, player.route().square_at(player.route().end_position()).id) #Coloca las piezas en casillas al final, en posiciones de casillas sin mover
+			square_position+=1
 
 func set_show_pieces(value):
 	show_pieces=value
@@ -78,9 +74,9 @@ func get_piece_by_player_id_and_id(player_id, piece_id):
 	print("NO SE HA ENCONTRADO PIEZA", player_id, piece_id)
 	return null
 
-func get_piece_by_total_id(total_id):
-	for piece in get_tree().get_nodes_in_group("pieces"):
-		if piece.total_id()==total_id:
-			return piece
-	print("NO SE HA ENCONTRADO PIEZA POR TOTAL ID", total_id)
-	return null
+# func get_piece_by_total_id(total_id):
+# 	for piece in get_tree().get_nodes_in_group("pieces"):
+# 		if piece.total_id()==total_id:
+# 			return piece
+# 	print("NO SE HA ENCONTRADO PIEZA POR TOTAL ID", total_id)
+# 	return null

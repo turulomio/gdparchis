@@ -25,6 +25,11 @@ func initialize( color_):
 	new_material.albedo_color = self.color
 	MeshInstance.material_override=new_material
 
+func set_final_position(_route_position, _square_position,square_id):
+	self.route_position=_route_position
+	self.square_position=_square_position
+	self.global_transform.origin=Globals.position4(square_id,self.square_position)
+
 func player():
 	return self.get_parent_node_3d()
 	
@@ -99,13 +104,22 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	var square_final=self.route().square_at(_route_position)
 	var square_initial=self.square()
 	var square_position_initial=self.square_position
-	var square_position_final=square_final.empty_position()
+
 	
 	square_initial.set_piece_at_square_position(square_position_initial,null)
+	var square_position_final=square_final.empty_position()
 	square_final.set_piece_at_square_position(square_position_final,self)
 	self.square_position=square_position_final
 	self.route_position=_route_position	
 	
+	# if square_final==square_initial and square_position_final==square_position_initial:#Casos al inicio de los juegos
+	# 	print("No se mueve por ser el mismo destino", self.player(), self, square_initial,square_position_initial)
+	# 	self.player().can_move_pieces=false	
+	# 	emit_signal("piece_moved")
+	# 	self.change_scale_on_specials_squares()
+	# 	return
+
+	print("Moviendo", self.player(), " ", self, " ", square_final, " ", square_position_initial, " ", square_final, " ",square_position_final)
 	
 	#TWeen moving
 	self.player().can_move_pieces=false	
@@ -363,7 +377,7 @@ func is_threating_me(stalker, _square):
 	if _square.has_barrier_of_this_player(self.player()):
 		return false
 		
-	var stalker_pieces_all_out=stalker.player.are_all_pieces_out_of_home()
+	var stalker_pieces_all_out=stalker.player().are_all_pieces_out_of_home()
 
 
 	var mysix
@@ -378,7 +392,7 @@ func is_threating_me(stalker, _square):
 	if stalker_pieces_all_out==true and _square.type in [Globals.eSquareTypes.NORMAL] and distance==5:
 		return true
 
-	if stalker.player.can_some_piece_go_final_square_with_dice_movement():
+	if stalker.player().can_some_piece_go_final_square_with_dice_movement():
 		if _square.type in [Globals.eSquareTypes.NORMAL] and distance==10:
 			return true
 

@@ -14,12 +14,12 @@ func _ready():
 func _on_Tween_tween_all_completed():
 	emit_signal("text_disappear")
 	
-	print("Finished to show text")
+	# print("Finished to show text")
 	self.visible=false
 
 
 func show_text(text, color):
-	print("Starting to show ", text, color)
+	# print("Starting to show ", text, color)
 	label.set("theme_override_colors/font_color", color)
 	self.visible=true
 	self.transform.origin=self.vector2_viewport_center()

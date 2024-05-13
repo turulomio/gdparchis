@@ -115,7 +115,7 @@ func save_game(game):
 	file_new.close()
 	
 func new_game(max_players):
-	var dict={}	
+	var dict={}
 	dict["max_players"]=max_players
 	dict["current"]=0
 	dict["fake_dice"]=[]
@@ -134,7 +134,7 @@ func new_game(max_players):
 		dict_p["pieces"]=[]
 		for i in range(4):
 			var dict_piece={}
-			dict_piece["id"]=(4*player_id)+i
+			dict_piece["id"]=i
 			dict_piece["route_position"]=0
 			dict_piece["square_position"]=i
 			dict_p["pieces"].append(dict_piece)
@@ -472,10 +472,10 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 		# player.fancy_name=d_player["name"]		
 		for d_piece in d_player["pieces"]:
 			if show_pieces:
-				var piece=gameobject.board().get_piece_by_total_id(d_piece["id"])
-				print(d_piece,piece.player(),piece)
+				var piece=gameobject.board().get_piece_by_player_id_and_id(player.id,d_piece["id"])
+				# print(d_piece,player,piece)
 				if player.plays:
-					piece.move_to_route_position(d_piece["route_position"], 0.5)
+					piece.move_to_route_position(d_piece["route_position"], 0.2)
 					await piece.piece_moved
 
 		

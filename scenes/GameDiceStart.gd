@@ -22,7 +22,6 @@ func _ready():
 		self.winers=[] #Player index
 		self.dice_higher=0
 		for p in self.board().players_than_plays():
-			print(p,self.board().players_than_plays())
 			p.can_move_pieces=false
 			p.dice_throws=[]
 			p.extra_moves=[]
