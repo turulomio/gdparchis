@@ -38,7 +38,7 @@ func game():
 	return self.board().get_parent_node_3d()
 	
 func route():
-	return self.player().route
+	return self.player().route()
 	
 func total_id():
 	# Returns the total id 0-16 in board4
@@ -104,8 +104,10 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	
 	square_initial.set_piece_at_square_position(self.square_position,null)
 	
+	
 	var new_square_position=square_final.empty_position()
 	square_final.set_piece_at_square_position(new_square_position,self)
+	print("square_position", self, self.player,self.square_position,new_square_position)
 	self.square_position=new_square_position
 	self.route_position=_route_position	
 	
@@ -130,19 +132,13 @@ func move_to_route_position(_route_position, duration=0.5, max_height=15):
 	#print("Stoping tweenmoving", self.player(),self)
 	self.change_scale_on_specials_squares()
 
-		
-func TweenMoving_method(step,steps):
-	self.global_transform.origin=steps[step]
-
-
-
 #Para casillas estrechas
 func change_scale_on_specials_squares():
 	if self.board().max_players==4:
 		if self.square().id in [8,9,25,26,42,43,59,60]:
-			self.scale=Vector3(1.5,1.5,1.5)
+			self.scale=Vector3(0.75	, 0.75, 0.75)
 		else:
-			self.scale=Vector3(2,2,2)
+			self.scale=Vector3(1,1,1)
 
 func squares_to_move():
 	if self.player().extra_moves.size()>0:
@@ -159,7 +155,7 @@ func squares_to_move():
 func am_i_in_a_barrier_of_my_player():
 	var s=self.square()
 	if s.has_barrier()==true:
-		if s.pieces[0].player==self.player() and s.pieces[1].player==self.player():
+		if s.pieces[0].player()==self.player() and s.pieces[1].player()==self.player():
 			return true
 	return false
 	
@@ -299,11 +295,12 @@ func TweenWaiting_start():
 	TweenWaiting.tween_method(TweenWaiting_method, 0, 2*PI, 2)
 	
 func TweenWaiting_stop():
-	if self.visible==false or TweenWaiting==null:
+	if self.visible==false :
 		return
-	TweenWaiting.kill()
-	TweenWaiting=null
 	self.set_physics_process(true)
+	if TweenWaiting:
+		#TweenWaiting.kill()
+		TweenWaiting=null
 	
 
 

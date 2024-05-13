@@ -139,7 +139,7 @@ func on_clicked():
 	
 	var lpm=self.player().last_piece_moved
 	if self.player().dice_throws_has_three_sixes() and lpm!=null:
-		if self.player().route.is_ramp(lpm.route_position)==true:
+		if self.player().route().is_ramp(lpm.route_position)==true:
 			self.player().game().change_current_player()	
 			$FloatingText.show_text(tr("Tree sixes: You're lucky you are in the final ramp"), self.player().color)
 			await $FloatingText.text_disappear
@@ -149,7 +149,7 @@ func on_clicked():
 			$FloatingText.show_text(tr("Tree sixes: You're lucky you can't move"), self.player().color)
 			await $FloatingText.text_disappear
 			return
-		elif self.player().route.is_ramp(self.player().last_piece_moved.route_position)==false:
+		elif self.player().route().is_ramp(self.player().last_piece_moved.route_position)==false:
 			$ThreeSix.play()
 			self.player().last_piece_moved.move_to_route_position(0)
 			await self.player().last_piece_moved.piece_moved

@@ -227,7 +227,7 @@ func difficulty_probability():
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
 func position4(square_id, square_position):
-	var h=1.1105
+	var h=2
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]
@@ -502,10 +502,10 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 				var piece=player.pieces()[i]
 				if player.plays:
 					#Sets at the end
-					piece.route_position=player.route.end_position()
+					piece.route_position=player.route().end_position()
 					piece.square_position=square_position
 					square_position=square_position+1
-					piece.move_to_route_position(player.route.end_position(),0.1) 
+					piece.move_to_route_position(player.route().end_position(),0.1) 
 					await piece.piece_moved
 					piece.move_to_route_position(d_piece["route_position"], 0.5)
 					await piece.piece_moved

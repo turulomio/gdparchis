@@ -67,7 +67,7 @@ func _ready():
 			
 ## Before this method always have to check if piece can move
 func game4objects_move_to_route_position(piece,_route_position, duration):
-	var square_final=piece.route.square_at(_route_position)
+	var square_final=piece.route().square_at(_route_position)
 	
 	var new_square_position=square_final.empty_position()
 	square_final.set_piece_at_square_position(new_square_position,piece)

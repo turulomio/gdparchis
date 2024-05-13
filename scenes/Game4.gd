@@ -31,7 +31,7 @@ func _ready():
 	self.current_player.can_move_pieces=false
 	self.current_player.dice_throws=[]
 	self.current_player.can_throw_dice=true
-	if self.current_player.ia==true or Globals.settings.get("automatic", true)==true:
+	if self.current_player.ia==true or Globals.settings.get("automatic", true):
 		self.current_player.dice().on_clicked()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,8 +52,11 @@ func _process(_delta):
 				$Click.play()
 
 		
-	if Input.is_action_just_pressed("orto_view"):
+	if Input.is_action_just_pressed("top_view"):
 		OrCamera.look_at_from_position(Vector3(0,47,0),Vector3(0,0,0.001),Vector3.UP)
+		OrCamera.global_rotate(Vector3(0,1,0),PI)
+	if Input.is_action_just_pressed("bottom_view"):
+		OrCamera.look_at_from_position(Vector3(0,-47,0),Vector3(0,0,-0.001),Vector3.UP)
 		OrCamera.global_rotate(Vector3(0,1,0),PI)
 	if Input.is_action_just_pressed("yellow_view"):
 		OrCamera.look_at_from_position(Vector3(-30,50,-30),Vector3(0,3,0),Vector3.UP)
@@ -88,7 +91,7 @@ func _process(_delta):
 			print("  + Threats before: ", object.threats_at(object.square()))
 				
 			if object.player==self.current_player and object.player.can_move_pieces:
-				print("  + Threats after: ", object.threats_at(object.route.square_at(object.route_position+object.squares_to_move())))
+				print("  + Threats after: ", object.threats_at(object.route().square_at(object.route_position+object.squares_to_move())))
 				
 		if object is Dice and OS.is_debug_build():
 			$Popup.set_text(object.historical_report())

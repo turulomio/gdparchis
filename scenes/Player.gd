@@ -13,7 +13,7 @@ var id: int
 var show_pieces:bool
 
 var color: Color
-var route: Route
+var _route: Route
 var can_throw_dice: bool = false: set = set_can_throw_dice
 var can_move_pieces: bool = false: set = set_can_move_pieces
 var dice_throws=[]
@@ -34,7 +34,7 @@ func initialize(_id, _show_pieces):
 	for i in range(self.pieces().size()):
 		var piece=self.pieces()[i]
 		piece.initialize(i,self.color)
-		piece.visible=self.show_pieces
+		piece.visible=self.show_pieces			
 	
 func board():
 	return self.get_parent_node_3d()
@@ -56,10 +56,11 @@ func pieces():
 			r.append(children)
 	return r
 	
-
+func route():
+	return self._route
 
 func set_route(p):
-	self.route=p
+	self._route=p
 	
 func set_can_throw_dice(v):
 	can_throw_dice=v
@@ -176,7 +177,7 @@ func ia_selects_piece_to_move():
 			return p
 	# Reduce risks
 	for p in pieces_can_move:
-		var square_final=p.player().route.square_at(p.route_position+p.squares_to_move()) #Could be null
+		var square_final=p.player().route().square_at(p.route_position+p.squares_to_move()) #Could be null
 		if square_final!=null and p.threats_at(p.square()).size()>p.threats_at(square_final).size():
 			print("Selected due to less threats")
 			return p
