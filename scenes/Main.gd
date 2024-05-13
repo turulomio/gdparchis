@@ -4,7 +4,7 @@ extends Control
 func _ready():	
 	$Version.text="Version: {0}".format([Globals.VERSION])
 	get_tree().get_root().size_changed.connect(resize) 
-
+	self.resize()
 
 func _on_Exit_pressed():
 		get_tree().quit()
@@ -28,13 +28,6 @@ func _on_FileDialog_file_selected(path):
 func _on_Options_pressed():
 	get_tree().change_scene_to_file("res://scenes/Options.tscn")
 
-
-func _on_CheckBox_toggled(_button_pressed):
-	var current_mode = DisplayServer.window_get_mode(0)
-	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, 0)
 
 
 func _input(_event):
@@ -88,6 +81,4 @@ func _on_StatisticsGlobal_gui_input(_event):
 
 
 func resize():
-	print($VBoxContainer.size)
 	$VBoxContainer.size=DisplayServer.window_get_size()
-	print($VBoxContainer.size)
