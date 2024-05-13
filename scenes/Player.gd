@@ -9,7 +9,9 @@ class_name Player
 #@onready var _Piece1=$Piece1
 #@onready var _Piece2=$Piece2
 #@onready var _Piece3=$Piece3
-var id: int 
+@export var id: int: 
+	set(value):
+		id=value
 var show_pieces:bool
 
 var color: Color
@@ -28,15 +30,13 @@ var fancy_name#Name seems the name of the class
 # 	return "[Player: "+ str(self.id) + " " + str(self)+"]"
 # Called when the node enters the scene tree for the first time.
 
-func initialize(_id, _show_pieces):
-	self.id=_id
+func initialize(_show_pieces):
 	self.show_pieces=_show_pieces
 	self.color=Globals.ePlayer2Color(self.id)
 	self.fancy_name=Globals.ePlayerDefaultName(self.id)
 	self.dice().set_my_position(5)	
-	for i in range(self.pieces().size()):
-		var piece=self.pieces()[i]
-		piece.initialize(i,self.color)
+	for piece in self.pieces():
+		piece.initialize(self.color)
 		piece.visible=self.show_pieces		
 	
 func board():

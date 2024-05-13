@@ -2,11 +2,14 @@
 extends CharacterBody3D
 class_name Piece
 
+@export var id: int: 
+	set(value):
+		id=value
+
 signal piece_moved
 var vel : Vector3 = Vector3(0,-30,0)
 @onready var MeshInstance=$MeshInstance
 
-var id:int
 var color: Color
 var route_position: int 
 var square_position: int
@@ -14,14 +17,8 @@ var square_position: int
 #animation movement
 #var animation_positions=null #Will be an array of positions
 var TweenWaiting
-
-func _ready():
-	#print("Start Piece ready",self.is_node_ready())
-	await self.ready
-	#print("Finish Piece ready")
 	
-func initialize(id_, color_):
-	self.id=id_
+func initialize( color_):
 	self.color=color_
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD

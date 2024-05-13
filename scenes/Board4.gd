@@ -2,6 +2,7 @@
 extends Node3D
 class_name Board4
 
+
 @onready var Board=$Board
 @onready var Player0=$Player0
 @onready var Player1=$Player1
@@ -26,13 +27,8 @@ func initialize(_show_pieces):
 		self.squares[i]=Square.new(i)
 		
 
-	for i in range(self.max_players):
-		var player=self.players()[i]
-		print(player,i)
-		player.initialize(i,self.show_pieces)#Debeb inicializarse todos primeros
-
-
 	for player in self.players():
+		player.initialize(self.show_pieces)#Debeb inicializarse todos primeros
 		player.set_route(Route.new(self.max_players, player.id, self.squares))
 		#Sets pieces at final square
 		for piece in player.pieces():
