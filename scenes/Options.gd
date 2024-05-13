@@ -20,7 +20,6 @@ func _on_Return_pressed():
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
 
 func _on_FullScreen_toggled(_button_pressed):
-	print("Button pressed",_button_pressed)
 	Globals.set_window_mode_fullscreen(_button_pressed)
 	self.resize()
 	
