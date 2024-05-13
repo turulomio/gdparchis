@@ -358,7 +358,7 @@ func is_threating_me(stalker, _square):
 	if stalker_square==_square:
 		return false
 	
-	if stalker.route.position_in_route(_square)==-1:
+	if stalker.route().position_in_route(_square)==-1:
 		return false
 		
 	var distance=self.route().distance_between_squares(stalker_square,_square)
