@@ -1,8 +1,9 @@
 extends Control
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	$Version.text="Version: {0}".format([Globals.VERSION])
+	$VBoxContainer2/HBoxContainer/Version.text=" Version: {0}".format([Globals.VERSION])
 	get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
 
@@ -81,4 +82,4 @@ func _on_StatisticsGlobal_gui_input(_event):
 
 
 func resize():
-	$VBoxContainer.size=DisplayServer.window_get_size()
+	$VBoxContainer2.size=DisplayServer.window_get_size()
