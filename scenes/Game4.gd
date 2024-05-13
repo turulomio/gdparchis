@@ -76,8 +76,8 @@ func _process(_delta):
 				player.dice().historical_report()
 		
 		get_tree().change_scene_to_file("res://scenes/Main.tscn")
-	#if Input.is_action_just_pressed("full_screen"):
-		#OS.window_fullscreen = !OS.window_fullscreen
+	if Input.is_action_just_pressed("full_screen"):
+		Globals.toggle_window_mode()
 	if Input.is_action_just_pressed("right_click"):
 		var object=get_object_under_mouse()
 		if object == null:

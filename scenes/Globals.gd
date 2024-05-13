@@ -14,16 +14,6 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 var game_data=null #Dictionary to load and init games
 var settings
 
-func vector2_window()-> Vector2:
-	var	window_width=DisplayServer.window_get_size().x
-	var window_height=DisplayServer.window_get_size().y
-	return Vector2(window_width,window_height)
-	
-
-func vector2_os_center() -> Vector2:
-	return vector2_window()/2.0
-
-
 func _init():
 	print("Singleton load")
 	load_settings()
@@ -173,12 +163,8 @@ func load_settings():
 		file_load.close()
 	
 	print("Settings loaded: ", settings)
-	if settings["full_screen"]:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN,0)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED,0)
-		
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"),not settings["sound"])
+	set_window_mode_fullscreen(settings["full_screen"])		
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), not settings["sound"])
 	change_language(settings["language"])
 
 func change_language(e_language):
@@ -491,3 +477,24 @@ func game_load_glogals_game_data(gameobject,show_pieces):
 
 
 	print(Globals.game_data)
+
+
+func is_window_mode_fullscreen(screen=0):
+	if  DisplayServer.window_get_mode(screen)== DisplayServer.WINDOW_MODE_FULLSCREEN:
+		return true
+	return false
+	
+func set_window_mode_fullscreen(boolean,screen=0):
+	if boolean:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, screen)
+		settings["full_screen"]=true
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, screen)
+		settings["full_screen"]=false
+	save_settings()
+
+func toggle_window_mode(screen=0):
+	if is_window_mode_fullscreen(screen):
+		set_window_mode_fullscreen(false,screen)
+	else:
+		set_window_mode_fullscreen(true,screen)
