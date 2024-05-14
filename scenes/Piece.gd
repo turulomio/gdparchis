@@ -206,7 +206,7 @@ func on_clicked():
 			has_eaten_after=true
 			$Eat.play()			
 			var piece_eaten=self.square().pieces_different_to_me_ordered(self.player())[0]
-			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player().name]), self.player().color)
+			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player().playername]), self.player().color)
 			piece_eaten.move_to_route_position(0)
 			await piece_eaten.piece_moved
 
@@ -320,7 +320,7 @@ func can_move_stm():
 func can_eat_at_route_position(_route_position, check_after_movement):
 	var square_=self.route().square_at(_route_position)
 	if check_after_movement==false and self.can_move_to_route_position(_route_position): #chequeo antes de mover y comprueba que3 mueve
-		if square_.pieces_count()==1 and square_.type==Globals.eSquareTypes.NORMAL and square_.pieces_objects()[0].player!=self.player():
+		if square_.pieces_count()==1 and square_.type==Globals.eSquareTypes.NORMAL and square_.pieces_objects()[0].player()!=self.player():
 			return true
 	else: #chequeo despues de mover
 		if square_.pieces_count()==2 and square_.type==Globals.eSquareTypes.NORMAL and square_.pieces_different_to_me_ordered(self.player())!=null:
