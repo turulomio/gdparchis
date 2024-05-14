@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://qe0o7vwvwhmh"]
 
 [ext_resource type="Texture2D" uid="uid://obxnlhj4i5au" path="res://images/fichaamarilla.png" id="1"]
+[ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="1_xlmpf"]
 [ext_resource type="Script" path="res://scenes/PlayerOptions.gd" id="2"]
-[ext_resource type="Theme" uid="uid://bvi01pkikc5q4" path="res://themes/FreshmanMiddle.tres" id="3"]
 
 [node name="PlayerOptions" type="Control"]
 custom_minimum_size = Vector2(500, 66)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 648.0
+offset_right = 739.0
 offset_bottom = 66.0
-theme = ExtResource("3")
+theme = ExtResource("1_xlmpf")
 script = ExtResource("2")
 playername = "Yellowy"
 
@@ -25,10 +25,11 @@ texture = ExtResource("1")
 stretch_mode = 1
 
 [node name="PlayerName" type="TextEdit" parent="HBoxContainer"]
-custom_minimum_size = Vector2(300, 50)
+custom_minimum_size = Vector2(300, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("1_xlmpf")
 text = "Yellowy"
 placeholder_text = "User name"
 
