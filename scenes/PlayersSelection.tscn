@@ -1,31 +1,32 @@
 [gd_scene load_steps=4 format=3 uid="uid://cqtmk7ackbsjl"]
 
 [ext_resource type="Script" path="res://scenes/PlayersSelection.gd" id="1"]
-[ext_resource type="Theme" uid="uid://bvi01pkikc5q4" path="res://themes/FreshmanMiddle.tres" id="2"]
+[ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="1_8wb30"]
 [ext_resource type="PackedScene" uid="uid://qe0o7vwvwhmh" path="res://scenes/PlayerOptions.tscn" id="3"]
 
 [node name="PlayersSelection" type="Control"]
-clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_8wb30")
 script = ExtResource("1")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
 clip_contents = true
+custom_minimum_size = Vector2(710, 2.08165e-12)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -324.0
-offset_top = -206.0
-offset_right = 324.0
-offset_bottom = 206.0
+offset_left = -355.0
+offset_top = -199.0
+offset_right = 355.0
+offset_bottom = 199.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -51,14 +52,12 @@ id = 3
 
 [node name="Button" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2")
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Start game"
 flat = true
 
 [node name="ButtonReturn" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2")
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 text = "Return"
 flat = true

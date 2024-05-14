@@ -7,7 +7,6 @@
 script = ExtResource("2")
 
 [node name="Label" type="Label" parent="."]
-clip_contents = true
 offset_left = -300.0
 offset_right = -80.0
 offset_bottom = 49.0

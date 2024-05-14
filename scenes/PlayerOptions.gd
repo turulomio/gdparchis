@@ -41,10 +41,12 @@ func change_icon_and_name():
 	$HBoxContainer/Plays.set("theme_override_colors/font_pressed_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/Plays.set("theme_override_colors/font_hover_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/Plays.set("theme_override_colors/font_hover_pressed_color", Globals.ePlayer2Color(id))
+	$HBoxContainer/Plays.set("theme_override_colors/font_focus_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/IA.set("theme_override_colors/font_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/IA.set("theme_override_colors/font_pressed_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/IA.set("theme_override_colors/font_hover_color", Globals.ePlayer2Color(id))
 	$HBoxContainer/IA.set("theme_override_colors/font_hover_pressed_color", Globals.ePlayer2Color(id))
+	$HBoxContainer/IA.set("theme_override_colors/font_focus_color", Globals.ePlayer2Color(id))
 	
 func set_playername(s):
 	playername=s
