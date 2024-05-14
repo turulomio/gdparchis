@@ -46,4 +46,3 @@ func _on_Language_item_selected(index):
 func _on_Sound_toggled(button_pressed):
 	Globals.settings["sound"]=button_pressed
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"),not button_pressed)
-

@@ -227,5 +227,3 @@ func _on_RequestGameFake_request_completed(result, response_code, headers, body)
 		print ("  - ", r["success"],": ", r["detail"])
 	else:
 		print ("  -  Couldn't connect")
-
-

@@ -190,6 +190,3 @@ func ia_selects_piece_to_move():
 		print("Selected due to can move")
 		return p
 	print("IA COUDN'T FIND A PIECE TO MOVE")
-
-
-

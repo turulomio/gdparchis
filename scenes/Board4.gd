@@ -36,6 +36,32 @@ func initialize(_show_pieces):
 			piece.set_final_position(player.route().end_position(), square_position, player.route().square_at(player.route().end_position()).id) #Coloca las piezas en casillas al final, en posiciones de casillas sin mover
 			square_position+=1
 
+
+	self.write_python_files()
+	
+
+func write_python_files():
+	# Used for django_gdparchis to generate file of squares
+	var file_new=FileAccess.open("squares4.py", FileAccess.WRITE)
+	var r="squares4={\n"
+	for square in self.squares.values():
+		r+="{0}:{'id':{0},'type':{1},'color':{2},'max_pieces':{3}},\n".format([square.id,square.type,Globals.Color2ePlayer(square.color),square.max_pieces()])
+	r=r.replace("<null>","None")
+	r+="}\n"
+	file_new.store_line(r)
+	file_new.close()
+	# Used for django_gdparchis to generate file of squares
+	var file_new2=FileAccess.open("routes4.py", FileAccess.WRITE)
+	var r2="routes4={\n"
+	for player in self.players():
+		var route=[]
+		for square in player.route().arr:
+			route.append(square.id)
+		r2+="{0}:{'id':{0},'route': {1}},\n".format([player.id, str(route)])
+	r2+="}\n"
+	file_new2.store_line(r2)
+	file_new2.close()
+
 func set_show_pieces(value):
 	show_pieces=value
 

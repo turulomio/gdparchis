@@ -1,0 +1,85 @@
+# Configuración de Exportación y Entorno Godot 4.7 (Gentoo)
+
+Este documento detalla la adaptación del proyecto **gdparchis** para **Godot 4.7** en Gentoo Linux, incluyendo el soporte de **Wayland por defecto** y la inclusión de **plantillas de exportación locales dentro del proyecto**.
+
+---
+
+## 1. Configuración de Wayland en Linux
+
+En el archivo [`project.godot`](file:///home/keko/Proyectos/gdparchis/project.godot#L81), dentro de la sección `[display]`, se ha configurado el controlador de pantalla nativo para Linux:
+
+```ini
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/fullscreen=true
+display_server/driver.linuxbsd="wayland"
+```
+
+* **Comportamiento:** Al ejecutar el proyecto en Linux, Godot utilizará Wayland de forma nativa. En entornos sin compositor Wayland activo, Godot realiza un fallback automático a X11/XWayland.
+
+---
+
+## 2. Plantillas de Exportación Locales (`templates/`)
+
+Para evitar depender de la ubicación global de Godot (`~/.local/share/godot/export_templates/`), las plantillas de exportación están almacenadas directamente dentro del repositorio en el directorio [`templates/`](file:///home/keko/Proyectos/gdparchis/templates/).
+
+### Estructura de `templates/`:
+
+```
+templates/
+├── linux_release.x86_64 -> /usr/bin/godot
+├── linux_debug.x86_64   -> /usr/bin/godot
+├── windows_release_x86_64.exe
+└── windows_debug_x86_64.exe
+```
+
+* **Linux:** Se utiliza `/usr/bin/godot` enlazado como plantilla de exportación local.
+* **Windows:** Se incluyen las plantillas oficiales `windows_release_x86_64.exe` y `windows_debug_x86_64.exe` en `templates/`.
+
+---
+
+## 3. Presets de Exportación (`export_presets.cfg`)
+
+Los presets en [`export_presets.cfg`](file:///home/keko/Proyectos/gdparchis/export_presets.cfg) apuntan a la carpeta del proyecto usando la notación `res://`:
+
+### Preset 0 (Linux):
+```ini
+[preset.0]
+name="Linux"
+platform="Linux"
+export_path="dist/Linux/gdparchis.x86_64"
+
+[preset.0.options]
+custom_template/debug="res://templates/linux_debug.x86_64"
+custom_template/release="res://templates/linux_release.x86_64"
+binary_format/embed_pck=false
+```
+
+### Preset 1 (Windows Desktop):
+```ini
+[preset.1]
+name="Windows Desktop"
+platform="Windows Desktop"
+export_path="dist/Windows/Gdparchis.exe"
+
+[preset.1.options]
+custom_template/debug="res://templates/windows_debug_x86_64.exe"
+custom_template/release="res://templates/windows_release_x86_64.exe"
+```
+
+---
+
+## 4. Ejecución del Script de Exportación
+
+Para generar los binarios de exportación, ejecuta el script de gestión:
+
+```bash
+python3 management.py --export
+```
+
+Los ejecutables y archivos `.pck` resultantes se generan en:
+* `dist/Linux/gdparchis-<VERSION>.x86_64`
+* `dist/Linux/gdparchis-<VERSION>.pck`
+* `dist/Windows/gdparchis-<VERSION>.exe`
