@@ -174,7 +174,7 @@ func piece_to_eat_before_move():
 	var square_initial=self.square()
 	var square_final=self.route().square_at(self.route_position+self.squares_to_move())#After move
 
-	if square_final.pieces_count()==2 and self.player().dice.value==5 and square_initial.type==Globals.eSquareTypes.START:
+	if square_final.pieces_count()==2 and self.player().dice().value==5 and square_initial.type==Globals.eSquareTypes.START:
 		var ordered= square_final.pieces_different_to_me_ordered(self.player())
 		if ordered!=null:
 			return ordered[0]
