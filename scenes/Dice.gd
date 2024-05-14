@@ -176,22 +176,23 @@ func on_clicked():
 			self.player().game().change_current_player()
 
 
-func historical_report() -> void:
+func historical_report():
+	var s=""
 	if len(self.historical)>0:
-		print("Dice %s has been thrown %s times:" % [self.player().id, self.historical.size()])
-		print("  - 1: %d (%.2f%%)" % [ self.historical.count(1), float(self.historical.count(1))/len(self.historical)*100 ])
-		print("  - 2: %d (%.2f%%)" % [ self.historical.count(2), float(self.historical.count(2))/len(self.historical)*100 ])
-		print("  - 3: %d (%.2f%%)" % [ self.historical.count(3), float(self.historical.count(3))/len(self.historical)*100 ])
-		print("  - 4: %d (%.2f%%)" % [ self.historical.count(4), float(self.historical.count(4))/len(self.historical)*100 ])
-		print("  - 5: %d (%.2f%%)" % [ self.historical.count(5), float(self.historical.count(5))/len(self.historical)*100 ])
-		print("  - 6: %d (%.2f%%)" % [ self.historical.count(6), float(self.historical.count(6))/len(self.historical)*100 ])
+		s+="Dice %s has been thrown %s times:\n" % [self.player().id, self.historical.size()]
+		s+="  - 1: %d (%.2f%%)\n" % [ self.historical.count(1), float(self.historical.count(1))/len(self.historical)*100 ]
+		s+="  - 2: %d (%.2f%%)\n" % [ self.historical.count(2), float(self.historical.count(2))/len(self.historical)*100 ]
+		s+="  - 3: %d (%.2f%%)\n" % [ self.historical.count(3), float(self.historical.count(3))/len(self.historical)*100 ]
+		s+="  - 4: %d (%.2f%%)\n" % [ self.historical.count(4), float(self.historical.count(4))/len(self.historical)*100 ]
+		s+="  - 5: %d (%.2f%%)\n" % [ self.historical.count(5), float(self.historical.count(5))/len(self.historical)*100 ]
+		s+="  - 6: %d (%.2f%%)\n" % [ self.historical.count(6), float(self.historical.count(6))/len(self.historical)*100 ]
 		if len(self.historical)>1:
 			var repetitions=0
 			for i in range(1,len(self.historical)):
 				if self.historical[i]==self.historical[i-1]:
 					repetitions+=1
-			print("  - Repetitions: %d" % repetitions)
-
+			s+="  - Repetitions: %d" % repetitions
+	return s
 
 func _on_RelaunchTimer_timeout():
 	if $RelaunchTimer.is_stopped():

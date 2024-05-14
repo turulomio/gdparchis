@@ -3,6 +3,7 @@ class_name Game4
 
 @onready var OrCamera = $Camera
 @onready var OrBoard=$Board4
+@onready var OrPopup=$Popup
 var current_player
 
 func board():
@@ -93,18 +94,19 @@ func _process(_delta):
 		if object == null:
 			return
 		if object is Piece:
-			print("Piece", str(object), " ", object.player.name)
-			if object.player==self.current_player and object.player.can_move_pieces:
-				print("  + Can move: ", object.can_move_stm())
-				print("  + Can eat before: ", object.can_eat_before_stm())
-				print("  + Can eat after: ", object.can_eat_at_route_position(object.route_position+object.squares_to_move(),false))
-			print("  + Threats before: ", object.threats_at(object.square()))
+			var s="Piece " + str(object) + " " + object.player().name +"\n"
+			if object.player()==self.current_player and object.player().can_move_pieces:
+				s+="  + Can move: " + str(object.can_move_stm())
+				s+="  + Can eat before: " + str(object.can_eat_before_stm())
+				s+="  + Can eat after: " +  str(object.can_eat_at_route_position(object.route_position+object.squares_to_move(),false))
+				s+="  + Threats before: "+ str(object.threats_at(object.square()))
 				
-			if object.player==self.current_player and object.player.can_move_pieces:
-				print("  + Threats after: ", object.threats_at(object.route().square_at(object.route_position+object.squares_to_move())))
+			if object.player()==self.current_player and object.player().can_move_pieces:
+				s+="  + Threats after: " +  str(object.threats_at(object.route().square_at(object.route_position+object.squares_to_move())))
+			OrPopup.set_text(s)
 				
 		if object is Dice and OS.is_debug_build():
-			$Popup.set_text(object.historical_report())
+			OrPopup.set_text(object.historical_report())
 			
 
 func change_current_player():

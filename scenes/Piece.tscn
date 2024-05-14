@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4u8nm6s4x3x7"]
+[gd_scene load_steps=13 format=3 uid="uid://b4u8nm6s4x3x7"]
 
 [ext_resource type="Script" path="res://scenes/Piece.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://ytq4lx03ic66" path="res://images/wood.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://c53k3o3xilm3j" path="res://sounds/meter.wav" id="4"]
 [ext_resource type="AudioStream" uid="uid://cs3nhgrntfgbe" path="res://sounds/win.wav" id="5"]
 [ext_resource type="AudioStream" uid="uid://hlxjaluhu8ph" path="res://sounds/comer.wav" id="6"]
+[ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="7_trulg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4bvw"]
 albedo_color = Color(0.258063, 0.636478, 0.404455, 1)
@@ -52,3 +53,5 @@ stream = ExtResource("6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.4, 0, 0, 0, 0.088, 0, 0, 0, 1.4, 0, 0, 0)
 shape = SubResource("CylinderShape3D_4bi72")
+
+[node name="FloatingText" parent="." instance=ExtResource("7_trulg")]

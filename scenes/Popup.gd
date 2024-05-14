@@ -1,8 +1,10 @@
 extends Popup
 
-#onready var rich=$Panel/RichTextLabel
-#onready var rich=$Panel/RichTextLabel
+@onready var rich=$RichTextLabel
+
+
 
 func set_text(t):
-	$Panel/RichTextLabel.text=t
+	rich.clear()
+	rich.text=t
 	self.popup()

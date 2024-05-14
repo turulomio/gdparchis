@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dcgsd6vm40egh"]
 
-[ext_resource type="PackedScene" path="res://scenes/Popup.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ctcgw1d6h1kmd" path="res://scenes/Popup.tscn" id="2"]
 [ext_resource type="Script" path="res://scenes/Game4.gd" id="3"]
 [ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="4"]
 [ext_resource type="PackedScene" uid="uid://b1o5wtrh2qa8b" path="res://scenes/Board4.tscn" id="4_asd23"]
