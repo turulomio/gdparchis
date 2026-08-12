@@ -56,12 +56,13 @@ if args.export is True:
     replace_line_in_file_that_contains("export_presets.cfg", "application/file_version", f'application/file_version="{get_version()}"\n')
     replace_line_in_file_that_contains("export_presets.cfg", "application/product_version", f'application/product_version="{get_version()}"\n')
     replace_line_in_file_that_contains("export_presets.cfg", "application/file_description", f'application/file_description="https://github.com/turulomio/gdparchis/"\n')
-    system(f"godot --no-window --export Linux/X11 dist/Linux/gdparchis-{get_version()}.Linux_x86_64")
-    system(f"godot --no-window --export 'Windows Desktop' dist/Windows/gdparchis-{get_version()}.exe")
+    system("mkdir -p dist/Linux dist/Windows")
+    system(f"godot --headless --export-release 'Linux' dist/Linux/gdparchis-{get_version()}.x86_64")
+    system(f"godot --headless --export-release 'Windows Desktop' dist/Windows/gdparchis-{get_version()}.exe")
     
 if args.apache is True:
-    system("rm dist/Html/*")
-    system("godot --no-window --export 'HTML5' --video-driver GLES2")
+    system("mkdir -p dist/Html && rm -rf dist/Html/*")
+    system("godot --headless --export-release 'HTML5' dist/Html/index.html")
     system(f"rsync -e 'ssh -l root -p {args.port}' -avzP dist/Html/* root@{args.server}:/var/www/html/gdparchis/ --delete-after")
     print(getcwd())
     system(f"ssh  root@{args.server} -p {args.port} 'chown -Rvc 33:33 /var/www/html/gdparchis && systemctl restart apache2'")

@@ -30,6 +30,19 @@ func ePlayer2Color(player_id):
 			return Color.GREEN
 		_:
 			return Color.WHITE
+func Color2ePlayer(color):
+	match color:
+		Color.YELLOW:
+			return 0
+		Color.BLUE:
+			return 1
+		Color.RED:
+			return 2
+		Color.GREEN:
+			return 3
+	
+	#print(color, Color.YELLOW)
+	return null
 	
 func ePlayerDefaultName(player_id):
 	var r
