@@ -22,6 +22,11 @@ func initialize( color_):
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
 	new_material.albedo_color = self.color
+	new_material.roughness = 0.3
+	new_material.metallic_specular = 0.5
+	new_material.clearcoat_enabled = true
+	new_material.clearcoat = 0.4
+	new_material.clearcoat_roughness = 0.15
 	MeshInstance.material_override=new_material
 
 func set_final_position(_route_position, _square_position,square_id):

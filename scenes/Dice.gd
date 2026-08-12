@@ -6,6 +6,7 @@ signal dice_got_value
 var vel : Vector3 = Vector3(0,-30,0)
 var value=0#To avoid failling values must be 0, null to start getting value, 1-6 has got a value
 var has_touch=false
+var collision_count: int = 0
 var historical=[] #List to store all throws to get statistics
 var tween_waiting
 
@@ -47,37 +48,63 @@ func launch():
 	self.player().can_throw_dice=false
 	self.value=null
 	self.has_touch=false
+	self.collision_count=0
+	self.freeze = false
 	
 	self.set_physics_process(true)
 	## Fake dice
 	if len(Globals.game_data["fake_dice"])>0:
 		var fake=int(Globals.game_data["fake_dice"][0])#no lo borra solo dibuja
 		self.simulate_value(fake)
-		self.set_my_position(10)
-		self.set_linear_velocity(Vector3(0,3,0)) ##Needs angular, physics condition
+		self.set_my_position(5)
+		var dir = (Vector3(0, 0, 0) - Vector3(self.global_transform.origin.x, 0, self.global_transform.origin.z)).normalized()
+		self.set_linear_velocity(dir * 12.0 + Vector3(0, 2.0, 0))
+		self.set_angular_velocity(Vector3(randf_range(-20.0, 20.0), randf_range(-3.0, 3.0), randf_range(-20.0, 20.0)))
 	else:
 		randomize()
-		self.set_my_position(randi_range(5,15))
+		self.set_my_position(randf_range(4.5, 6.5))
 		self.simulate_value(int(randf_range(1,6.99)))
 		
+		var spawn_pos = self.global_transform.origin
+		var dir_to_center = (Vector3(0, 0, 0) - Vector3(spawn_pos.x, 0, spawn_pos.z)).normalized()
+		var toss_speed = randf_range(9.0, 14.0)
+		var upward_force = randf_range(1.5, 3.0)
 		
-		var x = randi_range(-10,10)
-		var y = randi_range(-10,10)
-		var z = randi_range(-10,10)
-		self.set_linear_velocity(Vector3(randi_range(-3,3), randi_range(-3,3) ,randi_range(-3,3)))
-		self.set_angular_velocity(Vector3(x,y,z))
+		self.set_linear_velocity(dir_to_center * toss_speed + Vector3(0, upward_force, 0))
+		# Tumbling rotation across X and Z with controlled Y spin
+		self.set_angular_velocity(Vector3(randf_range(-25.0, 25.0), randf_range(-4.0, 4.0), randf_range(-25.0, 25.0)))
+
+
+func _on_body_entered(_body):
+	if self.collision_count < 4:
+		self.collision_count += 1
+		$Touched.pitch_scale = randf_range(0.9, 1.1)
+		$Touched.volume_db = 0.0
+		$Touched.play()
 
 
 func _physics_process(_delta):
 	if self.value==0:
 		return
 
+	# Out of bounds safety recovery
+	if self.global_transform.origin.y < -5.0:
+		self.global_transform.origin.y = 8.0
+		self.set_linear_velocity(Vector3.ZERO)
+		self.launch()
+		return
 	
-	if self.value!=null and Globals.vector_is_almost_zero(self.angular_velocity) and Globals.vector_is_almost_zero(self.linear_velocity):
+	var is_tumbling_stopped = abs(self.angular_velocity.x) < 0.2 and abs(self.angular_velocity.z) < 0.2
+	var is_linear_stopped = Globals.vector_is_almost_zero(self.linear_velocity, 0.2)
+	
+	if self.value!=null and is_tumbling_stopped and is_linear_stopped:
 		var s="Dice " + str(self.player().id) + " gets a "+ str(self.value)
 		print(s)
 		$RelaunchTimer.stop()
 		
+		self.set_linear_velocity(Vector3.ZERO)
+		self.set_angular_velocity(Vector3.ZERO)
+		self.freeze = true
 		self.set_physics_process(false)
 		## Fake dice
 		if len(Globals.game_data["fake_dice"])>0:
@@ -103,34 +130,22 @@ func _physics_process(_delta):
 	else:
 		if $RC1.is_colliding():
 			self.value=6
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 		if $RC2.is_colliding():
 			self.value=5
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 		if $RC3.is_colliding():
 			self.value=4
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 		if $RC4.is_colliding():
 			self.value=3
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 		if $RC5.is_colliding():
 			self.value=2
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 		if $RC6.is_colliding():
 			self.value=1
-			if self.has_touch==false:
-				$Touched.play()
-				self.has_touch=true
+			self.has_touch=true
 
 func on_clicked():
 	
@@ -198,9 +213,9 @@ func _on_RelaunchTimer_timeout():
 	if $RelaunchTimer.is_stopped():
 		return
 	else:
-		self.global_rotate(Vector3.ZERO, 0)
-		self.set_linear_velocity(Vector3(0,0,0))
-		self.set_angular_velocity(Vector3(0,0,0))
+		self.global_rotate(Vector3.UP, 0)
+		self.set_linear_velocity(Vector3.ZERO)
+		self.set_angular_velocity(Vector3.ZERO)
 		$FloatingText.show_text(tr("Recovering dice"),self.player().color)
 		self.player().can_throw_dice=true
 		self.launch()
@@ -211,6 +226,7 @@ func TweenWaiting_method(rad):
 
 func TweenWaiting_start():  
 	self.set_physics_process(false)	
+	self.freeze = true
 	self.tween_waiting = create_tween()
 	self.tween_waiting.set_loops()
 	self.tween_waiting.tween_method(TweenWaiting_method, 0, 2*PI, 2)
@@ -218,6 +234,7 @@ func TweenWaiting_start():
 func TweenWaiting_stop():
 	#$TweenWaiting.stop_all() 
 	self.tween_waiting.kill()
+	self.freeze = false
 	self.set_physics_process(true)
 
 

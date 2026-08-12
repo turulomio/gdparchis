@@ -68,54 +68,55 @@ func value_almost_zero(_value,precision=0.001):
 	return false
 	
 func save_game(game):
-	var dir= DirAccess.open("user://saves/")
-	if not dir.dir_exists("user://saves/"):
-		dir.make_dir("user://saves/")
+	if not DirAccess.dir_exists_absolute("user://saves/"):
+		DirAccess.make_dir_absolute("user://saves/")
 				
-	#Removes innecesary autosaves
+	# Removes unnecessary autosaves
 	var files=[]
-	dir=DirAccess.open("user://saves/")
-	dir.list_dir_begin()
-	while true:
-		var file=dir.get_next()
-		if file=="":
-			break
-		else:
-			if "autosave" in file:
+	var dir=DirAccess.open("user://saves/")
+	if dir:
+		dir.list_dir_begin()
+		while true:
+			var file=dir.get_next()
+			if file=="":
+				break
+			elif "autosave" in file:
 				files.append(file)
-
-	dir.list_dir_end()
-	files.sort()
-	var to_remove=files.slice(0,files.size()-self.settings.autosaves)
-	for f in to_remove:
-		dir.remove("user://saves/"+f)
+		dir.list_dir_end()
+		files.sort()
+		if files.size() >= self.settings.get("autosaves", 10):
+			var to_remove=files.slice(0, files.size() - self.settings.get("autosaves", 10) + 1)
+			for f in to_remove:
+				dir.remove("user://saves/"+f)
 		
-	#Create new autosave
+	# Create new autosave
 	var d=Time.get_datetime_dict_from_system()
 	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.board().max_players]
 	var file_new=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
-	var dict={}	
-	dict["max_players"]=game.board().max_players
-	dict["current"]=game.current_player.id
-	dict["fake_dice"]=[]
-	dict["players"]=[]
-	dict["game_uuid"]=self.game_data.game_uuid
-	for p in game.board().players():
-		var dict_p={}
-		dict_p["id"]=p.id
-		dict_p["playername"]=p.playername
-		dict_p["plays"]=p.plays
-		dict_p["ia"]=p.ia
-		dict["players"].append(dict_p)
-		dict_p["pieces"]=[]
-		for piece in p.pieces():
-			var dict_piece={}
-			dict_piece["id"]=piece.id
-			dict_piece["route_position"]=piece.route_position
-			dict_piece["square_position"]=piece.square_position
-			dict_p["pieces"].append(dict_piece)
-	file_new.store_line(JSON.stringify(dict))
-	file_new.close()
+	if file_new:
+		var dict={}	
+		dict["max_players"]=game.board().max_players
+		dict["current"]=game.current_player.id
+		dict["fake_dice"]=[]
+		dict["players"]=[]
+		dict["game_uuid"]=self.game_data.game_uuid
+		for p in game.board().players():
+			var dict_p={}
+			dict_p["id"]=p.id
+			dict_p["playername"]=p.playername
+			dict_p["plays"]=p.plays
+			dict_p["ia"]=p.ia
+			dict["players"].append(dict_p)
+			dict_p["pieces"]=[]
+			for piece in p.pieces():
+				var dict_piece={}
+				dict_piece["id"]=piece.id
+				dict_piece["route_position"]=piece.route_position
+				dict_piece["square_position"]=piece.square_position
+				dict_p["pieces"].append(dict_piece)
+		file_new.store_line(JSON.stringify(dict))
+		file_new.close()
+		print("Autosave created: ", filename)
 	
 func new_game(max_players):
 	var dict={}
@@ -225,7 +226,7 @@ func difficulty_probability():
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
-func position4(square_id, square_position,h=2):
+func position4(square_id, square_position,h=0.2):
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]

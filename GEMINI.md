@@ -71,13 +71,17 @@ custom_template/release="res://templates/windows_release_x86_64.exe"
 
 ---
 
-## 4. Ejecución del Script de Exportación
+## 4. Script de Gestión (`management.py`)
 
-Para generar los binarios de exportación, ejecuta el script de gestión:
+* **Ejecutar el proyecto en desarrollo:**
+  ```bash
+  python3 management.py --play
+  ```
 
-```bash
-python3 management.py --export
-```
+* **Generar binarios de exportación:**
+  ```bash
+  python3 management.py --export
+  ```
 
 Los ejecutables y archivos `.pck` resultantes se generan en:
 * `dist/Linux/gdparchis-<VERSION>.x86_64`

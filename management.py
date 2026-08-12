@@ -23,6 +23,7 @@ group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--reusing', help='It gets all reused files downloading from Internet and updates them for this project', action="store_true", default=False)
 group.add_argument('--procedure', help='Shows release procedure information', action="store_true", default=False)
 group.add_argument('--export', help='Export all projects to dist folder', action="store_true", default=False)
+group.add_argument('--play', help='Runs the project using godot', action="store_true", default=False)
 group.add_argument('--apache', help='Sets project in apache', action="store_true", default=False)
 
 parser.add_argument('--server', help='HTML Export server', action="store", default="127.0.0.1")
@@ -51,6 +52,9 @@ if args.procedure is True:
     
     for i, p in enumerate(procedures):
         print(f"{i+1}) {p}")
+
+if args.play is True:
+    system("godot --audio-driver PulseAudio")
 
 if args.export is True:
     replace_line_in_file_that_contains("export_presets.cfg", "application/file_version", f'application/file_version="{get_version()}"\n')
