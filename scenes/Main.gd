@@ -21,7 +21,7 @@ func _on_Load_pressed():
 ## Button handler starting a new 4-player game.
 func _on_Players4_pressed():
 	Globals.game_data = Globals.new_game(4)
-	get_tree().change_scene_to_file("res://scenes/PlayersSelection.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
 
 
 ## Callback when a saved game file is selected in FileDialog.
@@ -30,18 +30,19 @@ func _on_FileDialog_file_selected(path):
 	var data = Globals.load_game(path)
 	if data["max_players"] == 4:
 		Globals.game_data = data
-		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 
 
 ## Button handler navigating to Options.tscn scene.
 func _on_Options_pressed():
-	get_tree().change_scene_to_file("res://scenes/Options.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Options.tscn")
 
 
 ## Input event callback handling global exit key press.
 ## @param _event InputEvent object.
 func _input(_event):
 	if _event.is_action_pressed("exit"):
+		get_viewport().set_input_as_handled()
 		print("Exiting from gdParchis due to exit action")
 		get_tree().quit()
 

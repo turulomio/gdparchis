@@ -16,7 +16,7 @@ func _ready():
 ## Return button click handler saving settings to disk and returning to Main.tscn.
 func _on_Return_pressed():
 	Globals.save_settings()
-	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
 ## Checkbox toggle handler for FullScreen window mode setting.

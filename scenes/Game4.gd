@@ -40,7 +40,7 @@ func check_game_over() -> bool:
 				"human_won": not player.ia,
 			}
 			print(fields)
-			get_tree().change_scene_to_file("res://scenes/Main.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 			return true
 	return false
 
@@ -140,7 +140,7 @@ func _process(_delta):
 		for player in self.board().players():
 			if player.plays:
 				player.dice().historical_report()
-		get_tree().change_scene_to_file("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 		
 	# Handle fullscreen toggle
 	if Input.is_action_just_pressed("full_screen"):

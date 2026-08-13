@@ -15,7 +15,7 @@ func _on_Button_pressed():
 		Globals.game_data.players[i].plays = node.plays
 		Globals.game_data.players[i].ia = node.ia
 		i += 1
-	get_tree().change_scene_to_file("res://scenes/GameDiceStart.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart.tscn")
 
 
 ## Helper returning an array of all child PlayerOptions nodes.
@@ -42,4 +42,4 @@ func resize():
 
 ## Return button handler navigating back to Main.tscn.
 func _on_button_return_pressed():
-	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")

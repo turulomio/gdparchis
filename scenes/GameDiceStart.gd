@@ -62,7 +62,7 @@ func is_there_a_winer():
 		Globals.from_dice_start = true
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].playername]), self.winers[0].color)
 		await $FloatingText.text_disappear
-		get_tree().change_scene_to_file("res://scenes/Game4.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 		return true
 	else:
 		# Filter participating players to tied winners for tie-breaker
@@ -76,7 +76,7 @@ func is_there_a_winer():
 ## @param _delta Delta frame time.
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene_to_file("res://scenes/Main.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
 ## Completion handler for backend game start HTTP request.

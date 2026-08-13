@@ -316,7 +316,7 @@ func on_clicked():
 			Globals.request_put($RequestGameEnd, Globals.APIROOT + "/games/", fields)
 			await $RequestGameEnd.request_completed
 			
-			get_tree().change_scene_to_file("res://scenes/Main.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 			return
 			
 		# Award +10 extra moves and display floating text for reaching the final goal square
