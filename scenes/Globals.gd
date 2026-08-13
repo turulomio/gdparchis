@@ -13,6 +13,7 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 
 var game_data = null # Dictionary to load and init games
 var settings
+var from_dice_start: bool = false
 
 
 ## Singleton initialization callback. Loads saved configuration settings.
@@ -483,23 +484,37 @@ func position4(square_id, square_position, h=0.2):
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
-func game_load_glogals_game_data(gameobject,show_pieces):
-	# ALL Game scenes have board() y cargan de Globals gamedata
+## Loads global game state data into board, players, and piece positions.
+## @param gameobject Scene object instance containing a board() method.
+## @param show_pieces Boolean flag indicating whether piece visual models should be visible.
+## @param animate Optional boolean flag controlling whether piece placement is animated step-by-step.
+func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
+	# 1. Initialize board squares, players, and default piece properties
 	gameobject.board().initialize(show_pieces)
 	
-	
+	# 2. Loop through each player dictionary stored in global game_data
 	for d_player in Globals.game_data.players:
-		var player=gameobject.board().get_player_by_id(d_player["id"])
-		player.plays=d_player["plays"]
-		player.ia=d_player["ia"]		
-		player.playername=d_player["playername"]		
+		var player = gameobject.board().get_player_by_id(d_player["id"])
+		player.plays = d_player["plays"]
+		player.ia = d_player["ia"]		
+		player.playername = d_player["playername"]		
+		
+		# 3. Loop through each piece configuration for active players
 		for d_piece in d_player["pieces"]:
 			if show_pieces:
-				var piece=gameobject.board().get_piece_by_player_id_and_id(player.id,d_piece["id"])
-				# print(d_piece,player,piece)
+				var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
 				if player.plays:
-					piece.move_to_route_position(d_piece["route_position"], 0.2)
-					await piece.piece_moved
+					if animate:
+						# Animate piece movement along route to target position
+						piece.move_to_route_position(d_piece["route_position"], 0.2)
+						await piece.piece_moved
+					else:
+						# Directly place piece at target route position without playing hop animations
+						var square_final = player.route().square_at(d_piece["route_position"])
+						var square_position_final = square_final.empty_position()
+						square_final.set_piece_at_square_position(square_position_final, piece)
+						piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
+						piece.change_scale_on_specials_squares()
 
 		
 	## Registering game

@@ -19,8 +19,8 @@ func _ready():
 	print("LOADING GAMEDICESTART")
 	$FloatingText.show_text(tr("Let's see who starts"), Color(255, 255, 255, 1))
 
-	# Load global player configuration
-	Globals.game_load_glogals_game_data(self, false)
+	# Load global player configuration and await all pieces moving to their starting home positions
+	await Globals.game_load_glogals_game_data(self, true, true)
 	var is_winer = null
 	
 	# Loop until a single winner is determined
@@ -58,6 +58,8 @@ func _ready():
 func is_there_a_winer():
 	if len(self.winers) == 1:
 		Globals.game_data["current"] = self.winers[0].id
+		# Flag that scene transition to Game4 comes directly from GameDiceStart
+		Globals.from_dice_start = true
 		$FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].playername]), self.winers[0].color)
 		await $FloatingText.text_disappear
 		get_tree().change_scene_to_file("res://scenes/Game4.tscn")

@@ -42,7 +42,26 @@ func initialize(color_):
 func set_final_position(_route_position, _square_position, square_id):
 	self.route_position = _route_position
 	self.square_position = _square_position
-	self.global_transform.origin = Globals.position4(square_id, self.square_position)
+	self.global_transform.origin = Globals.position4(square_id, self.square_position, 0.2)
+	self.rotation = Vector3.ZERO
+
+
+## Performs a smooth corrective alignment animation, snapping the piece to its exact square slot and 3D upright stance on the board floor.
+## @param duration Interpolation duration in seconds.
+func correct_position_and_drop(duration = 0.15):
+	if not self.square():
+		return
+		
+	var target_3d = Globals.position4(self.square().id, self.square_position, 0.2)
+	
+	# Smoothly align position XZ, snap height Y=0.2, and reset 3D rotation upright
+	var tween_correct = create_tween().set_parallel(true)
+	tween_correct.tween_property(self, "global_transform:origin", target_3d, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween_correct.tween_property(self, "rotation", Vector3.ZERO, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	await tween_correct.finished
+	self.set_physics_process(true)
+	self.freeze = false
 
 
 ## Returns the parent Player node instance.
@@ -188,6 +207,9 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			bounce_tween.tween_property(self, "scale", Vector3(cur_scale.x * 1.08, cur_scale.y * 0.88, cur_scale.z * 1.08), 0.05)
 			bounce_tween.tween_property(self, "scale", cur_scale, 0.07)
 			await bounce_tween.finished
+		
+		# Smoothly correct any displacement and drop cleanly onto board floor (h=0.2)
+		await self.correct_position_and_drop(0.12)
 		
 	# Adjust visual scale on narrow corridor squares and signal completion
 	self.change_scale_on_specials_squares()
@@ -385,15 +407,8 @@ func TweenWaiting_stop():
 		TweenWaiting.kill()
 		TweenWaiting = null
 		
-	# Smoothly descend back to ground floor level (0.2) in 0.12 seconds
-	var target_y = 0.2
-	if self.square():
-		target_y = Globals.position4(self.square().id, self.square_position, 0.2).y
-		
-	var descend_tween = create_tween()
-	descend_tween.tween_property(self, "global_transform:origin:y", target_y, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	await descend_tween.finished
-	self.freeze = false
+	# Smoothly correct position and descend back to ground floor level (0.2)
+	await self.correct_position_and_drop(0.12)
 
 
 ## Evaluates whether this piece can move given current state machine status.

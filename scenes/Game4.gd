@@ -31,8 +31,12 @@ func _ready():
 	print("LOADING GAME4")
 	var d = Globals.game_data
 
-	# Load global game state into board and pieces
-	Globals.game_load_glogals_game_data(self, true)
+	# Check if transition came from GameDiceStart (pieces already animated) or saved game load
+	var animate = not Globals.from_dice_start
+	Globals.from_dice_start = false
+
+	# Load global game state into board and pieces and wait for piece placement to complete
+	await Globals.game_load_glogals_game_data(self, true, animate)
 
 	# Set active starting player
 	self.current_player = self.board().players()[d["current"]]
@@ -160,6 +164,12 @@ func change_current_player():
 	# Update dice visibility so only current player's dice is visible
 	for p in self.board().players():
 		p.dice().visible = (p == self.current_player)
+	
+	# Realign and drop all active pieces on the board to correct any displacement
+	for p in self.board().players():
+		for piece in p.pieces():
+			if piece.visible:
+				piece.correct_position_and_drop(0.12)
 	
 	# Autosave current game progress
 	Globals.save_game(self)
