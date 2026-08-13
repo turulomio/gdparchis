@@ -409,6 +409,10 @@ func on_clicked():
 		
 	# Handle piece selection or next player turn
 	if self.player().can_some_piece_move_stm():
+		# Notify player when rolling a 5 requires leaving home
+		if self.value == 5 and self.player().can_some_piece_move_to_first_square():
+			$FloatingText.show_text(tr("A 5! You must leave home"), self.player().color)
+			
 		self.player().can_move_pieces = true
 		if self.player().ia == true:
 			var p = self.player().ia_selects_piece_to_move()

@@ -100,8 +100,11 @@ func set_can_move_pieces(b):
 	can_move_pieces = b
 	if b == true:
 		for p in self.pieces():
-			if self.ia == false and p.route_position != p.route().end_position():
+			# Only pieces of human players that can make a valid move in this turn oscillate
+			if self.ia == false and p.can_move_stm() == true:
 				p.TweenWaiting_start()
+			else:
+				p.TweenWaiting_stop()
 	else:
 		for p in self.pieces():
 			p.TweenWaiting_stop()
