@@ -110,12 +110,16 @@ func _process(_delta):
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
 	if Input.is_action_just_pressed("yellow_view"):
 		OrCamera.look_at_from_position(Vector3(-30, 50, -30), Vector3(0, 3, 0), Vector3.UP)
+		OrCamera.global_transform.origin.y -= 18
 	if Input.is_action_just_pressed("blue_view"):
 		OrCamera.look_at_from_position(Vector3(-30, 50, 30), Vector3(0, 3, 0), Vector3.UP)
+		OrCamera.global_transform.origin.y -= 18
 	if Input.is_action_just_pressed("red_view"):
 		OrCamera.look_at_from_position(Vector3(30, 50, 30), Vector3(0, 3, 0), Vector3.UP)
+		OrCamera.global_transform.origin.y -= 18
 	if Input.is_action_just_pressed("green_view"):
 		OrCamera.look_at_from_position(Vector3(30, 50, -30), Vector3(0, 3, 0), Vector3.UP)
+		OrCamera.global_transform.origin.y -= 18
 	if Input.is_action_just_pressed("yellow_view_floor"):
 		OrCamera.look_at_from_position(Vector3(-30, 1, -30), Vector3(0, 1, 0), Vector3.UP)
 	if Input.is_action_just_pressed("blue_view_floor"):
