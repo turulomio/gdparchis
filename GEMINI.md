@@ -87,3 +87,10 @@ Los ejecutables y archivos `.pck` resultantes se generan en:
 * `dist/Linux/gdparchis-<VERSION>.x86_64`
 * `dist/Linux/gdparchis-<VERSION>.pck`
 * `dist/Windows/gdparchis-<VERSION>.exe`
+
+---
+
+## 5. Estándares de Documentación de Código
+
+* **Documentación de Funciones:** Cada función escrita en los scripts (GDScript o Python) debe incluir un bloque de documentación descriptivo (encabezado/docstring con `##` o `""`) explicando su propósito, parámetros y tipo de retorno.
+* **Comentarios Internos:** La implementación interna de las funciones debe estar debidamente comentada paso a paso para explicitar la lógica de desarrollo, algoritmos y decisiones clave de diseño.

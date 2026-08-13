@@ -11,13 +11,19 @@ const IMAGE_WOOD = preload("res://images/wood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 
-var game_data=null #Dictionary to load and init games
+var game_data = null # Dictionary to load and init games
 var settings
 
+
+## Singleton initialization callback. Loads saved configuration settings.
 func _init():
 	print("Singleton load")
 	load_settings()
 
+
+## Maps a numeric player ID (0-3) to its corresponding Godot Color.
+## @param player_id Integer ID of the player (0: Yellow, 1: Blue, 2: Red, 3: Green).
+## @return Color associated with the player.
 func ePlayer2Color(player_id):
 	match player_id:
 		0:
@@ -30,6 +36,11 @@ func ePlayer2Color(player_id):
 			return Color.GREEN
 		_:
 			return Color.WHITE
+
+
+## Maps a Godot Color back to its numeric player ID (0-3).
+## @param color Color object to convert.
+## @return Player ID integer or null if unmatched.
 func Color2ePlayer(color):
 	match color:
 		Color.YELLOW:
@@ -40,30 +51,42 @@ func Color2ePlayer(color):
 			return 2
 		Color.GREEN:
 			return 3
-	
-	#print(color, Color.YELLOW)
 	return null
-	
+
+
+## Returns default name for a player according to its enum ID.
+## @param player_id ePlayer enum integer.
+## @return Default name string.
 func ePlayerDefaultName(player_id):
 	var r
 	match player_id:
 		ePlayer.YELLOW:
-			r= "Yellowy"
+			r = "Yellowy"
 		ePlayer.BLUE:
-			r= "Bluey"
+			r = "Bluey"
 		ePlayer.RED:
-			r= "Redy"
+			r = "Redy"
 		ePlayer.GREEN:
-			r= "Greeny"
+			r = "Greeny"
 	return r
-	
-func vector_is_almost_zero(v,precision=0.001):
-	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
+
+
+## Checks whether a 3D vector is within precision threshold of zero.
+## @param v Vector3 to test.
+## @param precision Maximum allowable deviation magnitude.
+## @return True if all components are nearly zero.
+func vector_is_almost_zero(v, precision = 0.001):
+	if self.value_almost_zero(v.x, precision) and self.value_almost_zero(v.y, precision) and self.value_almost_zero(v.z, precision):
 		return true
 	return false
-	
-func value_almost_zero(_value,precision=0.001):
-	if abs(_value)<=precision:
+
+
+## Checks whether a float value is within precision threshold of zero.
+## @param _value Float value to test.
+## @param precision Maximum allowable deviation magnitude.
+## @return True if value is nearly zero.
+func value_almost_zero(_value, precision = 0.001):
+	if abs(_value) <= precision:
 		return true
 	return false
 	
@@ -226,7 +249,7 @@ func difficulty_probability():
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
-func position4(square_id, square_position,h=0.2):
+func position4(square_id, square_position,h=2):
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]

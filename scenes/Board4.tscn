@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 6, 0)
 shape = SubResource("BoxShape3D_wall_z")
 
 [node name="BoardBlend" parent="Board" instance=ExtResource("3_3u5ny")]
-transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
 
 [node name="Light" parent="Board/BoardBlend" index="1"]
 visible = false
