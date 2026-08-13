@@ -273,7 +273,7 @@ func on_clicked():
 			var eaten_before = self.piece_to_eat_before_move()
 			has_eaten_before = true
 			$Eat.play()
-			$FloatingText.show_text(tr("{0}, I did it unintentionally").format([eaten_before.player().playername]), self.player().color)
+			$FloatingText.show_text(tr("{0}, I did it unintentionally! +20 moves").format([eaten_before.player().playername]), self.player().color)
 			eaten_before.move_to_route_position(0)
 			await eaten_before.piece_moved
 		
@@ -290,7 +290,7 @@ func on_clicked():
 			has_eaten_after = true
 			$Eat.play()			
 			var piece_eaten = self.square().pieces_different_to_me_ordered(self.player())[0]
-			$FloatingText.show_text(tr("{0}, you're so tasty").format([piece_eaten.player().playername]), self.player().color)
+			$FloatingText.show_text(tr("{0}, you're so tasty! +20 moves").format([piece_eaten.player().playername]), self.player().color)
 			piece_eaten.move_to_route_position(0)
 			await piece_eaten.piece_moved
 
@@ -316,9 +316,10 @@ func on_clicked():
 			get_tree().change_scene_to_file("res://scenes/Main.tscn")
 			return
 			
-		# Award +10 extra moves for reaching the final goal square
+		# Award +10 extra moves and display floating text for reaching the final goal square
 		if self.square().type == Globals.eSquareTypes.END:
 			$EndRoute.play()
+			$FloatingText.show_text(tr("Piece in goal! +10 moves"), self.player().color)
 			self.player().extra_moves.append(10)
 			
 		self.player().last_piece_moved = self
