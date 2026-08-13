@@ -23,12 +23,19 @@ doppler_tracking = 2
 far = 1000.0
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 15, 0)
-light_color = Color(1, 0.96, 0.9, 1)
-light_energy = 1.3
+transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 30, 0)
+light_color = Color(1, 0.98, 0.94, 1)
+light_energy = 1.2
 shadow_enabled = true
-shadow_bias = 0.04
-directional_shadow_mode = 1
+shadow_bias = 0.02
+shadow_normal_bias = 1.5
+shadow_blur = 2.0
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.15
+directional_shadow_split_2 = 0.35
+directional_shadow_split_3 = 0.65
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 65.0
 
 [node name="Popup" parent="." instance=ExtResource("2")]
 

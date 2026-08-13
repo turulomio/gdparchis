@@ -11,9 +11,11 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4bvw"]
 albedo_color = Color(0.258063, 0.636478, 0.404455, 1)
 albedo_texture = ExtResource("2")
+roughness = 0.35
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_16edx"]
 albedo_texture = ExtResource("2")
+roughness = 0.35
 
 [sub_resource type="CylinderMesh" id="4"]
 material = SubResource("StandardMaterial3D_16edx")
@@ -27,6 +29,7 @@ height = 0.2
 
 [node name="Piece" type="RigidBody3D"]
 mass = 24.0
+freeze = true
 linear_damp = 6.0
 angular_damp = 5.0
 axis_lock_angular_x = true
@@ -35,7 +38,7 @@ script = ExtResource("1")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-layers = 6
+layers = 1
 material_override = SubResource("StandardMaterial3D_v4bvw")
 mesh = SubResource("4")
 surface_material_override/0 = SubResource("StandardMaterial3D_cuue7")

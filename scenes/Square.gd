@@ -28,10 +28,10 @@ func _init(node_id):
 			self.color = Color.BLUE
 		39:
 			self.type = Globals.eSquareTypes.FIRST
-			self.color = Color.RED
+			self.color = Globals.ePlayer2Color(2)
 		56:
 			self.type = Globals.eSquareTypes.FIRST
-			self.color = Color.GREEN
+			self.color = Globals.ePlayer2Color(3)
 			
 		12, 17, 29, 34, 46, 51, 63, 68:
 			self.type = Globals.eSquareTypes.SECURE
@@ -44,10 +44,10 @@ func _init(node_id):
 			self.color = Color.BLUE
 		92:
 			self.type = Globals.eSquareTypes.END
-			self.color = Color.RED
+			self.color = Globals.ePlayer2Color(2)
 		100:
 			self.type = Globals.eSquareTypes.END
-			self.color = Color.GREEN
+			self.color = Globals.ePlayer2Color(3)
 		101:
 			self.type = Globals.eSquareTypes.START
 			self.color = Color.YELLOW
@@ -56,10 +56,10 @@ func _init(node_id):
 			self.color = Color.BLUE
 		103:
 			self.type = Globals.eSquareTypes.START
-			self.color = Color.RED
+			self.color = Globals.ePlayer2Color(2)
 		104:
 			self.type = Globals.eSquareTypes.START
-			self.color = Color.GREEN
+			self.color = Globals.ePlayer2Color(3)
 		_:
 			self.type = Globals.eSquareTypes.NORMAL
 			

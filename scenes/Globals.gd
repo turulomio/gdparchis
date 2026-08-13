@@ -32,9 +32,9 @@ func ePlayer2Color(player_id):
 		1:
 			return Color.BLUE
 		2:
-			return Color.RED
+			return Color(0.75, 0, 0, 1) # Darkened RED by additional 10% (total 25%)
 		3:
-			return Color.GREEN
+			return Color(0, 0.85, 0, 1) # Darkened GREEN by 15%
 		_:
 			return Color.WHITE
 
@@ -48,9 +48,9 @@ func Color2ePlayer(color):
 			return 0
 		Color.BLUE:
 			return 1
-		Color.RED:
+		Color.RED, Color(0.85, 0, 0, 1), Color(0.75, 0, 0, 1):
 			return 2
-		Color.GREEN:
+		Color.GREEN, Color(0, 0.85, 0, 1):
 			return 3
 	return null
 

@@ -60,8 +60,8 @@ func correct_position_and_drop(duration = 0.15):
 	tween_correct.tween_property(self, "rotation", Vector3.ZERO, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 	await tween_correct.finished
-	self.set_physics_process(true)
-	self.freeze = false
+	self.set_physics_process(false)
+	self.freeze = true
 
 
 ## Returns the parent Player node instance.
@@ -404,7 +404,6 @@ func TweenWaiting_start():
 
 ## Stops hover selection animation and smoothly lowers piece back to board floor.
 func TweenWaiting_stop():
-	self.set_physics_process(true)
 	if self.visible == false:
 		return
 	if TweenWaiting:

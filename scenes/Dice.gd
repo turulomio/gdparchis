@@ -54,7 +54,11 @@ func apply_soft_tint(player_color: Color):
 		
 	var meshes = _find_all_mesh_instances($Dice)
 	for mesh_inst in meshes:
+		# Force layer 1 and double-sided shadow casting so inset dot cavities do not leak light
+		mesh_inst.layers = 1
+		mesh_inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
 		mesh_inst.material_override = null
+		
 		var surface_count = 1
 		if mesh_inst.mesh:
 			surface_count = mesh_inst.mesh.get_surface_count()
@@ -72,19 +76,25 @@ func apply_soft_tint(player_color: Color):
 				is_dots_material = true
 			
 			if is_dots_material:
-				# Keep dots surface crisp black
+				# Keep dots surface crisp black with solid depth draw and double-sided rendering
 				var dots_mat = StandardMaterial3D.new()
 				dots_mat.albedo_color = Color.BLACK
 				dots_mat.roughness = 0.5
+				dots_mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+				dots_mat.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_ALWAYS
+				dots_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 				mesh_inst.set_surface_override_material(s_idx, dots_mat)
 			else:
-				# Apply soft pastel tint to dice body
+				# Apply soft pastel tint to dice body with solid depth draw and double-sided rendering
 				var body_mat = StandardMaterial3D.new()
 				if orig_mat and orig_mat is StandardMaterial3D and orig_mat.albedo_texture:
 					body_mat.albedo_texture = orig_mat.albedo_texture
 				body_mat.albedo_color = soft_color
 				body_mat.roughness = 0.3
 				body_mat.metallic_specular = 0.5
+				body_mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+				body_mat.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_ALWAYS
+				body_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 				mesh_inst.set_surface_override_material(s_idx, body_mat)
 
 

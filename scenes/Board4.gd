@@ -14,13 +14,54 @@ var show_pieces
 
 ## Node ready lifecycle callback.
 func _ready():
-	pass
+	self.setup_board_materials()
+
+
+## Recursively finds all MeshInstance3D nodes under a parent node.
+## @param parent Node to search.
+## @return Array of MeshInstance3D nodes.
+func _find_all_mesh_instances(parent: Node) -> Array[MeshInstance3D]:
+	var result: Array[MeshInstance3D] = []
+	if parent is MeshInstance3D:
+		result.append(parent)
+	for child in parent.get_children():
+		result.append_array(_find_all_mesh_instances(child))
+	return result
+
+
+## Configures all mesh instances and materials of Board.blend so they receive lighting and shadows properly.
+func setup_board_materials() -> void:
+	if not $Board.has_node("BoardBlend"):
+		return
+		
+	var meshes = _find_all_mesh_instances($Board/BoardBlend)
+	for mesh_inst in meshes:
+		# Step 1: Force layer 1 and enable shadow casting/receiving
+		mesh_inst.layers = 1
+		mesh_inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		
+		var surface_count = 1
+		if mesh_inst.mesh:
+			surface_count = mesh_inst.mesh.get_surface_count()
+			
+		# Step 2: Ensure all surface materials are shaded (PER_PIXEL) and respond to light and shadow
+		for s_idx in range(surface_count):
+			var orig_mat = mesh_inst.get_active_material(s_idx)
+			if orig_mat:
+				var mat = orig_mat.duplicate()
+				if mat is StandardMaterial3D or mat is ORMMaterial3D:
+					mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+					mat.emission_enabled = false
+					mat.roughness = clamp(mat.roughness, 0.35, 0.7)
+					mat.metallic_specular = 0.5
+					mesh_inst.set_surface_override_material(s_idx, mat)
 
 
 ## Initializes the 4-player board, squares dictionary, routes, and initial piece positions.
 ## @param _show_pieces Boolean indicating whether piece visual meshes should be visible.
 func initialize(_show_pieces):
 	self.show_pieces = _show_pieces
+	self.setup_board_materials()
 	
 	# Instantiate all 104 board squares into dictionary indexed by ID
 	self.squares = {}
