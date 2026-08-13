@@ -5,6 +5,7 @@ class_name Game4
 @onready var OrBoard = $Board4
 @onready var OrPopup = $Popup
 var current_player
+var game_start_time: float = 0.0
 
 
 ## Returns the Board4 child node instance.
@@ -16,9 +17,9 @@ func board():
 ## Performs a 3D raycast query from mouse position into the scene world.
 ## @return Physics object collider hit by raycast, or null.
 func get_object_under_mouse():
-	var mouse_pos = get_viewport().get_mouse_position()
-	var ray_from = OrCamera.project_ray_origin(mouse_pos)
-	var ray_to = ray_from + OrCamera.project_ray_normal(mouse_pos) * 100
+	var mouse_pos = OrCamera.project_ray_origin(get_viewport().get_mouse_position())
+	var ray_from = OrCamera.project_ray_origin(get_viewport().get_mouse_position())
+	var ray_to = ray_from + OrCamera.project_ray_normal(get_viewport().get_mouse_position()) * 100
 	var space_state = get_world_3d().direct_space_state
 	var selection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from, ray_to))
 	if len(selection) == 0:
@@ -31,6 +32,7 @@ func get_object_under_mouse():
 func check_game_over() -> bool:
 	for player in self.board().players_than_plays():
 		if player.has_won():
+			Globals.add_game_history_entry(self.game_start_time, player, self.board())
 			$DebugFloatingText.show_text(tr("Player {0} wins").format([player.playername]), player.color)
 			await $DebugFloatingText.text_disappear
 			
@@ -48,6 +50,7 @@ func check_game_over() -> bool:
 ## Scene entry point. Initializes board data, player turns, and auto-throws if AI.
 func _ready():	
 	print("LOADING GAME4")
+	self.game_start_time = Time.get_unix_time_from_system()
 	var d = Globals.game_data
 
 	# Check if transition came from GameDiceStart (pieces already animated) or saved game load
@@ -152,7 +155,7 @@ func _process(_delta):
 		if object == null:
 			return
 		if object is Piece:
-			var s = "Piece " + str(object) + " " + object.player().name + "\n"
+			var s = "Piece " + str(object) + " " + object.player().playername + "\n"
 			if object.player() == self.current_player and object.player().can_move_pieces:
 				s += "  + Can move: " + str(object.can_move_stm())
 				s += "  + Can eat before: " + str(object.can_eat_before_stm())
@@ -183,7 +186,7 @@ func change_current_player():
 	elif self.current_player == self.board().players()[3]:
 		self.current_player = self.board().players()[0]
 		
-	print("Current player now is ", self.current_player.name)
+	print("Current player now is ", self.current_player.playername)
 		
 	# Skip inactive non-participating players or players who have already won
 	if self.current_player.plays == false or self.current_player.has_won():

@@ -330,7 +330,9 @@ func on_clicked():
 		# Check victory condition
 		if self.player().has_won():
 			$Won.play()
-			$FloatingText.show_text(tr("Player {0} wins").format([self.player().name]), self.player().color)
+			if self.game() != null and "game_start_time" in self.game():
+				Globals.add_game_history_entry(self.game().game_start_time, self.player(), self.board())
+			$FloatingText.show_text(tr("Player {0} wins").format([self.player().playername]), self.player().color)
 			await $FloatingText.text_disappear
 	
 			print("Registering end of game:")	
@@ -363,7 +365,7 @@ func on_clicked():
 			self.player().ia_selects_piece_to_move().on_clicked()
 		else:
 			var pieces_can_move_stm = self.player().pieces_can_move_stm()
-			print(self.player().name, " PIECES CAN MOVE ", pieces_can_move_stm)
+			print(self.player().playername, " PIECES CAN MOVE ", pieces_can_move_stm)
 			if pieces_can_move_stm.size() == 1:
 				pieces_can_move_stm[0].on_clicked()
 		

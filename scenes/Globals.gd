@@ -14,12 +14,92 @@ const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 var game_data = null # Dictionary to load and init games
 var settings
 var from_dice_start: bool = false
+var game_history: Array = []
 
 
-## Singleton initialization callback. Loads saved configuration settings.
+## Singleton initialization callback. Loads saved configuration settings and game history.
 func _init():
 	print("Singleton load")
 	load_settings()
+	load_game_history()
+
+
+## Loads match history records from user://game_history.json file.
+func load_game_history() -> void:
+	if not FileAccess.file_exists("user://game_history.json"):
+		self.game_history = []
+		return
+		
+	var file_load = FileAccess.open("user://game_history.json", FileAccess.READ)
+	if file_load:
+		var json_string = file_load.get_line()
+		file_load.close()
+		var parsed = JSON.parse_string(json_string)
+		if parsed is Array:
+			self.game_history = parsed
+		else:
+			self.game_history = []
+
+
+## Saves match history records to user://game_history.json file.
+func save_game_history() -> void:
+	var file_save = FileAccess.open("user://game_history.json", FileAccess.WRITE)
+	if file_save:
+		file_save.store_line(JSON.stringify(self.game_history))
+		file_save.close()
+
+
+## Clears all match history records.
+func clear_game_history() -> void:
+	self.game_history.clear()
+	self.save_game_history()
+
+
+## Adds a new game record to history log and persists to disk.
+## @param start_time Unix timestamp float when game began.
+## @param winner Player object that won the game.
+## @param board Board4 node instance.
+func add_game_history_entry(start_time: float, winner, board) -> void:
+	# Calculate elapsed game duration in seconds
+	var current_time = Time.get_unix_time_from_system()
+	var duration_sec = max(1, int(current_time - start_time))
+	var mins = duration_sec / 60
+	var secs = duration_sec % 60
+	var duration_str = "%02d:%02d" % [mins, secs]
+	
+	# Format current date and time string
+	var datetime_dict = Time.get_datetime_dict_from_system()
+	var datetime_str = "%04d-%02d-%02d %02d:%02d" % [datetime_dict.year, datetime_dict.month, datetime_dict.day, datetime_dict.hour, datetime_dict.minute]
+	
+	# Build player composition snapshot
+	var composition = []
+	var max_players = 4
+	if board != null:
+		if "max_players" in board:
+			max_players = board.max_players
+		for p in board.players():
+			composition.append({
+				"id": p.id,
+				"name": p.playername,
+				"color_id": p.id,
+				"ia": p.ia,
+				"plays": p.plays
+			})
+			
+	var entry = {
+		"datetime": datetime_str,
+		"duration_sec": duration_sec,
+		"duration_str": duration_str,
+		"max_players": max_players,
+		"winner_name": winner.playername if winner else "Unknown",
+		"winner_id": winner.id if winner else 0,
+		"winner_ia": winner.ia if winner else false,
+		"composition": composition
+	}
+	
+	# Insert newest record at top index 0
+	self.game_history.push_front(entry)
+	self.save_game_history()
 
 
 ## Maps a numeric player ID (0-3) to its corresponding Godot Color.

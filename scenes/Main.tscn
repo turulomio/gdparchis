@@ -43,6 +43,14 @@ flat = true
 clip_text = true
 expand_icon = true
 
+[node name="History" type="Button" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0, 1)
+text = "Match history"
+flat = true
+clip_text = true
+expand_icon = true
+
 [node name="Options" type="Button" parent="VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -119,6 +127,8 @@ stream = ExtResource("4")
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]

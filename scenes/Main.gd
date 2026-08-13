@@ -33,6 +33,11 @@ func _on_FileDialog_file_selected(path):
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 
 
+## Button handler navigating to GameHistory.tscn scene.
+func _on_History_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/GameHistory.tscn")
+
+
 ## Button handler navigating to Options.tscn scene.
 func _on_Options_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Options.tscn")
@@ -61,6 +66,11 @@ func _on_Players4_mouse_entered():
 
 ## Mouse hover audio feedback for Load button.
 func _on_Load_mouse_entered():
+	$Click.play()
+
+
+## Mouse hover audio feedback for History button.
+func _on_History_mouse_entered():
 	$Click.play()
 
 

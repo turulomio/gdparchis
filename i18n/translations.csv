@@ -1,25 +1,41 @@
 key,en,es,fr
-4 players board,4 players board,Tablero de 4 jugadores,4 players board
-Automatic dice and movements,Automatic dice and movements,Dado y movimientos automáticos,Automatic dice and movements
-Autosaves number  ,Autosaves number  ,Número de autoguardados  ,Autosaves number  
-Difficult,Difficult,Difícil,Difficult
-Easy,Easy,Fácil,Easy
-Exit,Exit,Salir,Sortir
-Fake dice: {0},Fake dice: {0},Dado trucado: {0},Fake dice: {0}
-Full window mode,Full window mode,Modo de pantalla completa,Full window mode
-Game difficulty  ,Game difficulty  ,Dificultad del juego  ,Game difficulty  
+4 players board,4 players board,Tablero de 4 jugadores,Plateau à 4 joueurs
+A 5! You must leave home,A 5! You must leave home,¡Un 5! Tienes que salir de casa,Un 5! Vous devez sortir de la maison
+Automatic dice and movements,Automatic dice and movements,Dado y movimientos automáticos,Dés et mouvements automatiques
+Autosaves number  ,Autosaves number  ,Número de autoguardados  ,Nombre de sauvegardes auto  
+Composition,Composition,Composición,Composition
+Disabled,Disabled,Desactivado,Désactivé
+Difficult,Difficult,Difícil,Difficile
+Duration: {0},Duration: {0},Duración: {0},Durée: {0}
+Easy,Easy,Fácil,Facile
+Exit,Exit,Salir,Quitter
+Fake dice: {0},Fake dice: {0},Dado trucado: {0},Faux dés: {0}
+Full window mode,Full window mode,Modo de pantalla completa,Mode plein écran
+Game difficulty  ,Game difficulty  ,Dificultad del juego  ,Difficulté du jeu  
+Human,Human,Persona,Humain
 IA?,IA?,¿IA?,IA?
-Language  ,Language  ,Idioma  ,Language  
-Let's see who starts,Let's see who starts,Veamos quién empieza,Let's see who starts
-Load game,Load game,Cargar juego,Chargement du jeu
+Language  ,Language  ,Idioma  ,Langue  
+Let's see who starts,Let's see who starts,Veamos quién empieza,Voyons qui commence
+Load game,Load game,Cargar juego,Charger la partie
+Match history,Match history,Registro de partidas,Historique des parties
+No games logged yet,No games logged yet,No hay partidas registradas aún,Aucune partie enregistrée
 Normal,Normal,Normal,Normal
-Player {0} starts,Player {0} starts,El jugador {0} comienza,Player {0} starts
-Player {0} wins,Player {0} wins,El jugador {0} gana,Player {0} wins
-Plays?,Plays?,¿Juega?,Plays?
-Recovering dice,Recovering dice,Recuperando el dado,Recovering dice
-Return,Return,Volver,Return
-Settings,Settings,Configuración,Paramètre
-Sound,Sound,Sonido,Sound
-Start game,Start game,Inicia el juego,Start game
-
-
+Person,Person,Persona,Personne
+Piece in goal! +10 moves,Piece in goal! +10 moves,¡Ficha en meta! +10 movimientos,Pion au but! +10 déplacements
+Player {0} starts,Player {0} starts,El jugador {0} comienza,Le joueur {0} commence
+Player {0} wins,Player {0} wins,El jugador {0} gana,Le joueur {0} gagne
+players board,players board,jugadores tablero,joueurs plateau
+Plays?,Plays?,¿Juega?,Joue?
+Recovering dice,Recovering dice,Recuperando el dado,Récupération du dé
+Return,Return,Volver,Retour
+Settings,Settings,Configuración,Paramètres
+Sound,Sound,Sonido,Son
+Start game,Start game,Inicia el juego,Commencer la partie
+Tilted dice - Rerolling from new position,Tilted dice - Rerolling from new position,Dado inclinado - Relanzando desde nueva posición,Dé incliné - Relance depuis une nouvelle position
+Tree sixes: You're lucky you are in the final ramp,Tree sixes: You're lucky you are in the final ramp,Tres seises: Tienes suerte de estar en el pasillo final,Trois six: Vous avez de la chance d'être sur la rampe finale
+Tree sixes: You're lucky you can't move,Tree sixes: You're lucky you can't move,Tres seises: Tienes suerte de no poder mover,Trois six: Vous avez de la chance de ne pas pouvoir bouger
+Tree sixes: too fast too young,Tree sixes: too fast too young,Tres seises: A casa la ficha,Trois six: Retour à la maison
+Upps, I did it again,Upps, I did it again,Upps, lo hice otra vez,Oups, je l'ai encore fait
+Winner,Winner,Ganador,Gagnant
+"{0}, I did it unintentionally! +20 moves","{0}, I did it unintentionally! +20 moves","¡{0}, lo hice sin querer! +20 movimientos","{0}, je l'ai fait sans le vouloir! +20 déplacements"
+"{0}, you're so tasty! +20 moves","{0}, you're so tasty! +20 moves","¡{0}, estás riquísimo! +20 movimientos","{0}, tu es si délicieux! +20 déplacements"
