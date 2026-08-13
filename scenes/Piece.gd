@@ -122,15 +122,16 @@ func can_move_to_route_position(_route_position):
 	return true
 
 
-## Animates smooth parabolic arc movement of the piece to a target route position.
+## Animates smooth sequential step-by-step hops along intermediate route squares.
 ## @param _route_position Destination route index.
-## @param duration Tween animation duration in seconds.
-## @param max_height Peak arc height during jump.
+## @param duration Overall duration modifier.
+## @param max_height Legacy peak arc height (used for single return jumps).
 func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	# Calculate initial and final square assignments
 	var square_final = self.route().square_at(_route_position)
 	var square_initial = self.square()
 	var square_position_initial = self.square_position
+	var initial_route_pos = self.route_position
 
 	# Update board square slots
 	square_initial.set_piece_at_square_position(square_position_initial, null)
@@ -141,19 +142,52 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 
 	print("Moviendo ", self.player(), " ", self, " ", square_initial, " ", square_position_initial, " ", square_final, " ", square_position_final)
 	
-	# Execute tween parabolic animation curve
 	self.player().can_move_pieces = false
 	if duration > 0:
-		var animation_from = Globals.position4(square_initial.id, square_position_initial)
-		var animation_to = Globals.position4(square_final.id, square_position_final)
-		var animation_diff = animation_to - animation_from
-		var animation_middle = animation_from + animation_diff / 2.0
-		animation_middle.y = max_height
+		var start_3d = Globals.position4(square_initial.id, square_position_initial)
+		var final_3d = Globals.position4(square_final.id, square_position_final)
+		
+		# If returning home or single-step teleport
+		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
+			var tween_single = get_tree().create_tween()
+			var mid_single = (start_3d + final_3d) / 2.0 + Vector3(0, max_height, 0)
+			tween_single.tween_property(self, "global_transform:origin", mid_single, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween_single.tween_property(self, "global_transform:origin", final_3d, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			await tween_single.finished
+		else:
+			# Build list of 3D waypoint positions for each intermediate square step
+			var waypoints: Array[Vector3] = []
+			var total_steps = _route_position - initial_route_pos
 			
-		var TweenMoving = get_tree().create_tween()
-		TweenMoving.tween_property(self, "global_transform:origin", animation_middle, duration / 2.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		TweenMoving.tween_property(self, "global_transform:origin", animation_to, duration / 2.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		await TweenMoving.finished
+			for step_idx in range(1, total_steps + 1):
+				var step_rpos = initial_route_pos + step_idx
+				var step_sq = self.route().square_at(step_rpos)
+				if step_idx == total_steps:
+					waypoints.append(final_3d)
+				else:
+					waypoints.append(Globals.position4(step_sq.id, 0))
+			
+			# Execute smooth sequential hops from square to square
+			var current_pos = start_3d
+			var hop_duration = 0.13
+			
+			for step_idx in range(waypoints.size()):
+				var next_pos = waypoints[step_idx]
+				var mid_pos = (current_pos + next_pos) / 2.0 + Vector3(0, 1.8, 0)
+				
+				var tween_hop = get_tree().create_tween()
+				tween_hop.tween_property(self, "global_transform:origin", mid_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				tween_hop.tween_property(self, "global_transform:origin", next_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+				await tween_hop.finished
+				
+				current_pos = next_pos
+				
+			# Soft touchdown bounce on final destination square
+			var bounce_tween = get_tree().create_tween()
+			var cur_scale = self.scale
+			bounce_tween.tween_property(self, "scale", Vector3(cur_scale.x * 1.08, cur_scale.y * 0.88, cur_scale.z * 1.08), 0.05)
+			bounce_tween.tween_property(self, "scale", cur_scale, 0.07)
+			await bounce_tween.finished
 		
 	# Adjust visual scale on narrow corridor squares and signal completion
 	self.change_scale_on_specials_squares()
