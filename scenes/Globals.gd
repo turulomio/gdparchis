@@ -501,20 +501,23 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 		
 		# 3. Loop through each piece configuration for active players
 		for d_piece in d_player["pieces"]:
-			if show_pieces:
-				var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
-				if player.plays:
-					if animate:
-						# Animate piece movement along route to target position
-						piece.move_to_route_position(d_piece["route_position"], 0.2)
-						await piece.piece_moved
-					else:
-						# Directly place piece at target route position without playing hop animations
-						var square_final = player.route().square_at(d_piece["route_position"])
-						var square_position_final = square_final.empty_position()
-						square_final.set_piece_at_square_position(square_position_final, piece)
-						piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
-						piece.change_scale_on_specials_squares()
+			var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
+			if show_pieces and player.plays:
+				piece.visible = true
+				if animate:
+					# Animate piece movement along route to target position
+					piece.move_to_route_position(d_piece["route_position"], 0.2)
+					await piece.piece_moved
+				else:
+					# Directly place piece at target route position without playing hop animations
+					var square_final = player.route().square_at(d_piece["route_position"])
+					var square_position_final = square_final.empty_position()
+					square_final.set_piece_at_square_position(square_position_final, piece)
+					piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
+					piece.change_scale_on_specials_squares()
+			else:
+				# Hide pieces for non-participating players
+				piece.visible = false
 
 		
 	## Registering game

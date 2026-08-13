@@ -116,7 +116,10 @@ func last_throw():
 ## Checks if this player is the active current player in the game.
 ## @return True if active player.
 func is_current():
-	return self == self.game().current_player
+	var g = self.game()
+	if g != null and "current_player" in g:
+		return self == g.current_player
+	return false
 
 
 ## Checks if the player rolled three consecutive 6s.

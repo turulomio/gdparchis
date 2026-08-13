@@ -26,6 +26,25 @@ func get_object_under_mouse():
 	return selection.collider
 
 
+## Evaluates if any active player has won and triggers the game victory completion sequence.
+## @return True if a winner was confirmed and game transition initiated.
+func check_game_over() -> bool:
+	for player in self.board().players_than_plays():
+		if player.has_won():
+			$DebugFloatingText.show_text(tr("Player {0} wins").format([player.playername]), player.color)
+			await $DebugFloatingText.text_disappear
+			
+			print("Registering end of game:")	
+			var fields = {
+				"game_uuid": Globals.game_data.game_uuid,
+				"human_won": not player.ia,
+			}
+			print(fields)
+			get_tree().change_scene_to_file("res://scenes/Main.tscn")
+			return true
+	return false
+
+
 ## Scene entry point. Initializes board data, player turns, and auto-throws if AI.
 func _ready():	
 	print("LOADING GAME4")
@@ -38,12 +57,21 @@ func _ready():
 	# Load global game state into board and pieces and wait for piece placement to complete
 	await Globals.game_load_glogals_game_data(self, true, animate)
 
+	# Check if any active player has already won upon loading scene
+	if await self.check_game_over():
+		return
+
 	# Set active starting player
 	self.current_player = self.board().players()[d["current"]]
 	self.current_player.can_move_pieces = false
 	self.current_player.dice_throws = []
 	self.current_player.can_throw_dice = true
 	
+	# Skip turn if starting player is non-participating or has won
+	if self.current_player.plays == false or self.current_player.has_won():
+		self.change_current_player()
+		return
+
 	# Update dice visibility so only current player's dice is visible
 	for p in self.board().players():
 		p.dice().visible = (p == self.current_player)
@@ -135,6 +163,10 @@ func _process(_delta):
 
 ## Rotates turn to next participating player, saves game state, and initiates turn action.
 func change_current_player():
+	# Check if an active player has won before changing turn
+	if await self.check_game_over():
+		return
+
 	# Cycle player turn in sequence (0 -> 1 -> 2 -> 3 -> 0)
 	if self.current_player == null:
 		self.current_player = self.board().players()[0]
@@ -149,8 +181,8 @@ func change_current_player():
 		
 	print("Current player now is ", self.current_player.name)
 		
-	# Skip inactive non-participating players
-	if self.current_player.plays == false:
+	# Skip inactive non-participating players or players who have already won
+	if self.current_player.plays == false or self.current_player.has_won():
 		self.change_current_player()
 		return
 		

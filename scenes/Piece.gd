@@ -273,7 +273,7 @@ func on_clicked():
 			var eaten_before = self.piece_to_eat_before_move()
 			has_eaten_before = true
 			$Eat.play()
-			$FloatingText.show_text(tr("{0}, I did it unintentionally").format([eaten_before.player.name]), self.player().color)
+			$FloatingText.show_text(tr("{0}, I did it unintentionally").format([eaten_before.player().playername]), self.player().color)
 			eaten_before.move_to_route_position(0)
 			await eaten_before.piece_moved
 		
