@@ -174,17 +174,13 @@ func change_current_player():
 	if await self.check_game_over():
 		return
 
-	# Cycle player turn in sequence (0 -> 1 -> 2 -> 3 -> 0)
+	# Cycle player turn dynamically using modulo arithmetic
+	var all_players = self.board().players()
 	if self.current_player == null:
-		self.current_player = self.board().players()[0]
-	elif self.current_player == self.board().players()[0]:
-		self.current_player = self.board().players()[1]
-	elif self.current_player == self.board().players()[1]:
-		self.current_player = self.board().players()[2]
-	elif self.current_player == self.board().players()[2]:
-		self.current_player = self.board().players()[3]
-	elif self.current_player == self.board().players()[3]:
-		self.current_player = self.board().players()[0]
+		self.current_player = all_players[0]
+	else:
+		var curr_idx = all_players.find(self.current_player)
+		self.current_player = all_players[(curr_idx + 1) % all_players.size()]
 		
 	print("Current player now is ", self.current_player.playername)
 		

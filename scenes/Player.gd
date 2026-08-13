@@ -59,8 +59,8 @@ func dice():
 
 ## Returns an array of child Piece instances.
 ## @return Array of Piece objects.
-func pieces():
-	var r = []
+func pieces() -> Array[Piece]:
+	var r: Array[Piece] = []
 	for children in self.get_children():
 		if children is Piece:
 			r.append(children)

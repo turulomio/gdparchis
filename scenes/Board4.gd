@@ -116,8 +116,8 @@ func set_show_pieces(value):
 
 ## Returns an array of all Player child nodes.
 ## @return Array of Player objects.
-func players():
-	var r = []
+func players() -> Array[Player]:
+	var r: Array[Player] = []
 	for children in self.get_children():
 		if children is Player:
 			r.append(children)
@@ -126,8 +126,8 @@ func players():
 
 ## Returns an array of active players participating in the current game.
 ## @return Array of participating Player objects.
-func players_than_plays():
-	var r = []
+func players_than_plays() -> Array[Player]:
+	var r: Array[Player] = []
 	for player in self.players():
 		if player.plays:
 			r.append(player)
