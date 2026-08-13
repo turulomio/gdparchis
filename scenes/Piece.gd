@@ -344,25 +344,39 @@ func must_move_to_first_square():
 	return false
 
 
-## Helper function for TweenWaiting hover oscillation.
-## @param rad Angle in radians.
-func TweenWaiting_method(rad):
-	self.global_transform.origin.y = 1.75 + sin(rad) / 2
+var base_y_position: float = 0.2
 
 
-## Starts hover animation indicating the piece is available for player selection.
+## Helper function for smooth floating hover oscillation.
+## @param val Normalized height offset.
+func TweenWaiting_method(val):
+	self.global_transform.origin.y = self.base_y_position + val
+
+
+## Starts smooth hover animation indicating the piece is available for player selection.
 func TweenWaiting_start():
 	if self.visible == false:
 		return
 		
 	self.set_physics_process(false)	
 	self.freeze = true
-	TweenWaiting = create_tween()
-	TweenWaiting.set_loops()
-	TweenWaiting.tween_method(TweenWaiting_method, 0, 2 * PI, 2)
+	
+	if self.square():
+		var ground_pos = Globals.position4(self.square().id, self.square_position, 0.2)
+		self.base_y_position = ground_pos.y
+	else:
+		self.base_y_position = 0.2
+
+	if TweenWaiting:
+		TweenWaiting.kill()
+		
+	# Smoothly bob up and down between +0.4 and +0.75 above ground level with TRANS_SINE
+	TweenWaiting = create_tween().set_loops()
+	TweenWaiting.tween_method(TweenWaiting_method, 0.4, 0.75, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	TweenWaiting.tween_method(TweenWaiting_method, 0.75, 0.4, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
-## Stops hover selection animation and unfreezes physics so piece rests on the board.
+## Stops hover selection animation and smoothly lowers piece back to board floor.
 func TweenWaiting_stop():
 	self.set_physics_process(true)
 	if self.visible == false:
@@ -370,6 +384,15 @@ func TweenWaiting_stop():
 	if TweenWaiting:
 		TweenWaiting.kill()
 		TweenWaiting = null
+		
+	# Smoothly descend back to ground floor level (0.2) in 0.12 seconds
+	var target_y = 0.2
+	if self.square():
+		target_y = Globals.position4(self.square().id, self.square_position, 0.2).y
+		
+	var descend_tween = create_tween()
+	descend_tween.tween_property(self, "global_transform:origin:y", target_y, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await descend_tween.finished
 	self.freeze = false
 
 

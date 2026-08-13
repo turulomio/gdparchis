@@ -249,7 +249,7 @@ func difficulty_probability():
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
-func position4(square_id, square_position,h=2):
+func position4(square_id, square_position, h=0.2):
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]
