@@ -9,6 +9,7 @@ var has_touch = false
 var collision_count: int = 0
 var historical = [] # List storing all past rolls for statistics reporting
 var tween_waiting
+var stopped_frames: int = 0
 
 
 ## Returns the parent Player node associated with this dice.
@@ -30,6 +31,61 @@ func set_my_position(h):
 			self.global_transform.origin = Vector3(20, h, 25)
 		3:
 			self.global_transform.origin = Vector3(25, h, -20)
+
+
+## Helper method recursively collecting all MeshInstance3D nodes under a parent.
+## @param node Root node to inspect.
+## @return Array of MeshInstance3D instances found.
+func _find_all_mesh_instances(node: Node) -> Array[MeshInstance3D]:
+	var result: Array[MeshInstance3D] = []
+	if node is MeshInstance3D:
+		result.append(node)
+	for child in node.get_children():
+		result.append_array(_find_all_mesh_instances(child))
+	return result
+
+
+## Applies a soft pastel color tint to the dice body without tinting the black dots.
+## @param player_color Godot Color of the owner player.
+func apply_soft_tint(player_color: Color):
+	var soft_color = Color.WHITE.lerp(player_color, 0.50)
+	if not has_node("Dice"):
+		return
+		
+	var meshes = _find_all_mesh_instances($Dice)
+	for mesh_inst in meshes:
+		mesh_inst.material_override = null
+		var surface_count = 1
+		if mesh_inst.mesh:
+			surface_count = mesh_inst.mesh.get_surface_count()
+		
+		for s_idx in range(surface_count):
+			var orig_mat = mesh_inst.get_active_material(s_idx)
+			var is_dots_material = false
+			
+			if orig_mat and orig_mat is StandardMaterial3D:
+				# Detect if original albedo is dark (dots material)
+				if orig_mat.albedo_color.r < 0.3 and orig_mat.albedo_color.g < 0.3 and orig_mat.albedo_color.b < 0.3:
+					is_dots_material = true
+			elif surface_count > 1 and s_idx > 0:
+				# In multi-surface dice models where surface > 0 is dots
+				is_dots_material = true
+			
+			if is_dots_material:
+				# Keep dots surface crisp black
+				var dots_mat = StandardMaterial3D.new()
+				dots_mat.albedo_color = Color.BLACK
+				dots_mat.roughness = 0.5
+				mesh_inst.set_surface_override_material(s_idx, dots_mat)
+			else:
+				# Apply soft pastel tint to dice body
+				var body_mat = StandardMaterial3D.new()
+				if orig_mat and orig_mat is StandardMaterial3D and orig_mat.albedo_texture:
+					body_mat.albedo_texture = orig_mat.albedo_texture
+				body_mat.albedo_color = soft_color
+				body_mat.roughness = 0.3
+				body_mat.metallic_specular = 0.5
+				mesh_inst.set_surface_override_material(s_idx, body_mat)
 
 
 ## Rotates the dice 3D orientation so that a target value appears at the top.
@@ -72,11 +128,122 @@ func is_piece_under_position(pos: Vector3, threshold_distance: float = 3.5) -> b
 	return false
 
 
+## Calculates a dynamic random spawn position for the dice along the player's board area.
+## @return Vector3 initial spawn position.
+func get_random_launch_origin() -> Vector3:
+	var h = randf_range(5.0, 7.0)
+	var p_id = self.player().id if self.player() else 0
+	match p_id:
+		0:
+			return Vector3(randf_range(-30.0, -12.0), h, randf_range(-30.0, -12.0))
+		1:
+			return Vector3(randf_range(-30.0, -12.0), h, randf_range(12.0, 30.0))
+		2:
+			return Vector3(randf_range(12.0, 30.0), h, randf_range(12.0, 30.0))
+		3:
+			return Vector3(randf_range(12.0, 30.0), h, randf_range(-30.0, -12.0))
+		_:
+			return Vector3(randf_range(-25.0, 25.0), h, randf_range(-25.0, 25.0))
+
+
+## Scans the 2D board floor to find a landing spot closest to player's exit square with large clearance to pieces.
+## @return Vector2 2D horizontal coordinates (X, Z) on the board floor.
+func find_empty_board_spot() -> Vector2:
+	# 1. Determine player's starting exit square 2D position
+	var start_square_id = 5
+	if self.player():
+		match self.player().id:
+			0: start_square_id = 5
+			1: start_square_id = 22
+			2: start_square_id = 39
+			3: start_square_id = 56
+	
+	var exit_3d = Globals.position4(start_square_id, 0)
+	var exit_2d = Vector2(exit_3d.x, exit_3d.z)
+
+	# 2. Collect 2D floor coordinates of all active standing pieces
+	var piece_positions: Array[Vector2] = []
+	if self.player() and self.player().board():
+		for p in self.player().board().players():
+			for piece in p.pieces():
+				if piece.visible:
+					var pos3d = piece.global_transform.origin
+					piece_positions.append(Vector2(pos3d.x, pos3d.z))
+					if piece.square():
+						var sq_pos = Globals.position4(piece.square().id, piece.square_position)
+						piece_positions.append(Vector2(sq_pos.x, sq_pos.z))
+
+	# 3. Fine-grid search across board floor (X: -26 to 26, Z: -26 to 26)
+	var step = 2.5
+	var best_spot = exit_2d
+	var best_score = -999999.0
+	var safe_candidates: Array[Dictionary] = []
+
+	for target_x in range(-26, 27, int(step)):
+		for target_z in range(-26, 27, int(step)):
+			var spot = Vector2(float(target_x), float(target_z))
+
+			# Calculate minimum distance to any standing piece
+			var min_dist_to_piece = 999.0
+			for p_pos in piece_positions:
+				var d = spot.distance_to(p_pos)
+				if d < min_dist_to_piece:
+					min_dist_to_piece = d
+
+			var dist_to_exit = spot.distance_to(exit_2d)
+
+			# Group candidate spots with large clearance (>= 8.0 units) from pieces
+			if min_dist_to_piece >= 8.0:
+				safe_candidates.append({
+					"spot": spot,
+					"dist_to_exit": dist_to_exit,
+					"clearance": min_dist_to_piece
+				})
+
+			# Scoring function balancing piece clearance and proximity to player exit square
+			var score = (min_dist_to_piece * 3.0) - dist_to_exit
+			if score > best_score:
+				best_score = score
+				best_spot = spot
+
+	# Pick safe candidate spot with large clearance that is CLOSEST to player exit square
+	if safe_candidates.size() > 0:
+		safe_candidates.sort_custom(func(a, b): return a["dist_to_exit"] < b["dist_to_exit"])
+		return safe_candidates[0]["spot"]
+
+	return best_spot
+
+
+## Relocates the dice launch position to a completely new corner/side of the board when a tilt occurs.
+func relaunch_from_new_position():
+	var alternate_corners = [
+		Vector3(-25, randf_range(9.0, 11.5), -25),
+		Vector3(-25, randf_range(9.0, 11.5), 25),
+		Vector3(25, randf_range(9.0, 11.5), 25),
+		Vector3(25, randf_range(9.0, 11.5), -25),
+		Vector3(0, randf_range(9.0, 11.5), -28),
+		Vector3(0, randf_range(9.0, 11.5), 28),
+		Vector3(-28, randf_range(9.0, 11.5), 0),
+		Vector3(28, randf_range(9.0, 11.5), 0)
+	]
+	alternate_corners.shuffle()
+	
+	var new_pos = alternate_corners[0]
+	for candidate in alternate_corners:
+		if candidate.distance_to(self.global_transform.origin) > 15.0:
+			new_pos = candidate
+			break
+			
+	self.global_transform.origin = new_pos
+	self.launch()
+
+
 ## Launches the dice towards the center of the board with random physical forces and torque.
 func launch():
 	# Configure physical parameters and timers for new throw
 	self.mass = 1.2
-	$RelaunchTimer.start(5)
+	self.stopped_frames = 0
+	$RelaunchTimer.start(8)
 	self.player().can_throw_dice = false
 	self.value = null
 	self.has_touch = false
@@ -94,28 +261,21 @@ func launch():
 		self.set_linear_velocity(dir * 12.0 + Vector3(0, 2.0, 0))
 		self.set_angular_velocity(Vector3(randf_range(-20.0, 20.0), randf_range(-3.0, 3.0), randf_range(-20.0, 20.0)))
 	else:
-		# Randomize spawn height and face orientation
 		randomize()
-		self.set_my_position(randf_range(4.5, 6.5))
+		# 1. Find a 2D spot on the horizontal plane with maximum clearance to all pieces
+		var empty_spot2d = find_empty_board_spot()
+		
+		# 2. Position the dice directly above the empty spot at an increased height Y = 8.5 to 11.0
+		self.global_transform.origin = Vector3(empty_spot2d.x, randf_range(8.5, 11.0), empty_spot2d.y)
 		self.simulate_value(int(randf_range(1, 6.99)))
 		
-		# Ensure vertical launch line is clear of any standing pieces
-		var spawn_pos = self.global_transform.origin
-		var shift_dir = (Vector3(0, 0, 0) - Vector3(spawn_pos.x, 0, spawn_pos.z)).normalized()
-		var attempts = 0
-		while is_piece_under_position(spawn_pos, 3.5) and attempts < 8:
-			attempts += 1
-			spawn_pos += Vector3(shift_dir.x * 2.0, 0, shift_dir.z * 2.0)
+		# 3. Apply tiny horizontal drift + downward drop velocity so it drops straight down in that empty spot
+		var tiny_drift_x = randf_range(-0.8, 0.8)
+		var tiny_drift_z = randf_range(-0.8, 0.8)
+		self.set_linear_velocity(Vector3(tiny_drift_x, -1.8, tiny_drift_z))
 		
-		# Apply calculated spawn position and throw velocities
-		self.global_transform.origin = spawn_pos
-		var dir_to_center = (Vector3(0, 0, 0) - Vector3(spawn_pos.x, 0, spawn_pos.z)).normalized()
-		var toss_speed = randf_range(9.0, 14.0)
-		var upward_force = randf_range(1.5, 3.0)
-		
-		self.set_linear_velocity(dir_to_center * toss_speed + Vector3(0, upward_force, 0))
-		# Apply tumbling angular rotation on X and Z axes
-		self.set_angular_velocity(Vector3(randf_range(-25.0, 25.0), randf_range(-4.0, 4.0), randf_range(-25.0, 25.0)))
+		# 4. Apply 3D tumbling rotation so it rolls locally on landing
+		self.set_angular_velocity(Vector3(randf_range(-16.0, 16.0), randf_range(-4.0, 4.0), randf_range(-16.0, 16.0)))
 
 
 ## Callback triggered when the dice collides with another physics body.
@@ -173,11 +333,19 @@ func _physics_process(_delta):
 		self.value = 1
 		self.has_touch = true
 	
-	# Check velocity thresholds to determine if the roll has stopped
+	# Check velocity thresholds and ground contact to determine if the roll has settled
+	var is_on_ground = self.global_transform.origin.y <= 2.2
 	var is_tumbling_stopped = abs(self.angular_velocity.x) < 0.2 and abs(self.angular_velocity.z) < 0.2
 	var is_linear_stopped = Globals.vector_is_almost_zero(self.linear_velocity, 0.2)
 	
-	if is_tumbling_stopped and is_linear_stopped:
+	if is_on_ground and is_tumbling_stopped and is_linear_stopped:
+		self.stopped_frames += 1
+	else:
+		self.stopped_frames = 0
+		
+	# Require 20 continuous stopped frames on ground (~0.33s) before settling
+	if self.stopped_frames >= 20:
+		self.stopped_frames = 0
 		if self.value != null:
 			# Roll successfully finished with a flat face
 			var s = "Dice " + str(self.player().id) + " gets a " + str(self.value)
@@ -206,10 +374,10 @@ func _physics_process(_delta):
 			self.historical.append(self.value)
 			emit_signal("dice_got_value")
 		else:
-			# Stopped cocked or tilted on an edge; trigger automatic re-roll
-			print("Dice stopped oblique/tilted - Relaunching...")
-			$FloatingText.show_text(tr("Tilted dice - Rerolling"), self.player().color)
-			self.launch()
+			# Stopped cocked or tilted on an edge; relocate launch point completely and re-roll
+			print("Dice stopped oblique/tilted - Changing launch point completely and relaunching...")
+			$FloatingText.show_text(tr("Tilted dice - Rerolling from new position"), self.player().color)
+			self.relaunch_from_new_position()
 
 
 ## Handles dice click input event to trigger throw and evaluate game rules.

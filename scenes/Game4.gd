@@ -40,6 +40,10 @@ func _ready():
 	self.current_player.dice_throws = []
 	self.current_player.can_throw_dice = true
 	
+	# Update dice visibility so only current player's dice is visible
+	for p in self.board().players():
+		p.dice().visible = (p == self.current_player)
+	
 	# Automatically trigger dice throw for AI or automatic mode
 	if self.current_player.ia == true or Globals.settings.get("automatic", true):
 		self.current_player.dice().on_clicked()
@@ -152,6 +156,10 @@ func change_current_player():
 	self.current_player.dice_throws = []
 	self.current_player.extra_moves = []
 	self.current_player.can_throw_dice = true
+	
+	# Update dice visibility so only current player's dice is visible
+	for p in self.board().players():
+		p.dice().visible = (p == self.current_player)
 	
 	# Autosave current game progress
 	Globals.save_game(self)

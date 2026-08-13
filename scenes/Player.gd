@@ -32,6 +32,8 @@ func initialize(_show_pieces):
 	self.color = Globals.ePlayer2Color(self.id)
 	self.playername = Globals.ePlayerDefaultName(self.id)
 	self.dice().set_my_position(5)	
+	self.dice().apply_soft_tint(self.color)
+	self.dice().visible = self.is_current()
 	for piece in self.pieces():
 		piece.initialize(self.color)
 		piece.visible = self.show_pieces		

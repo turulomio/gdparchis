@@ -27,7 +27,13 @@ func _ready():
 	while is_winer == null:
 		self.winers = []
 		self.dice_higher = 0
+		
+		# Hide all dice initially
+		for p in self.board().players():
+			p.dice().visible = false
+			
 		for p in self.board().players_than_plays():
+			p.dice().visible = true
 			p.can_move_pieces = false
 			p.dice_throws = []
 			p.extra_moves = []
@@ -37,6 +43,7 @@ func _ready():
 			await p.dice().dice_got_value
 			if p.dice().value > self.dice_higher:
 				self.dice_higher = p.dice().value	
+			p.dice().visible = false
 			
 		# Evaluate highest throw winners
 		for p in self.board().players():
