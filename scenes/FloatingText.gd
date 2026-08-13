@@ -32,8 +32,9 @@ func show_text(text: Variant, color: Color, custom_position: Variant = null) -> 
 		else:
 			self.global_position = self.vector2_viewport_center()
 		
-		# Step 3: Configure font color and text content
+		# Step 3: Configure font color, halved black outline size (10px), and text content
 		self.label.set("theme_override_colors/font_color", color)
+		self.label.set("theme_override_constants/outline_size", 10)
 		self.label.set_text(str(text))
 		
 		# Step 4: Setup initial transform scale for pop-in bounce effect

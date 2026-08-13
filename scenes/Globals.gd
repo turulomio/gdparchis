@@ -505,8 +505,8 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 			if show_pieces and player.plays:
 				piece.visible = true
 				if animate:
-					# Animate piece movement along route to target position
-					piece.move_to_route_position(d_piece["route_position"], 0.2)
+					# Animate piece movement along route to target position at 4x speed (0.1s duration vs normal 0.4s)
+					piece.move_to_route_position(d_piece["route_position"], 0.1)
 					await piece.piece_moved
 				else:
 					# Directly place piece at target route position without playing hop animations

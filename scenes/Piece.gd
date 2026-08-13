@@ -163,6 +163,8 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	
 	self.player().can_move_pieces = false
 	if duration > 0:
+		# Calculate speed scale multiplier relative to default move duration (0.4s)
+		var speed_mult: float = duration / 0.4
 		var start_3d = Globals.position4(square_initial.id, square_position_initial)
 		var final_3d = Globals.position4(square_final.id, square_position_final)
 		
@@ -170,8 +172,9 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
 			var tween_single = get_tree().create_tween()
 			var mid_single = (start_3d + final_3d) / 2.0 + Vector3(0, max_height, 0)
-			tween_single.tween_property(self, "global_transform:origin", mid_single, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			tween_single.tween_property(self, "global_transform:origin", final_3d, 0.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			var half_single_dur = 0.25 * speed_mult
+			tween_single.tween_property(self, "global_transform:origin", mid_single, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween_single.tween_property(self, "global_transform:origin", final_3d, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			await tween_single.finished
 		else:
 			# Build list of 3D waypoint positions for each intermediate square step
@@ -188,7 +191,7 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			
 			# Execute smooth sequential hops from square to square
 			var current_pos = start_3d
-			var hop_duration = 0.13
+			var hop_duration = 0.13 * speed_mult
 			
 			for step_idx in range(waypoints.size()):
 				var next_pos = waypoints[step_idx]
@@ -204,12 +207,12 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			# Soft touchdown bounce on final destination square
 			var bounce_tween = get_tree().create_tween()
 			var cur_scale = self.scale
-			bounce_tween.tween_property(self, "scale", Vector3(cur_scale.x * 1.08, cur_scale.y * 0.88, cur_scale.z * 1.08), 0.05)
-			bounce_tween.tween_property(self, "scale", cur_scale, 0.07)
+			bounce_tween.tween_property(self, "scale", Vector3(cur_scale.x * 1.08, cur_scale.y * 0.88, cur_scale.z * 1.08), 0.05 * speed_mult)
+			bounce_tween.tween_property(self, "scale", cur_scale, 0.07 * speed_mult)
 			await bounce_tween.finished
 		
 		# Smoothly correct any displacement and drop cleanly onto board floor (h=0.2)
-		await self.correct_position_and_drop(0.12)
+		await self.correct_position_and_drop(0.12 * speed_mult)
 		
 	# Adjust visual scale on narrow corridor squares and signal completion
 	self.change_scale_on_specials_squares()

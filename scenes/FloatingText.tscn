@@ -37,6 +37,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 [node name="Label" type="Label" parent="PanelContainer"]
 layout_mode = 2
 theme = ExtResource("1_freshman")
+theme_override_constants/outline_size = 10
 text = "My text"
 horizontal_alignment = 1
 vertical_alignment = 1
