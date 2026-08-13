@@ -219,6 +219,20 @@ func some_piece_is_in_barrier_of_my_player():
 	return false
 
 
+## Checks if any piece forming a barrier belonging to this player can legally move.
+## @return True if at least one piece in a barrier of this player has a valid legal move.
+func some_piece_in_barrier_of_my_player_can_move() -> bool:
+	for p in self.pieces():
+		if p.am_i_in_a_barrier_of_my_player() == true:
+			var target_pos = p.route_position + p.squares_to_move()
+			var sq_final = p.route().square_at(target_pos)
+			if sq_final != null:
+				if not p.route().is_there_barrier(p.route_position, target_pos):
+					if sq_final.empty_position() != -1:
+						return true
+	return false
+
+
 ## AI decision logic selecting the best piece to move based on capture priority and threat reduction.
 ## @return Selected Piece object to move.
 func ia_selects_piece_to_move():

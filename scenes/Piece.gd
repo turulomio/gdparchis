@@ -125,9 +125,10 @@ func can_move_to_route_position(_route_position):
 	if square_final == null:		
 		return false
 		
-	# Barrier break rule: If a 6 is rolled and a barrier exists, player must break barrier
-	if self.player().last_throw() == 6 and self.player().some_piece_is_in_barrier_of_my_player() == true and self.am_i_in_a_barrier_of_my_player() == false:
-		return false
+	# Barrier break rule: If a 6 is rolled, player must break a barrier ONLY IF at least one piece in the barrier can legally move
+	if self.player().last_throw() == 6 and self.am_i_in_a_barrier_of_my_player() == false:
+		if self.player().some_piece_in_barrier_of_my_player_can_move() == true:
+			return false
 		
 	# Check for intermediate barriers blocking the path
 	if self.route().is_there_barrier(self.route_position, _route_position):
@@ -170,11 +171,13 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 		
 		# If returning home or single-step teleport
 		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
-			var tween_single = get_tree().create_tween()
+			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
 			var mid_single = (start_3d + final_3d) / 2.0 + Vector3(0, max_height, 0)
 			var half_single_dur = 0.25 * speed_mult
+			var tween_single = get_tree().create_tween()
 			tween_single.tween_property(self, "global_transform:origin", mid_single, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			tween_single.tween_property(self, "global_transform:origin", final_3d, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			tween_single.parallel().tween_property(self, "scale", dest_scale, half_single_dur * 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			await tween_single.finished
 		else:
 			# Build list of 3D waypoint positions for each intermediate square step
@@ -195,20 +198,28 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			
 			for step_idx in range(waypoints.size()):
 				var next_pos = waypoints[step_idx]
+				var step_rpos = initial_route_pos + step_idx + 1
+				var step_sq = self.route().square_at(step_rpos)
+				
+				# Target 0.75 scale if stepping onto special corridor square, otherwise restore normal 1.0 scale
+				var target_scale = Vector3(0.75, 0.75, 0.75) if (step_sq != null and is_special_square_id(step_sq.id)) else Vector3(1, 1, 1)
 				var mid_pos = (current_pos + next_pos) / 2.0 + Vector3(0, 1.8, 0)
 				
 				var tween_hop = get_tree().create_tween()
+				# Sequential origin parabolic arc (upward half, then downward half)
 				tween_hop.tween_property(self, "global_transform:origin", mid_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				tween_hop.tween_property(self, "global_transform:origin", next_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+				# Parallel scale interpolation across the entire hop duration
+				tween_hop.parallel().tween_property(self, "scale", target_scale, hop_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 				await tween_hop.finished
 				
 				current_pos = next_pos
 				
-			# Soft touchdown bounce on final destination square
+			# Soft touchdown bounce on final destination square matching target square scale
 			var bounce_tween = get_tree().create_tween()
-			var cur_scale = self.scale
-			bounce_tween.tween_property(self, "scale", Vector3(cur_scale.x * 1.08, cur_scale.y * 0.88, cur_scale.z * 1.08), 0.05 * speed_mult)
-			bounce_tween.tween_property(self, "scale", cur_scale, 0.07 * speed_mult)
+			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
+			bounce_tween.tween_property(self, "scale", Vector3(dest_scale.x * 1.08, dest_scale.y * 0.88, dest_scale.z * 1.08), 0.05 * speed_mult)
+			bounce_tween.tween_property(self, "scale", dest_scale, 0.07 * speed_mult)
 			await bounce_tween.finished
 		
 		# Smoothly correct any displacement and drop cleanly onto board floor (h=0.2)
@@ -219,13 +230,28 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	emit_signal("piece_moved")
 
 
+## Helper evaluating whether a given square ID is a special narrow corridor square.
+## @param sq_id Square ID integer.
+## @return True if square requires reduced scale.
+func is_special_square_id(sq_id: int) -> bool:
+	if self.board() != null and self.board().max_players == 4:
+		return sq_id in [8, 9, 25, 26, 42, 43, 59, 60]
+	return false
+
+
 ## Adjusts visual piece scale when placed on special narrow corridor squares.
-func change_scale_on_specials_squares():
-	if self.board().max_players == 4:
-		if self.square().id in [8, 9, 25, 26, 42, 43, 59, 60]:
-			self.scale = Vector3(0.75, 0.75, 0.75)
+## @param sq_id Target square ID integer (defaults to current standing square).
+func change_scale_on_specials_squares(sq_id: int = -1):
+	if sq_id == -1:
+		if self.square():
+			sq_id = self.square().id
 		else:
-			self.scale = Vector3(1, 1, 1)
+			sq_id = 0
+			
+	if is_special_square_id(sq_id):
+		self.scale = Vector3(0.75, 0.75, 0.75)
+	else:
+		self.scale = Vector3(1, 1, 1)
 
 
 ## Returns the number of squares this piece should move based on throw and extra moves.
