@@ -22,7 +22,7 @@ OS2Version: 1
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: -1333113930
-ModificationTime: 1786709064
+ModificationTime: 1786709426
 PfmFamily: 81
 TTFWeight: 400
 TTFWidth: 5
@@ -315,13 +315,13 @@ DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
 WinInfo: 38 38 14
-BeginChars: 65539 102
+BeginChars: 65539 103
 
 StartChar: .notdef
 Encoding: 65536 -1 0
 Width: 850
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  27
@@ -399,105 +399,72 @@ SplineSet
  106 53 l 1,7,-1
  744 53 l 1,4,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: .null
 Encoding: 65537 -1 1
 Width: 0
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
+Fore
+Validated: 1
 EndChar
 
 StartChar: nonmarkingreturn
 Encoding: 65538 -1 2
 Width: 286
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
+Fore
+Validated: 1
 EndChar
 
 StartChar: space
 Encoding: 32 32 3
 Width: 286
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
+Fore
+Validated: 1
 EndChar
 
 StartChar: exclam
 Encoding: 33 33 4
 Width: 285
+VWidth: 1200
 GlyphClass: 1
-Flags: W
-TtInstrs:
-NPUSHB
- 18
- 7
- 6
- 5
- 4
- 3
- 2
- 1
- 0
- 7
- 6
- 14
- 4
- 3
- 2
- 0
- 5
- 4
- 7
-SVTCA[y-axis]
-MIAP[rnd]
-ALIGNRP
-MIAP[rnd]
-ALIGNRP
-SVTCA[y-axis]
-SRP0
-MIRP[rp0,min,rnd,black]
-ALIGNRP
-SVTCA[x-axis]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-MDAP[no-rnd]
-IUP[x]
-IUP[y]
-PUSHB_3
- 8
- 1
- 5
-CALL
-EndTTInstrs
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
-227 250 m 1,0,-1
- -2 250 l 1,1,-1
- -2 833 l 1,2,-1
- 227 833 l 1,3,-1
- 227 250 l 1,0,-1
-227 0 m 1,4,-1
- -2 0 l 1,5,-1
- -2 188 l 1,6,-1
- 227 188 l 1,7,-1
- 227 0 l 1,4,-1
+90 834 m 1
+ 190 834 l 1
+ 240 784 l 1
+ 240 260 l 1
+ 40 260 l 1
+ 90 834 l 1
+66 180 m 1
+ 214 180 l 1
+ 240 154 l 1
+ 240 26 l 1
+ 214 0 l 1
+ 66 0 l 1
+ 40 26 l 1
+ 40 154 l 1
+ 66 180 l 1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quotedbl
 Encoding: 34 34 5
 Width: 354
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  25
@@ -569,13 +536,14 @@ SplineSet
  310 834 l 1,7,-1
  310 596 l 1,4,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: numbersign
 Encoding: 35 35 6
 Width: 806
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  84
@@ -755,13 +723,14 @@ SplineSet
  415 467 l 1,31,-1
  415 567 l 1,28,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: dollar
 Encoding: 36 36 7
 Width: 689
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  86
@@ -968,13 +937,14 @@ SplineSet
  131 780 l 1,43,-1
  196 780 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: ampersand
 Encoding: 38 38 8
 Width: 760
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -1017,13 +987,14 @@ SplineSet
  135 150 l 1,34,-1
  165 120 l 1,27,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quotesingle
 Encoding: 39 39 9
 Width: 175
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  11
@@ -1066,13 +1037,14 @@ SplineSet
  131 834 l 1,3,-1
  131 596 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: comma
 Encoding: 44 44 10
 Width: 285
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  16
@@ -1128,6 +1100,7 @@ SplineSet
  76 0 l 1,5,-1
  -2 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 100 -38 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 98 -38 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1135,7 +1108,7 @@ StartChar: hyphen
 Encoding: 45 45 11
 Width: 388
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  10
@@ -1177,13 +1150,14 @@ SplineSet
  327 323 l 1,3,-1
  -2 323 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: period
 Encoding: 46 46 12
 Width: 271
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  10
@@ -1225,6 +1199,7 @@ SplineSet
  210 213 l 1,3,-1
  210 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 100 -38 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 98 -38 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1232,7 +1207,7 @@ StartChar: slash
 Encoding: 47 47 13
 Width: 658
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  8
@@ -1270,13 +1245,14 @@ SplineSet
  227 0 l 1,3,-1
  -2 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: zero
 Encoding: 48 48 14
 Width: 694
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  22
@@ -1354,6 +1330,7 @@ SplineSet
  402 214 l 1,15,-1
  402 619 l 1,8,-1
 EndSplineSet
+Validated: 1
 Kerns2: 53 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 21 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -5 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1361,7 +1338,7 @@ StartChar: one
 Encoding: 49 49 15
 Width: 459
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  23
@@ -1433,6 +1410,7 @@ SplineSet
  102 188 l 1,10,-1
  102 546 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 23 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 21 -34 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 20 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 19 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -27 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 17 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 16 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 14 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 9 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1440,7 +1418,7 @@ StartChar: two
 Encoding: 50 50 16
 Width: 656
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  25
@@ -1526,6 +1504,7 @@ SplineSet
  598 480 l 1,16,-1
  334 216 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 17 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1533,7 +1512,7 @@ StartChar: three
 Encoding: 51 51 17
 Width: 689
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  43
@@ -1660,6 +1639,7 @@ SplineSet
  272 321 l 1,28,-1
  272 513 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1667,7 +1647,7 @@ StartChar: four
 Encoding: 52 52 18
 Width: 671
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  45
@@ -1787,6 +1767,7 @@ SplineSet
  311 438 l 1,17,-1
  311 563 l 1,15,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 -40 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 19 4 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 -14 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1794,7 +1775,7 @@ StartChar: five
 Encoding: 53 53 19
 Width: 689
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  37
@@ -1904,6 +1885,7 @@ SplineSet
  227 646 l 1,21,-1
  227 598 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 20 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -1911,7 +1893,7 @@ StartChar: six
 Encoding: 54 54 20
 Width: 689
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  38
@@ -2025,6 +2007,7 @@ SplineSet
  254 312 l 1,24,-1
  227 286 l 1,17,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -2032,7 +2015,7 @@ StartChar: seven
 Encoding: 55 55 21
 Width: 659
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  21
@@ -2101,6 +2084,7 @@ SplineSet
  616 834 l 1,8,-1
  616 673 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 24 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 21 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 20 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -27 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -73 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -75 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -2108,7 +2092,7 @@ StartChar: eight
 Encoding: 56 56 22
 Width: 704
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  42
@@ -2236,6 +2220,7 @@ SplineSet
  379 646 l 1,29,-1
  281 646 l 1,22,-1
 EndSplineSet
+Validated: 1
 Kerns2: 23 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -2243,7 +2228,7 @@ StartChar: nine
 Encoding: 57 57 23
 Width: 708
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  39
@@ -2358,6 +2343,7 @@ SplineSet
  394 646 l 1,24,-1
  254 646 l 1,17,-1
 EndSplineSet
+Validated: 1
 Kerns2: 21 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 18 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 14 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -2365,7 +2351,7 @@ StartChar: colon
 Encoding: 58 58 24
 Width: 285
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  22
@@ -2434,13 +2420,14 @@ SplineSet
  227 667 l 1,7,-1
  227 479 l 1,4,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: semicolon
 Encoding: 59 59 25
 Width: 285
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  26
@@ -2519,13 +2506,14 @@ SplineSet
  76 0 l 1,9,-1
  -2 0 l 1,4,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: question
 Encoding: 63 63 26
 Width: 631
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  25
@@ -2614,13 +2602,14 @@ SplineSet
  411 188 l 1,19,-1
  410 0 l 1,16,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: A
 Encoding: 65 65 27
 Width: 873
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  55
@@ -2761,6 +2750,7 @@ SplineSet
  413 517 l 1,22,-1
  360 385 l 1,20,-1
 EndSplineSet
+Validated: 1
 Kerns2: 99 -88 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 77 -85 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -67 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -69 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -2768,7 +2758,7 @@ StartChar: B
 Encoding: 66 66 28
 Width: 704
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  48
@@ -2900,13 +2890,14 @@ SplineSet
  418 552 l 1,24,-1
  418 619 l 1,19,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: C
 Encoding: 67 67 29
 Width: 694
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  32
@@ -3004,6 +2995,7 @@ SplineSet
  631 700 l 1,19,-1
  631 513 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 72 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3011,7 +3003,7 @@ StartChar: D
 Encoding: 68 68 30
 Width: 710
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  32
@@ -3105,6 +3097,7 @@ SplineSet
  277 646 l 1,15,-1
  277 188 l 1,10,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3112,7 +3105,7 @@ StartChar: E
 Encoding: 69 69 31
 Width: 669
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  69
@@ -3275,13 +3268,14 @@ SplineSet
  277 323 l 1,23,-1
  277 188 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: F
 Encoding: 70 70 32
 Width: 654
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  63
@@ -3435,6 +3429,7 @@ SplineSet
  311 290 l 1,21,-1
  311 323 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -72 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -91 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -70 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3442,7 +3437,7 @@ StartChar: G
 Encoding: 71 71 33
 Width: 696
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  40
@@ -3560,6 +3555,7 @@ SplineSet
  339 463 l 1,21,-1
  631 463 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 74 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 40 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 39 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 38 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 37 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 34 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 32 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 31 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 28 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3567,7 +3563,7 @@ StartChar: H
 Encoding: 72 72 34
 Width: 777
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  75
@@ -3739,6 +3735,7 @@ SplineSet
  390 188 l 1,27,-1
  440 188 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 52 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 43 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3746,7 +3743,7 @@ StartChar: I
 Encoding: 73 73 35
 Width: 385
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  32
@@ -3834,6 +3831,7 @@ SplineSet
  327 188 l 1,11,-1
  327 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 52 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 50 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 43 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 42 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 40 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 39 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 38 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 37 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 36 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 34 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 32 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 31 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 30 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 28 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3841,7 +3839,7 @@ StartChar: J
 Encoding: 74 74 36
 Width: 677
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  29
@@ -3930,6 +3928,7 @@ SplineSet
  619 647 l 1,15,-1
  569 647 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 67 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 37 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -24 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -3937,7 +3936,7 @@ StartChar: K
 Encoding: 75 75 37
 Width: 811
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  65
@@ -4092,6 +4091,7 @@ SplineSet
  277 228 l 1,27,-1
  277 188 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 66 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 65 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 38 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 11 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 11 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4099,7 +4099,7 @@ StartChar: L
 Encoding: 76 76 38
 Width: 659
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  39
@@ -4204,6 +4204,7 @@ SplineSet
  327 646 l 1,13,-1
  277 646 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 99 -110 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 78 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 77 -114 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -66 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -66 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -69 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 -138 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 -89 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -85 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -17 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -87 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 39 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4211,7 +4212,7 @@ StartChar: M
 Encoding: 77 77 39
 Width: 978
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  54
@@ -4347,6 +4348,7 @@ SplineSet
  641 404 l 1,23,-1
  459 103 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 40 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4354,7 +4356,7 @@ StartChar: N
 Encoding: 78 78 40
 Width: 835
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  54
@@ -4488,6 +4490,7 @@ SplineSet
  777 0 l 1,21,-1
  501 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 43 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 36 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4495,7 +4498,7 @@ StartChar: O
 Encoding: 79 79 41
 Width: 694
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  22
@@ -4573,6 +4576,7 @@ SplineSet
  402 214 l 1,15,-1
  402 619 l 1,8,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 66 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 65 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 62 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 58 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 42 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 40 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 39 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 38 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 37 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 36 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 34 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 32 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 31 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 30 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 28 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4580,7 +4584,7 @@ StartChar: P
 Encoding: 80 80 42
 Width: 710
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  43
@@ -4696,6 +4700,7 @@ SplineSet
  277 646 l 1,19,-1
  277 504 l 1,14,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -82 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 43 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 42 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 38 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 34 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 32 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 31 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -79 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 11 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4703,7 +4708,7 @@ StartChar: Q
 Encoding: 81 81 43
 Width: 713
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  37
@@ -4817,6 +4822,7 @@ SplineSet
  402 468 l 1,21,-1
  402 619 l 1,11,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 32 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4824,7 +4830,7 @@ StartChar: R
 Encoding: 82 82 44
 Width: 754
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  61
@@ -4980,6 +4986,7 @@ SplineSet
  277 646 l 1,26,-1
  277 525 l 1,21,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 -19 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 -23 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -23 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -23 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -23 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -4987,7 +4994,7 @@ StartChar: S
 Encoding: 83 83 45
 Width: 689
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  44
@@ -5114,6 +5121,7 @@ SplineSet
  402 294 l 1,27,-1
  376 321 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 51 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 40 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5121,7 +5129,7 @@ StartChar: T
 Encoding: 84 84 46
 Width: 746
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  47
@@ -5244,6 +5252,7 @@ SplineSet
  702 834 l 1,15,-1
  702 596 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 99 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 78 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 77 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -4 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -4 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -4 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -73 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 43 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -86 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -86 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 11 -110 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -86 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5251,7 +5260,7 @@ StartChar: U
 Encoding: 85 85 47
 Width: 789
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  43
@@ -5367,6 +5376,7 @@ SplineSet
  681 647 l 1,19,-1
  681 134 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 71 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 33 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 29 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -24 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -24 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -24 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5374,7 +5384,7 @@ StartChar: V
 Encoding: 86 86 48
 Width: 853
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  46
@@ -5493,6 +5503,7 @@ SplineSet
  399 368 l 1,18,-1
  491 646 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 67 -29 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -73 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -85 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -85 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -85 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5500,7 +5511,7 @@ StartChar: W
 Encoding: 87 87 49
 Width: 1356
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  71
@@ -5671,6 +5682,7 @@ SplineSet
  656 388 l 1,32,-1
  589 188 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 99 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -29 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -73 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 50 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -88 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -88 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5678,7 +5690,7 @@ StartChar: X
 Encoding: 88 88 50
 Width: 955
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  61
@@ -5826,6 +5838,7 @@ SplineSet
  561 188 l 1,27,-1
  461 288 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 61 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 35 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5833,7 +5846,7 @@ StartChar: Y
 Encoding: 89 89 51
 Width: 955
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  48
@@ -5958,6 +5971,7 @@ SplineSet
  845 647 l 1,20,-1
  575 376 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 99 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -29 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 52 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -5965,7 +5979,7 @@ StartChar: Z
 Encoding: 90 90 52
 Width: 679
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  37
@@ -6066,6 +6080,7 @@ SplineSet
  620 675 l 1,13,-1
  296 188 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6073,7 +6088,7 @@ StartChar: a
 Encoding: 97 97 53
 Width: 706
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  56
@@ -6215,6 +6230,7 @@ SplineSet
  330 413 l 1,22,-1
  287 309 l 1,20,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -71 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -67 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -69 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 -70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -17 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 44 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 8 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 9 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6222,7 +6238,7 @@ StartChar: b
 Encoding: 98 98 54
 Width: 574
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  54
@@ -6363,6 +6379,7 @@ SplineSet
  334 442 l 1,24,-1
  334 495 l 1,19,-1
 EndSplineSet
+Validated: 1
 Kerns2: 46 -10 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6370,7 +6387,7 @@ StartChar: c
 Encoding: 99 99 55
 Width: 561
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  37
@@ -6475,6 +6492,7 @@ SplineSet
  505 560 l 1,19,-1
  505 411 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 46 -10 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 41 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 31 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6482,7 +6500,7 @@ StartChar: d
 Encoding: 100 100 56
 Width: 575
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  37
@@ -6585,6 +6603,7 @@ SplineSet
  221 517 l 1,15,-1
  221 150 l 1,10,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6592,7 +6611,7 @@ StartChar: e
 Encoding: 101 101 57
 Width: 546
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  73
@@ -6762,6 +6781,7 @@ SplineSet
  221 258 l 1,23,-1
  221 150 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 76 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 66 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 65 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 62 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 58 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 4 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6769,7 +6789,7 @@ StartChar: f
 Encoding: 102 102 58
 Width: 532
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  65
@@ -6926,6 +6946,7 @@ SplineSet
  248 231 l 1,21,-1
  248 258 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -74 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -40 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -41 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -6933,7 +6954,7 @@ StartChar: g
 Encoding: 103 103 59
 Width: 563
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  41
@@ -7047,6 +7068,7 @@ SplineSet
  271 371 l 1,21,-1
  505 371 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7054,7 +7076,7 @@ StartChar: h
 Encoding: 104 104 60
 Width: 633
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  82
@@ -7232,6 +7254,7 @@ SplineSet
  311 150 l 1,27,-1
  352 150 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7239,7 +7262,7 @@ StartChar: i
 Encoding: 105 105 61
 Width: 319
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  40
@@ -7339,6 +7362,7 @@ SplineSet
  261 150 l 1,11,-1
  261 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 62 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7346,7 +7370,7 @@ StartChar: j
 Encoding: 106 106 62
 Width: 553
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  36
@@ -7447,6 +7471,7 @@ SplineSet
  495 517 l 1,15,-1
  455 517 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -21 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7454,7 +7479,7 @@ StartChar: k
 Encoding: 107 107 63
 Width: 673
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  74
@@ -7623,6 +7648,7 @@ SplineSet
  221 183 l 1,27,-1
  221 150 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 12 1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 11 -35 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7630,7 +7656,7 @@ StartChar: l
 Encoding: 108 108 64
 Width: 535
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  46
@@ -7744,6 +7770,7 @@ SplineSet
  261 517 l 1,13,-1
  221 517 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -111 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -71 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 65 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 11 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 11 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7751,7 +7778,7 @@ StartChar: m
 Encoding: 109 109 65
 Width: 793
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  67
@@ -7908,6 +7935,7 @@ SplineSet
  512 323 l 1,23,-1
  366 82 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -7915,7 +7943,7 @@ StartChar: n
 Encoding: 110 110 66
 Width: 679
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  65
@@ -8066,6 +8094,7 @@ SplineSet
  621 0 l 1,21,-1
  401 0 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8073,7 +8102,7 @@ StartChar: o
 Encoding: 111 111 67
 Width: 563
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  27
@@ -8159,6 +8188,7 @@ SplineSet
  322 172 l 1,15,-1
  322 495 l 1,8,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 66 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 65 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 63 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 62 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 58 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 -36 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -36 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 47 -25 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -11 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8166,7 +8196,7 @@ StartChar: p
 Encoding: 112 112 68
 Width: 588
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  50
@@ -8293,6 +8323,7 @@ SplineSet
  221 517 l 1,19,-1
  221 403 l 1,14,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 61 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 60 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 58 -7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -17 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8300,7 +8331,7 @@ StartChar: q
 Encoding: 113 113 69
 Width: 574
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  45
@@ -8428,6 +8459,7 @@ SplineSet
  322 374 l 1,21,-1
  322 495 l 1,11,-1
 EndSplineSet
+Validated: 1
 Kerns2: 73 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 70 26 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8435,7 +8467,7 @@ StartChar: r
 Encoding: 114 114 70
 Width: 614
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  66
@@ -8595,6 +8627,7 @@ SplineSet
  221 517 l 1,26,-1
  221 420 l 1,21,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 -21 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -21 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 -21 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -21 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -31 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 2 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 3 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8602,7 +8635,7 @@ StartChar: s
 Encoding: 115 115 71
 Width: 563
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  50
@@ -8736,6 +8769,7 @@ SplineSet
  322 235 l 1,27,-1
  301 257 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 51 -36 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 49 -36 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 48 -36 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 -11 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8743,7 +8777,7 @@ StartChar: t
 Encoding: 116 116 72
 Width: 604
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  53
@@ -8875,6 +8909,7 @@ SplineSet
  561 667 l 1,15,-1
  561 476 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 75 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 73 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -69 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 45 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -68 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -8882,7 +8917,7 @@ StartChar: u
 Encoding: 117 117 73
 Width: 629
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  49
@@ -9007,6 +9042,7 @@ SplineSet
  545 517 l 1,19,-1
  545 107 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 55 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -14 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 46 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 15 7 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -13 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9014,7 +9050,7 @@ StartChar: v
 Encoding: 118 118 74
 Width: 690
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  46
@@ -9133,6 +9169,7 @@ SplineSet
  319 295 l 1,18,-1
  393 517 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -67 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -65 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 -65 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9140,7 +9177,7 @@ StartChar: w
 Encoding: 119 119 75
 Width: 1093
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  71
@@ -9311,6 +9348,7 @@ SplineSet
  524 310 l 1,32,-1
  471 150 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 76 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -71 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 27 -70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 -66 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9318,7 +9356,7 @@ StartChar: x
 Encoding: 120 120 76
 Width: 781
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  61
@@ -9466,6 +9504,7 @@ SplineSet
  454 150 l 1,27,-1
  372 229 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 77 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9473,7 +9512,7 @@ StartChar: y
 Encoding: 121 121 77
 Width: 771
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  56
@@ -9614,6 +9653,7 @@ SplineSet
  675 517 l 1,20,-1
  459 301 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 78 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 68 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 6 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9621,7 +9661,7 @@ StartChar: z
 Encoding: 122 122 78
 Width: 554
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  43
@@ -9731,6 +9771,7 @@ SplineSet
  496 540 l 1,13,-1
  236 150 l 1,0,-1
 EndSplineSet
+Validated: 1
 Kerns2: 75 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 67 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 64 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 59 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 57 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 56 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 54 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 53 -1 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 12 4 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 10 4 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
@@ -9738,15 +9779,17 @@ StartChar: nonbreakingspace
 Encoding: 160 160 79
 Width: 286
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
+Fore
+Validated: 1
 EndChar
 
 StartChar: questiondown
 Encoding: 191 191 80
 Width: 631
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9773,13 +9816,14 @@ SplineSet
  160 646 l 1,19,-1
  161 834 l 1,16,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Aacute
 Encoding: 193 193 81
 Width: 873
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9818,13 +9862,14 @@ SplineSet
  524 932 l 1,30,-1
  546 910 l 1,23,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Eacute
 Encoding: 201 201 82
 Width: 669
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9863,13 +9908,14 @@ SplineSet
  422 932 l 1,31,-1
  444 910 l 1,24,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Iacute
 Encoding: 205 205 83
 Width: 385
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9896,13 +9942,14 @@ SplineSet
  280 932 l 1,19,-1
  302 910 l 1,12,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Ntilde
 Encoding: 209 209 84
 Width: 835
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9935,13 +9982,14 @@ SplineSet
  245 872 l 1,25,-1
  245 932 l 1,22,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Oacute
 Encoding: 211 211 85
 Width: 694
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -9973,13 +10021,14 @@ SplineSet
  435 932 l 1,23,-1
  457 910 l 1,16,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: Uacute
 Encoding: 218 218 86
 Width: 789
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10014,13 +10063,14 @@ SplineSet
  482 932 l 1,27,-1
  504 910 l 1,20,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: agrave
 Encoding: 224 224 87
 Width: 706
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10050,22 +10100,23 @@ SplineSet
  330 413 l 1,22,-1
  287 309 l 1,20,-1
 243 743 m 1,23,-1
- 297 723 l 1,24,-1
- 344 701 l 1,25,-1
- 441 701 l 1,26,-1
- 463 723 l 1,27,-1
- 409 743 l 1,28,-1
- 362 765 l 1,29,-1
  265 765 l 1,30,-1
+ 362 765 l 1,29,-1
+ 409 743 l 1,28,-1
+ 463 723 l 1,27,-1
+ 441 701 l 1,26,-1
+ 344 701 l 1,25,-1
+ 297 723 l 1,24,-1
  243 743 l 1,23,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: aacute
 Encoding: 225 225 88
 Width: 706
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10104,13 +10155,14 @@ SplineSet
  330 413 l 1,30,-1
  287 309 l 1,28,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: egrave
 Encoding: 232 232 89
 Width: 546
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10140,22 +10192,23 @@ SplineSet
  221 258 l 1,23,-1
  221 150 l 1,0,-1
 163 743 m 1,24,-1
- 217 723 l 1,25,-1
- 264 701 l 1,26,-1
- 361 701 l 1,27,-1
- 383 723 l 1,28,-1
- 329 743 l 1,29,-1
- 282 765 l 1,30,-1
  185 765 l 1,31,-1
+ 282 765 l 1,30,-1
+ 329 743 l 1,29,-1
+ 383 723 l 1,28,-1
+ 361 701 l 1,27,-1
+ 264 701 l 1,26,-1
+ 217 723 l 1,25,-1
  163 743 l 1,24,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: eacute
 Encoding: 233 233 90
 Width: 546
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10194,13 +10247,14 @@ SplineSet
  221 258 l 1,31,-1
  221 150 l 1,8,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: iacute
 Encoding: 237 237 91
 Width: 319
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10227,13 +10281,14 @@ SplineSet
  261 150 l 1,19,-1
  261 0 l 1,8,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: ntilde
 Encoding: 241 241 92
 Width: 679
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10266,13 +10321,14 @@ SplineSet
  621 0 l 1,25,-1
  401 0 l 1,4,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: oacute
 Encoding: 243 243 93
 Width: 563
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10304,13 +10360,14 @@ SplineSet
  322 172 l 1,23,-1
  322 495 l 1,16,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: ugrave
 Encoding: 249 249 94
 Width: 629
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10336,22 +10393,23 @@ SplineSet
  545 517 l 1,19,-1
  545 107 l 1,0,-1
 204 743 m 1,20,-1
- 258 723 l 1,21,-1
- 306 701 l 1,22,-1
- 402 701 l 1,23,-1
- 424 723 l 1,24,-1
- 370 743 l 1,25,-1
- 324 765 l 1,26,-1
  226 765 l 1,27,-1
+ 324 765 l 1,26,-1
+ 370 743 l 1,25,-1
+ 424 723 l 1,24,-1
+ 402 701 l 1,23,-1
+ 306 701 l 1,22,-1
+ 258 723 l 1,21,-1
  204 743 l 1,20,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: uacute
 Encoding: 250 250 95
 Width: 629
 GlyphClass: 2
-Flags: W
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
@@ -10386,13 +10444,14 @@ SplineSet
  402 765 l 1,27,-1
  424 743 l 1,20,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: ydieresis
 Encoding: 255 255 96
 Width: 300
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  78
@@ -10610,13 +10669,14 @@ SplineSet
  111 650 111 650 111 639 c 0,71,72
  111 630 111 630 102 630 c 2,59,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quoteleft
 Encoding: 8216 8216 97
 Width: 288
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  19
@@ -10677,13 +10737,14 @@ SplineSet
  202 647 l 1,5,-1
  149 646 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quoteright
 Encoding: 8217 8217 98
 Width: 288
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  16
@@ -10739,13 +10800,14 @@ SplineSet
  51 646 l 1,5,-1
  -2 646 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quotedblleft
 Encoding: 8220 8220 99
 Width: 513
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  33
@@ -10838,13 +10900,14 @@ SplineSet
  202 647 l 1,11,-1
  149 646 l 1,6,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: quotedblright
 Encoding: 8221 8221 100
 Width: 513
 GlyphClass: 1
-Flags: W
+Flags: HW
 TtInstrs:
 NPUSHB
  29
@@ -10930,14 +10993,45 @@ SplineSet
  309 646 l 1,11,-1
  256 646 l 1,6,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: bullet
 Encoding: 8226 8226 101
 Width: 286
 GlyphClass: 1
-Flags: W
+Flags: HW
 LayerCount: 2
+Fore
+Validated: 1
+EndChar
+
+StartChar: exclamdown
+Encoding: 161 161 102
+Width: 285
+VWidth: 1200
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+66 834 m 1
+ 214 834 l 1
+ 240 808 l 1
+ 240 680 l 1
+ 214 654 l 1
+ 66 654 l 1
+ 40 680 l 1
+ 40 808 l 1
+ 66 834 l 1
+40 574 m 1
+ 240 574 l 1
+ 240 50 l 1
+ 190 0 l 1
+ 90 0 l 1
+ 40 50 l 1
+ 40 574 l 1
+EndSplineSet
+Validated: 1
 EndChar
 EndChars
 EndSplineFont

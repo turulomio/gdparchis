@@ -24,6 +24,7 @@ func assert_eq(val1: Variant, val2: Variant, test_name: String) -> void:
 func run_all_tests() -> Dictionary:
 	print("--- Running UI & Persistence Tests ---")
 	self.test_ui_scene_paths_exist()
+	self.test_font_resources_exist()
 	self.test_match_history_persistence()
 	self.test_settings_persistence()
 	return {"passed": self.passed, "failed": self.failed}
@@ -42,6 +43,22 @@ func test_ui_scene_paths_exist() -> void:
 	]
 	for sc_path in scenes_to_check:
 		self.assert_true(ResourceLoader.exists(sc_path), "Scene exists: " + sc_path)
+
+
+## Verifies that font and theme resources exist and load cleanly.
+func test_font_resources_exist() -> void:
+	# List of font and theme resource paths to validate
+	var font_paths = [
+		"res://fonts/Freshman.ttf",
+		"res://themes/Freshman.tres",
+		"res://themes/FreshmanSmall.tres",
+		"res://themes/FreshmanMiddle.tres"
+	]
+	# Iterate and assert each resource loads successfully
+	for f_path in font_paths:
+		self.assert_true(ResourceLoader.exists(f_path), "Font resource exists: " + f_path)
+		var res = ResourceLoader.load(f_path)
+		self.assert_true(res != null, "Font resource loaded: " + f_path)
 
 
 ## Verifies match history adding, saving, loading, and clearing.
