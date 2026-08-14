@@ -87,14 +87,11 @@ stream = ExtResource("4")
 [node name="RelaunchTimer" type="Timer" parent="."]
 wait_time = 5.0
 
-[node name="RequestGameFake" type="HTTPRequest" parent="."]
-
 [node name="FloatingText" parent="." instance=ExtResource("5_p4vs8")]
 visible = false
 position = Vector2(829.5, 488)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="RelaunchTimer" to="." method="_on_RelaunchTimer_timeout"]
-[connection signal="request_completed" from="RequestGameFake" to="." method="_on_RequestGameFake_request_completed"]
 
 [editable path="Dice"]

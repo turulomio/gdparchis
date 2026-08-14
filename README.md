@@ -5,10 +5,6 @@ Godot parchis
 It's a migration of my [glparchis](https://github.com/turulomio/glparchis/) project to Godot 
 
 
-## Statistics
-
-- [Global statistics](https://coolnewton.mooo.com/django_gdparchis/statistics/globals/)
-
 ## Changelog
 
 ### 0.3.0 (2022-08-27)

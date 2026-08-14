@@ -83,12 +83,3 @@ func is_there_a_winer():
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
-
-
-## Completion handler for backend game start HTTP request.
-func _on_RequestGameStart_request_completed(result, response_code, headers, body):
-	if result == 0:
-		var r = JSON.parse_string(body.get_string_from_utf8())
-		print("  - ", r["success"], ": ", r["detail"])
-	else:
-		print("  -  Couldn't connect")

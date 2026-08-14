@@ -84,35 +84,6 @@ func _on_Exit_mouse_entered():
 	$Click.play()
 
 
-## Ready callback sending installation tracking payload.
-func _on_RequestPostInstallation_ready():
-	print("Registering installation:")
-	var fields = {"uuid": Globals.settings.get("installation_uuid", ""), "so": OS.get_name()}
-
-
-## HTTP request completion handler for installation endpoint.
-func _on_RequestPostInstallation_request_completed(result, response_code, headers, body):
-	if result == 0:
-		var r = JSON.parse_string(body.get_string_from_utf8())
-		print("  - ", r["success"], ": ", r["detail"])
-	else:
-		print("  -  Couldn't connect")
-
-
-## GUI input callback opening user statistics URL in browser.
-## @param _event InputEvent object.
-func _on_StatisticsUser_gui_input(_event):
-	if _event.is_action_pressed("left_click"):
-		OS.shell_open("https://coolnewton.mooo.com/django_gdparchis/statistics/user/?uuid=" + Globals.settings.get("installation_uuid"))
-
-
-## GUI input callback opening global statistics URL in browser.
-## @param _event InputEvent object.
-func _on_StatisticsGlobal_gui_input(_event):
-	if _event.is_action_pressed("left_click"):
-		OS.shell_open("https://coolnewton.mooo.com/django_gdparchis/statistics/globals/")
-
-
 ## Resizes UI container bounds to match active window dimensions.
 func resize():
 	$VBoxContainer2.size = DisplayServer.window_get_size()

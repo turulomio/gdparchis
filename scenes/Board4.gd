@@ -79,34 +79,6 @@ func initialize(_show_pieces):
 			piece.set_final_position(player.route().end_position(), square_position, player.route().square_at(player.route().end_position()).id)
 			square_position += 1
 
-	# Export python configuration data for backend integration
-	self.write_python_files()
-
-
-## Exports squares4.py and routes4.py configuration files used by backend endpoints.
-func write_python_files():
-	# Generate squares dictionary script for backend
-	var file_new = FileAccess.open("squares4.py", FileAccess.WRITE)
-	var r = "squares4={\n"
-	for square in self.squares.values():
-		r += "{0}:{'id':{0},'type':{1},'color':{2},'max_pieces':{3}},\n".format([square.id, square.type, Globals.Color2ePlayer(square.color), square.max_pieces()])
-	r = r.replace("<null>", "None")
-	r += "}\n"
-	file_new.store_line(r)
-	file_new.close()
-	
-	# Generate routes dictionary script for backend
-	var file_new2 = FileAccess.open("routes4.py", FileAccess.WRITE)
-	var r2 = "routes4={\n"
-	for player in self.players():
-		var route = []
-		for square in player.route().arr:
-			route.append(square.id)
-		r2 += "{0}:{'id':{0},'route': {1}},\n".format([player.id, str(route)])
-	r2 += "}\n"
-	file_new2.store_line(r2)
-	file_new2.close()
-
 
 ## Sets piece visibility state.
 ## @param value Boolean visibility flag.
