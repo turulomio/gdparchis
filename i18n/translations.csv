@@ -4,8 +4,10 @@ A 5! You must leave home,A 5! You must leave home,¡Un 5! Tienes que salir de ca
 Automatic dice and movements,Automatic dice and movements,Dado y movimientos automáticos,Dés et mouvements automatiques
 Autosaves number  ,Autosaves number  ,Número de autoguardados  ,Nombre de sauvegardes auto  
 Back to Main Menu,Back to Main Menu,Volver al menú principal,Retour au menu principal
+Checking for updates...,Checking for updates...,Comprobando actualizaciones...,Vérification des mises à jour...
 Composition,Composition,Composición,Composition
 Controls & Shortcuts,Controls & Shortcuts,Controles y atajos,Contrôles et raccourcis
+Could not check for updates,Could not check for updates,No se ha podido comprobar,Impossible de vérifier les mises à jour
 Disabled,Disabled,Desactivado,Désactivé
 Difficult,Difficult,Difícil,Difficile
 Duration: {0},Duration: {0},Duración: {0},Durée: {0}
@@ -26,6 +28,7 @@ Full window mode,Full window mode,Modo de pantalla completa,Mode plein écran
 Game difficulty  ,Game difficulty  ,Dificultad del juego  ,Difficulté du jeu  
 Human,Human,Persona,Humain
 IA?,IA?,¿IA?,IA?
+Key S: Toggle Sound ON / OFF,Key S: Toggle Sound ON / OFF,Tecla S: Alternar sonido activado / desactivado,Touche S: Basculer le son activé / désactivé
 Language  ,Language  ,Idioma  ,Langue  
 Let's see who starts,Let's see who starts,Veamos quién empieza,Voyons qui commence
 Load game,Load game,Cargar juego,Charger la partie
@@ -34,6 +37,7 @@ Match history,Match history,Registro de partidas,Historique des parties
 Mouse Left Click: Roll Dice / Select Piece to Move,Mouse Left Click: Roll Dice / Select Piece to Move,Clic izquierdo del ratón: Tirar dado / Seleccionar ficha a mover,Clic gauche de la souris: Lancer le dé / Sélectionner un pion à déplacer
 Mouse Right Click Drag: Rotate 3D Board Camera,Mouse Right Click Drag: Rotate 3D Board Camera,Clic derecho del ratón + arrastrar: Rotar tablero 3D,Clic droit de la souris + glisser: Faire pivoter le plateau 3D
 Mouse Right Click: View Piece / Dice Info Popup,Mouse Right Click: View Piece / Dice Info Popup,Clic derecho del ratón: Ver ventana flotante de ficha / dado,Clic droit de la souris: Afficher les infos du pion / dé
+New version available: {0}!,New version available: {0}!,¡Nueva versión disponible: {0}!,Nouvelle version disponible: {0}!
 No games logged yet,No games logged yet,No hay partidas registradas aún,Aucune partie enregistrée
 Normal,Normal,Normal,Normal
 Person,Person,Persona,Personne
@@ -46,17 +50,20 @@ Plays?,Plays?,¿Juega?,Joue?
 Recovering dice,Recovering dice,Recuperando el dado,Récupération du dé
 Return,Return,Volver,Retour
 Settings,Settings,Configuración,Paramètres
-Shift + F1: Yellow Player Camera View (Floor Level),Shift + F1: Yellow Player Camera View (Floor Level),Shift + F1: Vista a nivel de suelo del jugador amarillo,Shift + F1: Vue niveau du sol joueur jaune
+Shift + F1: Yellow Player Camera View (Floor Level),Shift + F1: Yellow Player Camera View (Floor Level),Shift + F1: Vista a nivel de suelo del jugador amarillo,Shift + F1: Vue niveau du sol jugador jaune
 Shift + F2: Blue Player Camera View (Floor Level),Shift + F2: Blue Player Camera View (Floor Level),Shift + F2: Vista a nivel de suelo del jugador azul,Shift + F2: Vue niveau du sol joueur bleu
-Shift + F3: Red Player Camera View (Floor Level),Shift + F3: Red Player Camera View (Floor Level),Shift + F3: Vista a nivel de suelo del jugador rojo,Shift + F3: Vue niveau du sol joueur rouge
-Shift + F4: Green Player Camera View (Floor Level),Shift + F4: Green Player Camera View (Floor Level),Shift + F4: Vista a nivel de suelo del jugador verde,Shift + F4: Vue niveau du sol joueur vert
+Shift + F3: Red Player Camera View (Floor Level),Shift + F3: Red Player Camera View (Floor Level),Shift + F3: Vista a nivel de suelo del jugador rojo,Shift + F3: Vue niveau du sol jugador rouge
+Shift + F4: Green Player Camera View (Floor Level),Shift + F4: Green Player Camera View (Floor Level),Shift + F4: Vista a nivel de suelo del jugador verde,Shift + F4: Vue niveau du sol jugador vert
 Sound,Sound,Sonido,Son
+Sound OFF,Sound OFF,Sonido desactivado,Son désactivé
+Sound ON,Sound ON,Sonido activado,Son activé
 Spanish,Spanish,Español,Espagnol
 Start game,Start game,Inicia el juego,Commencer la partie
 Tilted dice - Rerolling from new position,Tilted dice - Rerolling from new position,Dado inclinado - Relanzando desde nueva posición,Dé incliné - Relance depuis une nouvelle position
 Tree sixes: You're lucky you are in the final ramp,Tree sixes: You're lucky you are in the final ramp,Tres seises: Tienes suerte de estar en el pasillo final,Trois six: Vous avez de la chance d'être sur la rampe finale
 Tree sixes: You're lucky you can't move,Tree sixes: You're lucky you can't move,Tres seises: Tienes suerte de no poder mover,Trois six: Vous avez de la chance de ne pas pouvoir bouger
 Tree sixes: too fast too young,Tree sixes: too fast too young,Tres seises: A casa la ficha,Trois six: Retour à la maison
+Up to date,Up to date,Actualizado,À jour
 Upps, I did it again,Upps, I did it again,Upps, lo hice otra vez,Oups, je l'ai encore fait
 User name,User name,Nombre de usuario,Nom d'utilisateur
 " Version: {0}"," Version: {0}"," Versión: {0}"," Version: {0}"

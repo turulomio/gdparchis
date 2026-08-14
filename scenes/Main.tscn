@@ -93,10 +93,16 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="Version" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("3")
+vertical_alignment = 1
+
+[node name="UpdateStatus" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3")
+vertical_alignment = 1
+mouse_filter = 0
 
 [node name="Github" type="TextureRect" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(35, 35)
@@ -105,10 +111,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5")
 expand_mode = 4
-
-[node name="Empty" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Load game"
@@ -141,5 +143,6 @@ stream = ExtResource("4")
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus" to="." method="_on_UpdateStatus_gui_input"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer2/HBoxContainer/Github" to="." method="_on_Github_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
