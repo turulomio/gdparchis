@@ -318,6 +318,32 @@ func change_language(e_language):
 		TranslationServer.set_locale("en")
 
 
+## Compares two semver-like version strings (e.g. "v1.0.0" and "0.9.99").
+## @param latest Target version string from GitHub release API.
+## @param current Installed local version string.
+## @return True if latest version is strictly newer than current version.
+func is_newer_version(latest: String, current: String) -> bool:
+	# 1. Clean leading version tags (e.g., 'v', 'gdparchis-') and whitespace
+	var clean_latest = latest.strip_edges().lstrip("v").lstrip("gdparchis-")
+	var clean_current = current.strip_edges().lstrip("v").lstrip("gdparchis-")
+	
+	# 2. Split version parts by '.' dot separator
+	var parts_latest = clean_latest.split(".")
+	var parts_current = clean_current.split(".")
+	
+	# 3. Compare numeric version components sequentially
+	var max_len = max(parts_latest.size(), parts_current.size())
+	for i in range(max_len):
+		var num_latest = int(parts_latest[i]) if i < parts_latest.size() else 0
+		var num_current = int(parts_current[i]) if i < parts_current.size() else 0
+		if num_latest > num_current:
+			return true
+		elif num_latest < num_current:
+			return false
+			
+	return false
+
+
 func generate_uuid():
 	return UUID_UTIL.v4()
 

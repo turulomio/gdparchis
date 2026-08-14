@@ -1,14 +1,87 @@
 extends Control
 
+var http_request: HTTPRequest
+var latest_release_url: String = "https://github.com/turulomio/gdparchis/releases"
 
-## Scene entry point initializing version label text and window resize listener.
+
+## Scene entry point initializing version label text, update checker, and window resize listener.
 func _ready():	
-	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0}").format([Globals.VERSION])
+	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0} - ").format([Globals.VERSION])
 	$FileDialog.title = tr("Load game")
 	$FileDialog.ok_button_text = tr("Load game")
 	if not get_tree().get_root().size_changed.is_connected(resize):
 		get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
+	self.check_for_updates()
+
+
+## Initializes HTTPRequest node and sends asynchronous API query to GitHub releases endpoint.
+func check_for_updates() -> void:
+	if not has_node("MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus"):
+		return
+	var status_label = $MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus
+	status_label.text = tr("Checking for updates...")
+	
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_update_request_completed)
+	
+	var url = "https://api.github.com/repos/turulomio/gdparchis/releases/latest"
+	var headers = PackedStringArray([
+		"User-Agent: gdParchis-App",
+		"Accept: application/vnd.github.v3+json"
+	])
+	var err = http_request.request(url, headers)
+	if err != OK:
+		status_label.text = tr("Could not check for updates")
+		status_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+
+
+## Callback processing HTTP response from GitHub releases API.
+## @param result Result enum of HTTP request.
+## @param response_code HTTP response status code (e.g. 200).
+## @param _headers Array of response headers.
+## @param body Byte array containing JSON response.
+func _on_update_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	if not has_node("MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus"):
+		return
+	var status_label = $MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus
+	
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
+		status_label.text = tr("Could not check for updates")
+		status_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+		return
+		
+	var json_str = body.get_string_from_utf8()
+	var json_data = JSON.parse_string(json_str)
+	if json_data == null or not (json_data is Dictionary):
+		status_label.text = tr("Could not check for updates")
+		status_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+		return
+		
+	var tag_name = str(json_data.get("tag_name", ""))
+	var release_url = str(json_data.get("html_url", "https://github.com/turulomio/gdparchis/releases"))
+	self.latest_release_url = release_url
+	
+	if Globals.is_newer_version(tag_name, Globals.VERSION):
+		status_label.text = tr("New version available: {0}!").format([tag_name])
+		status_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
+		status_label.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	else:
+		status_label.text = tr("Up to date")
+		status_label.add_theme_color_override("font_color", Color(0.4, 0.9, 0.4))
+		
+	# Store timestamp of successful update check
+	if Globals.settings != null and Globals.settings is Dictionary:
+		Globals.settings["last_internet_update"] = Time.get_datetime_string_from_system()
+		Globals.save_settings()
+
+
+## GUI input callback handling clicks on center-bottom UpdateStatus label.
+## @param _event InputEvent object.
+func _on_UpdateStatus_gui_input(_event: InputEvent) -> void:
+	if _event.is_action_pressed("left_click"):
+		OS.shell_open(self.latest_release_url)
 
 
 ## Scene exit cleanup callback disconnecting root window resize signal.

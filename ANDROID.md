@@ -32,8 +32,8 @@ Con `sdkmanager` (incluido en `dev-util/android-sdk-cmdline-tools-bin`), instala
 # Crear directorio local del SDK de Android
 mkdir -p ~/.android/sdk
 
-# Descargar Platform Tools, SDK Platform 34 y Build-Tools 34
-sdkmanager --sdk_root=$HOME/.android/sdk "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+# Descargar Platform Tools, SDK Platform 36 y Build-Tools
+sdkmanager --sdk_root=$HOME/.android/sdk "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 ```
 
 ---

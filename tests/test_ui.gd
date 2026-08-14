@@ -26,6 +26,7 @@ func run_all_tests() -> Dictionary:
 	self.test_font_resources_exist()
 	self.test_match_history_persistence()
 	self.test_settings_persistence()
+	self.test_version_comparison()
 	return {"passed": self.passed, "failed": self.failed}
 
 
@@ -107,3 +108,12 @@ func test_settings_persistence() -> void:
 	self.assert_true(toggled_sound == not initial_sound, "Globals.toggle_sound toggled sound state")
 	# Restore initial state
 	Globals.toggle_sound()
+
+
+## Verifies semver string comparison logic for update checking system.
+func test_version_comparison() -> void:
+	self.assert_true(Globals.is_newer_version("v1.0.0", "0.9.99"), "v1.0.0 is newer than 0.9.99")
+	self.assert_true(Globals.is_newer_version("0.10.0", "0.9.99"), "0.10.0 is newer than 0.9.99")
+	self.assert_true(Globals.is_newer_version("gdparchis-1.2.3", "0.9.99"), "gdparchis-1.2.3 is newer than 0.9.99")
+	self.assert_true(not Globals.is_newer_version("0.9.99", "0.9.99"), "0.9.99 is not newer than 0.9.99")
+	self.assert_true(not Globals.is_newer_version("v0.9.0", "0.9.99"), "v0.9.0 is not newer than 0.9.99")
