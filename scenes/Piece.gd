@@ -491,11 +491,17 @@ func is_threating_me(stalker, _square):
 	var stalker_square = stalker.square()
 	if stalker_square == _square:
 		return false
-	if stalker.route().position_in_route(_square) == -1:
+	var stalker_pos_target = stalker.route().position_in_route(_square)
+	if stalker_pos_target == -1:
 		return false
 		
-	var distance = self.route().distance_between_squares(stalker_square, _square)
-	if distance == null:
+	var distance = stalker.route().distance_between_squares(stalker_square, _square)
+	if distance == null or distance <= 0:
+		return false
+		
+	# Check if intermediate barriers block stalker from reaching _square
+	var stalker_pos_initial = stalker.route().position_in_route(stalker_square)
+	if stalker.route().is_there_barrier(stalker_pos_initial, stalker_pos_target):
 		return false
 	
 	if _square.type in [Globals.eSquareTypes.START, Globals.eSquareTypes.RAMP, Globals.eSquareTypes.SECURE, Globals.eSquareTypes.END]:

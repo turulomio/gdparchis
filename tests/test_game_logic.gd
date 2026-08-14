@@ -29,6 +29,7 @@ func run_all_tests() -> Dictionary:
 	self.test_extra_moves_array_management()
 	self.test_barrier_can_move_evaluation()
 	self.test_three_fives_cannot_move_third_piece_to_first_square()
+	self.test_threat_detection_logic()
 	return {"passed": self.passed, "failed": self.failed}
 
 
@@ -101,5 +102,36 @@ func test_three_fives_cannot_move_third_piece_to_first_square() -> void:
 	self.assert_true(piece2.must_move_to_first_square() == false, "3rd piece is not mandated to move out on 5 when first square is full")
 	self.assert_true(piece2.can_move_to_route_position(1) == false, "3rd piece cannot move to first square when 2 pieces are inside")
 	self.assert_true(p0.can_some_piece_move_to_first_square() == false, "Player cannot move any 3rd piece out to first square")
+	
+	sim.cleanup()
+
+
+## Verifies AI threat detection system (threats_at and is_threating_me).
+func test_threat_detection_logic() -> void:
+	var sim = TestSimulatorScript.new()
+	var p0_piece0 = sim.get_piece(0, 0) # Yellow piece
+	var p1_piece0 = sim.get_piece(1, 0) # Blue piece
+	
+	# Place Yellow piece at normal square 10
+	var sq10 = sim.get_square(10)
+	sq10.set_piece_at_square_position(0, p0_piece0)
+	p0_piece0.route_position = p0_piece0.route().position_in_route(sq10)
+	p0_piece0.square_position = 0
+	
+	# Place Blue piece 3 squares behind Yellow on Blue's route (square 7)
+	var sq7 = sim.get_square(7)
+	sq7.set_piece_at_square_position(0, p1_piece0)
+	p1_piece0.route_position = p1_piece0.route().position_in_route(sq7)
+	p1_piece0.square_position = 0
+	
+	# Assert Blue piece threatens Yellow piece at normal square 10 (3 steps away)
+	var threats = p0_piece0.threats_at(sq10)
+	self.assert_true(threats.size() == 1, "Blue piece threatens Yellow piece on normal square 10")
+	self.assert_true(threats[0] == p1_piece0, "Threat stalker is Blue piece")
+	
+	# Assert SECURE square 12 has zero threats (safe square rule)
+	var secure_sq12 = sim.get_square(12)
+	var threats_secure = p0_piece0.threats_at(secure_sq12)
+	self.assert_true(threats_secure.size() == 0, "Secure square 12 has zero threats")
 	
 	sim.cleanup()
