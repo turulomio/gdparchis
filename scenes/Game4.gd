@@ -105,11 +105,11 @@ func _process(_delta):
 
 	# Process preset camera view angles
 	if Input.is_action_just_pressed("top_view"):
-		OrCamera.look_at_from_position(Vector3(0, 47, 0), Vector3(0, 0, 0.001), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(0, 50, 0), Vector3(0, 0, 0.001), Vector3.UP)
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
 		$DebugFloatingText.show_text(tr("Upps, I did it again"), Color.CHOCOLATE)
 	if Input.is_action_just_pressed("bottom_view"):
-		OrCamera.look_at_from_position(Vector3(0, -47, 0), Vector3(0, 0, -0.001), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(0, -50, 0), Vector3(0, 0, -0.001), Vector3.UP)
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
 	if Input.is_action_just_pressed("yellow_view"):
 		OrCamera.look_at_from_position(Vector3(-30, 50, -30), Vector3(0, 3, 0), Vector3.UP)
