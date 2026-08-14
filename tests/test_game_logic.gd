@@ -134,4 +134,23 @@ func test_threat_detection_logic() -> void:
 	var threats_secure = p0_piece0.threats_at(secure_sq12)
 	self.assert_true(threats_secure.size() == 0, "Secure square 12 has zero threats")
 	
+	# Assert +20 extra move threat (Blue player has 20 in extra_moves)
+	var p1 = sim.get_player(1)
+	p1.extra_moves.clear()
+	p1.extra_moves.append(20)
+	
+	var sq22 = sim.get_square(22)
+	sq22.set_piece_at_square_position(0, p1_piece0)
+	p1_piece0.route_position = p1_piece0.route().position_in_route(sq22)
+	p1_piece0.square_position = 0
+	
+	var sq42 = sim.get_square(42) # Square 42 is exactly 20 steps ahead of square 22 on Blue's route
+	sq42.set_piece_at_square_position(0, p0_piece0)
+	p0_piece0.route_position = p0_piece0.route().position_in_route(sq42)
+	p0_piece0.square_position = 0
+	
+	var threats_20 = p0_piece0.threats_at(sq42)
+	self.assert_true(threats_20.size() == 1, "Blue piece with +20 extra move threatens Yellow piece 20 squares ahead")
+	self.assert_true(threats_20[0] == p1_piece0, "Threat stalker for +20 is Blue piece")
+	
 	sim.cleanup()

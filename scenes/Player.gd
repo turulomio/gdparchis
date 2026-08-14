@@ -219,6 +219,15 @@ func some_piece_is_in_barrier_of_my_player():
 	return false
 
 
+## Checks if any piece of this player can capture an opponent piece on this turn.
+## @return True if a capture move is available.
+func can_some_piece_eat_stm() -> bool:
+	for p in self.pieces():
+		if p.can_eat_before_stm() or p.can_eat_at_route_position(p.route_position + p.squares_to_move(), false):
+			return true
+	return false
+
+
 ## Checks if any piece forming a barrier belonging to this player can legally move.
 ## @return True if at least one piece in a barrier of this player has a valid legal move.
 func some_piece_in_barrier_of_my_player_can_move() -> bool:
