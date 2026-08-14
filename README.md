@@ -26,12 +26,10 @@
 
 ## 📸 Screenshots & Interface
 
-| Screen | Description |
-| :--- | :--- |
-| **Main Menu** | Player count, color selection, custom player names, and AI toggles. |
-| **Starting Dice Roll** | Comparative dice roll display determining turn order and tie-breakers. |
-| **3D Board** | Smooth piece step animations, 3D dice physics, and floating text feedback. |
-| **Match History** | Past game records, dates, turn statistics, and winner logs. |
+| Main Menu | Starting Dice Roll | 3D Gameplay |
+| :---: | :---: | :---: |
+| ![Main Menu](snapshots/main_menu.png) | ![Starting Dice Roll](snapshots/starting_dice_roll.png) | ![3D Gameplay](snapshots/game.png) |
+| *Player count, color selection, custom names, and AI settings* | *Simultaneous dice comparison and tie-breaker rounds* | *3D board physics, piece movement animations, and floating text* |
 
 ---
 

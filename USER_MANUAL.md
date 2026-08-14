@@ -21,6 +21,8 @@ Welcome to **GDParchis**, a 3D adaptation of the classic Parchís board game bui
 
 ## 1. Initial Game Setup
 
+![Main Menu](snapshots/main_menu.png)
+
 Upon launching the game, you will enter the **Player Selection Menu**:
 
 - **Player Count:** Select 2, 3, or 4 players for the match.
@@ -36,6 +38,8 @@ Upon launching the game, you will enter the **Player Selection Menu**:
 
 ## 2. Determining the Starting Player (Dice Roll)
 
+![Starting Dice Roll](snapshots/starting_dice_roll.png)
+
 Before moving pieces on the board:
 
 1. The **Starting Roll** screen is presented.
@@ -47,6 +51,8 @@ Before moving pieces on the board:
 ---
 
 ## 3. Game Rules & Movement Mechanics
+
+![3D Gameplay](snapshots/game.png)
 
 ### Exiting Home
 - All 4 pieces start inside their color-coded home base (route position 0).
