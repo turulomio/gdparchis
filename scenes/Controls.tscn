@@ -33,36 +33,108 @@ horizontal_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="ControlsList" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ControlsList" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Ctrl1" type="Label" parent="VBoxContainer/ControlsList"]
+[node name="Ctrl1" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
 text = "Mouse Left Click: Roll Dice / Select Piece to Move"
 horizontal_alignment = 1
 
-[node name="Ctrl2" type="Label" parent="VBoxContainer/ControlsList"]
+[node name="Ctrl2" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Mouse Right Click: View Piece / Dice Info Popup"
+horizontal_alignment = 1
+
+[node name="Ctrl3" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
 text = "Wheel Up / Key +: Zoom Camera In"
 horizontal_alignment = 1
 
-[node name="Ctrl3" type="Label" parent="VBoxContainer/ControlsList"]
+[node name="Ctrl4" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
 text = "Wheel Down / Key -: Zoom Camera Out"
 horizontal_alignment = 1
 
-[node name="Ctrl4" type="Label" parent="VBoxContainer/ControlsList"]
+[node name="Ctrl5" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
-text = "F11: Toggle Fullscreen Mode"
+text = "F1: Yellow Player Camera View (Perspective)"
 horizontal_alignment = 1
 
-[node name="Ctrl5" type="Label" parent="VBoxContainer/ControlsList"]
+[node name="Ctrl6" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F2: Blue Player Camera View (Perspective)"
+horizontal_alignment = 1
+
+[node name="Ctrl7" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F3: Red Player Camera View (Perspective)"
+horizontal_alignment = 1
+
+[node name="Ctrl8" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F4: Green Player Camera View (Perspective)"
+horizontal_alignment = 1
+
+[node name="Ctrl9" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Shift + F1: Yellow Player Camera View (Floor Level)"
+horizontal_alignment = 1
+
+[node name="Ctrl10" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Shift + F2: Blue Player Camera View (Floor Level)"
+horizontal_alignment = 1
+
+[node name="Ctrl11" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Shift + F3: Red Player Camera View (Floor Level)"
+horizontal_alignment = 1
+
+[node name="Ctrl12" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Shift + F4: Green Player Camera View (Floor Level)"
+horizontal_alignment = 1
+
+[node name="Ctrl13" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F9: Bottom Camera View"
+horizontal_alignment = 1
+
+[node name="Ctrl14" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F10 / Enter: Top Camera View"
+horizontal_alignment = 1
+
+[node name="Ctrl15" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "F11 / Key F: Toggle Fullscreen Mode"
+horizontal_alignment = 1
+
+[node name="Ctrl16" type="Label" parent="VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
 text = "Esc: Back to Main Menu / Exit"

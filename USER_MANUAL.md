@@ -104,6 +104,17 @@ Access the **Match History** screen (`GameHistory`) from the main menu:
 
 ## 6. Controls & Accessibility
 
-- **Mouse:** Click on 3D dice to roll and click highlighted pieces to move.
-- **Fullscreen Mode:** Toggle fullscreen mode in the Options menu.
-- **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.
+- **Mouse Controls:**
+  - **Left Click:** Roll 3D dice or select highlighted piece to move.
+  - **Right Click:** Open debug information popup for targeted piece or dice.
+  - **Scroll Wheel Up / `+` Key:** Zoom camera in.
+  - **Scroll Wheel Down / `-` Key:** Zoom camera out.
+- **Camera Preset Views:**
+  - **`F1` / `F2` / `F3` / `F4`:** Switch camera view to Yellow, Blue, Red, or Green player's perspective.
+  - **`Shift + F1` / `Shift + F2` / `Shift + F3` / `Shift + F4`:** Switch camera view to Yellow, Blue, Red, or Green player's floor level view.
+  - **`F9`:** Bottom camera view angle.
+  - **`F10` / `Enter`:** Top-down overhead camera view angle.
+- **System & Navigation:**
+  - **`F11` / `F` Key:** Toggle fullscreen mode.
+  - **`Esc` Key:** Return to Main Menu or exit game.
+  - **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.

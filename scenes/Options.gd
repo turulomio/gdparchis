@@ -28,7 +28,10 @@ func _on_FullScreen_toggled(_button_pressed):
 
 ## Window resize callback.
 func resize():
-	pass
+	# Sync FullScreen checkbox state with current window display mode
+	if has_node("VBoxContainer/FullScreen"):
+		$VBoxContainer/FullScreen.set_pressed_no_signal(Globals.is_window_mode_fullscreen())
+
 
 
 ## Checkbox toggle handler for Automatic Dice roll setting.

@@ -145,10 +145,6 @@ func _process(_delta):
 				player.dice().historical_report()
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 		
-	# Handle fullscreen toggle
-	if Input.is_action_just_pressed("full_screen"):
-		Globals.toggle_window_mode()
-		
 	# Handle right-click debug popup info
 	if Input.is_action_just_pressed("right_click"):
 		var object = get_object_under_mouse()
