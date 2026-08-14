@@ -31,6 +31,7 @@ group.add_argument('--reusing', help='It gets all reused files downloading from 
 group.add_argument('--procedure', help='Shows release procedure information', action="store_true", default=False)
 group.add_argument('--export', help='Export all projects to dist folder', action="store_true", default=False)
 group.add_argument('--play', help='Runs the project using godot', action="store_true", default=False)
+group.add_argument('--test', help='Runs the automated GDScript unit/integration test suite and code coverage report', action="store_true", default=False)
 group.add_argument('--apache', help='Sets project in apache', action="store_true", default=False)
 
 parser.add_argument('--server', help='HTML Export server', action="store", default="127.0.0.1")
@@ -50,6 +51,7 @@ if args.procedure is True:
         "Change version and version date in Globals.gd",
         "Update changelog in README.md",
         "Improve translations",
+        "Run management --test",
         "Run management --export",
         f"git commit -am 'gdparchis-{get_version()}'",
         "git push",
@@ -65,6 +67,10 @@ if args.procedure is True:
 if args.play is True:
     # Run development build in Godot
     system("godot --audio-driver PulseAudio")
+
+if args.test is True:
+    # Run automated GDScript test suite and code coverage report
+    system("godot --headless res://tests/test_runner.tscn")
 
 if args.export is True:
     # Update export_presets.cfg version strings and run Godot headless export
