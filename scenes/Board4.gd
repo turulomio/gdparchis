@@ -29,12 +29,14 @@ func _find_all_mesh_instances(parent: Node) -> Array[MeshInstance3D]:
 	return result
 
 
-## Configures all mesh instances and materials of Board.blend so they receive lighting and shadows properly.
+## Configures all mesh instances and materials of Board.blend and WoodenFrame so they receive lighting and shadows properly.
 func setup_board_materials() -> void:
 	if not $Board.has_node("BoardBlend"):
 		return
 		
-	var meshes = _find_all_mesh_instances($Board/BoardBlend)
+	self.setup_wooden_frame()
+	
+	var meshes = _find_all_mesh_instances($Board)
 	for mesh_inst in meshes:
 		# Step 1: Force layer 1 and enable shadow casting/receiving
 		mesh_inst.layers = 1
@@ -55,6 +57,80 @@ func setup_board_materials() -> void:
 					mat.roughness = clamp(mat.roughness, 0.35, 0.7)
 					mat.metallic_specular = 0.5
 					mesh_inst.set_surface_override_material(s_idx, mat)
+
+
+## Constructs a wooden frame surrounding the board on its sides and underneath with wood texture.
+func setup_wooden_frame() -> void:
+	if not $Board.has_node("WoodenFrame"):
+		var wf = Node3D.new()
+		wf.name = "WoodenFrame"
+		$Board.add_child(wf)
+		
+	var frame_root = $Board/WoodenFrame
+	# Clear existing children to avoid duplicates
+	for child in frame_root.get_children():
+		child.queue_free()
+		
+	var wood_tex = load("res://images/wood.png")
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
+	mat.albedo_texture = wood_tex
+	mat.roughness = 0.45
+	mat.uv1_scale = Vector3(4, 4, 4)
+	
+	# Height = 0.625 (1/4 of original 2.5 height)
+	var rail_height: float = 0.625
+	var base_thickness: float = 0.625
+	
+	# Bottom frame base under board
+	var bottom_mesh = BoxMesh.new()
+	bottom_mesh.material = mat
+	bottom_mesh.size = Vector3(72.0, base_thickness, 72.0)
+	
+	var frame_bottom = MeshInstance3D.new()
+	frame_bottom.name = "FrameBottom"
+	frame_bottom.mesh = bottom_mesh
+	frame_bottom.position = Vector3(0.0, -base_thickness / 2.0 - 0.1, 0.0)
+	frame_root.add_child(frame_bottom)
+	
+	# 4 Clean rectangular side rails around borders
+	var mesh_long = BoxMesh.new()
+	mesh_long.material = mat
+	mesh_long.size = Vector3(72.0, rail_height, 3.5)
+	
+	var mesh_short = BoxMesh.new()
+	mesh_short.material = mat
+	mesh_short.size = Vector3(3.5, rail_height, 65.0)
+	
+	var rail_y_pos = rail_height / 2.0 - 0.1
+	
+	# North Rail
+	var fn = MeshInstance3D.new()
+	fn.name = "FrameWallNorth"
+	fn.mesh = mesh_long
+	fn.position = Vector3(0.0, rail_y_pos, -34.25)
+	frame_root.add_child(fn)
+	
+	# South Rail
+	var fs = MeshInstance3D.new()
+	fs.name = "FrameWallSouth"
+	fs.mesh = mesh_long
+	fs.position = Vector3(0.0, rail_y_pos, 34.25)
+	frame_root.add_child(fs)
+	
+	# West Rail
+	var fw = MeshInstance3D.new()
+	fw.name = "FrameWallWest"
+	fw.mesh = mesh_short
+	fw.position = Vector3(-34.25, rail_y_pos, 0.0)
+	frame_root.add_child(fw)
+	
+	# East Rail
+	var fe = MeshInstance3D.new()
+	fe.name = "FrameWallEast"
+	fe.mesh = mesh_short
+	fe.position = Vector3(34.25, rail_y_pos, 0.0)
+	frame_root.add_child(fe)
 
 
 ## Initializes the 4-player board, squares dictionary, routes, and initial piece positions.

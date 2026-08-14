@@ -196,25 +196,32 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			# Execute smooth sequential hops from square to square
 			var current_pos = start_3d
 			var hop_duration = 0.13 * speed_mult
+			# Cruising altitude set to piece height * 1.10 (1.10 units above ground floor)
+			var cruise_y: float = 1.10
+			var apex_add_y: float = 0.8
 			
 			for step_idx in range(waypoints.size()):
-				var next_pos = waypoints[step_idx]
-				var step_rpos = initial_route_pos + step_idx + 1
-				var step_sq = self.route().square_at(step_rpos)
+				var is_last_step = (step_idx == waypoints.size() - 1)
+				var next_waypoint = waypoints[step_idx]
+				
+				# Intermediate waypoints maintain cruising height (3.0) above standing pieces
+				var dest_pos = next_waypoint if is_last_step else Vector3(next_waypoint.x, cruise_y, next_waypoint.z)
+				var step_sq = self.route().square_at(initial_route_pos + step_idx + 1)
 				
 				# Target 0.75 scale if stepping onto special corridor square, otherwise restore normal 1.0 scale
 				var target_scale = Vector3(0.75, 0.75, 0.75) if (step_sq != null and is_special_square_id(step_sq.id)) else Vector3(1, 1, 1)
-				var mid_pos = (current_pos + next_pos) / 2.0 + Vector3(0, 1.8, 0)
+				var mid_y = max(current_pos.y, dest_pos.y) + apex_add_y
+				var mid_pos = Vector3((current_pos.x + dest_pos.x) / 2.0, mid_y, (current_pos.z + dest_pos.z) / 2.0)
 				
 				var tween_hop = get_tree().create_tween()
 				# Sequential origin parabolic arc (upward half, then downward half)
 				tween_hop.tween_property(self, "global_transform:origin", mid_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-				tween_hop.tween_property(self, "global_transform:origin", next_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+				tween_hop.tween_property(self, "global_transform:origin", dest_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 				# Parallel scale interpolation across the entire hop duration
 				tween_hop.parallel().tween_property(self, "scale", target_scale, hop_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 				await tween_hop.finished
 				
-				current_pos = next_pos
+				current_pos = dest_pos
 				
 			# Soft touchdown bounce on final destination square matching target square scale
 			var bounce_tween = get_tree().create_tween()
@@ -261,12 +268,16 @@ func squares_to_move():
 	if self.player().extra_moves.size() > 0:
 		return self.player().extra_moves[0]
 	
-	if self.square().type == Globals.eSquareTypes.START and self.player().last_throw() == 5:
+	var lt = self.player().last_throw()
+	if lt == 0 or lt == null:
+		return 0
+		
+	if self.square() != null and self.square().type == Globals.eSquareTypes.START and lt == 5:
 		return 1
-	elif self.player().are_all_pieces_out_of_home() and self.player().last_throw() == 6:
+	elif self.player().are_all_pieces_out_of_home() and lt == 6:
 		return 7
 	else:
-		return self.player().last_throw()
+		return lt
 
 
 ## Checks if this piece is forming a barrier with another piece of the same player.
@@ -283,7 +294,12 @@ func am_i_in_a_barrier_of_my_player():
 ## @return Piece object to capture or null.
 func piece_to_eat_before_move():
 	var square_initial = self.square()
-	var square_final = self.route().square_at(self.route_position + self.squares_to_move())
+	var stm = self.squares_to_move()
+	if stm <= 0:
+		return null
+	var square_final = self.route().square_at(self.route_position + stm)
+	if square_final == null:
+		return null
 
 	if square_final.pieces_count() == 2 and self.player().dice().value == 5 and square_initial.type == Globals.eSquareTypes.START:
 		var ordered = square_final.pieces_different_to_me_ordered(self.player())
@@ -416,10 +432,10 @@ func TweenWaiting_start():
 	if TweenWaiting:
 		TweenWaiting.kill()
 		
-	# Smoothly bob up and down between +0.4 and +0.75 above ground level with TRANS_SINE
+	# Smoothly bob up and down between +0.35 and +1.35 above ground level (amplitude = 1.0) with TRANS_SINE
 	TweenWaiting = create_tween().set_loops()
-	TweenWaiting.tween_method(TweenWaiting_method, 0.4, 0.75, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	TweenWaiting.tween_method(TweenWaiting_method, 0.75, 0.4, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	TweenWaiting.tween_method(TweenWaiting_method, 0.35, 1.35, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	TweenWaiting.tween_method(TweenWaiting_method, 1.35, 0.35, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 ## Stops hover selection animation and smoothly lowers piece back to board floor.
