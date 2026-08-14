@@ -219,6 +219,15 @@ func some_piece_is_in_barrier_of_my_player():
 	return false
 
 
+## Checks if any piece of this player can capture an opponent piece on this turn.
+## @return True if a capture move is available.
+func can_some_piece_eat_stm() -> bool:
+	for p in self.pieces():
+		if p.can_eat_before_stm() or p.can_eat_at_route_position(p.route_position + p.squares_to_move(), false):
+			return true
+	return false
+
+
 ## Checks if any piece forming a barrier belonging to this player can legally move.
 ## @return True if at least one piece in a barrier of this player has a valid legal move.
 func some_piece_in_barrier_of_my_player_can_move() -> bool:
@@ -233,35 +242,54 @@ func some_piece_in_barrier_of_my_player_can_move() -> bool:
 	return false
 
 
-## AI decision logic selecting the best piece to move based on capture priority and threat reduction.
-## @return Selected Piece object to move.
+## AI decision logic selecting the best piece to move based on capture priority, threat reduction, and advance progress.
+## Step 1: Collect all pieces capable of making a valid legal move on this turn.
+## Step 2: Priority 1 - Evaluate capture moves (eat opponent). Triggered when randf() <= difficulty_probability (Easy: 55%, Normal: 75%, Hard: 95%).
+## Step 3: Priority 2 - Evaluate threat reduction moves (escape danger or move into safe square). Triggered when randf() <= difficulty_probability.
+## Step 4: Priority 3 - Prefer advancing pieces currently standing outside safe squares (NORMAL type).
+## Step 5: Priority 4 - Select the piece furthest advanced along its route towards goal (highest route_position).
+## @return Selected Piece object to move, or null if no legal moves exist.
 func ia_selects_piece_to_move():
 	randomize()
 	
-	# Find all pieces capable of making a valid move
+	# Step 1: Collect all pieces capable of making a valid move
 	var pieces_can_move = []
 	for p in self.pieces():
 		if p.can_move_stm():
 			pieces_can_move.append(p)
 			
-	# Priority 1: Select piece that can capture an opponent piece
+	if pieces_can_move.is_empty():
+		print("IA COULDN'T FIND A PIECE TO MOVE")
+		return null
+			
+	# Step 2: Priority 1 - Select piece that can capture an opponent piece
 	for p in pieces_can_move:
-		var attempt = 1
-		if p.can_eat_at_route_position(p.route_position + p.squares_to_move(), false) and attempt > Globals.difficulty_probability():
+		var attempt = randf()
+		if p.can_eat_at_route_position(p.route_position + p.squares_to_move(), false) and attempt <= Globals.difficulty_probability():
 			print("Selected due to can eat")
 			return p
 			
-	# Priority 2: Select piece that moves away from threats or into safety
+	# Step 3: Priority 2 - Select piece that moves away from threats or into safety
 	for p in pieces_can_move:
 		var square_final = p.player().route().square_at(p.route_position + p.squares_to_move())
-		if square_final != null and p.threats_at(p.square()).size() > p.threats_at(square_final).size():
+		var attempt = randf()
+		if square_final != null and p.threats_at(p.square()).size() > p.threats_at(square_final).size() and attempt <= Globals.difficulty_probability():
 			print("Selected due to less threats")
 			return p
 	
-	# Priority 3: Fallback to first available movable piece
+	# Step 4: Priority 3 - Prefer moving a piece that is outside a safe square (NORMAL type square)
+	var pieces_outside_secure = []
 	for p in pieces_can_move:
-		print("Selected due to can move")
-		return p
-		
-	print("IA COULDN'T FIND A PIECE TO MOVE")
-	return null
+		if p.square() and p.square().type == Globals.eSquareTypes.NORMAL:
+			pieces_outside_secure.append(p)
+			
+	var candidate_pool = pieces_outside_secure if not pieces_outside_secure.is_empty() else pieces_can_move
+	
+	# Step 5: Priority 4 - Select the most advanced piece in candidate pool (highest route_position towards goal)
+	var best_piece = candidate_pool[0]
+	for p in candidate_pool:
+		if p.route_position > best_piece.route_position:
+			best_piece = p
+			
+	print("Selected most advanced piece (outside secure preference)")
+	return best_piece

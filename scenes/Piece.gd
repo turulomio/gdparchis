@@ -483,40 +483,73 @@ func can_go_final_square_with_dice_movement():
 	return false
 
 
-## Evaluates whether an opponent stalker piece poses a threat to capture this piece at a specific square.
-## @param stalker Opponent piece object.
-## @param _square Target square to evaluate.
+## Evaluates whether an opponent stalker piece poses a threat to capture this piece at a specific target square.
+## Step 1: Ignore self or non-route squares.
+## Step 2: Calculate step distance along the stalker's route to the target square.
+## Step 3: Check for intermediate barriers blocking the stalker's path.
+## Step 4: Exclude safe squares (START, RAMP, SECURE, END) or friendly barriers.
+## Step 5: Check single die roll threats (1, 2, 3, 4, 6/7, 5 when all pieces out).
+## Step 6: Check +20 eat bonus threats (active +20 extra move or potential capture move).
+## Step 7: Check +10 goal bonus threats (active +10 extra move or potential goal entry move).
+## Step 8: Check FIRST exit square capture threats on rolling a 5.
+## @param stalker Opponent piece object being evaluated.
+## @param _square Target square to evaluate for threats.
 ## @return True if stalker can capture this piece at target square.
 func is_threating_me(stalker, _square):
 	var stalker_square = stalker.square()
 	if stalker_square == _square:
 		return false
-	if stalker.route().position_in_route(_square) == -1:
+		
+	# 1. Pieces inside home base (START square) can only threaten their own FIRST exit square on rolling 5
+	if stalker_square.type == Globals.eSquareTypes.START:
+		if not (_square.type == Globals.eSquareTypes.FIRST and _square.color == stalker.player().color):
+			return false
+			
+	# 2. Verify target square exists in stalker's route
+	var stalker_pos_target = stalker.route().position_in_route(_square)
+	if stalker_pos_target == -1:
 		return false
 		
-	var distance = self.route().distance_between_squares(stalker_square, _square)
-	if distance == null:
+	# 3. Calculate step distance along stalker's route to target square
+	var distance = stalker.route().distance_between_squares(stalker_square, _square)
+	if distance == null or distance <= 0:
+		return false
+		
+	# 4. Check if intermediate barriers block stalker from reaching target square
+	var stalker_pos_initial = stalker.route().position_in_route(stalker_square)
+	if stalker.route().is_there_barrier(stalker_pos_initial, stalker_pos_target):
 		return false
 	
+	# 5. Exclude safe square types where captures cannot occur
 	if _square.type in [Globals.eSquareTypes.START, Globals.eSquareTypes.RAMP, Globals.eSquareTypes.SECURE, Globals.eSquareTypes.END]:
 		return false
 
+	# 6. Exclude target squares containing a friendly barrier of this piece's player
 	if _square.has_barrier_of_this_player(self.player()):
 		return false
 		
 	var stalker_pieces_all_out = stalker.player().are_all_pieces_out_of_home()
 	var mysix = 7 if stalker_pieces_all_out else 6
 
-	if _square.type in [Globals.eSquareTypes.NORMAL] and distance in [1, 2, 3, 4, 20, mysix]:
+	# 7. Standard die roll threats (1, 2, 3, 4, or 6/7) on NORMAL squares
+	if _square.type in [Globals.eSquareTypes.NORMAL] and distance in [1, 2, 3, 4, mysix]:
 		return true
 
+	# 8. Die roll 5 threat on NORMAL squares when all stalker's pieces are out of home
 	if stalker_pieces_all_out == true and _square.type in [Globals.eSquareTypes.NORMAL] and distance == 5:
 		return true
 
-	if stalker.player().can_some_piece_go_final_square_with_dice_movement():
-		if _square.type in [Globals.eSquareTypes.NORMAL] and distance == 10:
+	# 9. Threat at 20 squares (eat bonus): either stalker has an active +20 in extra_moves or can eat an opponent piece on this turn
+	if _square.type in [Globals.eSquareTypes.NORMAL] and distance == 20:
+		if 20 in stalker.player().extra_moves or stalker.player().can_some_piece_eat_stm():
 			return true
 
+	# 10. Threat at 10 squares (goal bonus): either stalker has an active +10 in extra_moves or can enter goal on this turn
+	if _square.type in [Globals.eSquareTypes.NORMAL] and distance == 10:
+		if 10 in stalker.player().extra_moves or stalker.player().can_some_piece_go_final_square_with_dice_movement():
+			return true
+
+	# 11. Exit home threat on FIRST square when stalker rolls a 5 and exit square is occupied
 	if _square.type == Globals.eSquareTypes.FIRST and stalker.player().color == _square.color and _square.pieces_count() == 2 and _square.has_barrier_of_this_player(self.player()) == false:
 		return true
 
