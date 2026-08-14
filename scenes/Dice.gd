@@ -291,7 +291,11 @@ func launch():
 ## Callback triggered when the dice collides with another physics body.
 ## @param _body Body node collided with.
 func _on_body_entered(_body):
-	# Play collision audio effect with randomized pitch
+	# 1. Only play collision sound effect when the dice is actively rolling (value is null during throw)
+	if self.value != null:
+		return
+
+	# 2. Play collision audio effect with randomized pitch
 	$Touched.pitch_scale = randf_range(0.9, 1.1)
 	$Touched.volume_db = 0.0
 	$Touched.play()

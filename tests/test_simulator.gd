@@ -1,4 +1,3 @@
-class_name TestSimulator
 extends RefCounted
 
 var board_node: Board4
