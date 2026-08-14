@@ -8,6 +8,10 @@ const TestCoverageScript = preload("res://tests/test_coverage.gd")
 
 ## Node test runner entry point executing all test suites in headless CLI mode.
 func _ready():
+	call_deferred("_run_suite")
+
+
+func _run_suite():
 	print("\n===========================================================")
 	print("               GDPARCHIS AUTOMATED TEST SUITE              ")
 	print("===========================================================\n")

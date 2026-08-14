@@ -69,8 +69,13 @@ if args.play is True:
     system("godot --audio-driver PulseAudio")
 
 if args.test is True:
+    # Import all project assets first in headless mode to populate .godot/imported/
+    system("godot --headless --editor --quit")
     # Run automated GDScript test suite and code coverage report
-    system("godot --headless res://tests/test_runner.tscn")
+    ret = system("godot --headless res://tests/test_runner.tscn")
+    if ret != 0:
+        from sys import exit as sys_exit
+        sys_exit(1)
 
 if args.export is True:
     # Update export_presets.cfg version strings and run Godot headless export
