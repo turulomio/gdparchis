@@ -73,17 +73,12 @@ config/windows_native_icon="res://images/piece_red.ico"
 
 Globals="*res://scenes/Globals.gd"
 
-[audio]
-
-driver/driver="PulseAudio"
-
 [display]
 
+display_server/driver.linuxbsd="wayland"
 window/size/width=1920
 window/size/height=1080
 window/size/fullscreen=true
-display_server/driver.linuxbsd="wayland"
-
 
 [global]
 
@@ -192,10 +187,10 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-threads/thread_model=2
-environment/default_environment="res://default_env.tres"
 lights_and_shadows/directional_shadow/size=8192
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
-lights_and_shadows/positional_shadow/size=4096
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
 anti_aliasing/quality/msaa_3d=2
+threads/thread_model=2
+environment/default_environment="res://default_env.tres"
+lights_and_shadows/positional_shadow/size=4096

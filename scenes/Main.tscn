@@ -51,6 +51,14 @@ flat = true
 clip_text = true
 expand_icon = true
 
+[node name="Controls" type="Button" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.6, 1, 1)
+text = "Controls & Shortcuts"
+flat = true
+clip_text = true
+expand_icon = true
+
 [node name="Options" type="Button" parent="VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -89,7 +97,6 @@ expand_mode = 4
 [node name="Empty" type="Label" parent="VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3")
-text = " "
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -111,6 +118,8 @@ stream = ExtResource("4")
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Controls" to="." method="_on_Controls_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]

@@ -38,6 +38,16 @@ func _on_History_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/GameHistory.tscn")
 
 
+## Mouse hover event playing sound effect for Controls button.
+func _on_Controls_mouse_entered():
+	$Click.play()
+
+
+## Button handler navigating to Controls.tscn scene.
+func _on_Controls_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Controls.tscn")
+
+
 ## Button handler navigating to Options.tscn scene.
 func _on_Options_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Options.tscn")
