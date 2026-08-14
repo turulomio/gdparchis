@@ -23,16 +23,21 @@ func _ready():
 	await Globals.game_load_glogals_game_data(self, true, true)
 	var is_winer = null
 	
+	# Active candidates pool for current roll round (starts with all participating players)
+	var active_candidates = self.board().players_than_plays()
+	
 	# Loop until a single winner is determined
 	while is_winer == null:
 		self.winers = []
 		self.dice_higher = 0
 		
-		# Hide all dice initially
+		# Hide dice for any non-candidate players while keeping candidates' dice visible
 		for p in self.board().players():
-			p.dice().visible = false
+			if not p in active_candidates:
+				p.dice().visible = false
 			
-		for p in self.board().players_than_plays():
+		# Roll dice sequentially for each active candidate in this round
+		for p in active_candidates:
 			p.dice().visible = true
 			p.can_move_pieces = false
 			p.dice_throws = []
@@ -42,15 +47,21 @@ func _ready():
 			
 			await p.dice().dice_got_value
 			if p.dice().value > self.dice_higher:
-				self.dice_higher = p.dice().value	
-			p.dice().visible = false
+				self.dice_higher = p.dice().value
+			# All rolled dice remain visible on the board for visual comparison
 			
-		# Evaluate highest throw winners
-		for p in self.board().players():
+		# Evaluate highest throw winners among active candidates
+		for p in active_candidates:
 			if p.dice().value == dice_higher:
 				self.winers.append(p)
 				
-		is_winer = await self.is_there_a_winer()
+		if self.winers.size() == 1:
+			is_winer = await self.is_there_a_winer()
+		else:
+			# Tie detected! Wait briefly so players can see and compare the tied dice values
+			await get_tree().create_timer(1.5).timeout
+			# Next round tie-breaker: candidate pool becomes only the tied repeating players
+			active_candidates = self.winers.duplicate()
 
 
 ## Evaluates winner determination and transitions to Game4.tscn if a single winner exists.
@@ -64,12 +75,7 @@ func is_there_a_winer():
 		await $FloatingText.text_disappear
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 		return true
-	else:
-		# Filter participating players to tied winners for tie-breaker
-		for p in self.board().players():
-			if not p in self.winers: 
-				p.plays = false
-		return null
+	return null
 
 
 ## Frame process loop checking exit key shortcut.
