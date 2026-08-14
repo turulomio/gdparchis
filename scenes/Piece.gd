@@ -382,7 +382,7 @@ func must_move_to_first_square():
 		if square_first.pieces_count() < 2:
 			return true
 		else:
-			var ordered = square_first.pieces_different_to_me_ordered(self)
+			var ordered = square_first.pieces_different_to_me_ordered(self.player())
 			if ordered == null:
 				return false
 			else:
