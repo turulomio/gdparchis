@@ -65,6 +65,8 @@ func test_font_resources_exist() -> void:
 	if freshman_font:
 		self.assert_true(freshman_font.has_char("ô".unicode_at(0)), "Font contains ô glyph (U+00F4)")
 		self.assert_true(freshman_font.has_char("Ô".unicode_at(0)), "Font contains Ô glyph (U+00D4)")
+		self.assert_true(freshman_font.has_char("ç".unicode_at(0)), "Font contains ç glyph (U+00E7)")
+		self.assert_true(freshman_font.has_char("Ç".unicode_at(0)), "Font contains Ç glyph (U+00C7)")
 
 
 ## Verifies match history adding, saving, loading, and clearing.
