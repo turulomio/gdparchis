@@ -60,7 +60,7 @@ horizontal_alignment = 1
 [node name="Ctrl2" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/ControlsList"]
 layout_mode = 2
 theme = ExtResource("3")
-text = "Mouse Right Click: View Piece / Dice Info Popup"
+text = "Mouse Right Click Drag: Rotate 3D Board Camera"
 horizontal_alignment = 1
 
 [node name="Ctrl3" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/ControlsList"]

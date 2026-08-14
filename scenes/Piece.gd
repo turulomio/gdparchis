@@ -268,12 +268,16 @@ func squares_to_move():
 	if self.player().extra_moves.size() > 0:
 		return self.player().extra_moves[0]
 	
-	if self.square().type == Globals.eSquareTypes.START and self.player().last_throw() == 5:
+	var lt = self.player().last_throw()
+	if lt == 0 or lt == null:
+		return 0
+		
+	if self.square() != null and self.square().type == Globals.eSquareTypes.START and lt == 5:
 		return 1
-	elif self.player().are_all_pieces_out_of_home() and self.player().last_throw() == 6:
+	elif self.player().are_all_pieces_out_of_home() and lt == 6:
 		return 7
 	else:
-		return self.player().last_throw()
+		return lt
 
 
 ## Checks if this piece is forming a barrier with another piece of the same player.
@@ -290,7 +294,12 @@ func am_i_in_a_barrier_of_my_player():
 ## @return Piece object to capture or null.
 func piece_to_eat_before_move():
 	var square_initial = self.square()
-	var square_final = self.route().square_at(self.route_position + self.squares_to_move())
+	var stm = self.squares_to_move()
+	if stm <= 0:
+		return null
+	var square_final = self.route().square_at(self.route_position + stm)
+	if square_final == null:
+		return null
 
 	if square_final.pieces_count() == 2 and self.player().dice().value == 5 and square_initial.type == Globals.eSquareTypes.START:
 		var ordered = square_final.pieces_different_to_me_ordered(self.player())

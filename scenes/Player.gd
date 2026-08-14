@@ -112,7 +112,9 @@ func set_can_move_pieces(b):
 
 ## Returns the value of the last dice throw.
 ## @return Integer value.
-func last_throw():
+func last_throw() -> int:
+	if self.dice_throws.size() == 0:
+		return 0
 	return self.dice_throws[self.dice_throws.size() - 1]
 
 
@@ -223,8 +225,10 @@ func some_piece_is_in_barrier_of_my_player():
 ## @return True if a capture move is available.
 func can_some_piece_eat_stm() -> bool:
 	for p in self.pieces():
-		if p.can_eat_before_stm() or p.can_eat_at_route_position(p.route_position + p.squares_to_move(), false):
-			return true
+		var stm = p.squares_to_move()
+		if stm > 0:
+			if p.can_eat_before_stm() or p.can_eat_at_route_position(p.route_position + stm, false):
+				return true
 	return false
 
 
