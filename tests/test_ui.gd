@@ -1,4 +1,3 @@
-class_name TestUI
 extends RefCounted
 
 var passed: int = 0

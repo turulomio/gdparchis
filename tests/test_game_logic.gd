@@ -1,4 +1,3 @@
-class_name TestGameLogic
 extends RefCounted
 
 const TestSimulatorScript = preload("res://tests/test_simulator.gd")
