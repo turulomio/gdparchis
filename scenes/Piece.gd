@@ -461,7 +461,12 @@ func can_move_stm():
 ## @param check_after_movement If true, evaluates state post-movement.
 ## @return True if capture condition is met.
 func can_eat_at_route_position(_route_position, check_after_movement):
+	# 1. Fetch square object at target route position and return false if position is out of bounds
 	var square_ = self.route().square_at(_route_position)
+	if square_ == null:
+		return false
+
+	# 2. Evaluate pre-movement vs post-movement capture conditions on NORMAL type squares
 	if check_after_movement == false and self.can_move_to_route_position(_route_position):
 		if square_.pieces_count() == 1 and square_.type == Globals.eSquareTypes.NORMAL and square_.pieces_objects()[0].player() != self.player():
 			return true
@@ -576,6 +581,8 @@ func is_threating_me(stalker, _square):
 ## @param square Target square to check.
 ## @return Array of threatening opponent Piece objects.
 func threats_at(square):
+	if square == null:
+		return []
 	var r = []
 	for player_ in self.player().board().players():
 		if player_ == self.player():

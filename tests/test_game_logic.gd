@@ -153,4 +153,8 @@ func test_threat_detection_logic() -> void:
 	self.assert_true(threats_20.size() == 1, "Blue piece with +20 extra move threatens Yellow piece 20 squares ahead")
 	self.assert_true(threats_20[0] == p1_piece0, "Threat stalker for +20 is Blue piece")
 	
+	# Assert out-of-bounds route position and null square evaluate safely without error
+	self.assert_true(p0_piece0.can_eat_at_route_position(999, false) == false, "Out-of-bounds route position returns false for can_eat_at_route_position")
+	self.assert_true(p0_piece0.threats_at(null).size() == 0, "Null square returns empty array for threats_at")
+	
 	sim.cleanup()
