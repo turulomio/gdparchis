@@ -59,6 +59,12 @@ func test_font_resources_exist() -> void:
 		self.assert_true(ResourceLoader.exists(f_path), "Font resource exists: " + f_path)
 		var res = ResourceLoader.load(f_path)
 		self.assert_true(res != null, "Font resource loaded: " + f_path)
+	
+	# Verify specific glyphs exist in Freshman.ttf
+	var freshman_font: Font = load("res://fonts/Freshman.ttf") as Font
+	if freshman_font:
+		self.assert_true(freshman_font.has_char("ô".unicode_at(0)), "Font contains ô glyph (U+00F4)")
+		self.assert_true(freshman_font.has_char("Ô".unicode_at(0)), "Font contains Ô glyph (U+00D4)")
 
 
 ## Verifies match history adding, saving, loading, and clearing.
