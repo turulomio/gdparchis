@@ -21,10 +21,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Set up Godot Engine 4.7
-        uses: chickenandpork/setup-godot@v2
-        with:
-          version: '4.7'
+      - name: Install Godot Engine 4.7.1 Headless
+        run: |
+          sudo apt-get update && sudo apt-get install -y wget unzip
+          wget https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip || wget https://github.com/godotengine/godot-builds/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip || wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip Godot_v*.zip
+          sudo mv Godot_v*_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
 
       - name: Run Test Suite & Generate Coverage Report
         run: |
