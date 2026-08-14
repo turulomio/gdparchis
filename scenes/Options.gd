@@ -3,14 +3,21 @@ extends Control
 
 ## Scene entry point initializing settings UI elements from Globals configuration.
 func _ready():
-	get_tree().get_root().size_changed.connect(self.resize) 
+	if not get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.connect(self.resize) 
 	self.resize()
+
+
+## Scene exit cleanup callback disconnecting root window resize signal.
+func _exit_tree() -> void:
+	if get_tree() and get_tree().get_root() and get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.disconnect(self.resize)
 	$MarginContainer/VBoxContainer/OptionsList/FullScreen.set_pressed(Globals.settings.get("full_screen", false))
 	$MarginContainer/VBoxContainer/OptionsList/Sound.set_pressed(Globals.settings.get("sound", true))
 	$MarginContainer/VBoxContainer/OptionsList/AutomaticDice.set_pressed(Globals.settings.get("automatic", false))
-	$MarginContainer/VBoxContainer/OptionsList/HBAutosaves/Autosaves.text = str(Globals.settings["autosaves"])
-	$MarginContainer/VBoxContainer/OptionsList/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
-	$MarginContainer/VBoxContainer/OptionsList/HBLanguages/Language.select(int(Globals.settings["language"]))
+	$MarginContainer/VBoxContainer/OptionsList/HBAutosaves/Autosaves.text = str(int(Globals.settings.get("autosaves", 10)))
+	$MarginContainer/VBoxContainer/OptionsList/HBDifficulty/Difficulty.select(int(Globals.settings.get("difficulty", 1)))
+	$MarginContainer/VBoxContainer/OptionsList/HBLanguages/Language.select(int(Globals.settings.get("language", 0)))
 
 
 ## Return button click handler saving settings to disk and returning to Main.tscn.

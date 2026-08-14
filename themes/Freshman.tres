@@ -1,14 +1,19 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://be25la3s3qsje"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://be25la3s3qsje"]
 
 [ext_resource type="FontFile" uid="uid://dtrky5pcbr4jr" path="res://fonts/Freshman.ttf" id="1"]
+[ext_resource type="Texture2D" path="res://images/checkbox_checked.svg" id="2_chk"]
+[ext_resource type="Texture2D" path="res://images/checkbox_unchecked.svg" id="3_unchk"]
 
 [resource]
 default_font = ExtResource("1")
 default_font_size = 48
 Button/colors/font_outline_color = Color(0, 0, 0, 1)
 Button/constants/outline_size = 20
-CheckBox/icons/checked = null
-CheckBox/icons/checked_disabled = null
+CheckBox/constants/h_separation = 24
+CheckBox/icons/checked = ExtResource("2_chk")
+CheckBox/icons/checked_disabled = ExtResource("2_chk")
+CheckBox/icons/unchecked = ExtResource("3_unchk")
+CheckBox/icons/unchecked_disabled = ExtResource("3_unchk")
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 20
 LineEdit/colors/font_outline_color = Color(0, 0, 0, 1)

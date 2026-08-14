@@ -94,3 +94,27 @@ Los ejecutables y archivos `.pck` resultantes se generan en:
 
 * **Documentación de Funciones:** Cada función escrita en los scripts (GDScript o Python) debe incluir un bloque de documentación descriptivo (encabezado/docstring con `##` o `""`) explicando su propósito, parámetros y tipo de retorno.
 * **Comentarios Internos:** La implementación interna de las funciones debe estar debidamente comentada paso a paso para explicitar la lógica de desarrollo, algoritmos y decisiones clave de diseño.
+
+---
+
+## 6. Directorios de Almacenamiento Estándar del Usuario (`user://`)
+
+El proyecto utiliza la configuración nativa de directorio de usuario personalizado en [`project.godot`](file:///home/keko/Proyectos/gdparchis/project.godot#L65):
+
+```ini
+[application]
+config/use_custom_user_dir=true
+config/custom_user_dir_name="gdparchis"
+```
+
+Esto garantiza que todos los archivos persistentes del usuario (`user://`) se almacenen permanentemente en las ubicaciones estándar del sistema operativo:
+
+* **Linux (Estándar XDG Data):** `~/.local/share/gdparchis/`
+* **Windows (AppData Roaming):** `%APPDATA%\gdparchis\` (`C:\Users\<usuario>\AppData\Roaming\gdparchis\`)
+* **macOS:** `~/Library/Application Support/gdparchis/`
+
+### Archivos almacenados en el directorio de usuario:
+* **Configuración del juego:** `user://gdparchis.cfg` (preferencias de pantalla, idioma, sonido y dificultad).
+* **Historial permanente de partidas:** `user://game_history.json` (registro de partidas finalizadas y ganadores).
+* **Guardados automáticos y manuales:** `user://saves/` (archivos de partidas guardadas en formato `.json`).
+

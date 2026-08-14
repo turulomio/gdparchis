@@ -139,6 +139,13 @@ func _process(_delta):
 	if Input.is_action_just_pressed("zoom_out") or Input.is_action_pressed("zoom_out"):
 		zoom_camera(1.5)
 
+	# Handle toggle sound shortcut ('S' key) and display notification on board
+	if Input.is_action_just_pressed("toggle_sound"):
+		var is_sound_enabled = Globals.toggle_sound()
+		var msg = tr("Sound ON") if is_sound_enabled else tr("Sound OFF")
+		var text_color = Color.GREEN if is_sound_enabled else Color.RED
+		$DebugFloatingText.show_text(msg, text_color)
+
 	# Handle exit key shortcut back to main menu
 	if Input.is_action_just_pressed("exit"):
 		for player in self.board().players():

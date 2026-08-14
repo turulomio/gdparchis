@@ -3,8 +3,15 @@ extends Control
 
 ## Scene entry point initializing window resize listener.
 func _ready():
-	get_tree().get_root().size_changed.connect(self.resize) 
+	if not get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.connect(self.resize) 
 	self.resize()
+
+
+## Scene exit cleanup callback disconnecting root window resize signal.
+func _exit_tree() -> void:
+	if get_tree() and get_tree().get_root() and get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.disconnect(self.resize)
 
 
 ## Play button click handler saving player selections into Globals.game_data and launching GameDiceStart.tscn.

@@ -100,3 +100,10 @@ func test_match_history_persistence() -> void:
 func test_settings_persistence() -> void:
 	self.assert_true(Globals.settings != null, "Globals.settings initialized")
 	self.assert_true(Globals.settings.has("difficulty"), "Settings dictionary contains difficulty key")
+	
+	# Test sound toggle helper
+	var initial_sound = Globals.settings.get("sound", true)
+	var toggled_sound = Globals.toggle_sound()
+	self.assert_true(toggled_sound == not initial_sound, "Globals.toggle_sound toggled sound state")
+	# Restore initial state
+	Globals.toggle_sound()

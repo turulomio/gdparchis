@@ -6,8 +6,15 @@ func _ready():
 	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0}").format([Globals.VERSION])
 	$FileDialog.title = tr("Load game")
 	$FileDialog.ok_button_text = tr("Load game")
-	get_tree().get_root().size_changed.connect(resize) 
+	if not get_tree().get_root().size_changed.is_connected(resize):
+		get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
+
+
+## Scene exit cleanup callback disconnecting root window resize signal.
+func _exit_tree() -> void:
+	if get_tree() and get_tree().get_root() and get_tree().get_root().size_changed.is_connected(resize):
+		get_tree().get_root().size_changed.disconnect(resize)
 
 
 ## Button handler quitting the game application.

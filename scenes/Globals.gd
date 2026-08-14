@@ -19,6 +19,8 @@ var game_history: Array = []
 ## Singleton initialization callback. Loads saved configuration settings and game history.
 func _init():
 	print("Singleton load")
+	if not DirAccess.dir_exists_absolute("user://saves/"):
+		DirAccess.make_dir_absolute("user://saves/")
 	load_settings()
 	load_game_history()
 
@@ -31,7 +33,7 @@ func load_game_history() -> void:
 		
 	var file_load = FileAccess.open("user://game_history.json", FileAccess.READ)
 	if file_load:
-		var json_string = file_load.get_line()
+		var json_string = file_load.get_as_text()
 		file_load.close()
 		var parsed = JSON.parse_string(json_string)
 		if parsed is Array:
@@ -278,11 +280,34 @@ func load_settings():
 		var file_load=FileAccess.open("user://gdparchis.cfg", FileAccess.READ)
 		settings=JSON.parse_string(file_load.get_line())
 		file_load.close()
+		if settings != null and settings is Dictionary:
+			if settings.has("autosaves"):
+				settings["autosaves"] = int(settings["autosaves"])
+			if settings.has("difficulty"):
+				settings["difficulty"] = int(settings["difficulty"])
+			if settings.has("language"):
+				settings["language"] = int(settings["language"])
 	
 	print("Settings loaded: ", settings)
 	set_window_mode_fullscreen(settings["full_screen"])		
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), not settings["sound"])
 	change_language(settings["language"])
+
+
+## Toggles master audio sound mute setting, updates settings dictionary, and saves configuration.
+## @return New boolean sound state (true if sound is enabled).
+func toggle_sound() -> bool:
+	# 1. Read current sound setting (default to true if missing)
+	var current_sound = settings.get("sound", true)
+	var new_sound = not current_sound
+	
+	# 2. Update settings dictionary and master audio bus mute state
+	settings["sound"] = new_sound
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), not new_sound)
+	
+	# 3. Persist updated settings to user disk file
+	save_settings()
+	return new_sound
 
 func change_language(e_language):
 	if e_language==eLanguages.SPANISH:
