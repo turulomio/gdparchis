@@ -9,7 +9,6 @@ enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
 const IMAGE_WOOD = preload("res://images/wood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
-const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 
 var game_data = null # Dictionary to load and init games
 var settings
@@ -305,22 +304,6 @@ func difficulty_probability():
 		return 0.75
 	else:
 		return 0.95
-	
-
-#func request_post(httprequest, url, dict_):
-	#var headers = ["Content-Type: application/json"]
-#
-	#var	body = JSON.stringify(dict_)
-	#var error = httprequest.request(url,headers, true, HTTPClient.METHOD_POST, body)
-	#if error != OK:
-		#push_error(" An error occured in the POST request")
-#func request_put(httprequest, url, dict_):
-	#var headers = ["Content-Type: application/json"]
-#
-	#var	body = JSON.stringify(dict_)
-	#var error = httprequest.request(url,headers, true, HTTPClient.METHOD_PUT, body)
-	#if error != OK:
-		#push_error(" An error occured in the PUT request")
 
 # Lo calcule ayudandome de la función y con simetrías
 #func get_object_under_mouse():

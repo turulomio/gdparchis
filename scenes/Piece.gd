@@ -334,15 +334,6 @@ func on_clicked():
 				Globals.add_game_history_entry(self.game().game_start_time, self.player(), self.board())
 			$FloatingText.show_text(tr("Player {0} wins").format([self.player().playername]), self.player().color)
 			await $FloatingText.text_disappear
-	
-			print("Registering end of game:")	
-			var fields = {
-				"game_uuid": Globals.game_data.game_uuid,
-				"human_won": not self.player().ia,
-			}
-			print(fields)
-			Globals.request_put($RequestGameEnd, Globals.APIROOT + "/games/", fields)
-			await $RequestGameEnd.request_completed
 			
 			get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 			return
@@ -543,12 +534,3 @@ func threats_at(square):
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
 	return r
-
-
-## Completion handler for end of game HTTP request.
-func _on_RequestGameEnd_request_completed(result, response_code, headers, body):
-	if result == 0:
-		var r = JSON.parse_string(body.get_string_from_utf8())
-		print("  - ", r["success"], ": ", r["detail"])
-	else:
-		print("  -  Couldn't connect")

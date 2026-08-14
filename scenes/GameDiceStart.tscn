@@ -35,8 +35,6 @@ directional_shadow_split_3 = 0.65
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 65.0
 
-[node name="RequestGameStart" type="HTTPRequest" parent="."]
-
 [node name="FloatingText" parent="." instance=ExtResource("3")]
 visible = false
 position = Vector2(1, 1)
@@ -44,5 +42,3 @@ scale = Vector2(1.5, 1.5)
 
 [node name="Board4" parent="." instance=ExtResource("4_87ycm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-
-[connection signal="request_completed" from="RequestGameStart" to="." method="_on_RequestGameStart_request_completed"]

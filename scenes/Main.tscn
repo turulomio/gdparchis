@@ -86,22 +86,6 @@ size_flags_vertical = 4
 texture = ExtResource("5")
 expand_mode = 4
 
-[node name="StatisticsUser" type="TextureRect" parent="VBoxContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(35, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("8")
-expand_mode = 4
-
-[node name="StatisticsGlobal" type="TextureRect" parent="VBoxContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(35, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("7")
-expand_mode = 4
-
 [node name="Empty" type="Label" parent="VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3")
@@ -121,8 +105,6 @@ filters = PackedStringArray("*.save")
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4")
 
-[node name="RequestPostInstallation" type="HTTPRequest" parent="."]
-
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
@@ -134,8 +116,4 @@ stream = ExtResource("4")
 [connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="gui_input" from="VBoxContainer2/HBoxContainer/Github" to="." method="_on_Github_gui_input"]
-[connection signal="gui_input" from="VBoxContainer2/HBoxContainer/StatisticsUser" to="." method="_on_StatisticsUser_gui_input"]
-[connection signal="gui_input" from="VBoxContainer2/HBoxContainer/StatisticsGlobal" to="." method="_on_StatisticsGlobal_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="ready" from="RequestPostInstallation" to="." method="_on_RequestPostInstallation_ready"]
-[connection signal="request_completed" from="RequestPostInstallation" to="." method="_on_RequestPostInstallation_request_completed"]
