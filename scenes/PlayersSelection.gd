@@ -22,7 +22,7 @@ func _on_Button_pressed():
 ## @return Array of PlayerOptions nodes.
 func nodes():
 	var r = []
-	for node in self.get_children():
+	for node in $HBoxContainer.get_children():
 		if node is PlayerOptions:
 			r.append(node)
 	return r
@@ -35,9 +35,9 @@ func _process(_delta):
 		_on_button_return_pressed()
 
 
-## Resizes control bounds to match window size.
+## Window resize callback.
 func resize():
-	self.size = DisplayServer.window_get_size()
+	pass
 
 
 ## Return button handler navigating back to Main.tscn.

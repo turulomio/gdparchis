@@ -161,6 +161,6 @@ func _on_Return_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
-## Resizes UI container bounds to match active window size.
+## Window resize callback.
 func resize():
-	self.size = DisplayServer.window_get_size()
+	pass

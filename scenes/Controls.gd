@@ -7,9 +7,9 @@ func _ready() -> void:
 
 
 ## Dynamically resizes Control elements based on window size.
+## Window resize callback.
 func resize() -> void:
-	var root_size = get_tree().get_root().size
-	$VBoxContainer.size = root_size
+	pass
 
 
 ## Button handler navigating back to Main.tscn menu.

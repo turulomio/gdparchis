@@ -26,9 +26,9 @@ func _on_FullScreen_toggled(_button_pressed):
 	self.resize()
 
 
-## Resizes control bounds to match current window size.
+## Window resize callback.
 func resize():
-	self.size = DisplayServer.window_get_size()
+	pass
 
 
 ## Checkbox toggle handler for Automatic Dice roll setting.
