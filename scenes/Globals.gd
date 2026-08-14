@@ -296,12 +296,13 @@ func change_language(e_language):
 func generate_uuid():
 	return UUID_UTIL.v4()
 
-## Returns decision probabilty according is difficulty
+## Returns decision probability according to configured difficulty level.
+## @return Float probability threshold (0.65 for Easy, 0.80 for Normal, 0.95 for Difficult).
 func difficulty_probability():
-	if self.settings["difficulty"]==eDifficulty.EASY:
-		return 0.55
-	elif self.settings["difficulty"]==eDifficulty.NORMAL:
-		return 0.75
+	if self.settings["difficulty"] == eDifficulty.EASY:
+		return 0.65
+	elif self.settings["difficulty"] == eDifficulty.NORMAL:
+		return 0.80
 	else:
 		return 0.95
 
