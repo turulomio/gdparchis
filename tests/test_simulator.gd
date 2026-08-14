@@ -25,12 +25,18 @@ func _init():
 		p.color = Globals.ePlayer2Color(i)
 		p.playername = Globals.ePlayerDefaultName(i)
 		p.set_route(Route.new(4, i, self.squares))
+		
+		var d = Dice.new()
+		p.add_child(d)
+		p._Dice = d
+		
 		self.players.append(p)
 		self.board_node.add_child(p)
 		
 		# Create 4 pieces per player
+		var piece_scene = preload("res://scenes/Piece.tscn")
 		for piece_idx in range(4):
-			var piece = Piece.new()
+			var piece = piece_scene.instantiate()
 			piece.id = piece_idx
 			p.add_child(piece)
 			piece.initialize(p.color)

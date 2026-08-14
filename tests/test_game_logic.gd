@@ -1,6 +1,8 @@
 class_name TestGameLogic
 extends RefCounted
 
+const TestSimulatorScript = preload("res://tests/test_simulator.gd")
+
 var passed: int = 0
 var failed: int = 0
 
@@ -31,7 +33,7 @@ func run_all_tests() -> Dictionary:
 
 ## Verifies that piece at home position (route_position 0) requires 5 to exit.
 func test_roll_5_required_to_exit_home() -> void:
-	var sim = TestSimulator.new()
+	var sim = TestSimulatorScript.new()
 	var piece0 = sim.get_piece(0, 0)
 	
 	# Piece starts in home (route_position 0)
@@ -43,7 +45,7 @@ func test_roll_5_required_to_exit_home() -> void:
 
 ## Verifies extra moves array mechanics for +20 (eat) and +10 (goal).
 func test_extra_moves_array_management() -> void:
-	var sim = TestSimulator.new()
+	var sim = TestSimulatorScript.new()
 	var p0 = sim.get_player(0)
 	
 	p0.extra_moves.clear()
@@ -57,7 +59,7 @@ func test_extra_moves_array_management() -> void:
 
 ## Verifies some_piece_in_barrier_of_my_player_can_move evaluation.
 func test_barrier_can_move_evaluation() -> void:
-	var sim = TestSimulator.new()
+	var sim = TestSimulatorScript.new()
 	var p0 = sim.get_player(0)
 	
 	# When no barrier exists, method returns false

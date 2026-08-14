@@ -69,7 +69,7 @@ if args.play is True:
 
 if args.test is True:
     # Run automated GDScript test suite and code coverage report
-    system("godot --headless -s tests/test_runner.gd")
+    system("godot --headless res://tests/test_runner.tscn")
 
 if args.export is True:
     # Update export_presets.cfg version strings and run Godot headless export

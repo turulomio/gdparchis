@@ -32,7 +32,8 @@ func initialize(color_):
 	new_material.clearcoat_enabled = true
 	new_material.clearcoat = 0.4
 	new_material.clearcoat_roughness = 0.15
-	MeshInstance.material_override = new_material
+	if MeshInstance != null:
+		MeshInstance.material_override = new_material
 
 
 ## Sets piece target positions and updates global transform origin.
