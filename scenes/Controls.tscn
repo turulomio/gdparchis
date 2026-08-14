@@ -147,6 +147,12 @@ theme = ExtResource("3")
 text = "Esc: Back to Main Menu / Exit"
 horizontal_alignment = 1
 
+[node name="Ctrl17" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/ControlsList"]
+layout_mode = 2
+theme = ExtResource("3")
+text = "Key S: Toggle Sound ON / OFF"
+horizontal_alignment = 1
+
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 

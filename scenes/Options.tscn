@@ -55,6 +55,7 @@ theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
+theme_override_constants/h_separation = 24
 text = "Full window mode"
 
 [node name="Sound" type="CheckBox" parent="MarginContainer/VBoxContainer/OptionsList"]
@@ -65,6 +66,7 @@ theme_override_colors/font_pressed_color = Color(0, 0, 1, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 1, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 1, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 1, 1)
+theme_override_constants/h_separation = 24
 text = "Sound"
 
 [node name="AutomaticDice" type="CheckBox" parent="MarginContainer/VBoxContainer/OptionsList"]
@@ -75,6 +77,7 @@ theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_constants/h_separation = 24
 text = "Automatic dice and movements"
 
 [node name="HBAutosaves" type="HBoxContainer" parent="MarginContainer/VBoxContainer/OptionsList"]

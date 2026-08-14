@@ -40,7 +40,10 @@ Provides an in-memory testing environment to simulate board states without 3D re
 
 ### 4. UI & Persistence Test Suite (`test_ui.gd`)
 - **Scene Integrity:** Verifies existence and loading of `.tscn` scenes (`Main.tscn`, `PlayersSelection.tscn`, `Options.tscn`, `GameHistory.tscn`, `Game4.tscn`, `GameDiceStart.tscn`).
-- **Match History JSON Persistence:** Verifies clearing, saving, and loading `user://game_history.json` while maintaining exact winner names (`playername`).
+- **Match History & Config Persistence:** Verifies clearing, saving, and loading configuration (`user://gdparchis.cfg`) and match history (`user://game_history.json`) mapped to standard OS user data locations:
+  - **Linux:** `~/.local/share/gdparchis/`
+  - **Windows:** `%APPDATA%\gdparchis\` (`C:\Users\<user>\AppData\Roaming\gdparchis\`)
+  - **macOS:** `~/Library/Application Support/gdparchis/`
 
 ### 5. Code Coverage Parser (`test_coverage.gd`)
 Statically inspects GDScript files in `scenes/*.gd`, counting executable code lines (filtering blank lines, `#` comments, and passive `var`/`signal` declarations):

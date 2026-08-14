@@ -4,9 +4,16 @@ class_name GameHistory
 
 ## Scene entry point initializing history list and window resize handler.
 func _ready():
-	get_tree().get_root().size_changed.connect(self.resize)
+	if not get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.connect(self.resize)
 	self.resize()
 	self.populate_history()
+
+
+## Scene exit cleanup callback disconnecting root window resize signal.
+func _exit_tree() -> void:
+	if get_tree() and get_tree().get_root() and get_tree().get_root().size_changed.is_connected(self.resize):
+		get_tree().get_root().size_changed.disconnect(self.resize)
 
 
 ## Populates scrollable list with cards for each recorded match in Globals.game_history.
@@ -42,7 +49,7 @@ func populate_history() -> void:
 		card_style.border_width_right = 2
 		card_style.border_width_bottom = 2
 		
-		var winner_id = entry.get("winner_id", 0)
+		var winner_id = int(entry.get("winner_id", 0))
 		var winner_color = Globals.ePlayer2Color(winner_id)
 		card_style.border_color = winner_color.lerp(Color.WHITE, 0.3)
 		card.add_theme_stylebox_override("panel", card_style)
@@ -58,7 +65,7 @@ func populate_history() -> void:
 		datetime_lbl.add_theme_font_size_override("font_size", 18)
 		header_hbox.add_child(datetime_lbl)
 		
-		var max_players = entry.get("max_players", 4)
+		var max_players = int(entry.get("max_players", 4))
 		var board_lbl = Label.new()
 		board_lbl.text = "🎯  " + str(max_players) + " " + tr("players board") + "   "
 		board_lbl.add_theme_font_size_override("font_size", 18)

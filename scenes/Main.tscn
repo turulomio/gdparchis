@@ -119,7 +119,6 @@ theme = ExtResource("3")
 ok_button_text = "Load game"
 file_mode = 0
 access = 1
-root_subfolder = "saves/"
 filters = PackedStringArray("*.save")
 display_mode = 1
 favorites_enabled = false
