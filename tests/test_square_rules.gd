@@ -52,6 +52,7 @@ func test_square_max_capacity_two_pieces() -> void:
 	
 	# Assert 3rd piece cannot enter square because empty_position is -1
 	self.assert_true(sq.empty_position() == -1, "3rd piece cannot enter a square with 2 pieces")
+	sim.cleanup()
 
 
 ## Verifies that 2 pieces of the same color form a barrier blocking enemy entry.
@@ -68,6 +69,7 @@ func test_barrier_formation_and_blocking() -> void:
 	
 	# Assert square forms a barrier
 	self.assert_true(sq.has_barrier(), "2 pieces of same player form a barrier")
+	sim.cleanup()
 
 
 ## Verifies that on secure squares (SECURE type), different players coexist without eating.
@@ -84,6 +86,7 @@ func test_secure_squares_cannot_eat() -> void:
 	# Assert Blue piece can enter secure square safely without eating Yellow
 	self.assert_true(secure_sq.type == Globals.eSquareTypes.SECURE, "Square 12 is SECURE type")
 	self.assert_true(secure_sq.empty_position() >= 0, "Enemy piece can enter secure square")
+	sim.cleanup()
 
 
 ## Verifies that on normal squares, landing on an enemy piece triggers eating.
@@ -98,3 +101,4 @@ func test_normal_square_eating_rule() -> void:
 	
 	# Assert square is NORMAL type
 	self.assert_true(normal_sq.type == Globals.eSquareTypes.NORMAL, "Square 10 is NORMAL type")
+	sim.cleanup()

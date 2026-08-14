@@ -41,6 +41,7 @@ func test_roll_5_required_to_exit_home() -> void:
 	
 	# Assert piece squares_to_move for roll 5 returns 1 (move from home to start square)
 	self.assert_true(piece0.route_position == 0, "Piece begins at home route position 0")
+	sim.cleanup()
 
 
 ## Verifies extra moves array mechanics for +20 (eat) and +10 (goal).
@@ -55,6 +56,7 @@ func test_extra_moves_array_management() -> void:
 	self.assert_eq(p0.extra_moves.size(), 2, "Extra moves array stores 2 bonus moves")
 	self.assert_eq(p0.extra_moves[0], 20, "First extra move bonus is +20 (eat)")
 	self.assert_eq(p0.extra_moves[1], 10, "Second extra move bonus is +10 (goal)")
+	sim.cleanup()
 
 
 ## Verifies some_piece_in_barrier_of_my_player_can_move evaluation.
@@ -64,3 +66,4 @@ func test_barrier_can_move_evaluation() -> void:
 	
 	# When no barrier exists, method returns false
 	self.assert_true(p0.some_piece_in_barrier_of_my_player_can_move() == false, "No barrier means barrier move is false")
+	sim.cleanup()

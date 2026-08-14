@@ -51,6 +51,7 @@ if args.procedure is True:
         "Change version and version date in Globals.gd",
         "Update changelog in README.md",
         "Improve translations",
+        "Run management --test",
         "Run management --export",
         f"git commit -am 'gdparchis-{get_version()}'",
         "git push",

@@ -85,3 +85,12 @@ func seed_piece_at_route_position(player_id: int, piece_idx: int, route_pos: int
 ## @return Square object.
 func get_square(square_id: int) -> Square:
 	return self.squares[square_id]
+
+
+## Frees all created Node3D instances to prevent ObjectDB and RID memory leaks.
+func cleanup() -> void:
+	if self.board_node != null and is_instance_valid(self.board_node):
+		self.board_node.free()
+		self.board_node = null
+	self.squares.clear()
+	self.players.clear()
