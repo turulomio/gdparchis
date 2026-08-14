@@ -5,12 +5,12 @@ extends Control
 func _ready():
 	get_tree().get_root().size_changed.connect(self.resize) 
 	self.resize()
-	$VBoxContainer/FullScreen.set_pressed(Globals.settings.get("full_screen", false))
-	$VBoxContainer/Sound.set_pressed(Globals.settings.get("sound", true))
-	$VBoxContainer/AutomaticDice.set_pressed(Globals.settings.get("automatic", false))
-	$VBoxContainer/HBAutosaves/Autosaves.text = str(Globals.settings["autosaves"])
-	$VBoxContainer/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
-	$VBoxContainer/HBLanguages/Language.select(int(Globals.settings["language"]))
+	$MarginContainer/VBoxContainer/OptionsList/FullScreen.set_pressed(Globals.settings.get("full_screen", false))
+	$MarginContainer/VBoxContainer/OptionsList/Sound.set_pressed(Globals.settings.get("sound", true))
+	$MarginContainer/VBoxContainer/OptionsList/AutomaticDice.set_pressed(Globals.settings.get("automatic", false))
+	$MarginContainer/VBoxContainer/OptionsList/HBAutosaves/Autosaves.text = str(Globals.settings["autosaves"])
+	$MarginContainer/VBoxContainer/OptionsList/HBDifficulty/Difficulty.select(Globals.settings["difficulty"])
+	$MarginContainer/VBoxContainer/OptionsList/HBLanguages/Language.select(int(Globals.settings["language"]))
 
 
 ## Return button click handler saving settings to disk and returning to Main.tscn.
@@ -29,8 +29,8 @@ func _on_FullScreen_toggled(_button_pressed):
 ## Window resize callback.
 func resize():
 	# Sync FullScreen checkbox state with current window display mode
-	if has_node("VBoxContainer/FullScreen"):
-		$VBoxContainer/FullScreen.set_pressed_no_signal(Globals.is_window_mode_fullscreen())
+	if has_node("MarginContainer/VBoxContainer/OptionsList/FullScreen"):
+		$MarginContainer/VBoxContainer/OptionsList/FullScreen.set_pressed_no_signal(Globals.is_window_mode_fullscreen())
 
 
 

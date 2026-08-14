@@ -11,7 +11,7 @@ func _ready():
 
 ## Populates scrollable list with cards for each recorded match in Globals.game_history.
 func populate_history() -> void:
-	var list_container = $VBoxContainer/ScrollContainer/ListContainer
+	var list_container = $MarginContainer/VBoxContainer/ScrollContainer/ListContainer
 	for child in list_container.get_children():
 		child.queue_free()
 		

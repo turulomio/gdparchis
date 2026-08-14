@@ -22,7 +22,7 @@ func _on_Button_pressed():
 ## @return Array of PlayerOptions nodes.
 func nodes():
 	var r = []
-	for node in $HBoxContainer.get_children():
+	for node in $MarginContainer/VBoxContainer/HBoxContainer.get_children():
 		if node is PlayerOptions:
 			r.append(node)
 	return r
