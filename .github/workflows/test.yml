@@ -2,8 +2,9 @@ name: Automated Tests
 
 on:
   push:
+    branches: [ "**" ]
   pull_request:
-  workflow_dispatch:
+    branches: [ "**" ]
 
 jobs:
   test:
