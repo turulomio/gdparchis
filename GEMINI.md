@@ -32,11 +32,14 @@ templates/
 ├── linux_release.x86_64 -> /usr/bin/godot
 ├── linux_debug.x86_64   -> /usr/bin/godot
 ├── windows_release_x86_64.exe
-└── windows_debug_x86_64.exe
+├── windows_debug_x86_64.exe
+├── android_release.apk
+└── android_debug.apk
 ```
 
 * **Linux:** Se utiliza `/usr/bin/godot` enlazado como plantilla de exportación local.
 * **Windows:** Se incluyen las plantillas oficiales `windows_release_x86_64.exe` y `windows_debug_x86_64.exe` en `templates/`.
+* **Android:** Se incluyen las plantillas oficiales `android_release.apk` y `android_debug.apk` en `templates/`.
 
 ---
 
@@ -68,6 +71,22 @@ export_path="dist/Windows/Gdparchis.exe"
 custom_template/debug="res://templates/windows_debug_x86_64.exe"
 custom_template/release="res://templates/windows_release_x86_64.exe"
 ```
+
+### Preset 3 (Android):
+```ini
+[preset.3]
+name="Android"
+platform="Android"
+export_path="dist/Android/gdparchis.apk"
+
+[preset.3.options]
+architectures/arm64-v8a=true
+architectures/x86_64=true
+package/unique_name="org.turulomio.gdparchis"
+package/name="gdParchis"
+```
+
+* Para consultar la guía detallada de instalación de paquetes Portage en Gentoo Linux y preparación del Android SDK, ver [`ANDROID.md`](file:///home/keko/Proyectos/gdparchis/ANDROID.md).
 
 ---
 

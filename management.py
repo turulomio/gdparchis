@@ -82,9 +82,11 @@ if args.export is True:
     replace_line_in_file_that_contains("export_presets.cfg", "application/file_version", f'application/file_version="{get_version()}"\n')
     replace_line_in_file_that_contains("export_presets.cfg", "application/product_version", f'application/product_version="{get_version()}"\n')
     replace_line_in_file_that_contains("export_presets.cfg", "application/file_description", f'application/file_description="https://github.com/turulomio/gdparchis/"\n')
-    system("mkdir -p dist/Linux dist/Windows")
+    replace_line_in_file_that_contains("export_presets.cfg", "package/version_name", f'package/version_name="{get_version()}"\n')
+    system("mkdir -p dist/Linux dist/Windows dist/Android")
     system(f"godot --headless --export-release 'Linux' dist/Linux/gdparchis-{get_version()}.x86_64")
     system(f"godot --headless --export-release 'Windows Desktop' dist/Windows/gdparchis-{get_version()}.exe")
+    system(f"godot --headless --export-release 'Android' dist/Android/gdparchis-{get_version()}.apk")
 
 if args.apache is True:
     # Export HTML5 bundle and deploy to remote Apache webserver via rsync/ssh
