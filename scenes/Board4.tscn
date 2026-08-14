@@ -4,23 +4,48 @@
 [ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/Player.tscn" id="2_obu4h"]
 [ext_resource type="PackedScene" uid="uid://2t4s377rchda" path="res://models/Board.blend" id="3_3u5ny"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ra5d6"]
-size = Vector3(65, 0.2, 65)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_board"]
+friction = 0.7
+bounce = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(100, 10, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_x"]
+size = Vector3(72, 12, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_z"]
+size = Vector3(4, 12, 72)
 
 [node name="Board4" type="Node3D"]
 script = ExtResource("1_jfs5m")
 
-[node name="Board" type="RigidBody3D" parent="."]
+[node name="Board" type="StaticBody3D" parent="."]
 transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
-can_sleep = false
-freeze = true
+physics_material_override = SubResource("PhysicsMaterial_board")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Board"]
-transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-shape = SubResource("BoxShape3D_ra5d6")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WallNorth" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -36)
+shape = SubResource("BoxShape3D_wall_x")
+
+[node name="WallSouth" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 36)
+shape = SubResource("BoxShape3D_wall_x")
+
+[node name="WallWest" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 6, 0)
+shape = SubResource("BoxShape3D_wall_z")
+
+[node name="WallEast" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 6, 0)
+shape = SubResource("BoxShape3D_wall_z")
 
 [node name="BoardBlend" parent="Board" instance=ExtResource("3_3u5ny")]
-transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
 
 [node name="Light" parent="Board/BoardBlend" index="1"]
 visible = false

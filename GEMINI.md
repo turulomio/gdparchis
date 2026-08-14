@@ -71,15 +71,26 @@ custom_template/release="res://templates/windows_release_x86_64.exe"
 
 ---
 
-## 4. Ejecución del Script de Exportación
+## 4. Script de Gestión (`management.py`)
 
-Para generar los binarios de exportación, ejecuta el script de gestión:
+* **Ejecutar el proyecto en desarrollo:**
+  ```bash
+  python3 management.py --play
+  ```
 
-```bash
-python3 management.py --export
-```
+* **Generar binarios de exportación:**
+  ```bash
+  python3 management.py --export
+  ```
 
 Los ejecutables y archivos `.pck` resultantes se generan en:
 * `dist/Linux/gdparchis-<VERSION>.x86_64`
 * `dist/Linux/gdparchis-<VERSION>.pck`
 * `dist/Windows/gdparchis-<VERSION>.exe`
+
+---
+
+## 5. Estándares de Documentación de Código
+
+* **Documentación de Funciones:** Cada función escrita en los scripts (GDScript o Python) debe incluir un bloque de documentación descriptivo (encabezado/docstring con `##` o `""`) explicando su propósito, parámetros y tipo de retorno.
+* **Comentarios Internos:** La implementación interna de las funciones debe estar debidamente comentada paso a paso para explicitar la lógica de desarrollo, algoritmos y decisiones clave de diseño.

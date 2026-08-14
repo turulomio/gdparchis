@@ -11,13 +11,100 @@ const IMAGE_WOOD = preload("res://images/wood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 const APIROOT= "https://coolnewton.mooo.com/django_gdparchis"
 
-var game_data=null #Dictionary to load and init games
+var game_data = null # Dictionary to load and init games
 var settings
+var from_dice_start: bool = false
+var game_history: Array = []
 
+
+## Singleton initialization callback. Loads saved configuration settings and game history.
 func _init():
 	print("Singleton load")
 	load_settings()
+	load_game_history()
 
+
+## Loads match history records from user://game_history.json file.
+func load_game_history() -> void:
+	if not FileAccess.file_exists("user://game_history.json"):
+		self.game_history = []
+		return
+		
+	var file_load = FileAccess.open("user://game_history.json", FileAccess.READ)
+	if file_load:
+		var json_string = file_load.get_line()
+		file_load.close()
+		var parsed = JSON.parse_string(json_string)
+		if parsed is Array:
+			self.game_history = parsed
+		else:
+			self.game_history = []
+
+
+## Saves match history records to user://game_history.json file.
+func save_game_history() -> void:
+	var file_save = FileAccess.open("user://game_history.json", FileAccess.WRITE)
+	if file_save:
+		file_save.store_line(JSON.stringify(self.game_history))
+		file_save.close()
+
+
+## Clears all match history records.
+func clear_game_history() -> void:
+	self.game_history.clear()
+	self.save_game_history()
+
+
+## Adds a new game record to history log and persists to disk.
+## @param start_time Unix timestamp float when game began.
+## @param winner Player object that won the game.
+## @param board Board4 node instance.
+func add_game_history_entry(start_time: float, winner, board) -> void:
+	# Calculate elapsed game duration in seconds
+	var current_time = Time.get_unix_time_from_system()
+	var duration_sec = max(1, int(current_time - start_time))
+	var mins = duration_sec / 60
+	var secs = duration_sec % 60
+	var duration_str = "%02d:%02d" % [mins, secs]
+	
+	# Format current date and time string
+	var datetime_dict = Time.get_datetime_dict_from_system()
+	var datetime_str = "%04d-%02d-%02d %02d:%02d" % [datetime_dict.year, datetime_dict.month, datetime_dict.day, datetime_dict.hour, datetime_dict.minute]
+	
+	# Build player composition snapshot
+	var composition = []
+	var max_players = 4
+	if board != null:
+		if "max_players" in board:
+			max_players = board.max_players
+		for p in board.players():
+			composition.append({
+				"id": p.id,
+				"name": p.playername,
+				"color_id": p.id,
+				"ia": p.ia,
+				"plays": p.plays
+			})
+			
+	var entry = {
+		"datetime": datetime_str,
+		"duration_sec": duration_sec,
+		"duration_str": duration_str,
+		"max_players": max_players,
+		"winner_name": winner.playername if winner else "Unknown",
+		"winner_id": winner.id if winner else 0,
+		"winner_ia": winner.ia if winner else false,
+		"composition": composition
+	}
+	
+	# Insert newest record at top index 0
+	self.game_history.push_front(entry)
+	self.save_game_history()
+
+
+## Maps a numeric player ID (0-3) to its corresponding Godot Color.
+## @param player_id Integer ID of the player (0: Yellow, 1: Blue, 2: Red, 3: Green).
+## @return Color associated with the player.
 func ePlayer2Color(player_id):
 	match player_id:
 		0:
@@ -25,97 +112,115 @@ func ePlayer2Color(player_id):
 		1:
 			return Color.BLUE
 		2:
-			return Color.RED
+			return Color(0.75, 0, 0, 1) # Darkened RED by additional 10% (total 25%)
 		3:
-			return Color.GREEN
+			return Color(0, 0.85, 0, 1) # Darkened GREEN by 15%
 		_:
 			return Color.WHITE
+
+
+## Maps a Godot Color back to its numeric player ID (0-3).
+## @param color Color object to convert.
+## @return Player ID integer or null if unmatched.
 func Color2ePlayer(color):
 	match color:
 		Color.YELLOW:
 			return 0
 		Color.BLUE:
 			return 1
-		Color.RED:
+		Color.RED, Color(0.85, 0, 0, 1), Color(0.75, 0, 0, 1):
 			return 2
-		Color.GREEN:
+		Color.GREEN, Color(0, 0.85, 0, 1):
 			return 3
-	
-	#print(color, Color.YELLOW)
 	return null
-	
+
+
+## Returns default name for a player according to its enum ID.
+## @param player_id ePlayer enum integer.
+## @return Default name string.
 func ePlayerDefaultName(player_id):
 	var r
 	match player_id:
 		ePlayer.YELLOW:
-			r= "Yellowy"
+			r = "Yellowy"
 		ePlayer.BLUE:
-			r= "Bluey"
+			r = "Bluey"
 		ePlayer.RED:
-			r= "Redy"
+			r = "Redy"
 		ePlayer.GREEN:
-			r= "Greeny"
+			r = "Greeny"
 	return r
-	
-func vector_is_almost_zero(v,precision=0.001):
-	if self.value_almost_zero(v.x,precision) and self.value_almost_zero(v.y,precision) and self.value_almost_zero(v.z,precision):
+
+
+## Checks whether a 3D vector is within precision threshold of zero.
+## @param v Vector3 to test.
+## @param precision Maximum allowable deviation magnitude.
+## @return True if all components are nearly zero.
+func vector_is_almost_zero(v, precision = 0.001):
+	if self.value_almost_zero(v.x, precision) and self.value_almost_zero(v.y, precision) and self.value_almost_zero(v.z, precision):
 		return true
 	return false
-	
-func value_almost_zero(_value,precision=0.001):
-	if abs(_value)<=precision:
+
+
+## Checks whether a float value is within precision threshold of zero.
+## @param _value Float value to test.
+## @param precision Maximum allowable deviation magnitude.
+## @return True if value is nearly zero.
+func value_almost_zero(_value, precision = 0.001):
+	if abs(_value) <= precision:
 		return true
 	return false
 	
 func save_game(game):
-	var dir= DirAccess.open("user://saves/")
-	if not dir.dir_exists("user://saves/"):
-		dir.make_dir("user://saves/")
+	if not DirAccess.dir_exists_absolute("user://saves/"):
+		DirAccess.make_dir_absolute("user://saves/")
 				
-	#Removes innecesary autosaves
+	# Removes unnecessary autosaves
 	var files=[]
-	dir=DirAccess.open("user://saves/")
-	dir.list_dir_begin()
-	while true:
-		var file=dir.get_next()
-		if file=="":
-			break
-		else:
-			if "autosave" in file:
+	var dir=DirAccess.open("user://saves/")
+	if dir:
+		dir.list_dir_begin()
+		while true:
+			var file=dir.get_next()
+			if file=="":
+				break
+			elif "autosave" in file:
 				files.append(file)
-
-	dir.list_dir_end()
-	files.sort()
-	var to_remove=files.slice(0,files.size()-self.settings.autosaves)
-	for f in to_remove:
-		dir.remove("user://saves/"+f)
+		dir.list_dir_end()
+		files.sort()
+		if files.size() >= self.settings.get("autosaves", 10):
+			var to_remove=files.slice(0, files.size() - self.settings.get("autosaves", 10) + 1)
+			for f in to_remove:
+				dir.remove("user://saves/"+f)
 		
-	#Create new autosave
+	# Create new autosave
 	var d=Time.get_datetime_dict_from_system()
 	var filename="%d%s%s %s%s%s autosave %d.save" % [d.year,"%02d" % d.month,"%02d" %d.day,"%02d" %d.hour,"%02d" %d.minute, "%02d" %d.second, game.board().max_players]
 	var file_new=FileAccess.open("user://saves/" + filename, FileAccess.WRITE)
-	var dict={}	
-	dict["max_players"]=game.board().max_players
-	dict["current"]=game.current_player.id
-	dict["fake_dice"]=[]
-	dict["players"]=[]
-	dict["game_uuid"]=self.game_data.game_uuid
-	for p in game.board().players():
-		var dict_p={}
-		dict_p["id"]=p.id
-		dict_p["playername"]=p.playername
-		dict_p["plays"]=p.plays
-		dict_p["ia"]=p.ia
-		dict["players"].append(dict_p)
-		dict_p["pieces"]=[]
-		for piece in p.pieces():
-			var dict_piece={}
-			dict_piece["id"]=piece.id
-			dict_piece["route_position"]=piece.route_position
-			dict_piece["square_position"]=piece.square_position
-			dict_p["pieces"].append(dict_piece)
-	file_new.store_line(JSON.stringify(dict))
-	file_new.close()
+	if file_new:
+		var dict={}	
+		dict["max_players"]=game.board().max_players
+		dict["current"]=game.current_player.id
+		dict["fake_dice"]=[]
+		dict["players"]=[]
+		dict["game_uuid"]=self.game_data.game_uuid
+		for p in game.board().players():
+			var dict_p={}
+			dict_p["id"]=p.id
+			dict_p["playername"]=p.playername
+			dict_p["plays"]=p.plays
+			dict_p["ia"]=p.ia
+			dict["players"].append(dict_p)
+			dict_p["pieces"]=[]
+			for piece in p.pieces():
+				var dict_piece={}
+				dict_piece["id"]=piece.id
+				dict_piece["route_position"]=piece.route_position
+				dict_piece["square_position"]=piece.square_position
+				dict_p["pieces"].append(dict_piece)
+		file_new.store_line(JSON.stringify(dict))
+		file_new.close()
+		print("Autosave created: ", filename)
 	
 func new_game(max_players):
 	var dict={}
@@ -225,7 +330,7 @@ func difficulty_probability():
 #	var space_state=get_world().direct_space_state
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collider
-func position4(square_id, square_position,h=2):
+func position4(square_id, square_position, h=0.2):
 	match square_id:
 		1:
 			return [Vector3(-4.9,h,-30.7), Vector3(-7.8,h,-30.7)][square_position]
@@ -459,23 +564,40 @@ func position4(square_id, square_position,h=2):
 		_:
 			return [Vector3(0,h+square_id*1,33),Vector3(5,h+square_id*1,33),Vector3(10,h+square_id*1,33),Vector3(15,h+square_id*1,33)][square_position]
 
-func game_load_glogals_game_data(gameobject,show_pieces):
-	# ALL Game scenes have board() y cargan de Globals gamedata
+## Loads global game state data into board, players, and piece positions.
+## @param gameobject Scene object instance containing a board() method.
+## @param show_pieces Boolean flag indicating whether piece visual models should be visible.
+## @param animate Optional boolean flag controlling whether piece placement is animated step-by-step.
+func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
+	# 1. Initialize board squares, players, and default piece properties
 	gameobject.board().initialize(show_pieces)
 	
-	
+	# 2. Loop through each player dictionary stored in global game_data
 	for d_player in Globals.game_data.players:
-		var player=gameobject.board().get_player_by_id(d_player["id"])
-		player.plays=d_player["plays"]
-		player.ia=d_player["ia"]		
-		player.playername=d_player["playername"]		
+		var player = gameobject.board().get_player_by_id(d_player["id"])
+		player.plays = d_player["plays"]
+		player.ia = d_player["ia"]		
+		player.playername = d_player["playername"]		
+		
+		# 3. Loop through each piece configuration for active players
 		for d_piece in d_player["pieces"]:
-			if show_pieces:
-				var piece=gameobject.board().get_piece_by_player_id_and_id(player.id,d_piece["id"])
-				# print(d_piece,player,piece)
-				if player.plays:
-					piece.move_to_route_position(d_piece["route_position"], 0.2)
+			var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
+			if show_pieces and player.plays:
+				piece.visible = true
+				if animate:
+					# Animate piece movement along route to target position at 4x speed (0.1s duration vs normal 0.4s)
+					piece.move_to_route_position(d_piece["route_position"], 0.1)
 					await piece.piece_moved
+				else:
+					# Directly place piece at target route position without playing hop animations
+					var square_final = player.route().square_at(d_piece["route_position"])
+					var square_position_final = square_final.empty_position()
+					square_final.set_piece_at_square_position(square_position_final, piece)
+					piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
+					piece.change_scale_on_specials_squares()
+			else:
+				# Hide pieces for non-participating players
+				piece.visible = false
 
 		
 	## Registering game
