@@ -10,32 +10,44 @@
 
 [node name="Main" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("6")
 script = ExtResource("1")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-offset_right = 1161.0
-offset_bottom = 649.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Players4" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Players4" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("6")
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "4 players board"
 flat = true
 
-[node name="Load" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Load" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 text = "Load game"
@@ -43,7 +55,7 @@ flat = true
 clip_text = true
 expand_icon = true
 
-[node name="History" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="History" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.55, 0, 1)
 text = "Match history"
@@ -51,7 +63,15 @@ flat = true
 clip_text = true
 expand_icon = true
 
-[node name="Options" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Controls" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.6, 1, 1)
+text = "Controls & Shortcuts"
+flat = true
+clip_text = true
+expand_icon = true
+
+[node name="Options" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Settings"
@@ -59,26 +79,26 @@ flat = true
 clip_text = true
 expand_icon = true
 
-[node name="Exit" type="Button" parent="VBoxContainer2/VBoxContainer"]
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "Exit"
 flat = true
 expand_icon = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(2.08165e-12, 45)
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Version" type="Label" parent="VBoxContainer2/HBoxContainer"]
+[node name="Version" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3")
 
-[node name="Github" type="TextureRect" parent="VBoxContainer2/HBoxContainer"]
+[node name="Github" type="TextureRect" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -86,34 +106,41 @@ size_flags_vertical = 4
 texture = ExtResource("5")
 expand_mode = 4
 
-[node name="Empty" type="Label" parent="VBoxContainer2/HBoxContainer"]
+[node name="Empty" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3")
-text = " "
 
 [node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
+title = "Load game"
 initial_position = 2
-size = Vector2i(900, 500)
+size = Vector2i(1200, 750)
+min_size = Vector2i(1000, 650)
 theme = ExtResource("3")
-ok_button_text = "Abrir"
+ok_button_text = "Load game"
 file_mode = 0
 access = 1
 root_subfolder = "saves/"
 filters = PackedStringArray("*.save")
+display_mode = 1
+favorites_enabled = false
+recent_list_enabled = false
+folder_creation_enabled = false
+layout_toggle_enabled = false
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4")
 
-[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer2/VBoxContainer/History" to="." method="_on_History_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
-[connection signal="gui_input" from="VBoxContainer2/HBoxContainer/Github" to="." method="_on_Github_gui_input"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/History" to="." method="_on_History_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/History" to="." method="_on_History_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Controls" to="." method="_on_Controls_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Controls" to="." method="_on_Controls_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer2/HBoxContainer/Github" to="." method="_on_Github_gui_input"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

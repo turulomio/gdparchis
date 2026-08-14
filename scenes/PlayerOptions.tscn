@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scenes/PlayerOptions.gd" id="2"]
 
 [node name="PlayerOptions" type="Control"]
-custom_minimum_size = Vector2(500, 66)
+custom_minimum_size = Vector2(0, 66)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 739.0
@@ -15,12 +15,17 @@ script = ExtResource("2")
 playername = "Yellowy"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 233.0
-offset_bottom = 64.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("1")
 stretch_mode = 1
 
@@ -35,11 +40,13 @@ placeholder_text = "User name"
 
 [node name="Plays" type="CheckBox" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 button_pressed = true
 text = "Plays?"
 
 [node name="IA" type="CheckBox" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 button_pressed = true
 text = "IA?"
 

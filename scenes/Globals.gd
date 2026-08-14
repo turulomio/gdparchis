@@ -598,22 +598,41 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 	print(Globals.game_data)
 
 
+## Checks if current window display mode is fullscreen.
+## @param screen Integer screen monitor index (default 0).
+## @return True if window is fullscreen.
 func is_window_mode_fullscreen(screen=0):
-	if  DisplayServer.window_get_mode(screen)== DisplayServer.WINDOW_MODE_FULLSCREEN:
+	if DisplayServer.window_get_mode(screen) == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		return true
 	return false
 	
-func set_window_mode_fullscreen(boolean,screen=0):
+
+## Sets window display mode to fullscreen or windowed.
+## @param boolean Boolean flag for fullscreen mode.
+## @param screen Integer screen monitor index (default 0).
+func set_window_mode_fullscreen(boolean, screen=0):
 	if boolean:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, screen)
-		settings["full_screen"]=true
+		settings["full_screen"] = true
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, screen)
-		settings["full_screen"]=false
+		settings["full_screen"] = false
 	save_settings()
 
+
+## Toggles between fullscreen and windowed display mode.
+## @param screen Integer screen monitor index (default 0).
 func toggle_window_mode(screen=0):
 	if is_window_mode_fullscreen(screen):
-		set_window_mode_fullscreen(false,screen)
+		set_window_mode_fullscreen(false, screen)
 	else:
-		set_window_mode_fullscreen(true,screen)
+		set_window_mode_fullscreen(true, screen)
+
+
+## Global input event handler capturing shortcut keys across all scenes (e.g. F11 fullscreen).
+## @param event InputEvent object.
+func _unhandled_input(event: InputEvent) -> void:
+	# Toggle window display mode when full_screen action (F11 / F key) is pressed
+	if event.is_action_pressed("full_screen"):
+		get_viewport().set_input_as_handled()
+		self.toggle_window_mode()

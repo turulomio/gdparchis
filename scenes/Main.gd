@@ -3,7 +3,9 @@ extends Control
 
 ## Scene entry point initializing version label text and window resize listener.
 func _ready():	
-	$VBoxContainer2/HBoxContainer/Version.text = " Version: {0}".format([Globals.VERSION])
+	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0}").format([Globals.VERSION])
+	$FileDialog.title = tr("Load game")
+	$FileDialog.ok_button_text = tr("Load game")
 	get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
 
@@ -15,7 +17,9 @@ func _on_Exit_pressed():
 
 ## Button handler displaying the load game FileDialog.
 func _on_Load_pressed():
-	$FileDialog.popup()
+	$FileDialog.current_dir = "user://saves/"
+	self.resize()
+	$FileDialog.popup_centered()
 
 
 ## Button handler starting a new 4-player game.
@@ -36,6 +40,16 @@ func _on_FileDialog_file_selected(path):
 ## Button handler navigating to GameHistory.tscn scene.
 func _on_History_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/GameHistory.tscn")
+
+
+## Mouse hover event playing sound effect for Controls button.
+func _on_Controls_mouse_entered():
+	$Click.play()
+
+
+## Button handler navigating to Controls.tscn scene.
+func _on_Controls_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Controls.tscn")
 
 
 ## Button handler navigating to Options.tscn scene.
@@ -84,6 +98,10 @@ func _on_Exit_mouse_entered():
 	$Click.play()
 
 
-## Resizes UI container bounds to match active window dimensions.
+## Resizes UI container bounds and FileDialog to match active window dimensions.
 func resize():
-	$VBoxContainer2.size = DisplayServer.window_get_size()
+	if has_node("FileDialog"):
+		var vp_size = get_viewport().get_visible_rect().size
+		var target_w = max(400, int(vp_size.x * 0.85))
+		var target_h = max(300, int(vp_size.y * 0.85))
+		$FileDialog.size = Vector2i(target_w, target_h)

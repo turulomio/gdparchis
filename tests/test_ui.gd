@@ -35,6 +35,7 @@ func test_ui_scene_paths_exist() -> void:
 		"res://scenes/Main.tscn",
 		"res://scenes/PlayersSelection.tscn",
 		"res://scenes/Options.tscn",
+		"res://scenes/Controls.tscn",
 		"res://scenes/GameHistory.tscn",
 		"res://scenes/Game4.tscn",
 		"res://scenes/GameDiceStart.tscn"
