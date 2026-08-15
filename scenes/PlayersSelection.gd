@@ -54,7 +54,7 @@ func _on_Button_pressed():
 		6:
 			get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart6.tscn")
 		_:
-			get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart4.tscn")
+			get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart.tscn")
 
 
 ## Helper returning an array of all child PlayerOptions nodes.

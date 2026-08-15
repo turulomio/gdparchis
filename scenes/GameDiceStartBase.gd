@@ -10,10 +10,9 @@ var winers = []
 ## Returns the BoardBase child node instance. Virtual method.
 ## @return BoardBase node.
 func board() -> BoardBase:
-	var b = get_node_or_null("Board3")
-	if b: return b
-	b = get_node_or_null("Board4")
-	if b: return b
+	for child in get_children():
+		if child is BoardBase:
+			return child
 	return null
 
 
@@ -27,7 +26,7 @@ func get_target_game_scene_path() -> String:
 func _ready():
 	print("LOADING GAMEDICESTART")
 	if FloatingText:
-		FloatingText.show_text(tr("Let's see who starts"), Color(255, 255, 255, 1))
+		FloatingText.show_text(tr("Let's see who starts"), Color.WHITE)
 
 	# Load global player configuration and await all pieces moving to their starting home positions
 	await Globals.game_load_glogals_game_data(self, true, true)

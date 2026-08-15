@@ -54,6 +54,7 @@ func set_final_position(_route_position, _square_position, square_id):
 	self.square_position = _square_position
 	self.global_transform.origin = self.get_3d_position(square_id, self.square_position, 0.2)
 	self.rotation = Vector3.ZERO
+	self.change_scale_on_specials_squares(square_id)
 
 
 ## Performs a smooth corrective alignment animation, snapping the piece to its exact square slot and 3D upright stance on the board floor.
@@ -217,8 +218,8 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 				var dest_pos = next_waypoint if is_last_step else Vector3(next_waypoint.x, cruise_y, next_waypoint.z)
 				var step_sq = self.route().square_at(initial_route_pos + step_idx + 1)
 				
-				# Target 0.75 scale if stepping onto special corridor square, otherwise restore normal 1.0 scale
-				var target_scale = Vector3(0.75, 0.75, 0.75) if (step_sq != null and is_special_square_id(step_sq.id)) else Vector3(1, 1, 1)
+				# Target scale calculated from board calibration data or special square check
+				var target_scale = get_target_scale_for_square(step_sq.id, self.square_position) if step_sq != null else Vector3(1, 1, 1)
 				var mid_y = max(current_pos.y, dest_pos.y) + apex_add_y
 				var mid_pos = Vector3((current_pos.x + dest_pos.x) / 2.0, mid_y, (current_pos.z + dest_pos.z) / 2.0)
 				
@@ -234,7 +235,7 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 				
 			# Soft touchdown bounce on final destination square matching target square scale
 			var bounce_tween = get_tree().create_tween()
-			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
+			var dest_scale = get_target_scale_for_square(square_final.id, self.square_position)
 			bounce_tween.tween_property(self, "scale", Vector3(dest_scale.x * 1.08, dest_scale.y * 0.88, dest_scale.z * 1.08), 0.05 * speed_mult)
 			bounce_tween.tween_property(self, "scale", dest_scale, 0.07 * speed_mult)
 			await bounce_tween.finished
@@ -245,6 +246,19 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	# Adjust visual scale on narrow corridor squares and signal completion
 	self.change_scale_on_specials_squares()
 	emit_signal("piece_moved")
+
+
+## Helper returning scale Vector3 for target square and slot based on board calibration or special square check.
+func get_target_scale_for_square(sq_id: int, sq_pos: int = -1) -> Vector3:
+	if sq_pos == -1:
+		sq_pos = self.square_position
+	var b = self.board()
+	if b and b.has_method("get_piece_scale"):
+		var custom_sc = b.get_piece_scale(sq_id, sq_pos)
+		return Vector3(custom_sc, custom_sc, custom_sc)
+	if is_special_square_id(sq_id):
+		return Vector3(0.75, 0.75, 0.75)
+	return Vector3(1.0, 1.0, 1.0)
 
 
 ## Helper evaluating whether a given square ID is a special narrow corridor square.
@@ -265,17 +279,7 @@ func change_scale_on_specials_squares(sq_id: int = -1):
 		else:
 			sq_id = 0
 			
-	var b = self.board()
-	if b and b.has_method("get_piece_scale"):
-		var custom_sc = b.get_piece_scale(sq_id, self.square_position)
-		if custom_sc != 1.0:
-			self.scale = Vector3(custom_sc, custom_sc, custom_sc)
-			return
-
-	if is_special_square_id(sq_id):
-		self.scale = Vector3(0.75, 0.75, 0.75)
-	else:
-		self.scale = Vector3(1.0, 1.0, 1.0)
+	self.scale = get_target_scale_for_square(sq_id, self.square_position)
 
 
 ## Returns the number of squares this piece should move based on throw and extra moves.

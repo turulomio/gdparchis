@@ -469,7 +469,9 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 						await piece.piece_moved
 					else:
 						var square_final = player.route().square_at(d_piece["route_position"])
-						var square_position_final = square_final.empty_position()
+						var square_position_final = d_piece.get("square_position", square_final.empty_position())
+						if square_position_final < 0 or square_position_final >= square_final.max_pieces():
+							square_position_final = square_final.empty_position()
 						square_final.set_piece_at_square_position(square_position_final, piece)
 						piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
 						piece.change_scale_on_specials_squares()

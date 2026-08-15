@@ -27,7 +27,40 @@ func run_all_tests() -> Dictionary:
 	self.test_match_history_persistence()
 	self.test_settings_persistence()
 	self.test_version_comparison()
+	self.test_save_and_load_for_all_board_types()
 	return {"passed": self.passed, "failed": self.failed}
+
+
+## Verifies save and load data structure and player/piece state persistence across all board types (3, 4, 6 players).
+func test_save_and_load_for_all_board_types() -> void:
+	if not DirAccess.dir_exists_absolute("user://saves/"):
+		DirAccess.make_dir_absolute("user://saves/")
+		
+	for player_count in [3, 4, 6]:
+		var mock_game_data = Globals.new_game(player_count)
+		mock_game_data["current"] = (player_count - 1)
+		
+		# Move piece 0 of player 0 to a specific test position on route
+		mock_game_data["players"][0]["pieces"][0]["route_position"] = 10
+		mock_game_data["players"][0]["pieces"][0]["square_position"] = 1
+		
+		# Save mock game data to temporary test file
+		var temp_save_path = "user://saves/test_board_%d.save" % player_count
+		var file_out = FileAccess.open(temp_save_path, FileAccess.WRITE)
+		if file_out:
+			file_out.store_line(JSON.stringify(mock_game_data))
+			file_out.close()
+			
+		# Load game data back from disk
+		var loaded_data = Globals.load_game(temp_save_path)
+		self.assert_eq(loaded_data.get("max_players"), player_count, "Saved game max_players restored for %d-player board" % player_count)
+		self.assert_eq(loaded_data.get("current"), player_count - 1, "Saved game current_player restored for %d-player board" % player_count)
+		self.assert_eq(loaded_data.get("players").size(), player_count, "Saved game players count restored for %d-player board" % player_count)
+		self.assert_eq(loaded_data["players"][0]["pieces"][0]["route_position"], 10, "Saved piece route_position restored for %d-player board" % player_count)
+		
+		# Clean up temporary test file
+		if FileAccess.file_exists(temp_save_path):
+			DirAccess.remove_absolute(temp_save_path)
 
 
 ## Verifies all UI scene files exist on filesystem.

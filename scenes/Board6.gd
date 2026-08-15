@@ -25,7 +25,9 @@ func setup_wooden_frame() -> void:
 	if blend:
 		blend.visible = false
 		
-	var board_node = self
+	var board_node = get_node_or_null("Board")
+	if not board_node:
+		board_node = self
 	if not board_node.has_node("WoodenFrame"):
 		var wf = Node3D.new()
 		wf.name = "WoodenFrame"
@@ -35,28 +37,12 @@ func setup_wooden_frame() -> void:
 	for child in frame_root.get_children():
 		child.queue_free()
 		
-	var wood_tex = load("res://images/wood.png")
 	var board_tex = load("res://images/parchis6.png")
 	if not board_tex:
 		board_tex = load("res://images/parchis6.svg")
 		
-	var wood_mat = StandardMaterial3D.new()
-	wood_mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
-	wood_mat.albedo_texture = wood_tex
-	wood_mat.roughness = 0.45
-	wood_mat.uv1_scale = Vector3(4, 4, 4)
-	wood_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	wood_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-	
-	var board_mat = StandardMaterial3D.new()
-	board_mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
-	board_mat.albedo_texture = board_tex
-	board_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	board_mat.roughness = 1.0
-	board_mat.metallic = 0.0
-	board_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	board_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	board_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	var wood_mat = self.create_wood_material()
+	var board_mat = self.create_board_face_material(board_tex)
 	
 	var rail_height: float = 0.625
 	var base_thickness: float = 0.625
@@ -100,14 +86,14 @@ func setup_wooden_frame() -> void:
 		var p2 = v_poly[(i + 1) % n_verts]
 		var idx_c = t_verts.size()
 		
-		# CCW order viewed from top (+Y)
+		# Clockwise order viewed from top (+Y) so frontface points UP
 		t_verts.append(center_top)
-		t_verts.append(Vector3(p2.x, y_top, p2.y))
 		t_verts.append(Vector3(p1.x, y_top, p1.y))
+		t_verts.append(Vector3(p2.x, y_top, p2.y))
 		
 		t_uvs.append(center_uv)
-		t_uvs.append(Vector2(p2.x / board_width + 0.5, p2.y / H + 0.5))
 		t_uvs.append(Vector2(p1.x / board_width + 0.5, p1.y / H + 0.5))
+		t_uvs.append(Vector2(p2.x / board_width + 0.5, p2.y / H + 0.5))
 		
 		for k in range(3): t_normals.append(Vector3.UP)
 		
@@ -281,10 +267,8 @@ func setup_wooden_frame() -> void:
 
 ## Configures materials and texture for 6-player board.
 func setup_board_materials() -> void:
-	setup_wooden_frame()
-	var blend = get_node_or_null("Board/BoardBlend")
-	if blend:
-		blend.visible = false
+	self.setup_wooden_frame()
+	super.setup_board_materials()
 
 
 
@@ -330,3 +314,48 @@ func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vec
 ## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
 func get_max_slots(sq_id: int) -> int:
 	return 4 if sq_id in [110, 118, 126, 134, 142, 150, 151, 152, 153, 154, 155, 156] else 2
+
+
+## Populates and configures squares dictionary for 6-player board geometry.
+func setup_squares() -> void:
+	self.squares = {}
+	for i in range(1, 151):
+		self.squares[i] = Square.new(i, Globals.eSquareTypes.NORMAL)
+	for i in range(151, 157):
+		self.squares[i] = Square.new(i, Globals.eSquareTypes.START)
+
+	self.squares[5].type = Globals.eSquareTypes.FIRST
+	self.squares[5].color = Color.YELLOW
+	self.squares[22].type = Globals.eSquareTypes.FIRST
+	self.squares[22].color = Color.BLUE
+	self.squares[39].type = Globals.eSquareTypes.FIRST
+	self.squares[39].color = Globals.ePlayer2Color(2)
+	self.squares[56].type = Globals.eSquareTypes.FIRST
+	self.squares[56].color = Globals.ePlayer2Color(3)
+	self.squares[73].type = Globals.eSquareTypes.FIRST
+	self.squares[73].color = Globals.ePlayer2Color(4)
+	self.squares[90].type = Globals.eSquareTypes.FIRST
+	self.squares[90].color = Globals.ePlayer2Color(5)
+
+	for sq_id in [12, 17, 29, 34, 46, 51, 63, 68, 80, 85, 97, 102]:
+		self.squares[sq_id].type = Globals.eSquareTypes.SECURE
+
+	self.squares[110].type = Globals.eSquareTypes.END
+	self.squares[110].color = Color.YELLOW
+	self.squares[118].type = Globals.eSquareTypes.END
+	self.squares[118].color = Color.BLUE
+	self.squares[126].type = Globals.eSquareTypes.END
+	self.squares[126].color = Globals.ePlayer2Color(2)
+	self.squares[134].type = Globals.eSquareTypes.END
+	self.squares[134].color = Globals.ePlayer2Color(3)
+	self.squares[142].type = Globals.eSquareTypes.END
+	self.squares[142].color = Globals.ePlayer2Color(4)
+	self.squares[150].type = Globals.eSquareTypes.END
+	self.squares[150].color = Globals.ePlayer2Color(5)
+
+	self.squares[151].color = Color.YELLOW
+	self.squares[152].color = Color.BLUE
+	self.squares[153].color = Globals.ePlayer2Color(2)
+	self.squares[154].color = Globals.ePlayer2Color(3)
+	self.squares[155].color = Globals.ePlayer2Color(4)
+	self.squares[156].color = Globals.ePlayer2Color(5)

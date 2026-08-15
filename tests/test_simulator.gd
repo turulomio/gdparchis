@@ -16,10 +16,8 @@ func _init():
 	self.board_node = Board4Script.new()
 	self.board_node.max_players = 4
 	self.board_node.show_pieces = false
-	
-	# Create 104 board squares
-	for i in range(1, 105):
-		self.squares[i] = SquareScript.new(i)
+	self.board_node.setup_squares()
+	self.squares = self.board_node.squares
 		
 	# Create 4 players (0: Yellow, 1: Blue, 2: Red, 3: Green)
 	for i in range(4):
