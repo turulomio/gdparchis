@@ -168,19 +168,20 @@ func find_empty_board_spot() -> Vector2:
 			2: start_square_id = 39
 			3: start_square_id = 56
 	
-	var exit_3d = Globals.position4(start_square_id, 0)
+	var board_obj = self.player().board() if (self.player() and self.player().board()) else null
+	var exit_3d = board_obj.get_position3d(start_square_id, 0) if board_obj else Globals.position4(start_square_id, 0)
 	var exit_2d = Vector2(exit_3d.x, exit_3d.z)
 
 	# 2. Collect 2D floor coordinates of all active standing pieces
 	var piece_positions: Array[Vector2] = []
-	if self.player() and self.player().board():
-		for p in self.player().board().players():
+	if board_obj:
+		for p in board_obj.players():
 			for piece in p.pieces():
 				if piece.visible:
 					var pos3d = piece.global_transform.origin
 					piece_positions.append(Vector2(pos3d.x, pos3d.z))
 					if piece.square():
-						var sq_pos = Globals.position4(piece.square().id, piece.square_position)
+						var sq_pos = piece.get_3d_position(piece.square().id, piece.square_position)
 						piece_positions.append(Vector2(sq_pos.x, sq_pos.z))
 
 	# 3. Fine-grid search across board floor (X: -26 to 26, Z: -26 to 26)

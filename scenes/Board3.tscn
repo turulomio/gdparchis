@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3o5wtrh3qa3c"]
+
+[ext_resource type="Script" path="res://scenes/Board3.gd" id="1_board3"]
+[ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://2t4s377rchda" path="res://models/Board.blend" id="3_blend"]
+[ext_resource type="Texture2D" uid="uid://bxc3uw0fcaaxo" path="res://images/parchis3.png" id="4_tex"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_parchis3"]
+albedo_texture = ExtResource("4_tex")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_board"]
+friction = 0.7
+bounce = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(100, 10, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_x"]
+size = Vector3(72, 12, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_z"]
+size = Vector3(4, 12, 72)
+
+[node name="Board3" type="Node3D"]
+script = ExtResource("1_board3")
+
+[node name="Board" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_board")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WallNorth" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -36)
+shape = SubResource("BoxShape3D_wall_x")
+
+[node name="WallSouth" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 36)
+shape = SubResource("BoxShape3D_wall_x")
+
+[node name="WallWest" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 6, 0)
+shape = SubResource("BoxShape3D_wall_z")
+
+[node name="WallEast" type="CollisionShape3D" parent="Board"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 6, 0)
+shape = SubResource("BoxShape3D_wall_z")
+
+[node name="WoodenFrame" type="Node3D" parent="Board"]
+
+[node name="BoardBlend" parent="Board" instance=ExtResource("3_blend")]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+
+[node name="Cube" parent="Board/BoardBlend" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_parchis3")
+
+[node name="Light" parent="Board/BoardBlend" index="1"]
+visible = false
+
+[node name="Camera" parent="Board/BoardBlend" index="2"]
+visible = false
+
+[node name="Player0" parent="." groups=["players"] instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -5, 2.08165e-12)
+
+[node name="Player1" parent="." groups=["players"] instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -10, 2.08165e-12)
+id = 1
+
+[node name="Player2" parent="." groups=["players"] instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -15, 2.08165e-12)
+id = 2
+
+[editable path="Board/BoardBlend"]

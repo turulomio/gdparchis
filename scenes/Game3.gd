@@ -1,16 +1,16 @@
 extends GameBase
-class_name Game4
+class_name Game3
 
 
-## Returns the Board4 child node instance.
-## @return Board4 node.
+## Returns the Board3 child node instance.
+## @return BoardBase node.
 func board() -> BoardBase:
-	return $Board4 if has_node("Board4") else super.board()
+	return $Board3 if has_node("Board3") else super.board()
 
 
 ## Scene entry point. Initializes board data, player turns, and auto-throws if AI.
 func _ready():	
-	print("LOADING GAME4")
+	print("LOADING GAME3")
 	self.game_start_time = Time.get_unix_time_from_system()
 	var d = Globals.game_data
 
@@ -48,17 +48,15 @@ func _ready():
 ## Frame process loop handling mouse click interactions, camera shortcuts, and fullscreen toggles.
 ## @param _delta Delta frame time.
 func _process(_delta):
-	# Handle left click interactions with Piece or Dice
 	if Input.is_action_just_pressed("left_click"):
 		var object = get_object_under_mouse()
 		handle_object_click(object)
 
-	# Handle right click interactions (popup details)
 	if Input.is_action_just_pressed("right_click"):
 		var object = get_object_under_mouse()
 		handle_object_right_click(object)
 
-	# Process preset camera view angles
+	# Process preset camera view angles for 3 players (Yellow, Blue, Red)
 	if Input.is_action_just_pressed("top_view"):
 		OrCamera.look_at_from_position(Vector3(0, 50, 0), Vector3(0, 0, 0.001), Vector3.UP)
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
@@ -66,21 +64,11 @@ func _process(_delta):
 		OrCamera.look_at_from_position(Vector3(0, -50, 0), Vector3(0, 0, -0.001), Vector3.UP)
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
 	if Input.is_action_just_pressed("yellow_view"):
-		OrCamera.look_at_from_position(Vector3(-18, 48, -18), Vector3(0, -11.0, 0), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(0, 48, -25), Vector3(0, -11.0, 0), Vector3.UP)
 	if Input.is_action_just_pressed("blue_view"):
-		OrCamera.look_at_from_position(Vector3(-18, 48, 18), Vector3(0, -11.0, 0), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(-22, 48, 13), Vector3(0, -11.0, 0), Vector3.UP)
 	if Input.is_action_just_pressed("red_view"):
-		OrCamera.look_at_from_position(Vector3(18, 48, 18), Vector3(0, -11.0, 0), Vector3.UP)
-	if Input.is_action_just_pressed("green_view"):
-		OrCamera.look_at_from_position(Vector3(18, 48, -18), Vector3(0, -11.0, 0), Vector3.UP)
-	if Input.is_action_just_pressed("yellow_view_floor"):
-		OrCamera.look_at_from_position(Vector3(-30, 1, -30), Vector3(0, 1, 0), Vector3.UP)
-	if Input.is_action_just_pressed("blue_view_floor"):
-		OrCamera.look_at_from_position(Vector3(-30, 1, 30), Vector3(0, 1, 0), Vector3.UP)
-	if Input.is_action_just_pressed("red_view_floor"):
-		OrCamera.look_at_from_position(Vector3(30, 1, 30), Vector3(0, 1, 0), Vector3.UP)
-	if Input.is_action_just_pressed("green_view_floor"):
-		OrCamera.look_at_from_position(Vector3(30, 1, -30), Vector3(0, 1, 0), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(22, 48, 13), Vector3(0, -11.0, 0), Vector3.UP)
 		
 	# Process camera zoom
 	if Input.is_action_just_pressed("zoom_in") or Input.is_action_pressed("zoom_in"):

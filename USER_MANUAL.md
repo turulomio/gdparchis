@@ -25,14 +25,18 @@ Welcome to **GDParchis**, a 3D adaptation of the classic Parchís board game bui
 
 Upon launching the game, you will enter the **Player Selection Menu**:
 
-- **Player Count:** Select 2, 3, or 4 players for the match.
+- **Player Count & Board Selection:** Select 3, 4, 6, or 8 player board modes for the match.
 - **Color Assignments:**
   - Player 0: Yellow 🟡
   - Player 1: Blue 🔵
   - Player 2: Red 🔴
   - Player 3: Green 🟢
+  - Player 4: Orange 🟠 (6/8 Player Modes)
+  - Player 5: Purple 🟣 (6/8 Player Modes)
+  - Player 6: Cyan 🩵 (8 Player Mode)
+  - Player 7: Magenta 🩷 (8 Player Mode)
 - **Player Types:** Toggle each player slot between **Human Player** or **Artificial Intelligence (AI)**.
-- **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in the post-game Match History logs.
+- **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in post-game Match History logs.
 
 ---
 
@@ -153,3 +157,53 @@ Access the **Credits** screen (`Credits`) from the main menu:
 
 - **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.
 - **Android Support:** Embedded local export templates and debug key store configuration for Android APK builds (`arm64-v8a` and `x86_64`).
+
+---
+
+## 8. Developer Calibration Suite (`--calibration`)
+
+GDParchis includes a state-of-the-art interactive 3D board calibration suite built specifically for developers to fine-tune piece positions, sizes, and route geometries in real time.
+
+### 🚀 Launching Developer Calibration Mode
+Execute the management CLI command:
+```bash
+python3 management.py --calibration
+```
+Selecting a board variant (3, 4, 6, or 8 players) launches the interactive 3D calibration tool.
+
+---
+
+### 🛠️ Key Calibration Features & Mechanics
+
+#### 1. Interactive 3D Drag & Drop with Instant Autosave
+- **Mouse Drag:** Left-Click and drag any piece to position it precisely on the board plane $(X, Z)$.
+- **Autosave on Release:** Releasing the mouse button automatically persists the updated coordinates and scale factors directly into project dataset files (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`).
+
+#### 2. Fine-Grain Keyboard Nudging
+- **`Arrow Keys` / `WASD`:** Nudges the selected piece position in $0.1\text{ cm}$ micro-steps.
+- **`Shift` + `Arrow Keys` / `WASD`:** Nudges the selected piece position in larger $0.5\text{ cm}$ steps.
+
+#### 3. Proportional Scale ComboBox (5% - 100%)
+- Select any piece and pick a proportional scale from the **Tamaño Proporcional** ComboBox in 5% increments (`100%`, `95%`, `90%`, ..., `5%`) to adapt piece sizes to narrow corridor squares or special goal triangles.
+
+#### 4. 3D Route Line & Directional Arrow Visualizer
+- **`Inspección Ruta` ComboBox:** Select a specific player route and slot (e.g. `Ruta Amarillo (P0) - Slot 0`) to render a **3D line overlay with filled directional arrows**.
+- **Path Verification:** The 3D line traces the exact route from the home base, through the outer ring, into the final goal corridor, showing the direction of movement.
+
+#### 5. Camera Zoom, Panning (Pan), and Viewport Reset
+- **Mouse Wheel / `+` / `-` Keys:** Zoom in up to $12\text{ cm}$ height for micro-inspection or zoom out up to $95\text{ cm}$.
+- **Right-Click + Drag:** Pan and shift the camera viewport horizontally and vertically across the board plane.
+- **`R` Key / HUD Button:** Instantly resets camera zoom, height, and viewport offset back to default centered position.
+
+#### 6. Multi-Step Undo System (`Ctrl + Z`)
+- **`Ctrl + Z` / HUD "Deshacer" Button:** Reverts the last position or scale modification. Holds up to 100 undo snapshots in memory for stress-free editing.
+
+#### 7. Rapid Piece Navigation
+- **`N` / `TAB` Key:** Selects the next piece on the board.
+- **`P` Key:** Selects the previous piece on the board.
+
+#### 8. Data-Driven Architecture & Filtered Persistence
+- **Filtered JSON Saving:** `save_calibration_file()` strictly saves valid square IDs and defined slot indices (`0..max_slots-1`), automatically purging obsolete or stray entries.
+- **100% Data-Driven Boards:** In-game boards (`Board3`, `Board4`) read piece positions and scales directly from JSON files, eliminating hardcoded mathematical formulas.
+
+

@@ -6,12 +6,16 @@
 [![Android Downloads](https://img.shields.io/badge/Android_Downloads-1-3DDC84?logo=android&logoColor=white)](https://github.com/turulomio/gdparchis/releases)
 [![Total Downloads](https://img.shields.io/github/downloads/turulomio/gdparchis/total?label=Total%20Downloads&color=blue)](https://github.com/turulomio/gdparchis/releases)
 
-**GDParchis** is a modern 3D implementation of the traditional **Parchís** board game, built with **Godot Engine 4.7** featuring native **Wayland** support on Linux, Windows desktop executables, and Android APK packages.
+**GDParchis** is a modern 3D adaptation of the traditional **Parchís** board game, built with **Godot Engine 4.7** featuring native **Wayland** support on Linux, Windows desktop executables, and Android APK packages.
 
 ---
 
 ## 🌟 Key Features
 
+- 📐 **Polymorphic Board Variants:**
+  - 🔺 **3-Player Triangular Board (`Board3`):** Symmetrical 3-arm triangular board geometry with 3 players (Yellow 🟡, Blue 🔵, Red 🔴), 78 custom squares, and a 6-sided mitered wooden frame.
+  - 🟦 **4-Player Classic Board (`Board4`):** Classic 4-arm cross board geometry with 4 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢) and 104 squares.
+  - 🔷 **6 & 8 Player Expansions:** Modular support for 6 and 8 player boards.
 - 🎮 **Flexible Game Modes:** Configure 2, 3, or 4 players with any combination of **Human** or **AI (Artificial Intelligence)** players.
 - 🎲 **Comparative Starting Roll:** Simultaneous display of all initial dice rolls to determine the starting player, with automatic tie-breaker round management.
 - 📐 **Official Parchís Rules Enforcement:**
@@ -21,17 +25,29 @@
   - **Safe squares** and **Home Exit squares**.
   - Automatic bonus moves: **+20** for capturing an opponent piece and **+10** for reaching the goal square.
 - 📜 **Match History Viewer:** Persistent match recording (`user://game_history.json`) logging winners, duration, turn counts, and roll logs stored in standard OS user data locations (`~/.local/share/gdparchis/` on Linux, `%APPDATA%\gdparchis\` on Windows).
-- 🧪 **Automated Testing Suite:** Integrated 48-test GDScript headless testing system with a **99.6% Code Coverage Engine**.
+- 🛠️ **Developer 3D Calibration Suite (`management.py --calibration`):** Real-time interactive 3D piece dragging, 5% proportional scaling, 3D route line path visualizer with filled directional arrows, camera zoom/pan, multi-step undo (`Ctrl+Z`), and JSON dataset persistence.
+- 🧪 **Automated Testing Suite:** Integrated 54-test GDScript headless testing system with a **99.6% Code Coverage Engine**.
 - 🐧 **Multiplatform Distributions:** Native Linux binary/PCK, Windows `.exe`, and Android `.apk`.
 
 ---
 
-## 📸 Screenshots & Interface
+## 📸 Screenshots & Board Variants
 
-| Main Menu | Starting Dice Roll | 3D Gameplay |
-| :---: | :---: | :---: |
-| ![Main Menu](snapshots/main_menu.png) | ![Starting Dice Roll](snapshots/starting_dice_roll.png) | ![3D Gameplay](snapshots/game.png) |
-| *Player count, color selection, custom names, and AI settings* | *Simultaneous dice comparison and tie-breaker rounds* | *3D board physics, piece movement animations, and floating text* |
+### 🎮 Game Interface
+
+| Main Menu | Starting Dice Roll |
+| :---: | :---: |
+| ![Main Menu](snapshots/main_menu.png) | ![Starting Dice Roll](snapshots/starting_dice_roll.png) |
+| *Player count, color selection, custom names, and AI settings* | *Simultaneous dice comparison and tie-breaker rounds* |
+
+---
+
+### 📐 Board Variants
+
+| 🔺 3-Player Triangular Board (`Board3`) | 🟦 4-Player Classic Board (`Board4`) |
+| :---: | :---: |
+| ![3-Player Triangular Board](snapshots/board3.png) | ![4-Player Classic Board](snapshots/board4.png) |
+| *Symmetrical 3-arm triangular board (78 squares) with custom wooden frame* | *Classic 4-arm cross board (104 squares) with 4 players* |
 
 ---
 
@@ -47,6 +63,12 @@
 To run the game in development mode using Godot:
 ```bash
 python3 management.py --play
+```
+
+### Developer 3D Calibration Tool
+To launch the interactive 3D piece and route calibration suite:
+```bash
+python3 management.py --calibration
 ```
 
 ---
@@ -89,7 +111,7 @@ Output distributions are generated in `dist/`:
 
 ## 📚 Documentation Links
 
-- 📘 [User Manual](USER_MANUAL.md): Full guide on game rules, controls, and interface mechanics.
+- 📘 [User Manual](USER_MANUAL.md): Full guide on game rules, controls, calibration suite, and interface mechanics.
 - 🔬 [Testing System Documentation](TESTS.md): Technical details on unit testing, headless state simulator, and coverage engine.
 - ⚙️ [Godot 4.7 Environment Guide](GEMINI.md): Environment settings, local export templates, and coding standards.
 - 📱 [Android Setup Guide](ANDROID.md): Gentoo Portage dependencies, Android SDK installation, and APK signing steps.
@@ -98,4 +120,4 @@ Output distributions are generated in `dist/`:
 
 ## 📄 License
 
-This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**. See the [LICENSE](LICENSE) file for full details.
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.
