@@ -2080,6 +2080,343 @@
            id="tspan_casilla_69">69</tspan></text>
     </g>
 
+    <!-- BLOQUE AZUL (Arm 3) - Simétrico al brazo rojo (rotate(240, 418.30170, 236.47159)) -->
+    <!-- Row 1: 9 (outer left, connects to 8), azul_1 (center), 25 (inner right, connects to 26) -->
+    <g
+       id="casilla_77"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,252.17723 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_77" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 236.47159) matrix(-0.26458333,0,0,-0.26458333,151.43088,324.37742)"
+         id="text_casilla_77"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_77">77</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_1"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,252.17723 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_1" />
+    </g>
+    <g
+       id="casilla_93"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,252.17723 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_93" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 236.47159) matrix(-0.26458333,0,0,-0.26458333,281.40808,324.37742)"
+         id="text_casilla_93"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_93">93</tspan></text>
+    </g>
+
+    <!-- Row 2: 10 (left), azul_2 (center), 24 (right) -->
+    <g
+       id="casilla_78"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,283.58851 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_78" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 267.88287) matrix(-0.26458333,0,0,-0.26458333,155.76268,355.7887)"
+         id="text_casilla_78"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_78">78</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_2"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,283.58851 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_2" />
+    </g>
+    <g
+       id="casilla_92"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,283.58851 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_92" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 267.88287) matrix(-0.26458333,0,0,-0.26458333,281.40808,355.7887)"
+         id="text_casilla_92"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_92">92</tspan></text>
+    </g>
+
+    <!-- Row 3: 11 (left), azul_3 (center), 23 (right) -->
+    <g
+       id="casilla_79"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,314.99979 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_79" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 299.29415) matrix(-0.26458333,0,0,-0.26458333,155.76268,387.2000)"
+         id="text_casilla_79"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_79">79</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_3"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,314.99979 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_3" />
+    </g>
+    <g
+       id="casilla_91"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,314.99979 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_91" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 299.29415) matrix(-0.26458333,0,0,-0.26458333,281.40808,387.2000)"
+         id="text_casilla_91"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_91">91</tspan></text>
+    </g>
+
+    <!-- Row 4: 12 safe (left), azul_4 (center), 22 blue start (right) -->
+    <g
+       id="casilla_80"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,346.41107 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_80" />
+      <ellipse
+         id="ellipse_casilla_80"
+         style="fill:#cccccc;fill-opacity:1;stroke:#1a1a1a;stroke-width:1.54469;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         cx="-330.70543"
+         cy="252.17728"
+         rx="11.727656"
+         ry="11.727657"
+         transform="rotate(-90)" />
+    </g>
+    <g
+       id="casilla_rosa_4"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,346.41107 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_4" />
+    </g>
+    <g
+       id="casilla_90"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,346.41107 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_90" />
+    </g>
+
+    <!-- Row 5: 13 (left), azul_5 (center), 21 (right) -->
+    <g
+       id="casilla_81"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,377.82235 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_81" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 362.11671) matrix(-0.26458333,0,0,-0.26458333,155.76268,450.0226)"
+         id="text_casilla_81"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_81">81</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_5"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,377.82235 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_5" />
+    </g>
+    <g
+       id="casilla_89"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,377.82235 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_89" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 362.11671) matrix(-0.26458333,0,0,-0.26458333,281.40808,450.0226)"
+         id="text_casilla_89"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_89">89</tspan></text>
+    </g>
+
+    <!-- Row 6: 14 (left), azul_6 (center), 20 (right) -->
+    <g
+       id="casilla_82"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,409.23363 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_82" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 393.52799) matrix(-0.26458333,0,0,-0.26458333,155.76268,481.4339)"
+         id="text_casilla_82"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_82">82</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_6"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,409.23363 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_6" />
+    </g>
+    <g
+       id="casilla_88"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,409.23363 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_88" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 393.52799) matrix(-0.26458333,0,0,-0.26458333,281.40808,481.4339)"
+         id="text_casilla_88"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_88">88</tspan></text>
+    </g>
+
+    <!-- Row 7: 15 (left), azul_7 (center), 19 (right) -->
+    <g
+       id="casilla_83"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,440.64491 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_83" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 424.93927) matrix(-0.26458333,0,0,-0.26458333,155.76268,512.8452)"
+         id="text_casilla_83"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_83">83</tspan></text>
+    </g>
+    <g
+       id="casilla_rosa_7"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ff007f;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,440.64491 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_rosa_7" />
+    </g>
+    <g
+       id="casilla_87"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,440.64491 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_87" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 424.93927) matrix(-0.26458333,0,0,-0.26458333,281.40808,512.8452)"
+         id="text_casilla_87"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_87">87</tspan></text>
+    </g>
+
+    <!-- Row 8: 16 (left), seguro_azul (center), 18 (right) -->
+    <g
+       id="casilla_84"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 283.58864,472.05619 h -62.82272 v -31.41128 h 62.82272 z"
+         id="rect_casilla_84" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 252.17728, 456.35055) matrix(-0.26458333,0,0,-0.26458333,155.76268,544.2565)"
+         id="text_casilla_84"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_84">84</tspan></text>
+    </g>
+    <g
+       id="casilla_seguro_rosa"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 346.41134,472.05619 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_seguro_rosa" />
+      <ellipse
+         id="ellipse_seguro_rosa"
+         style="fill:#cccccc;fill-opacity:1;stroke:#1a1a1a;stroke-width:1.54469;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         cx="-456.35055"
+         cy="315"
+         rx="11.727656"
+         ry="11.727657"
+         transform="rotate(-90)" />
+    </g>
+    <g
+       id="casilla_86"
+       transform="rotate(240, 418.30170, 236.47159)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 409.23404,472.05619 h -62.8227 v -31.41128 h 62.8227 z"
+         id="rect_casilla_86" />
+      <text
+         xml:space="preserve"
+         transform="rotate(180, 377.82269, 456.35055) matrix(-0.26458333,0,0,-0.26458333,281.40808,544.2565)"
+         id="text_casilla_86"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect208240-72);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
+           x="-396.71289"
+           y="349.20706"
+           id="tspan_casilla_86">86</tspan></text>
+    </g>
+
     <!-- CASAS / TRIÁNGULOS DE JUGADORES -->
     <!-- Casa Amarilla (entre brazo 1 y brazo 3) -->
     <!-- Casa Roja (entre brazo 1 y brazo 2) -->
