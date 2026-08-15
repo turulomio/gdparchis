@@ -1378,5 +1378,23 @@
            y="349.20706"
            id="tspan_casilla_18">18</tspan></text>
     </g>
+    <!-- CASAS / TRIÁNGULOS DE JUGADORES -->
+    <!-- Casa Amarilla (entre brazo 1 y brazo 3) -->
+    <polygon
+       id="casa_amarilla"
+       points="220.76592,0 2.63158,377.78087 220.76592,252.17723"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+
+    <!-- Casa Roja (entre brazo 1 y brazo 2) -->
+    <polygon
+       id="casa_roja_triangulo"
+       points="409.23404,0 627.36842,377.78087 409.23404,252.17723"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+
+    <!-- Casa Azul (entre brazo 2 y brazo 3) -->
+    <polygon
+       id="casa_azul_triangulo"
+       points="96.68443,541.35185 532.91945,541.3713 315,415.26324"
+       style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>
