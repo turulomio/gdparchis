@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6b6dicestart6tscn"]
+
+[ext_resource type="Script" path="res://scenes/GameDiceStart6.gd" id="1_dicestart6script"]
+[ext_resource type="Environment" uid="uid://c6j2k4l5m8p9q" path="res://default_env.tres" id="2_env"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="3_click"]
+[ext_resource type="PackedScene" uid="uid://c6b6board6tscn" path="res://scenes/Board6.tscn" id="4_board6inst"]
+[ext_resource type="Theme" uid="uid://duw8566j0i73g" path="res://themes/FreshmanMiddle.tres" id="5_theme"]
+
+[node name="GameDiceStart6" type="Node3D"]
+script = ExtResource("1_dicestart6script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_click")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 65, 0)
+doppler_tracking = 2
+far = 1000.0
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 35, 0)
+light_color = Color(1, 0.98, 0.94, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Board6" parent="." instance=ExtResource("4_board6inst")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MessageLabel" type="Label" parent="HUD"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 40.0
+offset_right = 300.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme = ExtResource("5_theme")
+text = "Roll to determine starting player"
+horizontal_alignment = 1

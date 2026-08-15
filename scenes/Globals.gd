@@ -3,7 +3,7 @@ const VERSION="1.0.0"
 const VERSION_DATE="2026-08-14"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum ePlayer {YELLOW, BLUE, RED, GREEN, ORANGE, PURPLE, CYAN, MAGENTA}  # 0,1,2,3,4,5,6,7
+enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, PINK, ORANGE, CYAN}  # 0,1,2,3,4,5,6,7
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
@@ -116,17 +116,17 @@ func ePlayer2Color(player_id):
 		1:
 			return Color.BLUE
 		2:
-			return Color(0.75, 0, 0, 1) # Darkened RED by additional 10% (total 25%)
+			return Color(0.75, 0, 0, 1) # Darkened RED
 		3:
-			return Color(0, 0.85, 0, 1) # Darkened GREEN by 15%
+			return Color(0, 0.85, 0, 1) # Darkened GREEN
 		4:
-			return Color(1, 0.5, 0, 1) # Orange
+			return Color(0.5, 0.5, 0.5, 1) # Grey
 		5:
-			return Color(0.6, 0.2, 0.8, 1) # Purple
+			return Color(1.0, 0.4, 0.7, 1) # Pink
 		6:
-			return Color(0, 0.8, 0.9, 1) # Cyan
+			return Color(1.0, 0.5, 0.0, 1) # Orange
 		7:
-			return Color(0.9, 0.2, 0.6, 1) # Magenta
+			return Color(0.0, 0.8, 0.9, 1) # Cyan
 		_:
 			return Color.WHITE
 
@@ -144,13 +144,13 @@ func Color2ePlayer(color):
 			return 2
 		Color.GREEN, Color(0, 0.85, 0, 1):
 			return 3
-		Color(1, 0.5, 0, 1):
+		Color(0.5, 0.5, 0.5, 1):
 			return 4
-		Color(0.6, 0.2, 0.8, 1):
+		Color(1.0, 0.4, 0.7, 1):
 			return 5
-		Color(0, 0.8, 0.9, 1):
+		Color(1.0, 0.5, 0.0, 1):
 			return 6
-		Color(0.9, 0.2, 0.6, 1):
+		Color(0.0, 0.8, 0.9, 1):
 			return 7
 	return null
 
@@ -169,14 +169,14 @@ func ePlayerDefaultName(player_id):
 			r = "Redy"
 		ePlayer.GREEN:
 			r = "Greeny"
+		ePlayer.GREY:
+			r = "Greyey"
+		ePlayer.PINK:
+			r = "Pinky"
 		ePlayer.ORANGE:
 			r = "Orangey"
-		ePlayer.PURPLE:
-			r = "Purpley"
 		ePlayer.CYAN:
 			r = "Cyany"
-		ePlayer.MAGENTA:
-			r = "Magentey"
 		_:
 			r = "Player " + str(player_id + 1)
 	return r
@@ -427,6 +427,14 @@ func position4(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 ## Delegates 3D vector coordinates for 3-player Parchis board squares to Board3.
 func position3(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 	var board_script = load("res://scenes/Board3.gd")
+	if board_script:
+		return board_script.new().get_position3d(square_id, square_position, h)
+	return Vector3(0, h, 0)
+
+
+## Delegates 3D vector coordinates for 6-player Parchis board squares to Board6.
+func position6(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
+	var board_script = load("res://scenes/Board6.gd")
 	if board_script:
 		return board_script.new().get_position3d(square_id, square_position, h)
 	return Vector3(0, h, 0)

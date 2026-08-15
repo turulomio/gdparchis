@@ -257,15 +257,29 @@ func _on_Players4_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
 
 
+## Button handler starting a new 6-player game.
+func _on_Players6_pressed():
+	Globals.game_data = Globals.new_game(6)
+	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
+
+
+## Mouse hover audio feedback for 6 players button.
+func _on_Players6_mouse_entered():
+	_play_click()
+
+
 ## Callback when a saved game file is selected in FileDialog.
 ## @param path Absolute file path to .save file.
 func _on_FileDialog_file_selected(path):
 	var data = Globals.load_game(path)
 	Globals.game_data = data
-	if data.get("max_players", 4) == 3:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
-	else:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
+	match data.get("max_players", 4):
+		3:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
+		6:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game6.tscn")
+		_:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 
 
 ## Button handler navigating to GameHistory.tscn scene.

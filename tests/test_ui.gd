@@ -40,7 +40,10 @@ func test_ui_scene_paths_exist() -> void:
 		"res://scenes/GameHistory.tscn",
 		"res://scenes/Credits.tscn",
 		"res://scenes/Game4.tscn",
-		"res://scenes/GameDiceStart.tscn"
+		"res://scenes/Game6.tscn",
+		"res://scenes/GameDiceStart.tscn",
+		"res://scenes/GameDiceStart6.tscn",
+		"res://scenes/Board6Calibration.tscn"
 	]
 	for sc_path in scenes_to_check:
 		self.assert_true(ResourceLoader.exists(sc_path), "Scene exists: " + sc_path)

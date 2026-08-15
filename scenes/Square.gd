@@ -32,34 +32,53 @@ func _init(node_id):
 		56:
 			self.type = Globals.eSquareTypes.FIRST
 			self.color = Globals.ePlayer2Color(3)
+		73:
+			self.type = Globals.eSquareTypes.FIRST
+			self.color = Globals.ePlayer2Color(4)
+		90:
+			self.type = Globals.eSquareTypes.FIRST
+			self.color = Globals.ePlayer2Color(5)
 			
-		12, 17, 29, 34, 46, 51, 63, 68:
+		12, 17, 29, 34, 46, 51, 63, 68, 80, 85, 97, 102:
 			self.type = Globals.eSquareTypes.SECURE
 		
-		59, 76:
+		59, 76, 111:
 			self.type = Globals.eSquareTypes.END
 			self.color = Color.YELLOW
-		67, 84:
+		67, 84, 120:
 			self.type = Globals.eSquareTypes.END
 			self.color = Color.BLUE
-		75, 92:
+		75, 92, 129:
 			self.type = Globals.eSquareTypes.END
 			self.color = Globals.ePlayer2Color(2)
-		100:
+		100, 138:
 			self.type = Globals.eSquareTypes.END
 			self.color = Globals.ePlayer2Color(3)
-		101:
+		147:
+			self.type = Globals.eSquareTypes.END
+			self.color = Globals.ePlayer2Color(4)
+		156:
+			self.type = Globals.eSquareTypes.END
+			self.color = Globals.ePlayer2Color(5)
+			
+		101, 157:
 			self.type = Globals.eSquareTypes.START
 			self.color = Color.YELLOW
-		102:
+		102, 158:
 			self.type = Globals.eSquareTypes.START
 			self.color = Color.BLUE
-		103:
+		103, 159:
 			self.type = Globals.eSquareTypes.START
 			self.color = Globals.ePlayer2Color(2)
-		104:
+		104, 160:
 			self.type = Globals.eSquareTypes.START
 			self.color = Globals.ePlayer2Color(3)
+		105, 161:
+			self.type = Globals.eSquareTypes.START
+			self.color = Globals.ePlayer2Color(4)
+		106, 162:
+			self.type = Globals.eSquareTypes.START
+			self.color = Globals.ePlayer2Color(5)
 		_:
 			self.type = Globals.eSquareTypes.NORMAL
 			

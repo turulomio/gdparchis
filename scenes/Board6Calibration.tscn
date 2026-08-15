@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6b6calibtscn"]
+
+[ext_resource type="Script" path="res://scenes/Board6Calibration.gd" id="1_board6calib"]
+
+[node name="Board6Calibration" type="Node3D"]
+script = ExtResource("1_board6calib")
