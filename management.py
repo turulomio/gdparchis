@@ -32,6 +32,7 @@ group.add_argument('--procedure', help='Shows release procedure information', ac
 group.add_argument('--export', help='Export all projects to dist folder', action="store_true", default=False)
 group.add_argument('--play', help='Runs the project using godot', action="store_true", default=False)
 group.add_argument('--test', help='Runs the automated GDScript unit/integration test suite and code coverage report', action="store_true", default=False)
+group.add_argument('--calibration', help='Runs developer calibration menu for all 4 boards', action="store_true", default=False)
 group.add_argument('--apache', help='Sets project in apache', action="store_true", default=False)
 
 parser.add_argument('--server', help='HTML Export server', action="store", default="127.0.0.1")
@@ -76,6 +77,10 @@ if args.test is True:
     if ret != 0:
         from sys import exit as sys_exit
         sys_exit(1)
+
+if args.calibration is True:
+    # Launch Main Scene in Godot with --calibration command line argument
+    system("godot res://scenes/Main.tscn -- --calibration")
 
 if args.export is True:
     # Update export_presets.cfg version strings and run Godot headless export

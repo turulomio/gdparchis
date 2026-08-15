@@ -80,11 +80,61 @@ func _ready() -> void:
 	if exit_btn:
 		exit_btn.text = tr("Exit")
 
+	# Developer Calibration Mode check
+	if is_calibration_requested():
+		setup_calibration_developer_buttons()
+
 	# 3. Connect window resize listener
 	if not get_tree().get_root().size_changed.is_connected(resize):
 		get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
 	self.check_for_updates()
+
+
+## Checks whether --calibration flag was passed on CLI invocation.
+func is_calibration_requested() -> bool:
+	var user_args = OS.get_cmdline_user_args()
+	for arg in user_args:
+		if arg == "--calibration" or arg == "-c":
+			return true
+	var args = OS.get_cmdline_args()
+	for arg in args:
+		if arg == "--calibration" or arg == "-c":
+			return true
+	return false
+
+
+## Sets up developer calibration buttons in Main menu when --calibration is active.
+func setup_calibration_developer_buttons() -> void:
+	var vbox = find_child("VBoxContainer", true, false)
+	if not vbox: return
+	
+	var exit_btn = find_child("Exit", true, false)
+	
+	# Developer Calibration Section Label
+	var sep = Label.new()
+	sep.text = "--- MOD DEVEL CALIBRACIÓN ---"
+	sep.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(sep)
+	if exit_btn: vbox.move_child(sep, exit_btn.get_index())
+	
+	# Board 3 Calibration Button
+	var calib3_btn = Button.new()
+	calib3_btn.name = "Calibration3"
+	calib3_btn.text = "Calibración Tablero 3"
+	calib3_btn.pressed.connect(func(): get_tree().change_scene_to_file.call_deferred("res://scenes/Board3Calibration.tscn"))
+	calib3_btn.mouse_entered.connect(_play_click)
+	vbox.add_child(calib3_btn)
+	if exit_btn: vbox.move_child(calib3_btn, exit_btn.get_index())
+
+	# Board 4 Calibration Button
+	var calib4_btn = Button.new()
+	calib4_btn.name = "Calibration4"
+	calib4_btn.text = "Calibración Tablero 4"
+	calib4_btn.pressed.connect(func(): get_tree().change_scene_to_file.call_deferred("res://scenes/Board4Calibration.tscn"))
+	calib4_btn.mouse_entered.connect(_play_click)
+	vbox.add_child(calib4_btn)
+	if exit_btn: vbox.move_child(calib4_btn, exit_btn.get_index())
 
 
 ## Frame process loop spinning both background 3D red dice continuously around their vertical Y-axis like diamonds.
@@ -169,6 +219,11 @@ func _on_UpdateStatus_gui_input(_event: InputEvent) -> void:
 func _exit_tree() -> void:
 	if get_tree() and get_tree().get_root() and get_tree().get_root().size_changed.is_connected(resize):
 		get_tree().get_root().size_changed.disconnect(resize)
+
+
+## Button handler navigating to Board3Calibration.tscn scene.
+func _on_Calibration3_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Board3Calibration.tscn")
 
 
 ## Button handler quitting the game application.

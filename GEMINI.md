@@ -157,3 +157,46 @@ Esto garantiza que todos los archivos persistentes del usuario (`user://`) se al
 * **Uso Obligatorio de Herencia y Clases Base:** Para simplificar el código y evitar la proliferación de bloques condicionales `if max_players == 3 or max_players == 4`, la lógica del juego, tableros y recorridos se estructurará mediante polimorfismo y herencia con clases base dedicadas (`GameBase`, `BoardBase`, `RouteBase`, etc.).
 * **Especialización por Variante:** Cada variante de número de jugadores (3, 4, 6, 8) implementará su propia clase especializada (`Game3`, `Board3`, `Game4`, `Board4`, etc.), sobrescribiendo únicamente variables, geometrías y rutas específicas sin duplicar lógica de control.
 
+---
+
+## 10. Esquema de Numeración de Casillas por Variante de Tablero
+
+El sistema utiliza identificadores enteros únicos (`square_id`) para registrar y mapear cada casilla del tablero a través del diccionario `squares`:
+
+### 10.1. Tablero de 3 Jugadores (`Board3`):
+* **Carriles Exteriores (`1..50`)**:
+  * **Brazo 1 (Amarillo / Norte, Ángulo $0^\circ$)**: Columna izquierda `1..8`, pasillo llegada `51..58`, columna derecha `43..50`.
+  * **Brazo 2 (Rojo / Sudeste, Ángulo $120^\circ$)**: Columna izquierda `35..42`, pasillo llegada `68..74`, columna derecha `26..33`.
+  * **Brazo 3 (Azul / Sudoeste, Ángulo $240^\circ$)**: Columna izquierda `9..16`, pasillo llegada `60..66`, columna derecha `18..25`.
+* **Casillas Seguras de Esquina Exterior**:
+  * Esquina Brazo Azul: `17`
+  * Esquina Brazo Rojo: `34`
+* **Pasillos de Llegada y Triángulos de Meta Central (`51..75`)**:
+  * Pasillo Amarillo (P0): `51..58`, Meta Central Amarilla: `59`
+  * Pasillo Azul (P1): `60..66`, Meta Central Azul: `67`
+  * Pasillo Rojo (P2): `68..74`, Meta Central Roja: `75`
+* **Casas Iniciales (`101..103`)**:
+  * Casa Amarilla (P0): `101`
+  * Casa Azul (P1): `102`
+  * Casa Roja (P2): `103`
+
+### 10.2. Tablero de 4 Jugadores (`Board4`):
+* **Circuito Exterior (`1..68`)**:
+  * Brazo Amarillo (Norte): Salida `5`, entrada pasillo `68`
+  * Brazo Azul (Este): Salida `22`
+  * Brazo Rojo (Sur): Salida `39`
+  * Brazo Verde (Oeste): Salida `56`
+* **Pasillos de Llegada y Metas (`69..100`)**:
+  * Pasillo Amarillo (P0): `69..75`, Meta Amarilla: `76`
+  * Pasillo Azul (P1): `77..83`, Meta Azul: `84`
+  * Pasillo Rojo (P2): `85..91`, Meta Roja: `92`
+  * Pasillo Verde (P3): `93..99`, Meta Verde: `100`
+* **Casas Iniciales (`101..104`)**:
+  * Casa Amarilla (P0): `101`, Casa Azul (P1): `102`, Casa Roja (P2): `103`, Casa Verde (P3): `104`
+
+### 10.3. Tableros de 6 y 8 Jugadores (`Board6`, `Board8`):
+* Siguen el mismo estándar polimórfico de numeración incremental:
+  * Casas: `101..106` (para 6 jugadores) y `101..108` (para 8 jugadores).
+  * Metas y pasillos centralizados indexados tras el circuito exterior.
+
+

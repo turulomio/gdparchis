@@ -256,7 +256,7 @@ func is_special_square_id(sq_id: int) -> bool:
 	return false
 
 
-## Adjusts visual piece scale when placed on special narrow corridor squares.
+## Adjusts visual piece scale when placed on special narrow corridor squares or using calibrated JSON scale.
 ## @param sq_id Target square ID integer (defaults to current standing square).
 func change_scale_on_specials_squares(sq_id: int = -1):
 	if sq_id == -1:
@@ -265,10 +265,17 @@ func change_scale_on_specials_squares(sq_id: int = -1):
 		else:
 			sq_id = 0
 			
+	var b = self.board()
+	if b and b.has_method("get_piece_scale"):
+		var custom_sc = b.get_piece_scale(sq_id, self.square_position)
+		if custom_sc != 1.0:
+			self.scale = Vector3(custom_sc, custom_sc, custom_sc)
+			return
+
 	if is_special_square_id(sq_id):
 		self.scale = Vector3(0.75, 0.75, 0.75)
 	else:
-		self.scale = Vector3(1, 1, 1)
+		self.scale = Vector3(1.0, 1.0, 1.0)
 
 
 ## Returns the number of squares this piece should move based on throw and extra moves.

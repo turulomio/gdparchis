@@ -157,3 +157,18 @@ Access the **Credits** screen (`Credits`) from the main menu:
 
 - **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.
 - **Android Support:** Embedded local export templates and debug key store configuration for Android APK builds (`arm64-v8a` and `x86_64`).
+
+---
+
+## 8. Developer Calibration System (`--calibration`)
+
+GDParchis includes an interactive 3D board calibration suite for developers:
+
+- **CLI Management Command:**
+  ```bash
+  python3 management.py --calibration
+  ```
+- **Developer Calibration Menu (`CalibrationMain`):** Launches a dedicated developer menu to select and calibrate piece positions for 3, 4, 6, and 8 player boards.
+- **Interactive Drag & Drop:** Move 3D pieces with mouse drag-and-drop or fine-grain keyboard arrow keys (`WASD`).
+- **Project Position File:** Saves calibrated 3D coordinates directly into project resource files (e.g. `res://board3_calibrated_positions.json`, `res://board4_calibrated_positions.json`) for seamless Git versioning and distribution.
+
