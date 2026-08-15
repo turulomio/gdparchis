@@ -57,6 +57,11 @@ Abre el proyecto en el editor de Godot e ingresa a **Editor -> Configuración de
 * **Usuario del Keystore (`Debug Keystore User`):** `androiddebugkey`
 * **Contraseña del Keystore (`Debug Keystore Pass`):** `android`
 
+### Permisos de Red (Internet):
+En `export_presets.cfg` (Preset Android), se activan los permisos de red para permitir la comprobación de actualizaciones (`HTTPRequest`):
+* `permissions/internet=true`
+* `permissions/access_network_state=true`
+
 ---
 
 ## 5. Compilación y Exportación del Binario (`.apk`)
@@ -72,4 +77,34 @@ mkdir -p dist/Android
 godot --headless --export-release "Android" dist/Android/gdparchis.apk
 ```
 
-El paquete ejecutable resultante se generará en el directorio `dist/Android/gdparchis.apk`.
+El paquete ejecutable resultante se generará en el directorio `dist/Android/gdparchis-0.9.99.apk`.
+
+---
+
+## 6. Pruebas y Depuración del APK (`adb` y Emuladores)
+
+### Método A: Instalación mediante `adb` (Dispositivo Físico USB)
+1. Activa **Opciones de desarrollador** y **Depuración por USB** en tu dispositivo Android.
+2. Conecta el dispositivo vía USB e instala la aplicación ejecutando:
+   ```bash
+   # Verificar dispositivo conectado
+   adb devices
+
+   # Instalar el paquete APK
+   adb install -r dist/Android/gdparchis-0.9.99.apk
+
+   # Ejecutar la aplicación de forma remota
+   adb shell am start -n org.turulomio.gdparchis/com.godot.game.GodotApp
+
+   # Ver registros de depuración en tiempo real
+   adb logcat -s godot
+   ```
+
+### Método B: Instalación en Waydroid (Linux Wayland)
+Si utilizas **Waydroid** en Gentoo/Linux:
+```bash
+waydroid app install dist/Android/gdparchis-0.9.99.apk
+```
+
+### Método C: Despliegue Directo de un Clic desde Godot Editor
+Con tu teléfono conectado por USB y `adb` activo, Godot mostrará un icono de Android en la esquina superior derecha del editor. Al hacer clic, Godot compilará, enviará e iniciará el juego automáticamente en el dispositivo mostrando la consola de depuración en vivo.

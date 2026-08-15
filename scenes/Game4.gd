@@ -12,6 +12,20 @@ var orbit_yaw: float = 0.0
 var orbit_pitch: float = 0.6
 var orbit_radius: float = 65.0
 var _last_cam_pos: Vector3 = Vector3.ZERO
+var _touch_start_pos: Vector2 = Vector2.ZERO
+var _touch_press_time: float = 0.0
+var _is_touch_dragging: bool = false
+
+
+## System notification handler for Android back button (Escape key emulation).
+## @param what Notification type identifier.
+func _notification(what: int):
+	# 1. Intercept Android OS back button request
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		for player in self.board().players():
+			if player.plays:
+				player.dice().historical_report()
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
 ## Returns the Board4 child node instance.
@@ -20,17 +34,73 @@ func board():
 	return $Board4
 
 
-## Performs a 3D raycast query from mouse position into the scene world.
+## Performs a 3D raycast query from a 2D screen position into the scene world.
+## @param screen_pos 2D position on screen.
 ## @return Physics object collider hit by raycast, or null.
-func get_object_under_mouse():
-	var mouse_pos = OrCamera.project_ray_origin(get_viewport().get_mouse_position())
-	var ray_from = OrCamera.project_ray_origin(get_viewport().get_mouse_position())
-	var ray_to = ray_from + OrCamera.project_ray_normal(get_viewport().get_mouse_position()) * 100
+func get_object_at_position(screen_pos: Vector2):
+	# 1. Calculate ray origin and ray destination 100 units along camera projection vector
+	var ray_from = OrCamera.project_ray_origin(screen_pos)
+	var ray_to = ray_from + OrCamera.project_ray_normal(screen_pos) * 100
+	
+	# 2. Query 3D direct space state for physics intersections
 	var space_state = get_world_3d().direct_space_state
 	var selection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from, ray_to))
+	
+	# 3. Return collider hit or null
 	if len(selection) == 0:
 		return null
 	return selection.collider
+
+
+## Performs a 3D raycast query from mouse position into the scene world.
+## @return Physics object collider hit by raycast, or null.
+func get_object_under_mouse():
+	return get_object_at_position(get_viewport().get_mouse_position())
+
+
+## Handles click or touch interaction with 3D object (Piece or Dice).
+## @param object Physics object hit by 3D raycast query.
+func handle_object_click(object):
+	# 1. Ignore null targets
+	if object == null:
+		return
+		
+	# 2. Process selection click on Piece node
+	if object is Piece:
+		if object.player() == self.current_player and object.player().can_move_pieces:
+			object.on_clicked()
+		else:
+			$Click.play()
+			
+	# 3. Process selection click on Dice node
+	if object is Dice:
+		if object.player() == self.current_player and object.player().can_throw_dice:
+			object.on_clicked()
+		else:
+			$Click.play()
+
+
+## Handles right-click or long-press touch interaction displaying piece/dice detail popup.
+## @param object Physics object hit by 3D raycast query.
+func handle_object_right_click(object):
+	# 1. Ignore null targets
+	if object == null:
+		return
+		
+	# 2. Display piece state machine details in popup
+	if object is Piece:
+		var s = "Piece " + str(object) + " " + object.player().playername + "\n"
+		if object.player() == self.current_player and object.player().can_move_pieces:
+			s += "  + Can move: " + str(object.can_move_stm())
+			s += "  + Can eat before: " + str(object.can_eat_before_stm())
+			s += "  + Can eat after: " + str(object.can_eat_at_route_position(object.route_position + object.squares_to_move(), false))
+			s += "  + Threats before: " + str(object.threats_at(object.square()))
+			s += "  + Threats after: " + str(object.threats_at(object.route().square_at(object.route_position + object.squares_to_move())))
+		OrPopup.set_text(s)
+		
+	# 3. Display dice statistics in popup for debug builds
+	if object is Dice and OS.is_debug_build():
+		OrPopup.set_text(object.historical_report())
 
 
 ## Evaluates if any active player has won and triggers the game victory completion sequence.
@@ -96,18 +166,12 @@ func _process(_delta):
 	# Handle left click interactions with Piece or Dice
 	if Input.is_action_just_pressed("left_click"):
 		var object = get_object_under_mouse()
-		if object == null:
-			return
-		if object is Piece:
-			if object.player() == self.current_player and object.player().can_move_pieces:
-				object.on_clicked()
-			else:
-				$Click.play()
-		if object is Dice:
-			if object.player() == self.current_player and object.player().can_throw_dice:
-				object.on_clicked()
-			else:
-				$Click.play()
+		handle_object_click(object)
+
+	# Handle right click interactions (popup details)
+	if Input.is_action_just_pressed("right_click"):
+		var object = get_object_under_mouse()
+		handle_object_right_click(object)
 
 	# Process preset camera view angles
 	if Input.is_action_just_pressed("top_view"):
@@ -154,9 +218,10 @@ func _process(_delta):
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
-## Handles unhandled mouse wheel events for zooming and mouse drag for 3D board orbit rotation.
+## Handles unhandled mouse wheel events, mouse drags, and touch screen inputs for camera orbit and piece/dice interaction.
 ## @param event Input event object.
 func _unhandled_input(event: InputEvent):
+	# 1. Process right mouse button camera drag and mouse wheel zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			is_dragging_camera = event.is_pressed()
@@ -165,8 +230,42 @@ func _unhandled_input(event: InputEvent):
 				zoom_camera(-2.5)
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				zoom_camera(2.5)
+				
+	# 2. Process mouse motion for 3D camera orbiting
 	elif event is InputEventMouseMotion and is_dragging_camera:
 		orbit_camera(event.relative)
+		
+	# 3. Process touch screen press/release for piece/dice selection and long-press right-click / sound toggle on mobile
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_touch_start_pos = event.position
+			_touch_press_time = Time.get_ticks_msec()
+			_is_touch_dragging = false
+		else:
+			if not _is_touch_dragging:
+				var press_duration = (Time.get_ticks_msec() - _touch_press_time) / 1000.0
+				var object = get_object_at_position(event.position)
+				if press_duration >= 0.4:
+					# Long press (>0.4s) emulates right-click on object or 'S' key (toggle sound) on background
+					if object != null:
+						handle_object_right_click(object)
+					else:
+						var is_sound_enabled = Globals.toggle_sound()
+						var msg = tr("Sound ON") if is_sound_enabled else tr("Sound OFF")
+						var text_color = Color.GREEN if is_sound_enabled else Color.RED
+						$DebugFloatingText.show_text(msg, text_color)
+					get_viewport().set_input_as_handled()
+				else:
+					# Short tap (<0.4s) performs standard left-click selection
+					if object != null:
+						handle_object_click(object)
+						get_viewport().set_input_as_handled()
+					
+	# 4. Process touch drag motion for orbiting 3D camera on mobile devices
+	elif event is InputEventScreenDrag:
+		if (event.position - _touch_start_pos).length() > 15.0:
+			_is_touch_dragging = true
+			orbit_camera(event.relative)
 
 
 ## Syncs spherical coordinate angles with current camera position if camera moved externally.
@@ -207,24 +306,6 @@ func zoom_camera(amount: float):
 	var new_pos = OrCamera.global_transform.origin + forward * (-amount)
 	if new_pos.y >= 8.0 and new_pos.y <= 120.0:
 		OrCamera.global_transform.origin = new_pos
-		
-	# Handle right-click debug popup info
-	if Input.is_action_just_pressed("right_click"):
-		var object = get_object_under_mouse()
-		if object == null:
-			return
-		if object is Piece:
-			var s = "Piece " + str(object) + " " + object.player().playername + "\n"
-			if object.player() == self.current_player and object.player().can_move_pieces:
-				s += "  + Can move: " + str(object.can_move_stm())
-				s += "  + Can eat before: " + str(object.can_eat_before_stm())
-				s += "  + Can eat after: " + str(object.can_eat_at_route_position(object.route_position + object.squares_to_move(), false))
-				s += "  + Threats before: " + str(object.threats_at(object.square()))
-				s += "  + Threats after: " + str(object.threats_at(object.route().square_at(object.route_position + object.squares_to_move())))
-			OrPopup.set_text(s)
-				
-		if object is Dice and OS.is_debug_build():
-			OrPopup.set_text(object.historical_report())
 
 
 ## Rotates turn to next participating player, saves game state, and initiates turn action.

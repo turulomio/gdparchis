@@ -104,17 +104,41 @@ Access the **Match History** screen (`GameHistory`) from the main menu:
 
 ## 6. Controls & Accessibility
 
-- **Mouse Controls:**
+### 🖥️ Desktop Controls (Keyboard & Mouse)
+
+- **Mouse Interactions:**
   - **Left Click:** Roll 3D dice or select highlighted piece to move.
+  - **Right Click Drag:** Rotate and orbit 3D board camera.
   - **Right Click:** Open debug information popup for targeted piece or dice.
-  - **Scroll Wheel Up / `+` Key:** Zoom camera in.
-  - **Scroll Wheel Down / `-` Key:** Zoom camera out.
-- **Camera Preset Views:**
+  - **Scroll Wheel Up / `+` Key:** Zoom 3D camera in.
+  - **Scroll Wheel Down / `-` Key:** Zoom 3D camera out.
+
+- **Camera Perspective Shortcuts:**
   - **`F1` / `F2` / `F3` / `F4`:** Switch camera view to Yellow, Blue, Red, or Green player's perspective.
   - **`Shift + F1` / `Shift + F2` / `Shift + F3` / `Shift + F4`:** Switch camera view to Yellow, Blue, Red, or Green player's floor level view.
   - **`F9`:** Bottom camera view angle.
   - **`F10` / `Enter`:** Top-down overhead camera view angle.
-- **System & Navigation:**
+
+- **System & Navigation Shortcuts:**
   - **`F11` / `F` Key:** Toggle fullscreen mode.
   - **`Esc` Key:** Return to Main Menu or exit game.
-  - **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.
+  - **`S` Key:** Toggle Sound ON / OFF with floating status text.
+
+---
+
+### 📱 Android Controls (Touch & Mobile Gestures)
+
+- **Touch Gestures:**
+  - **Tap Screen:** Roll 3D dice or select highlighted piece to move.
+  - **Touch Drag:** Rotate and orbit 3D board camera in spherical coordinates.
+  - **Long Press on Piece / Dice ($\ge$ 0.4s):** Open detail information popup for targeted piece or dice (Right Click emulation).
+  - **Long Press on Background ($\ge$ 0.4s):** Toggle Sound ON / OFF with floating status text (`S` Key emulation).
+  - **Android Back Button / Gesture:** Return to Main Menu or exit game (`Esc` Key emulation).
+  - **Native Fullscreen:** Android builds run full-screen natively.
+
+---
+
+### 🐧 Display Server & Platform Support
+
+- **Linux Display Server:** Native **Wayland** support with automatic fallback to X11/XWayland.
+- **Android Support:** Embedded local export templates and debug key store configuration for Android APK builds (`arm64-v8a` and `x86_64`).

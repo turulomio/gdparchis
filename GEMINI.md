@@ -137,3 +137,10 @@ Esto garantiza que todos los archivos persistentes del usuario (`user://`) se al
 * **Historial permanente de partidas:** `user://game_history.json` (registro de partidas finalizadas y ganadores).
 * **Guardados automáticos y manuales:** `user://saves/` (archivos de partidas guardadas en formato `.json`).
 
+---
+
+## 7. Mantenimiento Obligatorio de Documentación
+
+* **Funcionalidades de Usuario (`USER_MANUAL.md`):** Siempre que una modificación afecte, añada o altere la interacción del usuario, controles, reglas del juego, persistencia, interfaz o flujo visual, se debe actualizar obligatoriamente el archivo [`USER_MANUAL.md`](file:///home/keko/Proyectos/gdparchis/USER_MANUAL.md).
+* **Plataforma Android (`ANDROID.md`):** Siempre que un cambio afecte a la configuración de compilación, permisos de exportación, gestos de control táctil o dependencias/herramientas del entorno Android, se debe actualizar obligatoriamente el archivo [`ANDROID.md`](file:///home/keko/Proyectos/gdparchis/ANDROID.md).
+
