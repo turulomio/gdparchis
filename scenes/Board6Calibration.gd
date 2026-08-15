@@ -28,17 +28,17 @@ func load_board_instance() -> void:
 		add_child(board_inst)
 
 
-## Returns all 162 square IDs of 6-player board (1..102 outer, 103..156 ramps/goals, 157..162 homes).
+## Returns all 156 square IDs of 6-player board (1..102 outer, 103..150 ramps/goals, 151..156 homes).
 func get_square_ids() -> Array[int]:
 	var square_ids: Array[int] = []
-	for i in range(1, 163):
+	for i in range(1, 157):
 		square_ids.append(i)
 	return square_ids
 
 
 ## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
 func get_max_slots(sq_id: int) -> int:
-	return 4 if sq_id in [110, 118, 127, 136, 145, 154, 157, 158, 159, 160, 161, 162] else 2
+	return 4 if sq_id in [110, 118, 126, 134, 142, 150, 151, 152, 153, 154, 155, 156] else 2
 
 
 ## Returns route square IDs for player on 6-player board.
