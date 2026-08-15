@@ -37,13 +37,22 @@ func initialize(color_):
 
 
 ## Sets piece target positions and updates global transform origin.
+## Returns the 3D position coordinate for a given square ID and sub-position slot.
+func get_3d_position(square_id: int, sq_pos: int, h: float = 0.2) -> Vector3:
+	var b = self.board()
+	if b and b.max_players == 3:
+		return Globals.position3(square_id, sq_pos, h)
+	return Globals.position4(square_id, sq_pos, h)
+
+
+## Sets piece target positions and updates global transform origin.
 ## @param _route_position Index in player route.
 ## @param _square_position Sub-index inside destination square.
 ## @param square_id Global board square identifier.
 func set_final_position(_route_position, _square_position, square_id):
 	self.route_position = _route_position
 	self.square_position = _square_position
-	self.global_transform.origin = Globals.position4(square_id, self.square_position, 0.2)
+	self.global_transform.origin = self.get_3d_position(square_id, self.square_position, 0.2)
 	self.rotation = Vector3.ZERO
 
 
@@ -53,7 +62,7 @@ func correct_position_and_drop(duration = 0.15):
 	if not self.square():
 		return
 		
-	var target_3d = Globals.position4(self.square().id, self.square_position, 0.2)
+	var target_3d = self.get_3d_position(self.square().id, self.square_position, 0.2)
 	
 	# Smoothly align position XZ, snap height Y=0.2, and reset 3D rotation upright
 	var tween_correct = create_tween().set_parallel(true)
@@ -167,8 +176,8 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	if duration > 0:
 		# Calculate speed scale multiplier relative to default move duration (0.4s)
 		var speed_mult: float = duration / 0.4
-		var start_3d = Globals.position4(square_initial.id, square_position_initial)
-		var final_3d = Globals.position4(square_final.id, square_position_final)
+		var start_3d = self.get_3d_position(square_initial.id, square_position_initial)
+		var final_3d = self.get_3d_position(square_final.id, square_position_final)
 		
 		# If returning home or single-step teleport
 		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
@@ -191,7 +200,7 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 				if step_idx == total_steps:
 					waypoints.append(final_3d)
 				else:
-					waypoints.append(Globals.position4(step_sq.id, 0))
+					waypoints.append(self.get_3d_position(step_sq.id, 0))
 			
 			# Execute smooth sequential hops from square to square
 			var current_pos = start_3d

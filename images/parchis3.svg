@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1000" height="920" viewBox="0 0 1000 920" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .border-line { stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+      .track-grid { stroke: #000000; stroke-width: 2.0; stroke-linejoin: round; }
+      .num-text { font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; fill: #000000; text-anchor: middle; dominant-baseline: central; }
+      .num-text-white { font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+  <!-- Wood Outer Frame -->
+  <polygon points="280.0,88.9 720.0,88.9 940.0,470.0 720.0,851.1 280.0,851.1 60.0,470.0" fill="#3A1A05" stroke="#1E0B02" stroke-width="16" stroke-linejoin="round" />
+  <polygon points="291.0,108.0 709.0,108.0 918.0,470.0 709.0,832.0 291.0,832.0 82.0,470.0" fill="#FFFFFF" stroke="#000000" stroke-width="3" />
+  <polygon points="82.0,470.0 291.0,108.0 500.0,470.0" fill="#FFEA00" stroke="#000" stroke-width="2.5" />
+  <polygon points="291.0,108.0 709.0,108.0 918.0,470.0 500.0,470.0" fill="#FF4444" stroke="#000" stroke-width="2.5" />
+  <polygon points="918.0,470.0 709.0,832.0 291.0,832.0 82.0,470.0 500.0,470.0" fill="#3355FF" stroke="#000" stroke-width="2.5" />
+  <rect x="420" y="110" width="160" height="320" fill="#FFFFFF" class="border-line" />
+  <rect x="473.3" y="150" width="53.3" height="280" fill="#FFEA00" class="border-line" />
+  <rect x="420" y="310" width="53.3" height="40" fill="#FFEA00" class="border-line" />
+  <line x1="420" y1="150" x2="580" y2="150" class="track-grid" />
+  <line x1="420" y1="190" x2="580" y2="190" class="track-grid" />
+  <line x1="420" y1="230" x2="580" y2="230" class="track-grid" />
+  <line x1="420" y1="270" x2="580" y2="270" class="track-grid" />
+  <line x1="420" y1="310" x2="580" y2="310" class="track-grid" />
+  <line x1="420" y1="350" x2="580" y2="350" class="track-grid" />
+  <line x1="420" y1="390" x2="580" y2="390" class="track-grid" />
+  <line x1="473.3" y1="110" x2="473.3" y2="430" class="track-grid" />
+  <line x1="526.6" y1="110" x2="526.6" y2="430" class="track-grid" />
+  <rect x="420" y="110" width="160" height="40" fill="#FFFFFF" class="border-line" />
+  <circle cx="500" cy="130" r="15" fill="#E0E0E0" stroke="#888" stroke-width="2"/>
+  <text x="446.6" y="130" class="num-text">1</text>
+  <text x="446.6" y="170" class="num-text">2</text>
+  <text x="446.6" y="210" class="num-text">3</text>
+  <text x="446.6" y="250" class="num-text">4</text>
+  <circle cx="446.6" cy="290" r="14" fill="#FFEA00" stroke="#000" stroke-width="1.5"/>
+  <text x="446.6" y="290" class="num-text">5</text>
+  <text x="446.6" y="330" class="num-text">6</text>
+  <text x="446.6" y="370" class="num-text">7</text>
+  <text x="446.6" y="410" class="num-text">8</text>
+  <text x="553.3" y="130" class="num-text">50</text>
+  <text x="553.3" y="170" class="num-text">49</text>
+  <text x="553.3" y="210" class="num-text">48</text>
+  <text x="553.3" y="250" class="num-text">47</text>
+  <circle cx="553.3" cy="290" r="14" fill="#E0E0E0" stroke="#888" stroke-width="2"/>
+  <text x="553.3" y="290" class="num-text">46</text>
+  <text x="553.3" y="330" class="num-text">45</text>
+  <text x="553.3" y="370" class="num-text">44</text>
+  <text x="553.3" y="410" class="num-text">43</text>
+  <polygon points="473.4,430.0 526.6,430.0 500.0,470.0" fill="#FFEA00" class="border-line" />
+  <polygon points="534.6,490.0 465.4,490.0 500.0,470.0" fill="#3355FF" class="border-line" />
+  <polygon points="534.6,450.0 465.4,450.0 500.0,470.0" fill="#FF4444" class="border-line" />
+  <circle cx="260" cy="240" r="17" fill="#FFEA00" stroke="#000000" stroke-width="2.5" />
+  <circle cx="285" cy="215" r="17" fill="#FFEA00" stroke="#000000" stroke-width="2.5" />
+  <circle cx="310" cy="190" r="17" fill="#FFEA00" stroke="#000000" stroke-width="2.5" />
+  <circle cx="335" cy="165" r="17" fill="#FFEA00" stroke="#000000" stroke-width="2.5" />
+  <circle cx="660" cy="230" r="17" fill="#FF4444" stroke="#000000" stroke-width="2.5" />
+  <circle cx="685" cy="255" r="17" fill="#FF4444" stroke="#000000" stroke-width="2.5" />
+  <circle cx="710" cy="280" r="17" fill="#FF4444" stroke="#000000" stroke-width="2.5" />
+  <circle cx="735" cy="305" r="17" fill="#FF4444" stroke="#000000" stroke-width="2.5" />
+  <circle cx="400" cy="780" r="17" fill="#3355FF" stroke="#000000" stroke-width="2.5" />
+  <circle cx="440" cy="780" r="17" fill="#3355FF" stroke="#000000" stroke-width="2.5" />
+  <circle cx="480" cy="780" r="17" fill="#3355FF" stroke="#000000" stroke-width="2.5" />
+  <circle cx="520" cy="780" r="17" fill="#3355FF" stroke="#000000" stroke-width="2.5" />
+</svg>
