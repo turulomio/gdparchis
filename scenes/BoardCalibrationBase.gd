@@ -51,10 +51,16 @@ func _ready() -> void:
 
 	camera = find_child("Camera3D", true, false)
 	if not camera:
-		camera = Camera3D.new()
-		camera.position = Vector3(0, 65, 0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
-		add_child(camera)
+		var cameras = find_children("*", "Camera3D", true, false)
+		if not cameras.is_empty():
+			camera = cameras[0]
+		else:
+			camera = Camera3D.new()
+			camera.position = Vector3(0, 65, 0)
+			camera.rotation_degrees = Vector3(-90, 0, 0)
+			add_child(camera)
+	if camera:
+		camera.make_current()
 
 	load_calibration_file()
 	populate_pieces()
