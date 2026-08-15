@@ -40,8 +40,8 @@ func initialize(color_):
 ## Returns the 3D position coordinate for a given square ID and sub-position slot.
 func get_3d_position(square_id: int, sq_pos: int, h: float = 0.2) -> Vector3:
 	var b = self.board()
-	if b and b.max_players == 3:
-		return Globals.position3(square_id, sq_pos, h)
+	if b and b.has_method("get_position3d"):
+		return b.get_position3d(square_id, sq_pos, h)
 	return Globals.position4(square_id, sq_pos, h)
 
 

@@ -150,3 +150,10 @@ Esto garantiza que todos los archivos persistentes del usuario (`user://`) se al
 
 * **Ejecución bajo demanda:** No ejecutar automáticamente `python3 management.py --test` al finalizar las tareas. Únicamente se ejecutará la suite de pruebas cuando el usuario lo solicite explícitamente.
 
+---
+
+## 9. Arquitectura y Polimorfismo en Variantes de Tablero
+
+* **Uso Obligatorio de Herencia y Clases Base:** Para simplificar el código y evitar la proliferación de bloques condicionales `if max_players == 3 or max_players == 4`, la lógica del juego, tableros y recorridos se estructurará mediante polimorfismo y herencia con clases base dedicadas (`GameBase`, `BoardBase`, `RouteBase`, etc.).
+* **Especialización por Variante:** Cada variante de número de jugadores (3, 4, 6, 8) implementará su propia clase especializada (`Game3`, `Board3`, `Game4`, `Board4`, etc.), sobrescribiendo únicamente variables, geometrías y rutas específicas sin duplicar lógica de control.
+

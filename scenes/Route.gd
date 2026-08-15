@@ -5,6 +5,21 @@ var player_id
 var arr = []
 
 
+## Factory method instantiating specialized Route subclasses based on player count.
+static func create(_p_max_players: int, _player_id: int, _squares: Dictionary) -> Route:
+	match _p_max_players:
+		3:
+			return Route3.new(_p_max_players, _player_id, _squares)
+		4:
+			return Route4.new(_p_max_players, _player_id, _squares)
+		6:
+			return Route6.new(_p_max_players, _player_id, _squares)
+		8:
+			return Route8.new(_p_max_players, _player_id, _squares)
+		_:
+			return Route.new(_p_max_players, _player_id, _squares)
+
+
 ## Constructor building player route array from global squares mapping.
 ## @param _p_max_players Total players in game.
 ## @param _player_id Owner player ID.
@@ -24,49 +39,9 @@ func _to_string():
 	return "[Route: " + str(self.player_id) + "]"
 
 
-## Internal helper returning the ordered list of square IDs for this player's route.
+## Internal helper returning the ordered list of square IDs for this player's route. Virtual.
 ## @return Array of square ID integers.
 func _get_route_square_ids():
-	if self.max_players == 3:
-		if self.player_id == Globals.ePlayer.YELLOW:
-			return [76] + Array(range(5, 51)) + Array(range(1, 5)) + Array(range(51, 59 + 1))
-		elif self.player_id == Globals.ePlayer.BLUE:
-			return [77] + Array(range(22, 51)) + Array(range(1, 22)) + Array(range(60, 67 + 1))
-		elif self.player_id == Globals.ePlayer.RED:
-			return [78] + Array(range(39, 51)) + Array(range(1, 39)) + Array(range(68, 75 + 1))
-	elif self.max_players == 4:
-		if self.player_id == Globals.ePlayer.YELLOW:
-			return ([101] + range(5, 76 + 1))
-		elif self.player_id == Globals.ePlayer.BLUE:
-			return [102] + range(22, 68 + 1) + range(1, 17 + 1) + range(77, 84 + 1)
-		elif self.player_id == Globals.ePlayer.RED:
-			return [103] + range(39, 68 + 1) + range(1, 34 + 1) + range(85, 92 + 1)
-		elif self.player_id == Globals.ePlayer.GREEN:
-			return [104] + range(56, 68 + 1) + range(1, 51 + 1) + range(93, 100 + 1)
-	elif self.max_players == 6:
-		var start_sq = 5 + self.player_id * 17
-		var home_ramp_base = 108 + self.player_id * 8
-		var home_sq = 151 + self.player_id
-		var main_route: Array = []
-		for i in range(102):
-			main_route.append(((start_sq - 1 + i) % 102) + 1)
-		var track_segment = main_route.slice(0, 102 - 17)
-		var ramp_segment: Array = []
-		for r_idx in range(8):
-			ramp_segment.append(home_ramp_base + r_idx)
-		return [home_sq] + track_segment + ramp_segment
-	elif self.max_players == 8:
-		var start_sq = 5 + self.player_id * 17
-		var home_ramp_base = 144 + self.player_id * 8
-		var home_sq = 201 + self.player_id
-		var main_route: Array = []
-		for i in range(136):
-			main_route.append(((start_sq - 1 + i) % 136) + 1)
-		var track_segment = main_route.slice(0, 136 - 17)
-		var ramp_segment: Array = []
-		for r_idx in range(8):
-			ramp_segment.append(home_ramp_base + r_idx)
-		return [home_sq] + track_segment + ramp_segment
 	return []
 
 

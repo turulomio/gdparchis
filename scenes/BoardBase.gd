@@ -140,7 +140,7 @@ func initialize(_show_pieces: bool) -> void:
 
 	for player in self.players():
 		player.initialize(self.show_pieces)
-		player.set_route(Route.new(self.max_players, player.id, self.squares))
+		player.set_route(Route.create(self.max_players, player.id, self.squares))
 		
 		var square_position = 0
 		for piece in player.pieces():
@@ -195,3 +195,9 @@ func get_piece_by_player_id_and_id(player_id: int, piece_id: int) -> Piece:
 				if piece.id == piece_id:
 					return piece
 	return null
+
+
+## Virtual method calculating 3D position for a given square ID and sub-position.
+## Overridden by variant board subclasses (Board3, Board4, etc.).
+func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
+	return Globals.position4(square_id, square_position, h)

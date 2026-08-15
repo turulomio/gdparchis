@@ -744,31 +744,41 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 	# 1. Initialize board squares, players, and default piece properties
 	gameobject.board().initialize(show_pieces)
 	
-	# 2. Loop through each player dictionary stored in global game_data
-	for d_player in Globals.game_data.players:
-		var player = gameobject.board().get_player_by_id(d_player["id"])
-		player.plays = d_player["plays"]
-		player.ia = d_player["ia"]		
-		player.playername = d_player["playername"]		
-		
-		# 3. Loop through each piece configuration for active players
-		for d_piece in d_player["pieces"]:
-			var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
-			if show_pieces and player.plays:
-				piece.visible = true
-				if animate:
-					# Animate piece movement along route to target position at 4x speed (0.1s duration vs normal 0.4s)
-					piece.move_to_route_position(d_piece["route_position"], 0.1)
-					await piece.piece_moved
+	# 2. Reset and configure all board players based on Globals.game_data.players
+	for player in gameobject.board().players():
+		var found_dict = null
+		for d_player in Globals.game_data.players:
+			if d_player["id"] == player.id:
+				found_dict = d_player
+				break
+				
+		if found_dict != null:
+			player.plays = found_dict["plays"]
+			player.ia = found_dict["ia"]		
+			player.playername = found_dict["playername"]		
+			
+			for d_piece in found_dict["pieces"]:
+				var piece = gameobject.board().get_piece_by_player_id_and_id(player.id, d_piece["id"])
+				if show_pieces and player.plays:
+					piece.visible = true
+					if animate:
+						piece.move_to_route_position(d_piece["route_position"], 0.1)
+						await piece.piece_moved
+					else:
+						var square_final = player.route().square_at(d_piece["route_position"])
+						var square_position_final = square_final.empty_position()
+						square_final.set_piece_at_square_position(square_position_final, piece)
+						piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
+						piece.change_scale_on_specials_squares()
 				else:
-					# Directly place piece at target route position without playing hop animations
-					var square_final = player.route().square_at(d_piece["route_position"])
-					var square_position_final = square_final.empty_position()
-					square_final.set_piece_at_square_position(square_position_final, piece)
-					piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
-					piece.change_scale_on_specials_squares()
-			else:
-				# Hide pieces for non-participating players
+					piece.visible = false
+		else:
+			# Non-participating player (e.g. Green in 3-player game)
+			player.plays = false
+			player.visible = false
+			if player.dice():
+				player.dice().visible = false
+			for piece in player.pieces():
 				piece.visible = false
 
 		

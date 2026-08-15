@@ -48,9 +48,37 @@ func _ready() -> void:
 		file_dlg.title = tr("Load game")
 		file_dlg.ok_button_text = tr("Load game")
 		
+	var p3_btn = find_child("Players3", true, false)
+	if p3_btn:
+		p3_btn.text = tr("3 players board")
+
+	var p4_btn = find_child("Players4", true, false)
+	if p4_btn:
+		p4_btn.text = tr("4 players board")
+
+	var load_btn = find_child("Load", true, false)
+	if load_btn:
+		load_btn.text = tr("Load game")
+
+	var hist_btn = find_child("History", true, false)
+	if hist_btn:
+		hist_btn.text = tr("Match history")
+
+	var ctrl_btn = find_child("Controls", true, false)
+	if ctrl_btn:
+		ctrl_btn.text = tr("Controls & Shortcuts")
+
+	var opt_btn = find_child("Options", true, false)
+	if opt_btn:
+		opt_btn.text = tr("Settings")
+
 	var credits_btn = find_child("Credits", true, false)
 	if credits_btn:
 		credits_btn.text = tr("Credits")
+
+	var exit_btn = find_child("Exit", true, false)
+	if exit_btn:
+		exit_btn.text = tr("Exit")
 
 	# 3. Connect window resize listener
 	if not get_tree().get_root().size_changed.is_connected(resize):
@@ -157,6 +185,17 @@ func _on_Load_pressed():
 		file_dlg.popup_centered()
 
 
+## Button handler starting a new 3-player game.
+func _on_Players3_pressed():
+	Globals.game_data = Globals.new_game(3)
+	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
+
+
+## Mouse hover audio feedback for 3 players button.
+func _on_Players3_mouse_entered():
+	_play_click()
+
+
 ## Button handler starting a new 4-player game.
 func _on_Players4_pressed():
 	Globals.game_data = Globals.new_game(4)
@@ -167,8 +206,10 @@ func _on_Players4_pressed():
 ## @param path Absolute file path to .save file.
 func _on_FileDialog_file_selected(path):
 	var data = Globals.load_game(path)
-	if data["max_players"] == 4:
-		Globals.game_data = data
+	Globals.game_data = data
+	if data.get("max_players", 4) == 3:
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
+	else:
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 
 
