@@ -275,6 +275,81 @@ func setup_board_materials() -> void:
 		blend.visible = false
 
 
-## Specialized 3D position calculator for 3-player board geometry.
+## Specialized 3D position calculator for 3-player board geometry encapsulated in Board3.
 func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
-	return Globals.position3(square_id, square_position, h)
+	var step_dist: float = 3.125
+	var max_v: float = 24.5
+	var u_left: float = -6.75
+	var u_mid: float = 0.0
+	var u_right: float = 6.75
+	var sub_off: float = 0.6 if (square_position % 2 == 1) else -0.6
+	
+	var get_arm_pos = func(u_col: float, v_dist: float, angle_deg: float) -> Vector3:
+		var rad = deg_to_rad(angle_deg)
+		var u_eff = u_col + sub_off
+		var x_world = u_eff * cos(rad) - v_dist * sin(rad)
+		var z_world = u_eff * sin(rad) + v_dist * cos(rad)
+		return Vector3(x_world, h, z_world)
+		
+	match square_id:
+		# Yellow Arm (0 degrees, North)
+		1, 2, 3, 4, 5, 6, 7, 8:
+			var v = -max_v + (square_id - 1) * step_dist
+			return get_arm_pos.call(u_left, v, 0.0)
+		51, 52, 53, 54, 55, 56, 57, 58:
+			var v = -max_v + (square_id - 51) * step_dist
+			return get_arm_pos.call(u_mid, v, 0.0)
+		43, 44, 45, 46, 47, 48, 49, 50:
+			var v = -max_v + (50 - square_id) * step_dist
+			return get_arm_pos.call(u_right, v, 0.0)
+		59:
+			var slots = [Vector3(-1.2, h, -1.2), Vector3(1.2, h, -1.2), Vector3(-1.2, h, 1.2), Vector3(1.2, h, 1.2)]
+			return slots[square_position % 4]
+			
+		# Blue Arm (+120 degrees)
+		9, 10, 11, 12, 13, 14, 15, 16:
+			var v = -max_v + (square_id - 9) * step_dist
+			return get_arm_pos.call(u_left, v, 120.0)
+		60, 61, 62, 63, 64, 65, 66:
+			var v = -max_v + (square_id - 60) * step_dist
+			return get_arm_pos.call(u_mid, v, 120.0)
+		18, 19, 20, 21, 22, 23, 24, 25:
+			var v = -max_v + (25 - square_id) * step_dist
+			return get_arm_pos.call(u_right, v, 120.0)
+		67:
+			var slots = [Vector3(-1.2, h, -1.2), Vector3(1.2, h, -1.2), Vector3(-1.2, h, 1.2), Vector3(1.2, h, 1.2)]
+			return slots[square_position % 4]
+			
+		# Red Arm (240 degrees)
+		35, 36, 37, 38, 39, 40, 41, 42:
+			var v = -max_v + (42 - square_id) * step_dist
+			return get_arm_pos.call(u_left, v, 240.0)
+		68, 69, 70, 71, 72, 73, 74:
+			var v = -max_v + (square_id - 68) * step_dist
+			return get_arm_pos.call(u_mid, v, 240.0)
+		26, 27, 28, 29, 30, 31, 32, 33:
+			var v = -max_v + (square_id - 26) * step_dist
+			return get_arm_pos.call(u_right, v, 240.0)
+		75:
+			var slots = [Vector3(-1.2, h, -1.2), Vector3(1.2, h, -1.2), Vector3(-1.2, h, 1.2), Vector3(1.2, h, 1.2)]
+			return slots[square_position % 4]
+			
+		# Secure Corner Squares 17 & 34
+		17:
+			return get_arm_pos.call(u_left, -max_v - 2.5, 120.0)
+		34:
+			return get_arm_pos.call(u_left, -max_v - 2.5, 240.0)
+			
+		# Home Bases (Casas)
+		101: # Yellow House (NW)
+			var slots = [Vector3(-19.5, h, -19.5), Vector3(-16.5, h, -19.5), Vector3(-19.5, h, -16.5), Vector3(-16.5, h, -16.5)]
+			return slots[square_position % 4]
+		102: # Blue House (South)
+			var slots = [Vector3(-1.5, h, 20.5), Vector3(1.5, h, 20.5), Vector3(-1.5, h, 23.5), Vector3(1.5, h, 23.5)]
+			return slots[square_position % 4]
+		103: # Red House (NE)
+			var slots = [Vector3(20.5, h, -6.5), Vector3(23.5, h, -6.5), Vector3(20.5, h, -3.5), Vector3(23.5, h, -3.5)]
+			return slots[square_position % 4]
+			
+		_:
+			return Vector3(0, h, 0)
