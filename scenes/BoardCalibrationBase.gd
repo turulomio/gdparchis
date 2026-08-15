@@ -218,8 +218,10 @@ func get_square_ids() -> Array[int]:
 	return []
 
 
-## Virtual method returning maximum piece slots for a given square ID.
-func get_max_slots(_sq_id: int) -> int:
+## Returns maximum piece slots for a given square ID (delegates to board_inst if available).
+func get_max_slots(sq_id: int) -> int:
+	if board_inst and board_inst.has_method("get_max_slots"):
+		return board_inst.get_max_slots(sq_id)
 	return 2
 
 

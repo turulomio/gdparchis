@@ -53,3 +53,8 @@ func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vec
 			return Vector3(float(d["x"]), h, float(d["z"]))
 
 	return Vector3(0, h, 0)
+
+
+## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
+func get_max_slots(sq_id: int) -> int:
+	return 4 if sq_id in [76, 84, 92, 100, 101, 102, 103, 104] else 2

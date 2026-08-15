@@ -201,3 +201,11 @@ func get_piece_by_player_id_and_id(player_id: int, piece_id: int) -> Piece:
 ## Overridden by variant board subclasses (Board3, Board4, etc.).
 func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 	return Globals.position4(square_id, square_position, h)
+
+
+## Returns maximum allowed slots (pieces) for a given square ID (4 for goal triangles & home houses, 2 for arm squares).
+## Overridden by board variant subclasses (Board3, Board4, Board6, etc.).
+func get_max_slots(sq_id: int) -> int:
+	if self.squares.has(sq_id):
+		return self.squares[sq_id].max_pieces()
+	return 2
