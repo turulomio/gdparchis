@@ -1,11 +1,36 @@
 extends Control
 
 
-## Scene entry point initializing window resize listener.
+## System notification handler for Android OS back button navigation.
+## @param what Notification type identifier.
+func _notification(what: int):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_on_button_return_pressed()
+
+
+## Scene entry point initializing dynamic player customization controls and window resize listener.
 func _ready():
 	if not get_tree().get_root().size_changed.is_connected(self.resize):
 		get_tree().get_root().size_changed.connect(self.resize) 
 	self.resize()
+
+	var container = get_node_or_null("MarginContainer/VBoxContainer/HBoxContainer")
+	if container:
+		for child in container.get_children():
+			child.queue_free()
+		
+		var max_players = 4
+		if Globals.game_data and Globals.game_data.has("max_players"):
+			max_players = Globals.game_data.max_players
+			
+		for p_idx in range(max_players):
+			var po = Globals.SCENE_PLAYER_OPTIONS.instantiate()
+			container.add_child(po)
+			po.set_player_id(p_idx)
+			if Globals.game_data and Globals.game_data.has("players") and p_idx < Globals.game_data.players.size():
+				var p_info = Globals.game_data.players[p_idx]
+				if po.has_method("set_player_data"):
+					po.set_player_data(p_info.get("playername", Globals.ePlayerDefaultName(p_idx)), p_info.get("plays", true), p_info.get("ia", p_idx > 0))
 
 
 ## Scene exit cleanup callback disconnecting root window resize signal.
@@ -18,9 +43,10 @@ func _exit_tree() -> void:
 func _on_Button_pressed():
 	var i = 0
 	for node in self.nodes():
-		Globals.game_data.players[i].playername = node.playername
-		Globals.game_data.players[i].plays = node.plays
-		Globals.game_data.players[i].ia = node.ia
+		if i < Globals.game_data.players.size():
+			Globals.game_data.players[i].playername = node.playername
+			Globals.game_data.players[i].plays = node.plays
+			Globals.game_data.players[i].ia = node.ia
 		i += 1
 	get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart.tscn")
 
@@ -29,9 +55,11 @@ func _on_Button_pressed():
 ## @return Array of PlayerOptions nodes.
 func nodes():
 	var r = []
-	for node in $MarginContainer/VBoxContainer/HBoxContainer.get_children():
-		if node is PlayerOptions:
-			r.append(node)
+	var container = get_node_or_null("MarginContainer/VBoxContainer/HBoxContainer")
+	if container:
+		for node in container.get_children():
+			if node is PlayerOptions:
+				r.append(node)
 	return r
 
 

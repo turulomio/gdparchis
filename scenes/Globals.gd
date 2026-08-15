@@ -3,7 +3,7 @@ const VERSION="1.0.0"
 const VERSION_DATE="2026-08-14"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum ePlayer {YELLOW, BLUE, RED, GREEN}  # 0,1,2,3
+enum ePlayer {YELLOW, BLUE, RED, GREEN, ORANGE, PURPLE, CYAN, MAGENTA}  # 0,1,2,3,4,5,6,7
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
@@ -106,8 +106,8 @@ func add_game_history_entry(start_time: float, winner, board) -> void:
 	self.save_game_history()
 
 
-## Maps a numeric player ID (0-3) to its corresponding Godot Color.
-## @param player_id Integer ID of the player (0: Yellow, 1: Blue, 2: Red, 3: Green).
+## Maps a numeric player ID (0-7) to its corresponding Godot Color.
+## @param player_id Integer ID of the player.
 ## @return Color associated with the player.
 func ePlayer2Color(player_id):
 	match player_id:
@@ -119,11 +119,19 @@ func ePlayer2Color(player_id):
 			return Color(0.75, 0, 0, 1) # Darkened RED by additional 10% (total 25%)
 		3:
 			return Color(0, 0.85, 0, 1) # Darkened GREEN by 15%
+		4:
+			return Color(1, 0.5, 0, 1) # Orange
+		5:
+			return Color(0.6, 0.2, 0.8, 1) # Purple
+		6:
+			return Color(0, 0.8, 0.9, 1) # Cyan
+		7:
+			return Color(0.9, 0.2, 0.6, 1) # Magenta
 		_:
 			return Color.WHITE
 
 
-## Maps a Godot Color back to its numeric player ID (0-3).
+## Maps a Godot Color back to its numeric player ID (0-7).
 ## @param color Color object to convert.
 ## @return Player ID integer or null if unmatched.
 func Color2ePlayer(color):
@@ -136,6 +144,14 @@ func Color2ePlayer(color):
 			return 2
 		Color.GREEN, Color(0, 0.85, 0, 1):
 			return 3
+		Color(1, 0.5, 0, 1):
+			return 4
+		Color(0.6, 0.2, 0.8, 1):
+			return 5
+		Color(0, 0.8, 0.9, 1):
+			return 6
+		Color(0.9, 0.2, 0.6, 1):
+			return 7
 	return null
 
 
@@ -153,6 +169,16 @@ func ePlayerDefaultName(player_id):
 			r = "Redy"
 		ePlayer.GREEN:
 			r = "Greeny"
+		ePlayer.ORANGE:
+			r = "Orangey"
+		ePlayer.PURPLE:
+			r = "Purpley"
+		ePlayer.CYAN:
+			r = "Cyany"
+		ePlayer.MAGENTA:
+			r = "Magentey"
+		_:
+			r = "Player " + str(player_id + 1)
 	return r
 
 

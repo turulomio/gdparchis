@@ -25,14 +25,18 @@ Welcome to **GDParchis**, a 3D adaptation of the classic Parchís board game bui
 
 Upon launching the game, you will enter the **Player Selection Menu**:
 
-- **Player Count:** Select 2, 3, or 4 players for the match.
+- **Player Count & Board Selection:** Select 3, 4, 6, or 8 player board modes for the match.
 - **Color Assignments:**
   - Player 0: Yellow 🟡
   - Player 1: Blue 🔵
   - Player 2: Red 🔴
   - Player 3: Green 🟢
+  - Player 4: Orange 🟠 (6/8 Player Modes)
+  - Player 5: Purple 🟣 (6/8 Player Modes)
+  - Player 6: Cyan 🩵 (8 Player Mode)
+  - Player 7: Magenta 🩷 (8 Player Mode)
 - **Player Types:** Toggle each player slot between **Human Player** or **Artificial Intelligence (AI)**.
-- **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in the post-game Match History logs.
+- **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in post-game Match History logs.
 
 ---
 
