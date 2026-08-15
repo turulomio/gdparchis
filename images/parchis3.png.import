@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cls2x8nayndgv"
-path="res://.godot/imported/game3.png-8288883c456bb77518c942c1ef76eaaa.ctex"
+uid="uid://bxc3uw0fcaaxo"
+path="res://.godot/imported/parchis3.png-b131d3373dbc6fc78543471d4bbc1f84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/game3.png"
-dest_files=["res://.godot/imported/game3.png-8288883c456bb77518c942c1ef76eaaa.ctex"]
+source_file="res://images/parchis3.png"
+dest_files=["res://.godot/imported/parchis3.png-b131d3373dbc6fc78543471d4bbc1f84.ctex"]
 
 [params]
 

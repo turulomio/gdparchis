@@ -1,4 +1,3 @@
-const GameDiceStartBase = preload("res://scenes/GameDiceStartBase.gd")
 extends GameDiceStartBase
 class_name GameDiceStart4
 

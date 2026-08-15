@@ -1,4 +1,3 @@
-const GameBase = preload("res://scenes/GameBase.gd")
 extends GameBase
 class_name Game3
 

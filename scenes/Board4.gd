@@ -1,4 +1,3 @@
-const BoardBase = preload("res://scenes/BoardBase.gd")
 extends BoardBase
 class_name Board4
 
