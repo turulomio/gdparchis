@@ -38,6 +38,7 @@ func test_ui_scene_paths_exist() -> void:
 		"res://scenes/Options.tscn",
 		"res://scenes/Controls.tscn",
 		"res://scenes/GameHistory.tscn",
+		"res://scenes/Credits.tscn",
 		"res://scenes/Game4.tscn",
 		"res://scenes/GameDiceStart.tscn"
 	]
@@ -71,6 +72,10 @@ func test_font_resources_exist() -> void:
 
 ## Verifies match history adding, saving, loading, and clearing.
 func test_match_history_persistence() -> void:
+	# Backup real user history before testing
+	Globals.load_game_history()
+	var real_history_backup = Globals.game_history.duplicate(true)
+	
 	Globals.clear_game_history()
 	self.assert_eq(Globals.game_history.size(), 0, "Game history cleared to 0 entries")
 	
@@ -93,8 +98,9 @@ func test_match_history_persistence() -> void:
 	self.assert_eq(Globals.game_history.size(), 1, "Game history saved and loaded 1 entry")
 	self.assert_eq(Globals.game_history[0]["winner_name"], "TestPlayer", "Match history winner name restored correctly")
 	
-	# Cleanup
-	Globals.clear_game_history()
+	# Restore real user history
+	Globals.game_history = real_history_backup
+	Globals.save_game_history()
 
 
 ## Verifies settings loading and difficulty mapping.

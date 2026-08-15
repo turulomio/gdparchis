@@ -1,25 +1,78 @@
-extends Control
+extends Node3D
+
+@onready var Dice1Pivot = get_node_or_null("Dice1Pivot")
+@onready var Dice2Pivot = get_node_or_null("Dice2Pivot")
 
 var http_request: HTTPRequest
 var latest_release_url: String = "https://github.com/turulomio/gdparchis/releases"
+var rotation_speed: float = 1.2
 
 
-## Scene entry point initializing version label text, update checker, and window resize listener.
-func _ready():	
-	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0} - ").format([Globals.VERSION])
-	$FileDialog.title = tr("Load game")
-	$FileDialog.ok_button_text = tr("Load game")
+## Scene entry point initializing 3D red dice, version label text, update checker, and window resize listener.
+func _ready() -> void:	
+	# 1. Apply diamond tilt rotation (35.264° pitch, 45° yaw) and freeze physics for background 3D dice
+	var diamond_tilt = Vector3(deg_to_rad(35.264), deg_to_rad(45.0), 0.0)
+	if Dice1Pivot and Dice1Pivot.has_node("Dice"):
+		var dice1 = Dice1Pivot.get_node("Dice")
+		if dice1 is RigidBody3D:
+			dice1.freeze = true
+			dice1.gravity_scale = 0.0
+			dice1.linear_velocity = Vector3.ZERO
+			dice1.angular_velocity = Vector3.ZERO
+		dice1.rotation = diamond_tilt
+		if dice1.has_method("apply_soft_tint"):
+			dice1.apply_soft_tint(Color(0.95, 0.15, 0.15))
+			
+	if Dice2Pivot and Dice2Pivot.has_node("Dice"):
+		var dice2 = Dice2Pivot.get_node("Dice")
+		if dice2 is RigidBody3D:
+			dice2.freeze = true
+			dice2.gravity_scale = 0.0
+			dice2.linear_velocity = Vector3.ZERO
+			dice2.angular_velocity = Vector3.ZERO
+		dice2.rotation = diamond_tilt
+		if dice2.has_method("apply_soft_tint"):
+			dice2.apply_soft_tint(Color(0.95, 0.15, 0.15))
+
+	# 2. Populate translated UI text fields and scale Title font size by 3x
+	var title_lbl = find_child("Title", true, false)
+	if title_lbl:
+		title_lbl.add_theme_font_size_override("font_size", 135)
+
+	var ver_label = find_child("Version", true, false)
+	if ver_label:
+		ver_label.text = tr(" Version: {0} - ").format([Globals.VERSION])
+		
+	var file_dlg = find_child("FileDialog", true, false)
+	if file_dlg:
+		file_dlg.title = tr("Load game")
+		file_dlg.ok_button_text = tr("Load game")
+		
+	var credits_btn = find_child("Credits", true, false)
+	if credits_btn:
+		credits_btn.text = tr("Credits")
+
+	# 3. Connect window resize listener
 	if not get_tree().get_root().size_changed.is_connected(resize):
 		get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
 	self.check_for_updates()
 
 
+## Frame process loop spinning both background 3D red dice continuously around their vertical Y-axis like diamonds.
+## @param delta Frame delta time in seconds.
+func _process(delta: float) -> void:
+	if Dice1Pivot:
+		Dice1Pivot.rotate_y(delta * rotation_speed)
+	if Dice2Pivot:
+		Dice2Pivot.rotate_y(-delta * rotation_speed)
+
+
 ## Initializes HTTPRequest node and sends asynchronous API query to GitHub releases endpoint.
 func check_for_updates() -> void:
-	if not has_node("MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus"):
+	var status_label = find_child("UpdateStatus", true, false)
+	if not status_label:
 		return
-	var status_label = $MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus
 	status_label.text = tr("Checking for updates...")
 	
 	http_request = HTTPRequest.new()
@@ -43,9 +96,9 @@ func check_for_updates() -> void:
 ## @param _headers Array of response headers.
 ## @param body Byte array containing JSON response.
 func _on_update_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-	if not has_node("MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus"):
+	var status_label = find_child("UpdateStatus", true, false)
+	if not status_label:
 		return
-	var status_label = $MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus
 	
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
 		status_label.text = tr("Could not check for updates")
@@ -97,9 +150,11 @@ func _on_Exit_pressed():
 
 ## Button handler displaying the load game FileDialog.
 func _on_Load_pressed():
-	$FileDialog.current_dir = "user://saves/"
-	self.resize()
-	$FileDialog.popup_centered()
+	var file_dlg = find_child("FileDialog", true, false)
+	if file_dlg:
+		file_dlg.current_dir = "user://saves/"
+		self.resize()
+		file_dlg.popup_centered()
 
 
 ## Button handler starting a new 4-player game.
@@ -124,7 +179,7 @@ func _on_History_pressed():
 
 ## Mouse hover event playing sound effect for Controls button.
 func _on_Controls_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
 ## Button handler navigating to Controls.tscn scene.
@@ -135,6 +190,16 @@ func _on_Controls_pressed():
 ## Button handler navigating to Options.tscn scene.
 func _on_Options_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Options.tscn")
+
+
+## Mouse hover audio feedback for Credits button.
+func _on_Credits_mouse_entered():
+	_play_click()
+
+
+## Button handler navigating to Credits.tscn scene.
+func _on_Credits_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Credits.tscn")
 
 
 ## Input event callback handling global exit key press.
@@ -155,33 +220,91 @@ func _on_Github_gui_input(_event):
 
 ## Mouse hover audio feedback for 4 players button.
 func _on_Players4_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
 ## Mouse hover audio feedback for Load button.
 func _on_Load_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
 ## Mouse hover audio feedback for History button.
 func _on_History_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
 ## Mouse hover audio feedback for Options button.
 func _on_Options_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
 ## Mouse hover audio feedback for Exit button.
 func _on_Exit_mouse_entered():
-	$Click.play()
+	_play_click()
 
 
-## Resizes UI container bounds and FileDialog to match active window dimensions.
+## Plays click audio sound effect if node exists.
+func _play_click() -> void:
+	var click_sound = find_child("Click", true, false)
+	if click_sound:
+		click_sound.play()
+
+
+## Resizes UI container bounds, FileDialog, and repositions 3D background dice relative to UI widget.
 func resize():
-	if has_node("FileDialog"):
+	var file_dlg = find_child("FileDialog", true, false)
+	if file_dlg:
 		var vp_size = get_viewport().get_visible_rect().size
 		var target_w = max(400, int(vp_size.x * 0.85))
 		var target_h = max(300, int(vp_size.y * 0.85))
-		$FileDialog.size = Vector2i(target_w, target_h)
+		file_dlg.size = Vector2i(target_w, target_h)
+		
+	call_deferred("position_pivots_from_ui")
+
+
+## Positions 3D dice pivots at a fixed screen margin relative to the central UI container bounds.
+func position_pivots_from_ui():
+	var camera = get_node_or_null("Camera3D")
+	if not camera:
+		return
+
+	var vp_size = get_viewport().get_visible_rect().size
+	var center_x = vp_size.x * 0.5
+	var center_y = vp_size.y * 0.5
+	var cam_z = camera.global_transform.origin.z
+
+	var half_menu = 250.0
+	var vbox = find_child("VBoxContainer", true, false)
+	if vbox:
+		vbox.force_update_transform()
+		if vbox.size.x > 50.0:
+			half_menu = vbox.size.x * 0.5
+
+	var margin = max(160.0, vp_size.x * 0.08)
+	var left_screen = Vector2(center_x - half_menu - margin, center_y)
+	var right_screen = Vector2(center_x + half_menu + margin, center_y)
+
+	var left_3d = camera.project_position(left_screen, cam_z)
+	var right_3d = camera.project_position(right_screen, cam_z)
+
+	if Dice1Pivot:
+		Dice1Pivot.global_transform.origin = left_3d
+		if Dice1Pivot.has_node("Dice"):
+			var dice1 = Dice1Pivot.get_node("Dice")
+			dice1.global_transform.origin = left_3d
+			if dice1 is RigidBody3D:
+				dice1.freeze = true
+				dice1.gravity_scale = 0.0
+				dice1.linear_velocity = Vector3.ZERO
+				dice1.angular_velocity = Vector3.ZERO
+
+	if Dice2Pivot:
+		Dice2Pivot.global_transform.origin = right_3d
+		if Dice2Pivot.has_node("Dice"):
+			var dice2 = Dice2Pivot.get_node("Dice")
+			dice2.global_transform.origin = right_3d
+			if dice2 is RigidBody3D:
+				dice2.freeze = true
+				dice2.gravity_scale = 0.0
+				dice2.linear_velocity = Vector3.ZERO
+				dice2.angular_velocity = Vector3.ZERO

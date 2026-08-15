@@ -1,13 +1,62 @@
-extends Control
+extends Node3D
 class_name GameHistory
 
+@onready var Dice1Pivot = get_node_or_null("Dice1Pivot")
+@onready var Dice2Pivot = get_node_or_null("Dice2Pivot")
 
-## Scene entry point initializing history list and window resize handler.
+var rotation_speed: float = 1.2
+
+
+## System notification handler intercepting Android OS back button navigation.
+## @param what Notification type identifier.
+func _notification(what: int):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_on_Return_pressed()
+
+
+## Scene entry point initializing 3D green dice, history list, and window resize handler.
 func _ready():
+	# 1. Apply diamond tilt rotation (35.264° pitch, 45° yaw) and green soft tint to background 3D dice
+	var diamond_tilt = Vector3(deg_to_rad(35.264), deg_to_rad(45.0), 0.0)
+	var green_tint = Color(0.1, 0.85, 0.2)
+	
+	if Dice1Pivot and Dice1Pivot.has_node("Dice"):
+		var dice1 = Dice1Pivot.get_node("Dice")
+		if dice1 is RigidBody3D:
+			dice1.freeze = true
+			dice1.gravity_scale = 0.0
+			dice1.linear_velocity = Vector3.ZERO
+			dice1.angular_velocity = Vector3.ZERO
+		dice1.rotation = diamond_tilt
+		if dice1.has_method("apply_soft_tint"):
+			dice1.apply_soft_tint(green_tint)
+			
+	if Dice2Pivot and Dice2Pivot.has_node("Dice"):
+		var dice2 = Dice2Pivot.get_node("Dice")
+		if dice2 is RigidBody3D:
+			dice2.freeze = true
+			dice2.gravity_scale = 0.0
+			dice2.linear_velocity = Vector3.ZERO
+			dice2.angular_velocity = Vector3.ZERO
+		dice2.rotation = diamond_tilt
+		if dice2.has_method("apply_soft_tint"):
+			dice2.apply_soft_tint(green_tint)
+
+	# 2. Load match history from disk and populate list cards
+	Globals.load_game_history()
 	if not get_tree().get_root().size_changed.is_connected(self.resize):
 		get_tree().get_root().size_changed.connect(self.resize)
 	self.resize()
 	self.populate_history()
+
+
+## Frame process loop spinning both background 3D green dice continuously around their vertical Y-axis like diamonds.
+## @param delta Frame delta time in seconds.
+func _process(delta: float) -> void:
+	if Dice1Pivot:
+		Dice1Pivot.rotate_y(delta * rotation_speed)
+	if Dice2Pivot:
+		Dice2Pivot.rotate_y(-delta * rotation_speed)
 
 
 ## Scene exit cleanup callback disconnecting root window resize signal.
@@ -18,7 +67,10 @@ func _exit_tree() -> void:
 
 ## Populates scrollable list with cards for each recorded match in Globals.game_history.
 func populate_history() -> void:
-	var list_container = $MarginContainer/VBoxContainer/ScrollContainer/ListContainer
+	var list_container = find_child("ListContainer", true, false)
+	if not list_container:
+		return
+		
 	for child in list_container.get_children():
 		child.queue_free()
 		
@@ -163,6 +215,14 @@ func populate_history() -> void:
 		list_container.add_child(card)
 
 
+## Input event listener supporting Escape key navigation back to Main.tscn.
+## @param event InputEvent object.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("exit"):
+		get_viewport().set_input_as_handled()
+		_on_Return_pressed()
+
+
 ## Return button click handler navigating back to Main.tscn.
 func _on_Return_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
@@ -170,4 +230,45 @@ func _on_Return_pressed():
 
 ## Window resize callback.
 func resize():
-	pass
+	call_deferred("position_pivots_from_ui")
+
+
+## Positions 3D dice pivots at a fixed screen margin relative to the central UI container bounds.
+func position_pivots_from_ui():
+	var camera = get_node_or_null("Camera3D")
+	var vbox = find_child("VBoxContainer", true, false)
+	if not camera or not vbox:
+		return
+
+	vbox.force_update_transform()
+	var rect = vbox.get_global_rect()
+	var cam_z = camera.global_transform.origin.z
+	var center_y = rect.position.y + rect.size.y * 0.5
+
+	var left_screen = Vector2(rect.position.x - 201.6, center_y)
+	var right_screen = Vector2(rect.position.x + rect.size.x + 201.6, center_y)
+
+	var left_3d = camera.project_position(left_screen, cam_z)
+	var right_3d = camera.project_position(right_screen, cam_z)
+
+	if Dice1Pivot:
+		Dice1Pivot.global_transform.origin = left_3d
+		if Dice1Pivot.has_node("Dice"):
+			var dice1 = Dice1Pivot.get_node("Dice")
+			dice1.global_transform.origin = left_3d
+			if dice1 is RigidBody3D:
+				dice1.freeze = true
+				dice1.gravity_scale = 0.0
+				dice1.linear_velocity = Vector3.ZERO
+				dice1.angular_velocity = Vector3.ZERO
+
+	if Dice2Pivot:
+		Dice2Pivot.global_transform.origin = right_3d
+		if Dice2Pivot.has_node("Dice"):
+			var dice2 = Dice2Pivot.get_node("Dice")
+			dice2.global_transform.origin = right_3d
+			if dice2 is RigidBody3D:
+				dice2.freeze = true
+				dice2.gravity_scale = 0.0
+				dice2.linear_velocity = Vector3.ZERO
+				dice2.angular_velocity = Vector3.ZERO

@@ -261,11 +261,12 @@ func _unhandled_input(event: InputEvent):
 						handle_object_click(object)
 						get_viewport().set_input_as_handled()
 					
-	# 4. Process touch drag motion for orbiting 3D camera on mobile devices
+	# 4. Process touch drag motion for orbiting 3D camera ONLY on mobile devices (Android / iOS)
 	elif event is InputEventScreenDrag:
-		if (event.position - _touch_start_pos).length() > 15.0:
-			_is_touch_dragging = true
-			orbit_camera(event.relative)
+		if OS.has_feature("mobile") or OS.get_name() in ["Android", "iOS"]:
+			if (event.position - _touch_start_pos).length() > 15.0:
+				_is_touch_dragging = true
+				orbit_camera(event.relative)
 
 
 ## Syncs spherical coordinate angles with current camera position if camera moved externally.

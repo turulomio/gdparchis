@@ -102,7 +102,18 @@ Access the **Match History** screen (`GameHistory`) from the main menu:
 
 ---
 
-## 6. Controls & Accessibility
+## 6. Credits & Version Information
+
+Access the **Credits** screen (`Credits`) from the main menu:
+
+- **3D Background Scene:** Features two red-tinted 3D dice standing on their vertices like diamonds, spinning continuously around their vertical Y-axis.
+- **Version & Release Info:** Displays the game version (`VERSION`) and version release date (`VERSION_DATE`).
+- **Development & License Details:** Highlights development (`turulomio`), engine (`Godot Engine 4.7`), and GNU GPL v3.0 license.
+- **Dynamic Copyright Notice:** Displays the copyright range (`© 2024 - <Release Year> turulomio`).
+
+---
+
+## 7. Controls & Accessibility
 
 ### 🖥️ Desktop Controls (Keyboard & Mouse)
 
