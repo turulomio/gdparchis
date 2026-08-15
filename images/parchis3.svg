@@ -412,6 +412,14 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <image
+       id="bg_wood"
+       x="0"
+       y="0"
+       width="630"
+       height="630"
+       href="wood.png"
+       preserveAspectRatio="none" />
     <path
        style="display:none;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="m 189.35447,409.23406 v -62.8227 h -31.41129 v 62.8227 z"
@@ -621,7 +629,7 @@
            id="tspan24">50</tspan></text>
     </g>
     <g
-       id="casilla_68">
+       id="casilla_seguro_amarillo">
       <path
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,32.29807 h -62.8227 V 0.88678285 h 62.8227 z"
@@ -636,42 +644,42 @@
          transform="rotate(-90)" />
     </g>
     <g
-       id="casilla_68a">
+       id="casilla_amarilla_1">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,63.709339 h -62.8227 V 32.29807 h 62.8227 z"
          id="rect5265-9-4-56" />
     </g>
     <g
-       id="casilla_68b">
+       id="casilla_amarilla_2">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,95.12068 h -62.8227 V 63.709393 h 62.8227 z"
          id="rect5265-9-1-8" />
     </g>
     <g
-       id="casilla_68c">
+       id="casilla_amarilla_3">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,126.53197 h -62.8227 V 95.12068 h 62.8227 z"
          id="rect5265-9-4-2-6" />
     </g>
     <g
-       id="casilla_68d">
+       id="casilla_amarilla_4">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,157.94338 h -62.8227 v -31.41129 h 62.8227 z"
          id="rect5265-9-12-7" />
     </g>
     <g
-       id="casilla_68e">
+       id="casilla_amarilla_5">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,189.35467 h -62.8227 v -31.41129 h 62.8227 z"
          id="rect5265-9-4-6-7" />
     </g>
     <g
-       id="casilla_68f">
+       id="casilla_amarilla_6">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,220.76595 h -62.8227 v -31.41128 h 62.8227 z"
@@ -693,7 +701,7 @@
            id="tspan25">8</tspan></text>
     </g>
     <g
-       id="casilla_68g">
+       id="casilla_amarilla_7">
       <path
          style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,252.17723 h -62.8227 v -31.41128 h 62.8227 z"
@@ -731,12 +739,12 @@
            id="tspan9_42">42</tspan></text>
     </g>
     <g
-       id="casilla_roja"
+       id="casilla_roja_1"
        transform="rotate(-60,436.65642,236.00866)">
       <path
          style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
          d="m 346.41134,252.17723 h -62.8227 v -31.41128 h 62.8227 z"
-         id="rect_casilla_roja" />
+         id="rect_casilla_roja_1" />
     </g>
     <g
        id="casilla_26"
