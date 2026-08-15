@@ -199,4 +199,22 @@ El sistema utiliza identificadores enteros únicos (`square_id`) para registrar 
   * Casas: `101..106` (para 6 jugadores) y `101..108` (para 8 jugadores).
   * Metas y pasillos centralizados indexados tras el circuito exterior.
 
+---
+
+## 11. Arquitectura del Sistema de Calibración Interactivo (`BoardCalibrationBase`)
+
+Para la gestión y mantenimiento de coordenadas de casillas y escalas de fichas en desarrollo:
+
+* **Jerarquía de Clases de Calibración**:
+  - `BoardCalibrationBase`: Clase base abstracta que gestiona la interacción 3D (drag & drop, ajuste fino por teclado `WASD`), trazado visual de rutas 3D mediante líneas iluminadas y flechas direccionales rellenas, zoom y panning de cámara, sistema de deshacer (`Ctrl+Z`), combobox de tamaños de 5% en 5% y persistencia filtrada en JSON.
+  - `Board3Calibration` / `Board4Calibration`: Especializaciones por variante de tablero que configuran el mapeo de rutas `Route3`/`Route4`, total de casillas y slots máximos (`get_max_slots`).
+* **Lanzamiento mediante Comando CLI**:
+  ```bash
+  python3 management.py --calibration
+  ```
+* **Persistencia Filtrada en Datasets JSON**:
+  - Archivos de calibración del proyecto: `res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`.
+  - `save_calibration_file()` filtra y almacena únicamente las casillas oficiales devueltas por `get_square_ids()` y los slots válidos (`0..max_slots-1`), purgando de forma automática cualquier clave obsoleta.
+
+
 

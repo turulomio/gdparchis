@@ -160,15 +160,50 @@ Access the **Credits** screen (`Credits`) from the main menu:
 
 ---
 
-## 8. Developer Calibration System (`--calibration`)
+## 8. Developer Calibration Suite (`--calibration`)
 
-GDParchis includes an interactive 3D board calibration suite for developers:
+GDParchis includes a state-of-the-art interactive 3D board calibration suite built specifically for developers to fine-tune piece positions, sizes, and route geometries in real time.
 
-- **CLI Management Command:**
-  ```bash
-  python3 management.py --calibration
-  ```
-- **Developer Calibration Menu (`CalibrationMain`):** Launches a dedicated developer menu to select and calibrate piece positions for 3, 4, 6, and 8 player boards.
-- **Interactive Drag & Drop:** Move 3D pieces with mouse drag-and-drop or fine-grain keyboard arrow keys (`WASD`).
-- **Project Position File:** Saves calibrated 3D coordinates directly into project resource files (e.g. `res://board3_calibrated_positions.json`, `res://board4_calibrated_positions.json`) for seamless Git versioning and distribution.
+### 🚀 Launching Developer Calibration Mode
+Execute the management CLI command:
+```bash
+python3 management.py --calibration
+```
+Selecting a board variant (3, 4, 6, or 8 players) launches the interactive 3D calibration tool.
+
+---
+
+### 🛠️ Key Calibration Features & Mechanics
+
+#### 1. Interactive 3D Drag & Drop with Instant Autosave
+- **Mouse Drag:** Left-Click and drag any piece to position it precisely on the board plane $(X, Z)$.
+- **Autosave on Release:** Releasing the mouse button automatically persists the updated coordinates and scale factors directly into project dataset files (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`).
+
+#### 2. Fine-Grain Keyboard Nudging
+- **`Arrow Keys` / `WASD`:** Nudges the selected piece position in $0.1\text{ cm}$ micro-steps.
+- **`Shift` + `Arrow Keys` / `WASD`:** Nudges the selected piece position in larger $0.5\text{ cm}$ steps.
+
+#### 3. Proportional Scale ComboBox (5% - 100%)
+- Select any piece and pick a proportional scale from the **Tamaño Proporcional** ComboBox in 5% increments (`100%`, `95%`, `90%`, ..., `5%`) to adapt piece sizes to narrow corridor squares or special goal triangles.
+
+#### 4. 3D Route Line & Directional Arrow Visualizer
+- **`Inspección Ruta` ComboBox:** Select a specific player route and slot (e.g. `Ruta Amarillo (P0) - Slot 0`) to render a **3D line overlay with filled directional arrows**.
+- **Path Verification:** The 3D line traces the exact route from the home base, through the outer ring, into the final goal corridor, showing the direction of movement.
+
+#### 5. Camera Zoom, Panning (Pan), and Viewport Reset
+- **Mouse Wheel / `+` / `-` Keys:** Zoom in up to $12\text{ cm}$ height for micro-inspection or zoom out up to $95\text{ cm}$.
+- **Right-Click + Drag:** Pan and shift the camera viewport horizontally and vertically across the board plane.
+- **`R` Key / HUD Button:** Instantly resets camera zoom, height, and viewport offset back to default centered position.
+
+#### 6. Multi-Step Undo System (`Ctrl + Z`)
+- **`Ctrl + Z` / HUD "Deshacer" Button:** Reverts the last position or scale modification. Holds up to 100 undo snapshots in memory for stress-free editing.
+
+#### 7. Rapid Piece Navigation
+- **`N` / `TAB` Key:** Selects the next piece on the board.
+- **`P` Key:** Selects the previous piece on the board.
+
+#### 8. Data-Driven Architecture & Filtered Persistence
+- **Filtered JSON Saving:** `save_calibration_file()` strictly saves valid square IDs and defined slot indices (`0..max_slots-1`), automatically purging obsolete or stray entries.
+- **100% Data-Driven Boards:** In-game boards (`Board3`, `Board4`) read piece positions and scales directly from JSON files, eliminating hardcoded mathematical formulas.
+
 
