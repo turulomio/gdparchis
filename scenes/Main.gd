@@ -9,6 +9,8 @@ func _ready():
 	$MarginContainer/VBoxContainer2/HBoxContainer/Version.text = tr(" Version: {0} - ").format([Globals.VERSION])
 	$FileDialog.title = tr("Load game")
 	$FileDialog.ok_button_text = tr("Load game")
+	if has_node("MarginContainer/VBoxContainer2/VBoxContainer/Credits"):
+		$MarginContainer/VBoxContainer2/VBoxContainer/Credits.text = tr("Credits")
 	if not get_tree().get_root().size_changed.is_connected(resize):
 		get_tree().get_root().size_changed.connect(resize) 
 	self.resize()
@@ -135,6 +137,16 @@ func _on_Controls_pressed():
 ## Button handler navigating to Options.tscn scene.
 func _on_Options_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/Options.tscn")
+
+
+## Mouse hover audio feedback for Credits button.
+func _on_Credits_mouse_entered():
+	$Click.play()
+
+
+## Button handler navigating to Credits.tscn scene.
+func _on_Credits_pressed():
+	get_tree().change_scene_to_file.call_deferred("res://scenes/Credits.tscn")
 
 
 ## Input event callback handling global exit key press.

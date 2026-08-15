@@ -38,6 +38,7 @@ func test_ui_scene_paths_exist() -> void:
 		"res://scenes/Options.tscn",
 		"res://scenes/Controls.tscn",
 		"res://scenes/GameHistory.tscn",
+		"res://scenes/Credits.tscn",
 		"res://scenes/Game4.tscn",
 		"res://scenes/GameDiceStart.tscn"
 	]

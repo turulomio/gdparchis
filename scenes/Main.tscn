@@ -79,6 +79,14 @@ flat = true
 clip_text = true
 expand_icon = true
 
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.4, 1, 1)
+text = "Credits"
+flat = true
+clip_text = true
+expand_icon = true
+
 [node name="Exit" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
@@ -141,6 +149,8 @@ stream = ExtResource("4")
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Credits" to="." method="_on_Credits_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer2/HBoxContainer/UpdateStatus" to="." method="_on_UpdateStatus_gui_input"]
