@@ -418,12 +418,18 @@ func difficulty_probability():
 #	var selection=space_state.intersect_ray(ray_from,ray_to)
 #	return selection.collide## Delegates 3D vector coordinates for 4-player Parchis board squares to Board4.
 func position4(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
-	return Board4.new().get_position3d(square_id, square_position, h)
+	var board_script = load("res://scenes/Board4.gd")
+	if board_script:
+		return board_script.new().get_position3d(square_id, square_position, h)
+	return Vector3(0, h, 0)
 
 
 ## Delegates 3D vector coordinates for 3-player Parchis board squares to Board3.
 func position3(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
-	return Board3.new().get_position3d(square_id, square_position, h)
+	var board_script = load("res://scenes/Board3.gd")
+	if board_script:
+		return board_script.new().get_position3d(square_id, square_position, h)
+	return Vector3(0, h, 0)
 
 ## Loads global game state data into board, players, and piece positions.
 ## @param gameobject Scene object instance containing a board() method.
