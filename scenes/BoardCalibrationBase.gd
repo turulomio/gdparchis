@@ -4,7 +4,7 @@ class_name BoardCalibrationBase
 ## Base class for interactive 3D board piece calibration tools.
 ## Encapsulates common 3D piece dragging, fine keyboard adjustment,
 ## proportional scaling, selection handling, camera zoom & panning,
-## 3D route line visualizer & 0.5s stepping animation, Undo stack (Ctrl+Z), and JSON persistence.
+## 3D route line path & filled directional arrows visualizer, Undo stack (Ctrl+Z), and JSON persistence.
 
 var board_inst: BoardBase = null
 var piece_nodes: Dictionary = {} # Key: Vector2i(sq_id, slot) -> Piece Node3D
@@ -28,14 +28,11 @@ var pan_start_cam_pos: Vector3 = Vector3.ZERO
 var min_cam_y: float = 12.0
 var max_cam_y: float = 95.0
 
-# Route Stepping Animation & 3D Line State
+# Route Line & Directional Arrow State
 var route_mode_active: bool = false
 var current_route_player_id: int = 0
 var current_route_sq_ids: Array = []
 var current_route_slot: int = 0
-var route_step_index: int = 0
-var step_timer: float = 0.0
-const STEP_INTERVAL: float = 0.5 # 0.5 seconds per step
 var route_line_mesh_inst: MeshInstance3D = null
 
 var info_label: Label = null
@@ -82,29 +79,6 @@ func hide_all_dice() -> void:
 		d_node.visible = false
 
 
-## Frame process loop driving automated 0.5s route stepping animation.
-func _process(delta: float) -> void:
-	if route_mode_active and current_route_sq_ids.size() > 0:
-		step_timer += delta
-		if step_timer >= STEP_INTERVAL:
-			step_timer = 0.0
-			advance_route_step()
-
-
-## Advances route stepping index and lifts piece vertically (h = 0.8) along route path.
-func advance_route_step() -> void:
-	if current_route_sq_ids.is_empty(): return
-	route_step_index = (route_step_index + 1) % current_route_sq_ids.size()
-	var sq_id = current_route_sq_ids[route_step_index]
-	select_piece(sq_id, current_route_slot)
-	
-	if selected_piece:
-		var target_pos = selected_piece.position
-		target_pos.y = 0.8
-		selected_piece.position = target_pos
-		selection_ring.position = target_pos
-
-
 ## Returns Player color associated with player ID.
 func get_player_color(player_id: int) -> Color:
 	match player_id:
@@ -115,7 +89,7 @@ func get_player_color(player_id: int) -> Color:
 		_: return Color(1.0, 1.0, 1.0)
 
 
-## Renders a 3D line overlay connecting all square centers along the active route.
+## Renders a 3D line overlay with filled directional arrows connecting all square centers along the active route.
 func update_route_line_visualization() -> void:
 	if not route_line_mesh_inst:
 		route_line_mesh_inst = MeshInstance3D.new()
@@ -130,12 +104,11 @@ func update_route_line_visualization() -> void:
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.emission_enabled = true
-	mat.emission = color * 1.2
+	mat.emission = color * 1.3
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 
-	var imm_mesh = ImmediateMesh.new()
-	imm_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP, mat)
-
+	var points: Array[Vector3] = []
 	for sq_id in current_route_sq_ids:
 		var key_str = "%d_%d" % [sq_id, current_route_slot]
 		var pos3d = Vector3.ZERO
@@ -144,9 +117,47 @@ func update_route_line_visualization() -> void:
 			pos3d = Vector3(float(d.get("x", 0)), 0.6, float(d.get("z", 0)))
 		elif board_inst:
 			pos3d = board_inst.get_position3d(sq_id, current_route_slot, 0.6)
-		imm_mesh.surface_add_vertex(pos3d)
+		points.append(pos3d)
+
+	var imm_mesh = ImmediateMesh.new()
+	
+	# Surface 0: Route line segments
+	imm_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP, mat)
+	for p in points:
+		imm_mesh.surface_add_vertex(p)
+	imm_mesh.surface_end()
+
+	# Surface 1: Filled directional arrow heads along each segment
+	imm_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES, mat)
+	for i in range(points.size() - 1):
+		var p_a = points[i]
+		var p_b = points[i + 1]
+		var delta_vec = p_b - p_a
+		var dist = delta_vec.length()
+		if dist < 0.2:
+			continue
+
+		var dir = delta_vec / dist
+		var perp = Vector3(-dir.z, 0, dir.x)
+
+		# Position arrow head near midpoint of segment
+		var mid = p_a + dir * (dist * 0.55)
+		var p_tip = mid + dir * 0.7
+		var p_left = mid - dir * 0.4 + perp * 0.45
+		var p_right = mid - dir * 0.4 - perp * 0.45
+
+		# Top face of filled arrow triangle (CCW)
+		imm_mesh.surface_add_vertex(p_tip)
+		imm_mesh.surface_add_vertex(p_left)
+		imm_mesh.surface_add_vertex(p_right)
+
+		# Bottom face of filled arrow triangle (CW for double-sided visibility)
+		imm_mesh.surface_add_vertex(p_tip)
+		imm_mesh.surface_add_vertex(p_right)
+		imm_mesh.surface_add_vertex(p_left)
 
 	imm_mesh.surface_end()
+
 	route_line_mesh_inst.mesh = imm_mesh
 	route_line_mesh_inst.visible = true
 
@@ -357,7 +368,7 @@ func setup_ui_overlay() -> void:
 
 	var help_lbl = Label.new()
 	help_lbl.position = Vector2(20, 350)
-	help_lbl.text = "CONTROLES:\n• Ctrl+Z (o Botón Deshacer): Revertir último cambio de posición/escala\n• Inspección Ruta: Traza línea 3D del recorrido y avanza la ficha cada 0.5s\n• Clic Izquierdo + Arrastrar: Mover Ficha (Autoguardado al soltar)\n• Rueda Ratón / Teclas [+] [-]: Zoom Cerca / Lejos\n• Clic Derecho + Arrastrar: Desplazar Pantalla (Pan Horizontal/Vertical)\n• ComboBox Tamaño: Ajusta escala proporcional de 5% a 100% (de 5 en 5)\n• Flechas Teclado (o WASD): Ajuste Fino (+Shift = Mayor distancia)\n• N / P o TAB: Navegar entre fichas | Tecla R: Resetear Cámara"
+	help_lbl.text = "CONTROLES:\n• Ctrl+Z (o Botón Deshacer): Revertir último cambio de posición/escala\n• Inspección Ruta: Traza línea 3D con flechas orientadas del recorrido\n• Clic Izquierdo + Arrastrar: Mover Ficha (Autoguardado al soltar)\n• Rueda Ratón / Teclas [+] [-]: Zoom Cerca / Lejos\n• Clic Derecho + Arrastrar: Desplazar Pantalla (Pan Horizontal/Vertical)\n• ComboBox Tamaño: Ajusta escala proporcional de 5% a 100% (de 5 en 5)\n• Flechas Teclado (o WASD): Ajuste Fino (+Shift = Mayor distancia)\n• N / P o TAB: Navegar entre fichas | Tecla R: Resetear Cámara"
 	canvas.add_child(help_lbl)
 
 
@@ -376,14 +387,11 @@ func _on_route_selected(index: int) -> void:
 		current_route_player_id = p_id
 		current_route_slot = int(meta.get("slot", 0))
 		current_route_sq_ids = get_player_route_square_ids(p_id)
-		route_step_index = 0
-		step_timer = 0.0
 		route_mode_active = true
 		update_route_line_visualization()
 		if current_route_sq_ids.size() > 0:
 			var sq_id = current_route_sq_ids[0]
 			select_piece(sq_id, current_route_slot)
-			advance_route_step()
 
 
 ## Resets camera height and horizontal pan position back to center.
@@ -476,7 +484,9 @@ func update_info_display() -> void:
 		var pos = selected_piece.position
 		var sc_pct = int(round(selected_piece.scale.x * 100.0))
 		if route_mode_active and current_route_sq_ids.size() > 0:
-			info_label.text = "INSPECCIÓN RUTA: Paso %d/%d\n• Casilla ID: %d | Slot: %d\n• Posición X: %.2f | Z: %.2f | Escala: %d%%" % [route_step_index + 1, current_route_sq_ids.size(), selected_sq_id, selected_slot, pos.x, pos.z, sc_pct]
+			var step_idx = current_route_sq_ids.find(selected_sq_id)
+			var display_step = step_idx + 1 if step_idx != -1 else 1
+			info_label.text = "INSPECCIÓN RUTA: Paso %d/%d\n• Casilla ID: %d | Slot: %d\n• Posición X: %.2f | Z: %.2f | Escala: %d%%" % [display_step, current_route_sq_ids.size(), selected_sq_id, selected_slot, pos.x, pos.z, sc_pct]
 		else:
 			info_label.text = "FICHA SELECCIONADA:\n• Casilla ID: %d | Slot: %d\n• Posición X: %.2f | Z: %.2f | Escala: %d%%" % [selected_sq_id, selected_slot, pos.x, pos.z, sc_pct]
 	else:
