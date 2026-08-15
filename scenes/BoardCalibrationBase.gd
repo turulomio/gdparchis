@@ -235,6 +235,10 @@ func get_player_name(_player_id: int) -> String:
 		1: return "Azul"
 		2: return "Rojo"
 		3: return "Verde"
+		4: return "Gris"
+		5: return "Rosa"
+		6: return "Naranja"
+		7: return "Cyan"
 		_: return "Jugador %d" % _player_id
 
 
@@ -315,7 +319,7 @@ func setup_ui_overlay() -> void:
 	route_combo = OptionButton.new()
 	route_combo.add_item("--- Todas las Casillas ---", 0)
 
-	var max_p = 3 if board_inst and board_inst.max_players == 3 else 4
+	var max_p = board_inst.max_players if (board_inst and "max_players" in board_inst) else 4
 	var idx_counter = 1
 	for p in range(max_p):
 		var p_name = get_player_name(p)
@@ -324,6 +328,8 @@ func setup_ui_overlay() -> void:
 			route_combo.set_item_metadata(idx_counter, {"player": p, "slot": s})
 			idx_counter += 1
 
+	if route_combo.get_popup():
+		route_combo.get_popup().max_size = Vector2i(0, 400)
 	route_combo.item_selected.connect(_on_route_selected)
 	route_row.add_child(route_combo)
 

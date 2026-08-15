@@ -38,7 +38,7 @@ func get_square_ids() -> Array[int]:
 
 ## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
 func get_max_slots(sq_id: int) -> int:
-	return 4 if sq_id in [111, 120, 129, 138, 147, 156, 157, 158, 159, 160, 161, 162] else 2
+	return 4 if sq_id in [110, 118, 127, 136, 145, 154, 157, 158, 159, 160, 161, 162] else 2
 
 
 ## Returns route square IDs for player on 6-player board.

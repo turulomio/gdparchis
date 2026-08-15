@@ -297,7 +297,7 @@ func get_piece_scale(square_id: int, square_position: int) -> float:
 		var d = user_calib_data[key_str]
 		if d is Dictionary and d.has("scale"):
 			return float(d["scale"])
-	return 1.0
+	return 0.75
 
 
 ## Loads calibrated position overrides from res://scenes/board6_calibrated_positions.json if present in the project.
