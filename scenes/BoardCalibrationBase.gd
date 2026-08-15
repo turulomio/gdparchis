@@ -26,7 +26,7 @@ var is_panning: bool = false
 var pan_start_mouse: Vector2 = Vector2.ZERO
 var pan_start_cam_pos: Vector3 = Vector3.ZERO
 var min_cam_y: float = 12.0
-var max_cam_y: float = 95.0
+var max_cam_y: float = 160.0
 
 # Route Line & Directional Arrow State
 var route_mode_active: bool = false
@@ -367,6 +367,7 @@ func setup_ui_overlay() -> void:
 	vbox.add_child(back_btn)
 
 	var help_lbl = Label.new()
+	help_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	help_lbl.position = Vector2(20, 350)
 	help_lbl.text = "CONTROLES:\n• Ctrl+Z (o Botón Deshacer): Revertir último cambio de posición/escala\n• Inspección Ruta: Traza línea 3D con flechas orientadas del recorrido\n• Clic Izquierdo + Arrastrar: Mover Ficha (Autoguardado al soltar)\n• Rueda Ratón / Teclas [+] [-]: Zoom Cerca / Lejos\n• Clic Derecho + Arrastrar: Desplazar Pantalla (Pan Horizontal/Vertical)\n• ComboBox Tamaño: Ajusta escala proporcional de 5% a 100% (de 5 en 5)\n• Flechas Teclado (o WASD): Ajuste Fino (+Shift = Mayor distancia)\n• N / P o TAB: Navegar entre fichas | Tecla R: Resetear Cámara"
 	canvas.add_child(help_lbl)
@@ -493,7 +494,7 @@ func update_info_display() -> void:
 		info_label.text = "Sin selección"
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	# Mouse Wheel Zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
