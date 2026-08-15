@@ -36,13 +36,13 @@ func _init(node_id):
 		12, 17, 29, 34, 46, 51, 63, 68:
 			self.type = Globals.eSquareTypes.SECURE
 		
-		76:
+		59, 76:
 			self.type = Globals.eSquareTypes.END
 			self.color = Color.YELLOW
-		84:
+		67, 84:
 			self.type = Globals.eSquareTypes.END
 			self.color = Color.BLUE
-		92:
+		75, 92:
 			self.type = Globals.eSquareTypes.END
 			self.color = Globals.ePlayer2Color(2)
 		100:
