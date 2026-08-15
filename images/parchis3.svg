@@ -1396,5 +1396,24 @@
        id="casa_azul_triangulo"
        points="96.68443,541.35185 532.91945,541.3713 315,415.26324"
        style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+
+    <!-- CENTRO DEL TABLERO / METAS -->
+    <!-- Meta Amarilla (entre casillas 8,9 y 43,42 hacia la bisectriz central) -->
+    <polygon
+       id="meta_amarilla"
+       points="220.76592,252.17723 409.23404,252.17723 315,306.56946"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+
+    <!-- Meta Roja (entre casillas 43,42 y 25,26 hacia la bisectriz central) -->
+    <polygon
+       id="meta_roja"
+       points="409.23404,252.17723 315,415.35393 315,306.56946"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+
+    <!-- Meta Azul (entre casillas 25,26 y 8,9 hacia la bisectriz central) -->
+    <polygon
+       id="meta_azul"
+       points="315,415.35393 220.76592,252.17723 315,306.56946"
+       style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>
