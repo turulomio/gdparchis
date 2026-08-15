@@ -67,12 +67,11 @@ run/main_scene="res://scenes/Main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="gdparchis"
 config/features=PackedStringArray("4.7")
-boot_splash/show_image=false
-boot_splash/fullsize=true
-boot_splash/use_filter=true
 boot_splash/bg_color=Color(0.08, 0.08, 0.12, 1)
+boot_splash/show_image=false
 config/icon="res://images/piece_red.png"
 config/windows_native_icon="res://images/piece_red.ico"
+boot_splash/fullsize=true
 
 [autoload]
 
@@ -80,27 +79,22 @@ Globals="*res://scenes/Globals.gd"
 
 [display]
 
+window/size/mode=3
 display_server/driver.linuxbsd="wayland"
 window/size/width=1920
 window/size/height=1080
-window/size/mode=3
 
 [global]
 
 view=true
 web=true
 
-[input_devices]
-
-pointing/emulate_mouse_from_touch=true
-pointing/emulate_touch_from_mouse=false
-
 [input]
 
 left_click={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
-, Object(InputEventScreenTouch,"resource_local_to_scene":false,"resource_name":"","device":-1,"index":0,"pressed":true,"canceled":false,"position":Vector2(0, 0),"script":null)
+, Object(InputEventScreenTouch,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"index":0,"position":Vector2(0, 0),"canceled":false,"pressed":true,"double_tap":false,"script":null)
 ]
 }
 zoom_in={
