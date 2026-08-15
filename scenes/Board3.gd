@@ -42,15 +42,18 @@ func setup_wooden_frame() -> void:
 	wood_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	
 	var board_mat = StandardMaterial3D.new()
+	board_mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
 	board_mat.albedo_texture = board_tex
-	board_mat.roughness = 0.4
-	board_mat.metallic_specular = 0.5
+	board_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	board_mat.roughness = 1.0
+	board_mat.metallic = 0.0
+	board_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	board_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	board_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	
 	var rail_height: float = 0.625
 	var base_thickness: float = 0.625
-	var wall_thickness: float = 3.5
+	var wall_thickness: float = 2.45
 	
 	# The 6 exact 3D vertices of the 3-player board texture polygon (in world XZ coordinates)
 	var v_poly: Array[Vector2] = [
