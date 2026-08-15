@@ -11,6 +11,71 @@ func _init():
 	self.max_players = 3
 
 
+## Constructs a 6-sided wooden frame adapted to the 3-player board geometry.
+func setup_wooden_frame() -> void:
+	var board_node = get_node_or_null("Board")
+	if not board_node:
+		return
+		
+	if not board_node.has_node("WoodenFrame"):
+		var wf = Node3D.new()
+		wf.name = "WoodenFrame"
+		board_node.add_child(wf)
+		
+	var frame_root = board_node.get_node("WoodenFrame")
+	for child in frame_root.get_children():
+		child.queue_free()
+		
+	var wood_tex = load("res://images/wood.png")
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
+	mat.albedo_texture = wood_tex
+	mat.roughness = 0.45
+	mat.uv1_scale = Vector3(4, 4, 4)
+	
+	var rail_height: float = 0.625
+	var base_thickness: float = 0.625
+	
+	# 6-sided hexagonal base platform
+	var bottom_mesh = CylinderMesh.new()
+	bottom_mesh.material = mat
+	bottom_mesh.top_radius = 35.0
+	bottom_mesh.bottom_radius = 35.0
+	bottom_mesh.height = base_thickness
+	bottom_mesh.radial_segments = 6
+	
+	var frame_bottom = MeshInstance3D.new()
+	frame_bottom.name = "FrameBottom"
+	frame_bottom.mesh = bottom_mesh
+	frame_bottom.position = Vector3(0.0, -base_thickness / 2.0 - 0.1, 0.0)
+	frame_bottom.rotation_degrees = Vector3(0, 30, 0)
+	frame_root.add_child(frame_bottom)
+	
+	# The 6 outer walls of the 3-player hexagonal board (rotated at 60-degree intervals)
+	var radius: float = 34.25
+	var wall_length: float = 37.5
+	var wall_thickness: float = 3.5
+	
+	for i in range(6):
+		var angle_deg = i * 60.0
+		var angle_rad = deg_to_rad(angle_deg)
+		
+		var wall_mesh = BoxMesh.new()
+		wall_mesh.material = mat
+		wall_mesh.size = Vector3(wall_length, rail_height, wall_thickness)
+		
+		var wall_inst = MeshInstance3D.new()
+		wall_inst.name = "FrameWall_" + str(i)
+		wall_inst.mesh = wall_mesh
+		
+		var pos_x = radius * sin(angle_rad)
+		var pos_z = -radius * cos(angle_rad)
+		wall_inst.position = Vector3(pos_x, rail_height / 2.0 - 0.1, pos_z)
+		wall_inst.rotation_degrees = Vector3(0, angle_deg, 0)
+		
+		frame_root.add_child(wall_inst)
+
+
 ## Configures materials and texture for 3-player board.
 func setup_board_materials() -> void:
 	super.setup_board_materials()
