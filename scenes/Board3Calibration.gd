@@ -7,6 +7,18 @@ func _init() -> void:
 	save_path = "res://scenes/board3_calibrated_positions.json"
 
 
+func _ready() -> void:
+	super._ready()
+	reset_camera_view()
+
+
+## Resets camera height and horizontal pan position back to center for Board 3.
+func reset_camera_view() -> void:
+	if camera:
+		camera.position = Vector3(0.0, 40.25, -5.0)
+		camera.rotation_degrees = Vector3(-90, 0, 0)
+
+
 ## Instantiates 3-player board geometry with wooden frame and board materials.
 func load_board_instance() -> void:
 	var board_scene = load("res://scenes/Board3.tscn")

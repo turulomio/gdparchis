@@ -24,13 +24,15 @@ static func create(_p_max_players: int, _player_id: int, _squares: Dictionary) -
 ## @param _p_max_players Total players in game.
 ## @param _player_id Owner player ID.
 ## @param _squares Global dictionary of squares.
-func _init(_p_max_players, _player_id, _squares):
+func _init(_p_max_players, _player_id, _squares = {}):
 	self.max_players = _p_max_players
 	self.player_id = _player_id
 	
-	# Populate route array with Square objects in order
-	for i in self._get_route_square_ids():
-		arr.append(_squares[i])
+	# Populate route array with Square objects in order if _squares is provided
+	if _squares is Dictionary and not _squares.is_empty():
+		for i in self._get_route_square_ids():
+			if _squares.has(i):
+				arr.append(_squares[i])
 
 
 ## String representation helper.
