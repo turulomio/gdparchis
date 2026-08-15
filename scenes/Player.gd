@@ -54,6 +54,12 @@ func game():
 ## Returns Dice child node instance.
 ## @return Dice node.
 func dice():
+	if _Dice == null:
+		_Dice = get_node_or_null("Dice")
+	if _Dice == null:
+		var dice_script = load("res://scenes/Dice.gd")
+		_Dice = dice_script.new()
+		add_child(_Dice)
 	return _Dice
 
 

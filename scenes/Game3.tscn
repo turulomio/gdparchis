@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://dc3sd3vm30e3g"]
+
+[ext_resource type="PackedScene" uid="uid://ctcgw1d6h1kmd" path="res://scenes/Popup.tscn" id="2"]
+[ext_resource type="Script" path="res://scenes/Game3.gd" id="3_game3"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="4"]
+[ext_resource type="PackedScene" uid="uid://b3o5wtrh3qa3c" path="res://scenes/Board3.tscn" id="4_board3"]
+[ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="5_mhjkk"]
+[ext_resource type="Environment" uid="uid://c6j2k4l5m8p9q" path="res://default_env.tres" id="2_env"]
+
+[node name="Game3" type="Node3D"]
+script = ExtResource("3_game3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 40.25, -5)
+doppler_tracking = 2
+far = 1000.0
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 30, 0)
+light_color = Color(1, 0.98, 0.94, 1)
+light_energy = 1.2
+shadow_enabled = true
+shadow_bias = 0.02
+shadow_normal_bias = 1.5
+shadow_blur = 2.0
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.15
+directional_shadow_split_2 = 0.35
+directional_shadow_split_3 = 0.65
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 65.0
+
+[node name="Popup" parent="." instance=ExtResource("2")]
+
+[node name="Board3" parent="." instance=ExtResource("4_board3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="DebugFloatingText" parent="." instance=ExtResource("5_mhjkk")]

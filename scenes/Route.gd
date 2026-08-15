@@ -5,17 +5,34 @@ var player_id
 var arr = []
 
 
+## Factory method instantiating specialized Route subclasses based on player count.
+static func create(_p_max_players: int, _player_id: int, _squares: Dictionary) -> Route:
+	match _p_max_players:
+		3:
+			return Route3.new(_p_max_players, _player_id, _squares)
+		4:
+			return Route4.new(_p_max_players, _player_id, _squares)
+		6:
+			return Route6.new(_p_max_players, _player_id, _squares)
+		8:
+			return Route8.new(_p_max_players, _player_id, _squares)
+		_:
+			return Route.new(_p_max_players, _player_id, _squares)
+
+
 ## Constructor building player route array from global squares mapping.
 ## @param _p_max_players Total players in game.
 ## @param _player_id Owner player ID.
 ## @param _squares Global dictionary of squares.
-func _init(_p_max_players, _player_id, _squares):
+func _init(_p_max_players, _player_id, _squares = {}):
 	self.max_players = _p_max_players
 	self.player_id = _player_id
 	
-	# Populate route array with Square objects in order
-	for i in self._get_route_square_ids():
-		arr.append(_squares[i])
+	# Populate route array with Square objects in order if _squares is provided
+	if _squares is Dictionary and not _squares.is_empty():
+		for i in self._get_route_square_ids():
+			if _squares.has(i):
+				arr.append(_squares[i])
 
 
 ## String representation helper.
@@ -24,18 +41,9 @@ func _to_string():
 	return "[Route: " + str(self.player_id) + "]"
 
 
-## Internal helper returning the ordered list of square IDs for this player's route.
+## Internal helper returning the ordered list of square IDs for this player's route. Virtual.
 ## @return Array of square ID integers.
 func _get_route_square_ids():
-	if self.max_players == 4:
-		if self.player_id == Globals.ePlayer.YELLOW:
-			return ([101] + range(5, 76 + 1))
-		elif self.player_id == Globals.ePlayer.BLUE:
-			return [102] + range(22, 68 + 1) + range(1, 17 + 1) + range(77, 84 + 1)
-		elif self.player_id == Globals.ePlayer.RED:
-			return [103] + range(39, 68 + 1) + range(1, 34 + 1) + range(85, 92 + 1)
-		elif self.player_id == Globals.ePlayer.GREEN:
-			return [104] + range(56, 68 + 1) + range(1, 51 + 1) + range(93, 100 + 1)
 	return []
 
 

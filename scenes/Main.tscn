@@ -71,6 +71,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 alignment = 1
 
+[node name="Players3" type="Button" parent="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("6")
+theme_override_colors/font_color = Color(0.2, 0.9, 0.2, 1)
+text = "3 players board"
+flat = true
+
 [node name="Players4" type="Button" parent="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("6")
@@ -170,6 +177,8 @@ layout_toggle_enabled = false
 [node name="Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4")
 
+[connection signal="mouse_entered" from="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer/Players3" to="." method="_on_Players3_mouse_entered"]
+[connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer/Players3" to="." method="_on_Players3_pressed"]
 [connection signal="mouse_entered" from="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_mouse_entered"]
 [connection signal="pressed" from="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer/Players4" to="." method="_on_Players4_pressed"]
 [connection signal="mouse_entered" from="UI/Control/MarginContainer/VBoxContainer2/VBoxContainer/Load" to="." method="_on_Load_mouse_entered"]
