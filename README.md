@@ -1,8 +1,10 @@
 # GDParchis 🎲 🏆
 
 [![Tests Workflows](https://github.com/turulomio/gdparchis/actions/workflows/test.yml/badge.svg)](https://github.com/turulomio/gdparchis/actions/workflows/test.yml)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20Android-lightgrey?logo=linux&logoColor=white)](#)
-[![License](https://img.shields.io/badge/License-GPL--3.0-green.svg)](LICENSE)
+[![Linux Downloads](https://img.shields.io/badge/Linux_Downloads-33-FCC624?logo=linux&logoColor=white)](https://github.com/turulomio/gdparchis/releases)
+[![Windows Downloads](https://img.shields.io/badge/Windows_Downloads-34-0078D6?logo=windows&logoColor=white)](https://github.com/turulomio/gdparchis/releases)
+[![Android Downloads](https://img.shields.io/badge/Android_Downloads-1-3DDC84?logo=android&logoColor=white)](https://github.com/turulomio/gdparchis/releases)
+[![Total Downloads](https://img.shields.io/github/downloads/turulomio/gdparchis/total?label=Total%20Downloads&color=blue)](https://github.com/turulomio/gdparchis/releases)
 
 **GDParchis** is a modern 3D implementation of the traditional **Parchís** board game, built with **Godot Engine 4.7** featuring native **Wayland** support on Linux, Windows desktop executables, and Android APK packages.
 
@@ -72,6 +74,16 @@ Output distributions are generated in `dist/`:
 - 🐧 **Linux:** `dist/Linux/gdparchis-<VERSION>.x86_64` & `dist/Linux/gdparchis-<VERSION>.pck`
 - 🪟 **Windows Desktop:** `dist/Windows/gdparchis-<VERSION>.exe`
 - 🤖 **Android:** `dist/Android/gdparchis-<VERSION>.apk`
+
+---
+
+## 📊 Download Statistics by Release & Platform
+
+| Platform | Cumulative Downloads | Live Asset Badges by Release |
+| :--- | :---: | :--- |
+| 🐧 **Linux** | [![Linux Total](https://img.shields.io/badge/Linux-33_downloads-FCC624?logo=linux&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.x86_64?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) [![v0.3.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.3.0.Linux_x86_64?label=v0.3.0)](https://github.com/turulomio/gdparchis/releases/tag/0.3.0) [![v0.2.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.2.0.Linux_x86_64?label=v0.2.0)](https://github.com/turulomio/gdparchis/releases/tag/0.2.0) [![v0.1.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.1.0.Linux_x86_64?label=v0.1.0)](https://github.com/turulomio/gdparchis/releases/tag/0.1.0) [![v0.0.1](https://img.shields.io/github/downloads/turulomio/gdparchis/Gdparchis.x86_64?label=v0.0.1)](https://github.com/turulomio/gdparchis/releases/tag/0.0.1) |
+| 🪟 **Windows** | [![Windows Total](https://img.shields.io/badge/Windows-34_downloads-0078D6?logo=windows&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.exe?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) [![v0.3.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.3.0.exe?label=v0.3.0)](https://github.com/turulomio/gdparchis/releases/tag/0.3.0) [![v0.2.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.2.0.exe?label=v0.2.0)](https://github.com/turulomio/gdparchis/releases/tag/0.2.0) [![v0.1.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.1.0.exe?label=v0.1.0)](https://github.com/turulomio/gdparchis/releases/tag/0.1.0) [![v0.0.1](https://img.shields.io/github/downloads/turulomio/gdparchis/Gdparchis.exe?label=v0.0.1)](https://github.com/turulomio/gdparchis/releases/tag/0.0.1) |
+| 🤖 **Android** | [![Android Total](https://img.shields.io/badge/Android-1_download-3DDC84?logo=android&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.apk?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) |
 
 ---
 
