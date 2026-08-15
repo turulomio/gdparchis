@@ -67,7 +67,10 @@ run/main_scene="res://scenes/Main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="gdparchis"
 config/features=PackedStringArray("4.7")
-boot_splash/image="res://images/splash.png"
+boot_splash/show_image=false
+boot_splash/fullsize=true
+boot_splash/use_filter=true
+boot_splash/bg_color=Color(0.08, 0.08, 0.12, 1)
 config/icon="res://images/piece_red.png"
 config/windows_native_icon="res://images/piece_red.ico"
 
@@ -80,7 +83,7 @@ Globals="*res://scenes/Globals.gd"
 display_server/driver.linuxbsd="wayland"
 window/size/width=1920
 window/size/height=1080
-window/size/fullscreen=true
+window/size/mode=3
 
 [global]
 

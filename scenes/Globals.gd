@@ -61,6 +61,9 @@ func clear_game_history() -> void:
 ## @param winner Player object that won the game.
 ## @param board Board4 node instance.
 func add_game_history_entry(start_time: float, winner, board) -> void:
+	# Ensure existing disk history is loaded before appending new match record
+	self.load_game_history()
+	
 	# Calculate elapsed game duration in seconds
 	var current_time = Time.get_unix_time_from_system()
 	var duration_sec = max(1, int(current_time - start_time))
@@ -264,29 +267,52 @@ func save_settings():
 	print("Settings saved: ", settings)
 	
 func load_settings():
-	if FileAccess.file_exists("user://gdparchis.cfg")==false:
-		settings={}
-		settings["full_screen"]=false
-		settings["installation_uuid"]=generate_uuid()
-		settings["automatic"]=false
-		settings["last_internet_update"]=null
-		settings["autosaves"]=10
-		settings["difficulty"]=eDifficulty.NORMAL
-		settings["language"]=eLanguages.ENGLISH
-		settings["sound"]=true
-		settings["statistics"]=true
+	if FileAccess.file_exists("user://gdparchis.cfg") == false:
+		settings = {}
+		settings["full_screen"] = false
+		settings["installation_uuid"] = generate_uuid()
+		settings["automatic"] = false
+		settings["last_internet_update"] = null
+		settings["autosaves"] = 10
+		settings["difficulty"] = eDifficulty.NORMAL
+		settings["language"] = eLanguages.ENGLISH
+		settings["sound"] = true
+		settings["statistics"] = true
 		save_settings()
 	else:
-		var file_load=FileAccess.open("user://gdparchis.cfg", FileAccess.READ)
-		settings=JSON.parse_string(file_load.get_line())
+		var file_load = FileAccess.open("user://gdparchis.cfg", FileAccess.READ)
+		var parsed = JSON.parse_string(file_load.get_line())
 		file_load.close()
-		if settings != null and settings is Dictionary:
-			if settings.has("autosaves"):
-				settings["autosaves"] = int(settings["autosaves"])
-			if settings.has("difficulty"):
-				settings["difficulty"] = int(settings["difficulty"])
-			if settings.has("language"):
-				settings["language"] = int(settings["language"])
+		if parsed != null and parsed is Dictionary:
+			settings = parsed
+		else:
+			settings = {}
+
+	# Ensure every required key exists with correct type in settings dictionary
+	if not settings.has("full_screen"):
+		settings["full_screen"] = false
+	if not settings.has("sound"):
+		settings["sound"] = true
+	if not settings.has("automatic"):
+		settings["automatic"] = false
+	if not settings.has("autosaves"):
+		settings["autosaves"] = 10
+	if not settings.has("difficulty"):
+		settings["difficulty"] = eDifficulty.NORMAL
+	if not settings.has("language"):
+		settings["language"] = eLanguages.ENGLISH
+	if not settings.has("statistics"):
+		settings["statistics"] = true
+	if not settings.has("installation_uuid"):
+		settings["installation_uuid"] = generate_uuid()
+
+	settings["full_screen"] = bool(settings["full_screen"])
+	settings["sound"] = bool(settings["sound"])
+	settings["automatic"] = bool(settings["automatic"])
+	settings["autosaves"] = int(settings["autosaves"])
+	settings["difficulty"] = int(settings["difficulty"])
+	settings["language"] = int(settings["language"])
+	settings["statistics"] = bool(settings["statistics"])
 	
 	print("Settings loaded: ", settings)
 	set_window_mode_fullscreen(settings["full_screen"])		
@@ -651,11 +677,12 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 
 ## Checks if current window display mode is fullscreen.
 ## @param screen Integer screen monitor index (default 0).
+## Checks if current window display mode is fullscreen or exclusive fullscreen.
+## @param screen Integer screen monitor index (default 0).
 ## @return True if window is fullscreen.
-func is_window_mode_fullscreen(screen=0):
-	if DisplayServer.window_get_mode(screen) == DisplayServer.WINDOW_MODE_FULLSCREEN:
-		return true
-	return false
+func is_window_mode_fullscreen(screen=0) -> bool:
+	var mode = DisplayServer.window_get_mode(screen)
+	return mode == DisplayServer.WINDOW_MODE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	
 
 ## Sets window display mode to fullscreen or windowed.
@@ -663,10 +690,12 @@ func is_window_mode_fullscreen(screen=0):
 ## @param screen Integer screen monitor index (default 0).
 func set_window_mode_fullscreen(boolean, screen=0):
 	if boolean:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, screen)
+		if not is_window_mode_fullscreen(screen):
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN, screen)
 		settings["full_screen"] = true
 	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, screen)
+		if is_window_mode_fullscreen(screen):
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, screen)
 		settings["full_screen"] = false
 	save_settings()
 
@@ -680,10 +709,13 @@ func toggle_window_mode(screen=0):
 		set_window_mode_fullscreen(true, screen)
 
 
-## Global input event handler capturing shortcut keys across all scenes (e.g. F11 fullscreen).
+## Global input event handler capturing shortcut keys across all scenes (e.g. F / F11 fullscreen).
 ## @param event InputEvent object.
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	# Toggle window display mode when full_screen action (F11 / F key) is pressed
 	if event.is_action_pressed("full_screen"):
+		var focus_owner = get_viewport().gui_get_focus_owner()
+		if focus_owner is LineEdit:
+			return
 		get_viewport().set_input_as_handled()
 		self.toggle_window_mode()

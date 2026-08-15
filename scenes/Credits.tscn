@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8x7c5k1m9p0"]
 
 [ext_resource type="Script" path="res://scenes/Credits.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://fcw6tuv4kh27" path="res://scenes/Dice.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://b4u8nm6s4x3x7" path="res://scenes/Piece.tscn" id="2"]
 [ext_resource type="Theme" uid="uid://be25la3s3qsje" path="res://themes/Freshman.tres" id="3"]
 [ext_resource type="Theme" uid="uid://gh07j4jcab8j" path="res://themes/FreshmanSmall.tres" id="4"]
 
@@ -16,15 +16,25 @@ fov = 50.0
 transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 10, 10)
 light_energy = 1.2
 
-[node name="Dice1Pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, 0)
+[node name="Piece1Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.8, 0)
 
-[node name="Dice" parent="Dice1Pivot" instance=ExtResource("2")]
+[node name="Piece" parent="Piece1Pivot" instance=ExtResource("2")]
 
-[node name="Dice2Pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+[node name="Piece2Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2.8, 0)
 
-[node name="Dice" parent="Dice2Pivot" instance=ExtResource("2")]
+[node name="Piece" parent="Piece2Pivot" instance=ExtResource("2")]
+
+[node name="Piece3Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, -2.8, 0)
+
+[node name="Piece" parent="Piece3Pivot" instance=ExtResource("2")]
+
+[node name="Piece4Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, -2.8, 0)
+
+[node name="Piece" parent="Piece4Pivot" instance=ExtResource("2")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 

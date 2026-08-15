@@ -144,3 +144,9 @@ Esto garantiza que todos los archivos persistentes del usuario (`user://`) se al
 * **Funcionalidades de Usuario (`USER_MANUAL.md`):** Siempre que una modificación afecte, añada o altere la interacción del usuario, controles, reglas del juego, persistencia, interfaz o flujo visual, se debe actualizar obligatoriamente el archivo [`USER_MANUAL.md`](file:///home/keko/Proyectos/gdparchis/USER_MANUAL.md).
 * **Plataforma Android (`ANDROID.md`):** Siempre que un cambio afecte a la configuración de compilación, permisos de exportación, gestos de control táctil o dependencias/herramientas del entorno Android, se debe actualizar obligatoriamente el archivo [`ANDROID.md`](file:///home/keko/Proyectos/gdparchis/ANDROID.md).
 
+---
+
+## 8. Ejecución de Pruebas Automatizadas (`management.py --test`)
+
+* **Ejecución bajo demanda:** No ejecutar automáticamente `python3 management.py --test` al finalizar las tareas. Únicamente se ejecutará la suite de pruebas cuando el usuario lo solicite explícitamente.
+
