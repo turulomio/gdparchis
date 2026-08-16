@@ -72,10 +72,14 @@ func test_ui_scene_paths_exist() -> void:
 		"res://scenes/Controls.tscn",
 		"res://scenes/GameHistory.tscn",
 		"res://scenes/Credits.tscn",
+		"res://scenes/Game3.tscn",
 		"res://scenes/Game4.tscn",
 		"res://scenes/Game6.tscn",
 		"res://scenes/GameDiceStart.tscn",
+		"res://scenes/GameDiceStart3.tscn",
 		"res://scenes/GameDiceStart6.tscn",
+		"res://scenes/Board3Calibration.tscn",
+		"res://scenes/Board4Calibration.tscn",
 		"res://scenes/Board6Calibration.tscn"
 	]
 	for sc_path in scenes_to_check:

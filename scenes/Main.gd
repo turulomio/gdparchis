@@ -41,7 +41,7 @@ func _ready() -> void:
 
 	var ver_label = find_child("Version", true, false)
 	if ver_label:
-		ver_label.text = tr(" Version: {0} - ").format([Globals.VERSION])
+		ver_label.text = tr(" Version: {0}").format([Globals.VERSION]) + " - "
 		
 	var file_dlg = find_child("FileDialog", true, false)
 	if file_dlg:
