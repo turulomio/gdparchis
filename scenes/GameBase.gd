@@ -363,10 +363,6 @@ func _process(delta: float) -> void:
 		else:
 			handle_object_click(object)
 
-	if Input.is_action_just_pressed("right_click"):
-		var object = get_object_under_mouse()
-		handle_object_right_click(object)
-
 	# Process variant-specific camera view shortcuts
 	process_camera_inputs(delta)
 

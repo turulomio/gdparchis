@@ -123,7 +123,7 @@ Access the **Credits** screen (`Credits`) from the main menu:
 
 - **Mouse Interactions:**
   - **Left Click:** Roll 3D dice or select highlighted piece to move.
-  - **Shift + Left Click / Right Click:** Open detailed information popup for targeted piece or dice (showing player name, piece index, square ID & type, route position, threats received from opponent pieces, threats generated on opponent pieces, and turn movement options).
+  - **Shift + Left Click:** Open detailed information popup for targeted piece or dice (showing player name, piece index, square ID & type, route position, threats received from opponent pieces, threats generated on opponent pieces, and turn movement options).
   - **Right Click Drag:** Rotate and orbit 3D board camera.
   - **Scroll Wheel Up / `+` Key:** Zoom 3D camera in.
   - **Scroll Wheel Down / `-` Key:** Zoom 3D camera out.

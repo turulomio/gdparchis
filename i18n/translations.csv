@@ -49,8 +49,7 @@ Match History,Match History,Registro de partidas,Historique des parties
 Match history,Match history,Registro de partidas,Historique des parties
 Mouse Left Click: Roll Dice / Select Piece to Move,Mouse Left Click: Roll Dice / Select Piece to Move,Clic izquierdo del ratón: Tirar dado / Seleccionar ficha a mover,Clic gauche de la souris: Lancer le dé / Sélectionner un pion à déplacer
 Mouse Right Click Drag: Rotate 3D Board Camera,Mouse Right Click Drag: Rotate 3D Board Camera,Clic derecho del ratón + arrastrar: Rotar tablero 3D,Clic droit de la souris + glisser: Faire pivoter le plateau 3D
-Mouse Right Click: View Piece / Dice Info Popup,Mouse Right Click: View Piece / Dice Info Popup,Clic derecho del ratón: Ver ventana flotante de ficha / dado,Clic droit de la souris: Afficher les infos du pion / dé
-Mouse Right Click / Shift + Left Click: View Piece / Dice Info Popup,Mouse Right Click / Shift + Left Click: View Piece / Dice Info Popup,Clic derecho del ratón / Shift + Clic izquierdo: Ver ventana flotante de ficha / dado,Clic droit de la souris / Shift + Clic gauche: Afficher les infos du pion / dé
+Shift + Mouse Left Click: View Piece / Dice Info Popup,Shift + Mouse Left Click: View Piece / Dice Info Popup,Shift + Clic izquierdo del ratón: Ver ventana flotante de ficha / dado,Shift + Clic gauche de la souris: Afficher les infos du pion / dé
 New version available: {0}!,New version available: {0}!,¡Nueva versión disponible: {0}!,Nouvelle version disponible: {0}!
 No games logged yet,No games logged yet,No hay partidas registradas aún,Aucune partie enregistrée
 Normal,Normal,Normal,Normal

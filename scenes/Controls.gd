@@ -22,7 +22,7 @@ func _ready() -> void:
 	else:
 		# Populate standard desktop keyboard and mouse shortcut labels
 		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl1.text = tr("Mouse Left Click: Roll Dice / Select Piece to Move")
-		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl2.text = tr("Mouse Right Click / Shift + Left Click: View Piece / Dice Info Popup")
+		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl2.text = tr("Shift + Mouse Left Click: View Piece / Dice Info Popup")
 		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl3.text = tr("Mouse Right Click Drag: Rotate 3D Board Camera")
 		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl4.text = tr("Wheel Up / Key +: Zoom Camera In")
 		$MarginContainer/VBoxContainer/ScrollContainer/ControlsList/Ctrl5.text = tr("Wheel Down / Key -: Zoom Camera Out")
