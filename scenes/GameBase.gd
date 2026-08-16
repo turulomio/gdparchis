@@ -27,6 +27,43 @@ func _notification(what: int):
 		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
 
 
+## Scene entry point. Initializes board data, player turns, and auto-throws if AI.
+func _ready():
+	print("LOADING GAME: ", self.name)
+	self.game_start_time = Time.get_unix_time_from_system()
+	var d = Globals.game_data
+
+	# Check if transition came from GameDiceStart (pieces already animated) or saved game load
+	var animate = not Globals.from_dice_start
+	Globals.from_dice_start = false
+
+	# Load global game state into board and pieces and wait for piece placement to complete
+	await Globals.game_load_glogals_game_data(self, true, animate)
+
+	# Check if any active player has already won upon loading scene
+	if await self.check_game_over():
+		return
+
+	# Set active starting player
+	self.current_player = self.board().players()[d["current"]]
+	self.current_player.can_move_pieces = false
+	self.current_player.dice_throws = []
+	self.current_player.can_throw_dice = true
+	
+	# Skip turn if starting player is non-participating or has won
+	if self.current_player.plays == false or self.current_player.has_won():
+		self.change_current_player()
+		return
+
+	# Update dice visibility so only current player's dice is visible
+	for p in self.board().players():
+		p.dice().visible = (p == self.current_player)
+	
+	# Automatically trigger dice throw for AI or automatic mode
+	if self.current_player.ia == true or Globals.settings.get("automatic", true):
+		self.current_player.dice().on_clicked()
+
+
 ## Returns the BoardBase child node instance.
 ## Virtual method to be overridden by child scenes if board node name differs.
 ## @return BoardBase node instance.
@@ -88,17 +125,73 @@ func handle_object_right_click(object):
 		return
 		
 	if object is Piece:
-		var s = "Piece " + str(object) + " " + object.player().playername + "\n"
+		var p_name = object.player().playername if object.player() else "Unknown"
+		var p_idx = object.player().pieces().find(object) + 1 if object.player() else 0
+		var sq = object.square()
+		var sq_str = "N/A"
+		var sq_type_str = ""
+		if sq != null:
+			sq_str = "#" + str(sq.id)
+			sq_type_str = " [color=#888888](" + sq.type_name() + ")[/color]"
+			
+		var title = tr("Piece Details") + " #" + str(p_idx)
+		
+		var cyan = "#00E5FF"
+		var yellow = "#FFD700"
+		var green = "#55FF55"
+		var red = "#FF5555"
+		var orange = "#FFAA00"
+		
+		var s = "[color=" + cyan + "][b]" + tr("Player") + ":[/b][/color] " + p_name + "\n"
+		s += "[color=" + cyan + "][b]" + tr("Piece") + ":[/b][/color] #" + str(p_idx) + "  |  [color=" + cyan + "][b]" + tr("Square") + ":[/b][/color] " + sq_str + sq_type_str + "\n"
+		s += "[color=" + cyan + "][b]" + tr("Route Position") + ":[/b][/color] " + str(object.route_position) + "\n\n"
+		
+		# Threats received at current square
+		var threats_in = object.threats_at(sq)
+		if threats_in.size() > 0:
+			var t_in_list = []
+			for tp in threats_in:
+				var tp_num = tp.player().pieces().find(tp) + 1
+				t_in_list.append(tp.player().playername + " #" + str(tp_num))
+			s += "[color=" + red + "][b]" + tr("Threats received") + ":[/b][/color] " + str(threats_in.size()) + " (" + ", ".join(t_in_list) + ")\n"
+		else:
+			s += "[color=" + green + "][b]" + tr("Threats received") + ":[/b][/color] 0 (" + tr("Safe") + ")\n"
+		
+		# Threats generated on opponent pieces
+		var threats_out = object.threats_generated()
+		if threats_out.size() > 0:
+			var t_out_list = []
+			for tp in threats_out:
+				var tp_num = tp.player().pieces().find(tp) + 1
+				t_out_list.append(tp.player().playername + " #" + str(tp_num))
+			s += "[color=" + orange + "][b]" + tr("Threats generated") + ":[/b][/color] " + str(threats_out.size()) + " (" + ", ".join(t_out_list) + ")\n"
+		else:
+			s += "[color=" + yellow + "][b]" + tr("Threats generated") + ":[/b][/color] 0\n"
+		
+		# Turn movement analysis if it is current player's turn
 		if object.player() == self.current_player and object.player().can_move_pieces:
-			s += "  + Can move: " + str(object.can_move_stm())
-			s += "  + Can eat before: " + str(object.can_eat_before_stm())
-			s += "  + Can eat after: " + str(object.can_eat_at_route_position(object.route_position + object.squares_to_move(), false))
-			s += "  + Threats before: " + str(object.threats_at(object.square()))
-			s += "  + Threats after: " + str(object.threats_at(object.route().square_at(object.route_position + object.squares_to_move())))
-		OrPopup.set_text(s)
+			s += "\n[color=" + yellow + "][b]--- " + tr("Turn Status") + " ---[/b][/color]\n"
+			
+			var can_m = "[color=" + green + "]" + tr("Yes") + "[/color]" if object.can_move_stm() else "[color=" + red + "]" + tr("No") + "[/color]"
+			s += "  • [b]" + tr("Can move") + ":[/b] " + can_m + "\n"
+			
+			var can_e_b = "[color=" + green + "]" + tr("Yes") + "[/color]" if object.can_eat_before_stm() else "[color=" + red + "]" + tr("No") + "[/color]"
+			s += "  • [b]" + tr("Can eat before") + ":[/b] " + can_e_b + "\n"
+			
+			var target_pos = object.route_position + object.squares_to_move()
+			var target_sq = object.route().square_at(target_pos)
+			var can_e_a = "[color=" + green + "]" + tr("Yes (+20)") + "[/color]" if object.can_eat_at_route_position(target_pos, false) else "[color=" + red + "]" + tr("No") + "[/color]"
+			s += "  • [b]" + tr("Can eat after") + ":[/b] " + can_e_a + "\n"
+			
+			if target_sq != null:
+				var threats_after = object.threats_at(target_sq)
+				var t_aft_str = "[color=" + green + "]0[/color]" if threats_after.size() == 0 else "[color=" + red + "]" + str(threats_after.size()) + "[/color]"
+				s += "  • [b]" + tr("Threats after move") + ":[/b] " + t_aft_str + "\n"
+				
+		OrPopup.set_text(s, title)
 		
 	if object is Dice and OS.is_debug_build():
-		OrPopup.set_text(object.historical_report())
+		OrPopup.set_text(object.historical_report(), tr("Dice History Report"))
 
 
 ## Evaluates if any active player has won and triggers the game victory completion sequence.
@@ -258,3 +351,50 @@ func change_current_player():
 	else:
 		if Globals.settings.get("automatic", true) == true:
 			self.current_player.dice().on_clicked()
+
+
+## Common frame process loop handling mouse clicks, camera zoom, sound toggle, and exit navigation.
+## @param delta Frame time delta.
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("left_click"):
+		var object = get_object_under_mouse()
+		if Input.is_key_pressed(KEY_SHIFT):
+			handle_object_right_click(object)
+		else:
+			handle_object_click(object)
+
+	if Input.is_action_just_pressed("right_click"):
+		var object = get_object_under_mouse()
+		handle_object_right_click(object)
+
+	# Process variant-specific camera view shortcuts
+	process_camera_inputs(delta)
+
+	# Process camera zoom
+	if Input.is_action_just_pressed("zoom_in") or Input.is_action_pressed("zoom_in"):
+		zoom_camera(-1.5)
+	if Input.is_action_just_pressed("zoom_out") or Input.is_action_pressed("zoom_out"):
+		zoom_camera(1.5)
+
+	# Handle toggle sound shortcut ('S' key) and display notification on board
+	if Input.is_action_just_pressed("toggle_sound"):
+		var is_sound_enabled = Globals.toggle_sound()
+		var msg = tr("Sound ON") if is_sound_enabled else tr("Sound OFF")
+		var text_color = Color.GREEN if is_sound_enabled else Color.RED
+		var debug_text = get_node_or_null("DebugFloatingText")
+		if debug_text:
+			debug_text.show_text(msg, text_color)
+
+	# Handle exit key shortcut back to main menu
+	if Input.is_action_just_pressed("exit"):
+		if self.board():
+			for player in self.board().players():
+				if player.plays:
+					player.dice().historical_report()
+		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
+
+
+## Virtual method overridden by specialized game variants (Game3, Game4, Game6) for camera preset views.
+## @param _delta Frame time delta.
+func process_camera_inputs(_delta: float) -> void:
+	pass

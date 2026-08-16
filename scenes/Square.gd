@@ -36,6 +36,24 @@ func max_pieces():
 	return 2
 
 
+## Returns string representation of square type.
+## @return String type name.
+func type_name() -> String:
+	match self.type:
+		Globals.eSquareTypes.START:
+			return "START"
+		Globals.eSquareTypes.FIRST:
+			return "EXIT"
+		Globals.eSquareTypes.SECURE:
+			return "SAFE"
+		Globals.eSquareTypes.RAMP:
+			return "RAMP"
+		Globals.eSquareTypes.END:
+			return "GOAL"
+		_:
+			return "NORMAL"
+
+
 ## Returns the active non-null piece count standing on this square.
 ## @return Integer count of active pieces.
 func pieces_count():

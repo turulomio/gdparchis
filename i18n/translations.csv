@@ -50,6 +50,7 @@ Match history,Match history,Registro de partidas,Historique des parties
 Mouse Left Click: Roll Dice / Select Piece to Move,Mouse Left Click: Roll Dice / Select Piece to Move,Clic izquierdo del ratón: Tirar dado / Seleccionar ficha a mover,Clic gauche de la souris: Lancer le dé / Sélectionner un pion à déplacer
 Mouse Right Click Drag: Rotate 3D Board Camera,Mouse Right Click Drag: Rotate 3D Board Camera,Clic derecho del ratón + arrastrar: Rotar tablero 3D,Clic droit de la souris + glisser: Faire pivoter le plateau 3D
 Mouse Right Click: View Piece / Dice Info Popup,Mouse Right Click: View Piece / Dice Info Popup,Clic derecho del ratón: Ver ventana flotante de ficha / dado,Clic droit de la souris: Afficher les infos du pion / dé
+Mouse Right Click / Shift + Left Click: View Piece / Dice Info Popup,Mouse Right Click / Shift + Left Click: View Piece / Dice Info Popup,Clic derecho del ratón / Shift + Clic izquierdo: Ver ventana flotante de ficha / dado,Clic droit de la souris / Shift + Clic gauche: Afficher les infos du pion / dé
 New version available: {0}!,New version available: {0}!,¡Nueva versión disponible: {0}!,Nouvelle version disponible: {0}!
 No games logged yet,No games logged yet,No hay partidas registradas aún,Aucune partie enregistrée
 Normal,Normal,Normal,Normal
@@ -85,3 +86,21 @@ Wheel Up / Key +: Zoom Camera In,Wheel Up / Key +: Zoom Camera In,Rueda arriba /
 Winner,Winner,Ganador,Gagnant
 "{0}, I did it unintentionally! +20 moves","{0}, I did it unintentionally! +20 moves","¡{0}, lo hice sin querer! +20 movimientos","{0}, je l'ai fait sans le vouloir! +20 déplacements"
 "{0}, you're so tasty! +20 moves","{0}, you're so tasty! +20 moves","¡{0}, estás riquísimo! +20 movimientos","{0}, tu es si délicieux! +20 déplacements"
+Player,Player,Jugador,Joueur
+Piece,Piece,Ficha,Pion
+Square,Square,Casilla,Case
+Route Position,Route Position,Posición en ruta,Position sur le parcours
+Threats received,Threats received,Amenazas recibidas,Menaces reçues
+Threats generated,Threats generated,Amenazas generadas,Menaces générées
+Turn Status,Turn Status,Estado del turno,Statut du tour
+Can move,Can move,Puede mover,Peut bouger
+Can eat before,Can eat before,Puede comer antes,Peut manger avant
+Can eat after,Can eat after,Puede comer después,Peut manger après
+Threats after move,Threats after move,Amenazas tras mover,Menaces après déplacement
+Piece Details,Piece Details,Detalles de la ficha,Détails del pion
+Safe,Safe,Segura,Sécurisée
+Yes,Yes,Sí,Oui
+No,No,No,Non
+Yes (+20),Yes (+20),Sí (+20),Oui (+20)
+Dice History Report,Dice History Report,Informe del dado,Rapport du dé
+Information,Information,Información,Information

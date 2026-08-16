@@ -611,3 +611,18 @@ func threats_at(square):
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
 	return r
+
+
+## Returns a list of opponent pieces that this piece is currently threatening to capture.
+## @return Array of threatened opponent Piece objects.
+func threats_generated() -> Array:
+	if self.square() == null:
+		return []
+	var r = []
+	for player_ in self.player().board().players():
+		if player_ == self.player():
+			continue
+		for opponent_piece in player_.pieces():
+			if opponent_piece.square() != null and opponent_piece.is_threating_me(self, opponent_piece.square()):
+				r.append(opponent_piece)
+	return r

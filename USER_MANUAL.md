@@ -123,8 +123,8 @@ Access the **Credits** screen (`Credits`) from the main menu:
 
 - **Mouse Interactions:**
   - **Left Click:** Roll 3D dice or select highlighted piece to move.
+  - **Shift + Left Click / Right Click:** Open detailed information popup for targeted piece or dice (showing player name, piece index, square ID & type, route position, threats received from opponent pieces, threats generated on opponent pieces, and turn movement options).
   - **Right Click Drag:** Rotate and orbit 3D board camera.
-  - **Right Click:** Open debug information popup for targeted piece or dice.
   - **Scroll Wheel Up / `+` Key:** Zoom 3D camera in.
   - **Scroll Wheel Down / `-` Key:** Zoom 3D camera out.
 
@@ -146,7 +146,7 @@ Access the **Credits** screen (`Credits`) from the main menu:
 - **Touch Gestures:**
   - **Tap Screen:** Roll 3D dice or select highlighted piece to move.
   - **Touch Drag:** Rotate and orbit 3D board camera in spherical coordinates.
-  - **Long Press on Piece / Dice ($\ge$ 0.4s):** Open detail information popup for targeted piece or dice (Right Click emulation).
+  - **Long Press on Piece / Dice ($\ge$ 0.4s):** Open detailed information popup for targeted piece or dice (showing player name, piece index, square ID & type, threats received, threats generated, and turn evaluation).
   - **Long Press on Background ($\ge$ 0.4s):** Toggle Sound ON / OFF with floating status text (`S` Key emulation).
   - **Android Back Button / Gesture:** Return to Main Menu or exit game (`Esc` Key emulation).
   - **Native Fullscreen:** Android builds run full-screen natively.
