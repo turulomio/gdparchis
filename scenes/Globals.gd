@@ -3,7 +3,7 @@ const VERSION="1.0.0"
 const VERSION_DATE="2026-08-14"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, PINK, ORANGE, CYAN}  # 0,1,2,3,4,5,6,7
+enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, VIOLET, ORANGE, CYAN}  # 0,1,2,3,4,5,6,7
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
@@ -120,17 +120,17 @@ func ePlayer2Color(player_id):
 		1:
 			return Color.BLUE
 		2:
-			return Color(0.75, 0, 0, 1) # Darkened RED
+			return Color.RED
 		3:
-			return Color(0, 0.85, 0, 1) # Darkened GREEN
+			return Color.GREEN
 		4:
-			return Color(0.35, 0.35, 0.35, 1) # Darkened Grey (30% darker)
+			return Color.GRAY
 		5:
-			return Color(0.85, 0.2, 0.6, 1) # Dark Pink
+			return Color.VIOLET
 		6:
-			return Color(1.0, 0.5, 0.0, 1) # Orange
+			return Color.ORANGE
 		7:
-			return Color(0.0, 0.8, 0.9, 1) # Cyan
+			return Color.CYAN
 		_:
 			return Color.WHITE
 
@@ -144,17 +144,17 @@ func Color2ePlayer(color):
 			return 0
 		Color.BLUE:
 			return 1
-		Color(0.75, 0, 0, 1), Color.RED:
+		Color.RED:
 			return 2
-		Color(0, 0.85, 0, 1), Color.GREEN:
+		Color.GREEN:
 			return 3
-		Color(0.35, 0.35, 0.35, 1):
+		Color.GRAY:
 			return 4
-		Color(0.85, 0.2, 0.6, 1):
+		Color.VIOLET:
 			return 5
-		Color(1.0, 0.5, 0.0, 1):
+		Color.ORANGE:
 			return 6
-		Color(0.0, 0.8, 0.9, 1):
+		Color.CYAN:
 			return 7
 	return null
 
@@ -175,8 +175,8 @@ func ePlayerDefaultName(player_id):
 			r = "Greeny"
 		ePlayer.GREY:
 			r = "Greyey"
-		ePlayer.PINK:
-			r = "Pinky"
+		ePlayer.VIOLET:
+			r = "Violety"
 		ePlayer.ORANGE:
 			r = "Orangey"
 		ePlayer.CYAN:

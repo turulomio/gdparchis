@@ -43,7 +43,7 @@ func change_icon_and_name():
 				get_node("HBoxContainer/Icon").texture = load("res://images/fichaverde.png")
 			Globals.ePlayer.GREY:
 				get_node("HBoxContainer/Icon").texture = load("res://images/fichagris.png")
-			Globals.ePlayer.PINK:
+			Globals.ePlayer.VIOLET:
 				get_node("HBoxContainer/Icon").texture = load("res://images/ficharosa.png")
 			Globals.ePlayer.ORANGE:
 				get_node("HBoxContainer/Icon").texture = load("res://images/fichanaranja.png")

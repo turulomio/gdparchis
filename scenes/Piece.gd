@@ -180,16 +180,20 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 		var start_3d = self.get_3d_position(square_initial.id, square_position_initial)
 		var final_3d = self.get_3d_position(square_final.id, square_position_final)
 		
-		# If returning home or single-step teleport
+			# If returning home or single-step teleport
 		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
 			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
 			var mid_single = (start_3d + final_3d) / 2.0 + Vector3(0, max_height, 0)
 			var half_single_dur = 0.25 * speed_mult
-			var tween_single = get_tree().create_tween()
+			if not is_inside_tree():
+				return
+			var tween_single = create_tween()
 			tween_single.tween_property(self, "global_transform:origin", mid_single, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			tween_single.tween_property(self, "global_transform:origin", final_3d, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			tween_single.parallel().tween_property(self, "scale", dest_scale, half_single_dur * 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			await tween_single.finished
+			if not is_inside_tree():
+				return
 		else:
 			# Build list of 3D waypoint positions for each intermediate square step
 			var waypoints: Array[Vector3] = []
@@ -211,6 +215,8 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			var apex_add_y: float = 0.8
 			
 			for step_idx in range(waypoints.size()):
+				if not is_inside_tree():
+					return
 				var is_last_step = (step_idx == waypoints.size() - 1)
 				var next_waypoint = waypoints[step_idx]
 				
@@ -223,22 +229,28 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 				var mid_y = max(current_pos.y, dest_pos.y) + apex_add_y
 				var mid_pos = Vector3((current_pos.x + dest_pos.x) / 2.0, mid_y, (current_pos.z + dest_pos.z) / 2.0)
 				
-				var tween_hop = get_tree().create_tween()
+				var tween_hop = create_tween()
 				# Sequential origin parabolic arc (upward half, then downward half)
 				tween_hop.tween_property(self, "global_transform:origin", mid_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				tween_hop.tween_property(self, "global_transform:origin", dest_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 				# Parallel scale interpolation across the entire hop duration
 				tween_hop.parallel().tween_property(self, "scale", target_scale, hop_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 				await tween_hop.finished
+				if not is_inside_tree():
+					return
 				
 				current_pos = dest_pos
 				
+			if not is_inside_tree():
+				return
 			# Soft touchdown bounce on final destination square matching target square scale
-			var bounce_tween = get_tree().create_tween()
+			var bounce_tween = create_tween()
 			var dest_scale = get_target_scale_for_square(square_final.id, self.square_position)
 			bounce_tween.tween_property(self, "scale", Vector3(dest_scale.x * 1.08, dest_scale.y * 0.88, dest_scale.z * 1.08), 0.05 * speed_mult)
 			bounce_tween.tween_property(self, "scale", dest_scale, 0.07 * speed_mult)
 			await bounce_tween.finished
+			if not is_inside_tree():
+				return
 		
 		# Smoothly correct any displacement and drop cleanly onto board floor (h=0.2)
 		await self.correct_position_and_drop(0.12 * speed_mult)

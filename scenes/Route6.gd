@@ -14,6 +14,6 @@ func _get_route_square_ids():
 		return [154] + range(56, 102 + 1) + range(1, 51 + 1) + range(127, 134 + 1)
 	elif self.player_id == Globals.ePlayer.GREY:
 		return [155] + range(73, 102 + 1) + range(1, 68 + 1) + range(135, 142 + 1)
-	elif self.player_id == Globals.ePlayer.PINK:
+	elif self.player_id == Globals.ePlayer.VIOLET:
 		return [156] + range(90, 102 + 1) + range(1, 85 + 1) + range(143, 150 + 1)
 	return []
