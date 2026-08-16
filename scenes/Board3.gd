@@ -9,6 +9,7 @@ class_name Board3
 
 func _init():
 	self.max_players = 3
+	self.camera_top_height = 50.0
 
 
 ## Constructs a 6-sided 3D board plate and miter-closed frame matching the 3-player board SVG polygon with fully opaque faces.

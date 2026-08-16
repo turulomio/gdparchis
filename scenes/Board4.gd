@@ -10,6 +10,7 @@ class_name Board4
 
 func _init():
 	self.max_players = 4
+	self.camera_top_height = 50.0
 
 
 var user_calib_data: Dictionary = {}

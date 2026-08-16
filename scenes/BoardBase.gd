@@ -4,6 +4,7 @@ class_name BoardBase
 var squares: Dictionary = {}
 var max_players: int = 4
 var show_pieces: bool = true
+var camera_top_height: float = 50.0
 
 
 ## Node ready lifecycle callback.

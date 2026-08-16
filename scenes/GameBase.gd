@@ -15,6 +15,8 @@ var _last_cam_pos: Vector3 = Vector3.ZERO
 var _touch_start_pos: Vector2 = Vector2.ZERO
 var _touch_press_time: float = 0.0
 var _is_touch_dragging: bool = false
+var elapsed_time: float = 0.0
+var _timer_label: Label = null
 
 
 ## System notification handler for Android back button (Escape key emulation).
@@ -35,6 +37,7 @@ func _ready():
 		Globals.new_game(max_p)
 		
 	self.game_start_time = Time.get_unix_time_from_system()
+	setup_timer_ui()
 	var d = Globals.game_data
 
 	# Check if transition came from GameDiceStart (pieces already animated) or saved game load
@@ -360,6 +363,9 @@ func change_current_player():
 ## Common frame process loop handling mouse clicks, camera zoom, sound toggle, and exit navigation.
 ## @param delta Frame time delta.
 func _process(delta: float) -> void:
+	self.elapsed_time += delta
+	update_timer_ui()
+
 	if Input.is_action_just_pressed("left_click"):
 		var object = get_object_under_mouse()
 		if Input.is_key_pressed(KEY_SHIFT):
@@ -392,6 +398,75 @@ func _process(delta: float) -> void:
 				if player.plays:
 					player.dice().historical_report()
 		await Globals.fade_to_scene(get_tree(), "res://scenes/Main.tscn")
+
+
+## Constructs top-right HUD timer panel container displaying accumulated match duration.
+func setup_timer_ui() -> void:
+	if has_node("TimerHUD"):
+		return
+		
+	var canvas = CanvasLayer.new()
+	canvas.name = "TimerHUD"
+	canvas.layer = 10
+	add_child(canvas)
+	
+	var margin_container = MarginContainer.new()
+	margin_container.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	margin_container.anchor_left = 1.0
+	margin_container.anchor_right = 1.0
+	margin_container.anchor_top = 0.0
+	margin_container.anchor_bottom = 0.0
+	margin_container.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	margin_container.add_theme_constant_override("margin_top", 16)
+	margin_container.add_theme_constant_override("margin_right", 16)
+	canvas.add_child(margin_container)
+	
+	var panel = PanelContainer.new()
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.08, 0.10, 0.14, 0.82)
+	panel_style.border_color = Color(0.85, 0.70, 0.20, 0.85)
+	panel_style.border_width_left = 1
+	panel_style.border_width_top = 1
+	panel_style.border_width_right = 1
+	panel_style.border_width_bottom = 1
+	panel_style.corner_radius_top_left = 8
+	panel_style.corner_radius_top_right = 8
+	panel_style.corner_radius_bottom_left = 8
+	panel_style.corner_radius_bottom_right = 8
+	panel_style.content_margin_left = 12
+	panel_style.content_margin_top = 6
+	panel_style.content_margin_right = 14
+	panel_style.content_margin_bottom = 6
+	panel.add_theme_stylebox_override("panel", panel_style)
+	margin_container.add_child(panel)
+	
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 6)
+	panel.add_child(hbox)
+	
+	var icon_lbl = Label.new()
+	icon_lbl.text = "⏱️"
+	icon_lbl.add_theme_font_size_override("font_size", 16)
+	hbox.add_child(icon_lbl)
+	
+	_timer_label = Label.new()
+	_timer_label.text = "00:00"
+	_timer_label.add_theme_font_size_override("font_size", 18)
+	_timer_label.add_theme_color_override("font_color", Color(1.0, 0.92, 0.65))
+	hbox.add_child(_timer_label)
+
+
+## Updates top-right HUD timer label string with formatted elapsed match duration.
+func update_timer_ui() -> void:
+	if _timer_label:
+		var total_sec = int(elapsed_time)
+		var hrs = total_sec / 3600
+		var mins = (total_sec % 3600) / 60
+		var secs = total_sec % 60
+		if hrs > 0:
+			_timer_label.text = "%02d:%02d:%02d" % [hrs, mins, secs]
+		else:
+			_timer_label.text = "%02d:%02d" % [mins, secs]
 
 
 ## Virtual method overridden by specialized game variants (Game3, Game4, Game6) for camera preset views.

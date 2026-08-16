@@ -367,8 +367,9 @@ func on_clicked():
 		# Check victory condition
 		if self.player().has_won():
 			$Won.play()
-			if self.game() != null and "game_start_time" in self.game():
-				Globals.add_game_history_entry(self.game().game_start_time, self.player(), self.board())
+			if self.game() != null:
+				var elapsed = self.game().elapsed_time if "elapsed_time" in self.game() else 0.0
+				Globals.add_game_history_entry(elapsed, self.player(), self.board())
 			$FloatingText.show_text(tr("Player {0} wins").format([self.player().playername]), self.player().color)
 			await $FloatingText.text_disappear
 			

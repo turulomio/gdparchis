@@ -14,9 +14,7 @@ func _ready() -> void:
 
 ## Resets camera height and horizontal pan position back to center for Board 6.
 func reset_camera_view() -> void:
-	if camera:
-		camera.position = Vector3(0.0, 65.0, 0.0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+	super.reset_camera_view()
 
 
 ## Instantiates 6-player board geometry with board materials.

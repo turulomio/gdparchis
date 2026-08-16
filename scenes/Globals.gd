@@ -57,19 +57,23 @@ func clear_game_history() -> void:
 
 
 ## Adds a new game record to history log and persists to disk.
-## @param start_time Unix timestamp float when game began.
+## @param elapsed_time Elapsed match duration in seconds (or Unix start timestamp).
 ## @param winner Player object that won the game.
-## @param board Board4 node instance.
-func add_game_history_entry(start_time: float, winner, board) -> void:
+## @param board Board node instance.
+func add_game_history_entry(elapsed_time: float, winner, board) -> void:
 	# Ensure existing disk history is loaded before appending new match record
 	self.load_game_history()
 	
 	# Calculate elapsed game duration in seconds
-	var current_time = Time.get_unix_time_from_system()
-	var duration_sec = max(1, int(current_time - start_time))
-	var mins = duration_sec / 60
+	var duration_sec: int = max(1, int(elapsed_time))
+	if elapsed_time > 1000000000.0:
+		var current_time = Time.get_unix_time_from_system()
+		duration_sec = max(1, int(current_time - elapsed_time))
+		
+	var hrs = duration_sec / 3600
+	var mins = (duration_sec % 3600) / 60
 	var secs = duration_sec % 60
-	var duration_str = "%02d:%02d" % [mins, secs]
+	var duration_str = "%02d:%02d:%02d" % [hrs, mins, secs] if hrs > 0 else "%02d:%02d" % [mins, secs]
 	
 	# Format current date and time string
 	var datetime_dict = Time.get_datetime_dict_from_system()
@@ -234,6 +238,7 @@ func save_game(game):
 		dict["fake_dice"]=[]
 		dict["players"]=[]
 		dict["game_uuid"]=self.game_data.game_uuid
+		dict["elapsed_time"]=game.elapsed_time if "elapsed_time" in game else 0.0
 		for p in game.board().players():
 			var dict_p={}
 			dict_p["id"]=p.id
@@ -259,6 +264,7 @@ func new_game(max_players):
 	dict["fake_dice"]=[]
 	dict["players"]=[]
 	dict["game_uuid"]=generate_uuid()
+	dict["elapsed_time"]=0.0
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
@@ -445,6 +451,9 @@ func position6(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 ## @param show_pieces Boolean flag indicating whether piece visual models should be visible.
 ## @param animate Optional boolean flag controlling whether piece placement is animated step-by-step.
 func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
+	if "elapsed_time" in gameobject and Globals.game_data != null and Globals.game_data.has("elapsed_time"):
+		gameobject.elapsed_time = float(Globals.game_data.get("elapsed_time", 0.0))
+		
 	# 1. Initialize board squares, players, and default piece properties
 	gameobject.board().initialize(show_pieces)
 	

@@ -25,6 +25,12 @@ func get_target_game_scene_path() -> String:
 ## Node initialization loop. Rolls dice for all active players to decide starting player.
 func _ready():
 	print("LOADING GAMEDICESTART")
+	var cam = get_node_or_null("Camera")
+	if cam and self.board():
+		var cam_h = self.board().camera_top_height
+		cam.look_at_from_position(Vector3(0, cam_h, 0), Vector3(0, 0, 0.001), Vector3.UP)
+		cam.global_rotate(Vector3(0, 1, 0), PI)
+
 	if FloatingText:
 		FloatingText.show_text(tr("Let's see who starts"), Color.WHITE)
 

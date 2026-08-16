@@ -14,9 +14,7 @@ func _ready() -> void:
 
 ## Resets camera height and horizontal pan position back to center for Board 3.
 func reset_camera_view() -> void:
-	if camera:
-		camera.position = Vector3(0.0, 40.25, -5.0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+	super.reset_camera_view()
 
 
 ## Instantiates 3-player board geometry with wooden frame and board materials.
