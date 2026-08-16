@@ -55,7 +55,6 @@ func _ready() -> void:
 	load_board_instance()
 	hide_all_dice()
 
-	var cam_h = board_inst.camera_top_height if board_inst else 50.0
 	camera = find_child("Camera3D", true, false)
 	if not camera:
 		var cameras = find_children("*", "Camera3D", true, false)
@@ -63,12 +62,10 @@ func _ready() -> void:
 			camera = cameras[0]
 		else:
 			camera = Camera3D.new()
-			camera.position = Vector3(0, cam_h, 0)
-			camera.rotation_degrees = Vector3(-90, 0, 0)
 			add_child(camera)
 	if camera:
-		camera.position = Vector3(0, cam_h, 0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+		if board_inst:
+			board_inst.setup_camera_top(camera)
 		camera.make_current()
 
 	load_calibration_file()
@@ -420,10 +417,8 @@ func _on_route_selected(index: int) -> void:
 
 ## Resets camera height and horizontal pan position back to center.
 func reset_camera_view() -> void:
-	if camera:
-		var cam_h = board_inst.camera_top_height if board_inst else 50.0
-		camera.position = Vector3(0.0, cam_h, 0.0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+	if camera and board_inst:
+		board_inst.setup_camera_top(camera)
 
 
 ## OptionButton dropdown item selection callback.

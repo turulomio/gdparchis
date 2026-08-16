@@ -4,7 +4,23 @@ class_name BoardBase
 var squares: Dictionary = {}
 var max_players: int = 4
 var show_pieces: bool = true
-var camera_top_height: float = 50.0
+var camera_top_position: Vector3 = Vector3(0.0, 50.0, 0.0)
+var camera_top_target: Vector3 = Vector3(0.0, 0.0, 0.001)
+
+var camera_top_height: float:
+	get:
+		return camera_top_position.y
+	set(v):
+		camera_top_position.y = v
+
+
+## Applies standard top camera position and target orientation for this board.
+## @param cam Camera3D instance to configure.
+func setup_camera_top(cam: Camera3D) -> void:
+	if cam:
+		cam.fov = 75.0
+		cam.position = self.camera_top_position
+		cam.rotation_degrees = Vector3(-90, 0, 0)
 
 
 ## Node ready lifecycle callback.

@@ -12,7 +12,8 @@ class_name Board6
 
 func _init():
 	self.max_players = 6
-	self.camera_top_height = 75.0
+	self.camera_top_position = Vector3(0.0, 75.0, 0.0)
+	self.camera_top_target = Vector3(0.0, 0.0, 0.001)
 
 
 var user_calib_data: Dictionary = {}
