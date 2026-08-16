@@ -545,3 +545,42 @@ func _input(event: InputEvent) -> void:
 			return
 		get_viewport().set_input_as_handled()
 		self.toggle_window_mode()
+
+
+## Smoothly fades out current scene to black, changes scene to target_path, and fades back in.
+## @param tree SceneTree instance.
+## @param target_path File path to target scene.
+## @param duration Duration of fade out and fade in in seconds.
+func fade_to_scene(tree: SceneTree, target_path: String, duration: float = 0.35) -> void:
+	if not tree:
+		return
+		
+	# Create overlay CanvasLayer over all UI/3D layers
+	var canvas = CanvasLayer.new()
+	canvas.layer = 128
+	
+	var rect = ColorRect.new()
+	rect.color = Color(0, 0, 0, 0)
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	canvas.add_child(rect)
+	
+	tree.root.add_child(canvas)
+	
+	# Fade out to black
+	var tween_out = tree.create_tween()
+	tween_out.tween_property(rect, "color:a", 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await tween_out.finished
+	
+	# Change scene while screen is black
+	tree.change_scene_to_file(target_path)
+	
+	# Wait 2 process frames for new scene _ready() to execute fully
+	await tree.process_frame
+	await tree.process_frame
+	
+	# Fade in from black
+	var tween_in = tree.create_tween()
+	tween_in.tween_property(rect, "color:a", 0.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tween_in.finished
+	
+	canvas.queue_free()

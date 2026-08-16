@@ -387,7 +387,7 @@ func _process(delta: float) -> void:
 			for player in self.board().players():
 				if player.plays:
 					player.dice().historical_report()
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
+		await Globals.fade_to_scene(get_tree(), "res://scenes/Main.tscn")
 
 
 ## Virtual method overridden by specialized game variants (Game3, Game4, Game6) for camera preset views.

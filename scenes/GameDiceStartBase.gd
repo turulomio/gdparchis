@@ -83,7 +83,7 @@ func is_there_a_winer():
 		if FloatingText:
 			FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].playername]), self.winers[0].color)
 			await FloatingText.text_disappear
-		get_tree().change_scene_to_file.call_deferred(self.get_target_game_scene_path())
+		await Globals.fade_to_scene(get_tree(), self.get_target_game_scene_path())
 		return true
 	return null
 
@@ -92,4 +92,4 @@ func is_there_a_winer():
 ## @param _delta Delta frame time.
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
+		await Globals.fade_to_scene(get_tree(), "res://scenes/Main.tscn")
