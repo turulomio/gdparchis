@@ -1,6 +1,6 @@
 extends Node 
-const VERSION="1.0.0"
-const VERSION_DATE="2026-08-14"
+const VERSION="1.1.0"
+const VERSION_DATE="2026-08-16"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
 enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, VIOLET, ORANGE, CYAN}  # 0,1,2,3,4,5,6,7
