@@ -26,7 +26,7 @@ func initialize(color_):
 	# Create StandardMaterial3D with wood texture and polished clearcoat
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = self.color
+	new_material.albedo_color = self.color.darkened(0.3)
 	new_material.roughness = 0.3
 	new_material.metallic_specular = 0.5
 	new_material.clearcoat_enabled = true

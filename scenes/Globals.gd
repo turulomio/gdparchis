@@ -7,7 +7,7 @@ enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, PINK, ORANGE, CYAN}  # 0,1,2,3,4,5
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
-const IMAGE_WOOD = preload("res://images/wood.png")
+const IMAGE_WOOD = preload("res://images/transwood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 
 var game_data = null # Dictionary to load and init games
