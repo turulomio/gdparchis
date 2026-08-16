@@ -10,6 +10,8 @@ class_name Board4
 
 func _init():
 	self.max_players = 4
+	self.camera_top_position = Vector3(0.0, 50.0, 0.0)
+	self.camera_top_target = Vector3(0.0, 0.0, 0.001)
 
 
 var user_calib_data: Dictionary = {}
@@ -53,3 +55,43 @@ func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vec
 			return Vector3(float(d["x"]), h, float(d["z"]))
 
 	return Vector3(0, h, 0)
+
+
+## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
+func get_max_slots(sq_id: int) -> int:
+	return 4 if sq_id in [76, 84, 92, 100, 101, 102, 103, 104] else 2
+
+
+## Populates and configures squares dictionary for 4-player board geometry.
+func setup_squares() -> void:
+	self.squares = {}
+	for i in range(1, 101):
+		self.squares[i] = Square.new(i, Globals.eSquareTypes.NORMAL)
+	for i in [101, 102, 103, 104]:
+		self.squares[i] = Square.new(i, Globals.eSquareTypes.START)
+
+	self.squares[5].type = Globals.eSquareTypes.FIRST
+	self.squares[5].color = Color.YELLOW
+	self.squares[22].type = Globals.eSquareTypes.FIRST
+	self.squares[22].color = Color.BLUE
+	self.squares[39].type = Globals.eSquareTypes.FIRST
+	self.squares[39].color = Globals.ePlayer2Color(2)
+	self.squares[56].type = Globals.eSquareTypes.FIRST
+	self.squares[56].color = Globals.ePlayer2Color(3)
+
+	for sq_id in [12, 17, 29, 34, 46, 51, 63, 68]:
+		self.squares[sq_id].type = Globals.eSquareTypes.SECURE
+
+	self.squares[76].type = Globals.eSquareTypes.END
+	self.squares[76].color = Color.YELLOW
+	self.squares[84].type = Globals.eSquareTypes.END
+	self.squares[84].color = Color.BLUE
+	self.squares[92].type = Globals.eSquareTypes.END
+	self.squares[92].color = Globals.ePlayer2Color(2)
+	self.squares[100].type = Globals.eSquareTypes.END
+	self.squares[100].color = Globals.ePlayer2Color(3)
+
+	self.squares[101].color = Color.YELLOW
+	self.squares[102].color = Color.BLUE
+	self.squares[103].color = Globals.ePlayer2Color(2)
+	self.squares[104].color = Globals.ePlayer2Color(3)

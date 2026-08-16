@@ -26,7 +26,7 @@ var is_panning: bool = false
 var pan_start_mouse: Vector2 = Vector2.ZERO
 var pan_start_cam_pos: Vector3 = Vector3.ZERO
 var min_cam_y: float = 12.0
-var max_cam_y: float = 95.0
+var max_cam_y: float = 160.0
 
 # Route Line & Directional Arrow State
 var route_mode_active: bool = false
@@ -43,6 +43,12 @@ var route_combo: OptionButton = null
 var save_path: String = "res://scenes/board_calibrated_positions.json"
 
 
+## Returns the board instance associated with this calibration tool.
+## @return BoardBase node.
+func board() -> BoardBase:
+	return board_inst
+
+
 func _ready() -> void:
 	print("INITIALIZING BOARD CALIBRATION TOOL BASE: ", get_class())
 	
@@ -51,10 +57,16 @@ func _ready() -> void:
 
 	camera = find_child("Camera3D", true, false)
 	if not camera:
-		camera = Camera3D.new()
-		camera.position = Vector3(0, 65, 0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
-		add_child(camera)
+		var cameras = find_children("*", "Camera3D", true, false)
+		if not cameras.is_empty():
+			camera = cameras[0]
+		else:
+			camera = Camera3D.new()
+			add_child(camera)
+	if camera:
+		if board_inst:
+			board_inst.setup_camera_top(camera)
+		camera.make_current()
 
 	load_calibration_file()
 	populate_pieces()
@@ -212,8 +224,10 @@ func get_square_ids() -> Array[int]:
 	return []
 
 
-## Virtual method returning maximum piece slots for a given square ID.
-func get_max_slots(_sq_id: int) -> int:
+## Returns maximum piece slots for a given square ID (delegates to board_inst if available).
+func get_max_slots(sq_id: int) -> int:
+	if board_inst and board_inst.has_method("get_max_slots"):
+		return board_inst.get_max_slots(sq_id)
 	return 2
 
 
@@ -229,6 +243,10 @@ func get_player_name(_player_id: int) -> String:
 		1: return "Azul"
 		2: return "Rojo"
 		3: return "Verde"
+		4: return "Gris"
+		5: return "Rosa"
+		6: return "Naranja"
+		7: return "Cyan"
 		_: return "Jugador %d" % _player_id
 
 
@@ -309,7 +327,7 @@ func setup_ui_overlay() -> void:
 	route_combo = OptionButton.new()
 	route_combo.add_item("--- Todas las Casillas ---", 0)
 
-	var max_p = 3 if board_inst and board_inst.max_players == 3 else 4
+	var max_p = board_inst.max_players if (board_inst and "max_players" in board_inst) else 4
 	var idx_counter = 1
 	for p in range(max_p):
 		var p_name = get_player_name(p)
@@ -318,6 +336,8 @@ func setup_ui_overlay() -> void:
 			route_combo.set_item_metadata(idx_counter, {"player": p, "slot": s})
 			idx_counter += 1
 
+	if route_combo.get_popup():
+		route_combo.get_popup().max_size = Vector2i(0, 400)
 	route_combo.item_selected.connect(_on_route_selected)
 	route_row.add_child(route_combo)
 
@@ -367,6 +387,7 @@ func setup_ui_overlay() -> void:
 	vbox.add_child(back_btn)
 
 	var help_lbl = Label.new()
+	help_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	help_lbl.position = Vector2(20, 350)
 	help_lbl.text = "CONTROLES:\n• Ctrl+Z (o Botón Deshacer): Revertir último cambio de posición/escala\n• Inspección Ruta: Traza línea 3D con flechas orientadas del recorrido\n• Clic Izquierdo + Arrastrar: Mover Ficha (Autoguardado al soltar)\n• Rueda Ratón / Teclas [+] [-]: Zoom Cerca / Lejos\n• Clic Derecho + Arrastrar: Desplazar Pantalla (Pan Horizontal/Vertical)\n• ComboBox Tamaño: Ajusta escala proporcional de 5% a 100% (de 5 en 5)\n• Flechas Teclado (o WASD): Ajuste Fino (+Shift = Mayor distancia)\n• N / P o TAB: Navegar entre fichas | Tecla R: Resetear Cámara"
 	canvas.add_child(help_lbl)
@@ -396,9 +417,8 @@ func _on_route_selected(index: int) -> void:
 
 ## Resets camera height and horizontal pan position back to center.
 func reset_camera_view() -> void:
-	if camera:
-		camera.position = Vector3(0, 65, 0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+	if camera and board_inst:
+		board_inst.setup_camera_top(camera)
 
 
 ## OptionButton dropdown item selection callback.
@@ -493,7 +513,7 @@ func update_info_display() -> void:
 		info_label.text = "Sin selección"
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	# Mouse Wheel Zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:

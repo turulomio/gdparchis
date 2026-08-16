@@ -14,9 +14,7 @@ func _ready() -> void:
 
 ## Resets camera height and horizontal pan position back to center for Board 3.
 func reset_camera_view() -> void:
-	if camera:
-		camera.position = Vector3(0.0, 40.25, -5.0)
-		camera.rotation_degrees = Vector3(-90, 0, 0)
+	super.reset_camera_view()
 
 
 ## Instantiates 3-player board geometry with wooden frame and board materials.
@@ -37,10 +35,6 @@ func get_square_ids() -> Array[int]:
 	square_ids.append(101); square_ids.append(102); square_ids.append(103)
 	return square_ids
 
-
-## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
-func get_max_slots(sq_id: int) -> int:
-	return 4 if sq_id in [59, 67, 75, 101, 102, 103] else 2
 
 
 ## Returns route square IDs for player on 3-player board.

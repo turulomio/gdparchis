@@ -16,10 +16,8 @@ func _init():
 	self.board_node = Board4Script.new()
 	self.board_node.max_players = 4
 	self.board_node.show_pieces = false
-	
-	# Create 104 board squares
-	for i in range(1, 105):
-		self.squares[i] = SquareScript.new(i)
+	self.board_node.setup_squares()
+	self.squares = self.board_node.squares
 		
 	# Create 4 players (0: Yellow, 1: Blue, 2: Red, 3: Green)
 	for i in range(4):
@@ -64,7 +62,7 @@ func get_piece(player_id: int, piece_id: int):
 	return null
 
 
-## Frees memory by queueing node deletion for simulator board node.
+## Frees memory by explicitly freeing simulator board node and all child players/pieces.
 func cleanup():
 	if self.board_node and is_instance_valid(self.board_node):
-		self.board_node.queue_free()
+		self.board_node.free()

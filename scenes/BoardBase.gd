@@ -4,6 +4,23 @@ class_name BoardBase
 var squares: Dictionary = {}
 var max_players: int = 4
 var show_pieces: bool = true
+var camera_top_position: Vector3 = Vector3(0.0, 50.0, 0.0)
+var camera_top_target: Vector3 = Vector3(0.0, 0.0, 0.001)
+
+var camera_top_height: float:
+	get:
+		return camera_top_position.y
+	set(v):
+		camera_top_position.y = v
+
+
+## Applies standard top camera position and target orientation for this board.
+## @param cam Camera3D instance to configure.
+func setup_camera_top(cam: Camera3D) -> void:
+	if cam:
+		cam.fov = 75.0
+		cam.position = self.camera_top_position
+		cam.rotation_degrees = Vector3(-90, 0, 0)
 
 
 ## Node ready lifecycle callback.
@@ -47,9 +64,62 @@ func setup_board_materials() -> void:
 				if mat is StandardMaterial3D or mat is ORMMaterial3D:
 					mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
 					mat.emission_enabled = false
-					mat.roughness = clamp(mat.roughness, 0.35, 0.7)
+					mat.roughness = 0.45
+					mat.metallic = 0.0
 					mat.metallic_specular = 0.5
+					mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+					mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+					mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 					mesh_inst.set_surface_override_material(s_idx, mat)
+
+
+## Returns the Texture2D associated with this board variant based on max_players.
+func get_board_texture() -> Texture2D:
+	var path = "res://images/parchis.png"
+	if self.max_players == 3 and ResourceLoader.exists("res://images/parchis3.png"):
+		path = "res://images/parchis3.png"
+	elif self.max_players == 6 and ResourceLoader.exists("res://images/parchis6.png"):
+		path = "res://images/parchis6.png"
+	elif self.max_players == 8 and ResourceLoader.exists("res://images/parchis8.png"):
+		path = "res://images/parchis8.png"
+	return load(path)
+
+
+## Creates a standardized StandardMaterial3D for board wood surfaces.
+## @return StandardMaterial3D instance.
+func create_wood_material() -> StandardMaterial3D:
+	var wood_tex = load("res://images/wood.png")
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+	mat.albedo_texture = wood_tex
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	mat.emission_enabled = false
+	mat.roughness = 0.45
+	mat.metallic = 0.0
+	mat.metallic_specular = 0.5
+	mat.uv1_scale = Vector3(4, 4, 4)
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	return mat
+
+
+## Creates a standardized StandardMaterial3D for board face texture (parchis background).
+## @param texture Texture2D object for the board face.
+## @return StandardMaterial3D instance.
+func create_board_face_material(texture: Texture2D = null) -> StandardMaterial3D:
+	var tex = texture if texture != null else self.get_board_texture()
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+	mat.albedo_texture = tex
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	mat.emission_enabled = false
+	mat.roughness = 0.45
+	mat.metallic = 0.0
+	mat.metallic_specular = 0.5
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	return mat
 
 
 ## Constructs a wooden frame surrounding the board.
@@ -67,12 +137,7 @@ func setup_wooden_frame() -> void:
 	for child in frame_root.get_children():
 		child.queue_free()
 		
-	var wood_tex = load("res://images/wood.png")
-	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
-	mat.albedo_texture = wood_tex
-	mat.roughness = 0.45
-	mat.uv1_scale = Vector3(4, 4, 4)
+	var mat = create_wood_material()
 	
 	var rail_height: float = 0.625
 	var base_thickness: float = 0.625
@@ -128,15 +193,7 @@ func initialize(_show_pieces: bool) -> void:
 	self.show_pieces = _show_pieces
 	self.setup_board_materials()
 	
-	self.squares = {}
-	var total_squares = 104
-	if self.max_players == 6:
-		total_squares = 156
-	elif self.max_players == 8:
-		total_squares = 208
-		
-	for i in range(1, total_squares + 1):
-		self.squares[i] = Square.new(i)
+	self.setup_squares()
 
 	for player in self.players():
 		player.initialize(self.show_pieces)
@@ -201,3 +258,17 @@ func get_piece_by_player_id_and_id(player_id: int, piece_id: int) -> Piece:
 ## Overridden by variant board subclasses (Board3, Board4, etc.).
 func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 	return Globals.position4(square_id, square_position, h)
+
+
+## Returns maximum allowed slots (pieces) for a given square ID (4 for goal triangles & home houses, 2 for arm squares).
+## Overridden by board variant subclasses (Board3, Board4, Board6, etc.).
+func get_max_slots(sq_id: int) -> int:
+	if self.squares.has(sq_id):
+		return self.squares[sq_id].max_pieces()
+	return 2
+
+
+## Virtual method initializing self.squares dictionary.
+## Overridden by variant board subclasses (Board3, Board4, Board6, etc.).
+func setup_squares() -> void:
+	self.squares = {}

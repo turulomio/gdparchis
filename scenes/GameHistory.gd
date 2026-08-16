@@ -119,13 +119,13 @@ func populate_history() -> void:
 		
 		var max_players = int(entry.get("max_players", 4))
 		var board_lbl = Label.new()
-		board_lbl.text = "🎯  " + str(max_players) + " " + tr("players board") + "   "
+		board_lbl.text = str(max_players) + " " + tr("players board") + "   "
 		board_lbl.add_theme_font_size_override("font_size", 18)
 		board_lbl.add_theme_color_override("font_color", Color(1, 0.85, 0.2))
 		header_hbox.add_child(board_lbl)
 		
 		var duration_lbl = Label.new()
-		duration_lbl.text = "⏱️  " + tr("Duration: {0}").format([str(entry.get("duration_str", "00:00"))])
+		duration_lbl.text = tr("Duration: {0}").format([str(entry.get("duration_str", "00:00"))])
 		duration_lbl.add_theme_font_size_override("font_size", 18)
 		duration_lbl.add_theme_color_override("font_color", Color(0.85, 0.88, 0.95))
 		header_hbox.add_child(duration_lbl)
@@ -147,7 +147,7 @@ func populate_history() -> void:
 		winner_badge.add_theme_stylebox_override("panel", winner_style)
 		
 		var winner_lbl = Label.new()
-		winner_lbl.text = "🏆 " + tr("Winner") + ": " + str(entry.get("winner_name", ""))
+		winner_lbl.text = tr("Winner") + ": " + str(entry.get("winner_name", ""))
 		winner_lbl.add_theme_font_size_override("font_size", 18)
 		winner_lbl.add_theme_color_override("font_color", Color.WHITE)
 		winner_badge.add_child(winner_lbl)
@@ -197,13 +197,13 @@ func populate_history() -> void:
 			
 			var slot_lbl = Label.new()
 			if not p_plays:
-				slot_lbl.text = p_name + " (❌ " + tr("Disabled") + ")"
+				slot_lbl.text = p_name + " (" + tr("Disabled") + ")"
 				slot_lbl.add_theme_color_override("font_color", Color(0.55, 0.55, 0.6))
 			elif p_ia:
-				slot_lbl.text = p_name + " (🤖 IA)"
+				slot_lbl.text = p_name + " (IA)"
 				slot_lbl.add_theme_color_override("font_color", Color.WHITE)
 			else:
-				slot_lbl.text = p_name + " (👤 " + tr("Human") + ")"
+				slot_lbl.text = p_name + " (" + tr("Human") + ")"
 				slot_lbl.add_theme_color_override("font_color", Color.WHITE)
 				
 			slot_lbl.add_theme_font_size_override("font_size", 14)

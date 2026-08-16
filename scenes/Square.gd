@@ -14,55 +14,15 @@ func _to_string():
 	return "[Square: " + str(self.id) + "]"
 
 
-## Constructor assigning square types, colors, and piece array capacity.
+## Constructor assigning square ID, type, and color.
 ## @param node_id Unique square ID integer.
-func _init(node_id):
+## @param sq_type Square type from Globals.eSquareTypes.
+## @param sq_color Color associated with the square.
+func _init(node_id: int, sq_type = Globals.eSquareTypes.NORMAL, sq_color: Color = Color.WHITE):
 	self.id = node_id
+	self.type = sq_type
+	self.color = sq_color
 
-	match(self.id):
-		5:
-			self.type = Globals.eSquareTypes.FIRST
-			self.color = Color.YELLOW
-		22:
-			self.type = Globals.eSquareTypes.FIRST
-			self.color = Color.BLUE
-		39:
-			self.type = Globals.eSquareTypes.FIRST
-			self.color = Globals.ePlayer2Color(2)
-		56:
-			self.type = Globals.eSquareTypes.FIRST
-			self.color = Globals.ePlayer2Color(3)
-			
-		12, 17, 29, 34, 46, 51, 63, 68:
-			self.type = Globals.eSquareTypes.SECURE
-		
-		59, 76:
-			self.type = Globals.eSquareTypes.END
-			self.color = Color.YELLOW
-		67, 84:
-			self.type = Globals.eSquareTypes.END
-			self.color = Color.BLUE
-		75, 92:
-			self.type = Globals.eSquareTypes.END
-			self.color = Globals.ePlayer2Color(2)
-		100:
-			self.type = Globals.eSquareTypes.END
-			self.color = Globals.ePlayer2Color(3)
-		101:
-			self.type = Globals.eSquareTypes.START
-			self.color = Color.YELLOW
-		102:
-			self.type = Globals.eSquareTypes.START
-			self.color = Color.BLUE
-		103:
-			self.type = Globals.eSquareTypes.START
-			self.color = Globals.ePlayer2Color(2)
-		104:
-			self.type = Globals.eSquareTypes.START
-			self.color = Globals.ePlayer2Color(3)
-		_:
-			self.type = Globals.eSquareTypes.NORMAL
-			
 	# Initialize pieces array with null slots up to max capacity
 	for _i in range(self.max_pieces()):
 		self.pieces.append(null)
@@ -74,6 +34,24 @@ func max_pieces():
 	if self.type in [Globals.eSquareTypes.START, Globals.eSquareTypes.END]:
 		return 4
 	return 2
+
+
+## Returns string representation of square type.
+## @return String type name.
+func type_name() -> String:
+	match self.type:
+		Globals.eSquareTypes.START:
+			return "START"
+		Globals.eSquareTypes.FIRST:
+			return "EXIT"
+		Globals.eSquareTypes.SECURE:
+			return "SAFE"
+		Globals.eSquareTypes.RAMP:
+			return "RAMP"
+		Globals.eSquareTypes.END:
+			return "GOAL"
+		_:
+			return "NORMAL"
 
 
 ## Returns the active non-null piece count standing on this square.
@@ -137,8 +115,11 @@ func pieces_different_to_me_ordered(_player):
 ## @param square_position Slot index (0-3).
 ## @param piece Piece object or null.
 func set_piece_at_square_position(square_position, piece):
-	self.pieces[square_position] = piece
-	self.last_piece_to_arrive = piece
+	while self.pieces.size() < self.max_pieces():
+		self.pieces.append(null)
+	if square_position >= 0 and square_position < self.pieces.size():
+		self.pieces[square_position] = piece
+		self.last_piece_to_arrive = piece
 
 
 ## Returns list of active non-null Piece objects standing on this square.

@@ -33,14 +33,22 @@ func change_icon_and_name():
 	
 	if has_node("HBoxContainer/Icon"):
 		match id:
-			Globals.ePlayer.RED:
-				get_node("HBoxContainer/Icon").texture = load("res://images/ficharoja.png")
-			Globals.ePlayer.BLUE:
-				get_node("HBoxContainer/Icon").texture = load("res://images/fichaazul.png")
-			Globals.ePlayer.GREEN:
-				get_node("HBoxContainer/Icon").texture = load("res://images/fichaverde.png")
 			Globals.ePlayer.YELLOW:
 				get_node("HBoxContainer/Icon").texture = load("res://images/fichaamarilla.png")
+			Globals.ePlayer.BLUE:
+				get_node("HBoxContainer/Icon").texture = load("res://images/fichaazul.png")
+			Globals.ePlayer.RED:
+				get_node("HBoxContainer/Icon").texture = load("res://images/ficharoja.png")
+			Globals.ePlayer.GREEN:
+				get_node("HBoxContainer/Icon").texture = load("res://images/fichaverde.png")
+			Globals.ePlayer.GREY:
+				get_node("HBoxContainer/Icon").texture = load("res://images/fichagris.png")
+			Globals.ePlayer.VIOLET:
+				get_node("HBoxContainer/Icon").texture = load("res://images/ficharosa.png")
+			Globals.ePlayer.ORANGE:
+				get_node("HBoxContainer/Icon").texture = load("res://images/fichanaranja.png")
+			Globals.ePlayer.CYAN:
+				get_node("HBoxContainer/Icon").texture = load("res://images/fichacyan.png")
 			_:
 				get_node("HBoxContainer/Icon").texture = load("res://images/piece_red.png")
 			

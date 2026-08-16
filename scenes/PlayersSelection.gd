@@ -48,10 +48,15 @@ func _on_Button_pressed():
 			Globals.game_data.players[i].plays = node.plays
 			Globals.game_data.players[i].ia = node.ia
 		i += 1
-	if Globals.game_data.get("max_players", 4) == 3:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart3.tscn")
-	else:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/GameDiceStart.tscn")
+	var target_sc = "res://scenes/GameDiceStart.tscn"
+	match int(Globals.game_data.get("max_players", 4)):
+		3:
+			target_sc = "res://scenes/GameDiceStart3.tscn"
+		6:
+			target_sc = "res://scenes/GameDiceStart6.tscn"
+		_:
+			target_sc = "res://scenes/GameDiceStart.tscn"
+	await Globals.fade_to_scene(get_tree(), target_sc)
 
 
 ## Helper returning an array of all child PlayerOptions nodes.

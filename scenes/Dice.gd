@@ -21,16 +21,23 @@ func player():
 ## Sets the initial spawn coordinates of the dice according to the player ID.
 ## @param h Height (Y coordinate) where the dice will be spawned.
 func set_my_position(h):
-	# Match player ID to set its corner spawn position
-	match(self.player().id):
-		0:
-			self.global_transform.origin = Vector3(-20, h, -25)
-		1:
-			self.global_transform.origin = Vector3(-25, h, 20)
-		2:
-			self.global_transform.origin = Vector3(20, h, 25)
-		3:
-			self.global_transform.origin = Vector3(25, h, -20)
+	if not self.player():
+		return
+	var max_p = self.player().board().max_players if (self.player().board() != null) else 4
+	if max_p == 6:
+		match(self.player().id):
+			0: self.global_transform.origin = Vector3(0, h, -28)
+			1: self.global_transform.origin = Vector3(-25, h, -15)
+			2: self.global_transform.origin = Vector3(-25, h, 15)
+			3: self.global_transform.origin = Vector3(0, h, 28)
+			4: self.global_transform.origin = Vector3(25, h, 15)
+			5: self.global_transform.origin = Vector3(25, h, -15)
+	else:
+		match(self.player().id):
+			0: self.global_transform.origin = Vector3(-20, h, -25)
+			1: self.global_transform.origin = Vector3(-25, h, 20)
+			2: self.global_transform.origin = Vector3(20, h, 25)
+			3: self.global_transform.origin = Vector3(25, h, -20)
 
 
 ## Helper method recursively collecting all MeshInstance3D nodes under a parent.
@@ -143,17 +150,24 @@ func is_piece_under_position(pos: Vector3, threshold_distance: float = 3.5) -> b
 func get_random_launch_origin() -> Vector3:
 	var h = randf_range(5.0, 7.0)
 	var p_id = self.player().id if self.player() else 0
-	match p_id:
-		0:
-			return Vector3(randf_range(-30.0, -12.0), h, randf_range(-30.0, -12.0))
-		1:
-			return Vector3(randf_range(-30.0, -12.0), h, randf_range(12.0, 30.0))
-		2:
-			return Vector3(randf_range(12.0, 30.0), h, randf_range(12.0, 30.0))
-		3:
-			return Vector3(randf_range(12.0, 30.0), h, randf_range(-30.0, -12.0))
-		_:
-			return Vector3(randf_range(-25.0, 25.0), h, randf_range(-25.0, 25.0))
+	var max_p = self.player().board().max_players if (self.player() and self.player().board()) else 4
+	
+	if max_p == 6:
+		match p_id:
+			0: return Vector3(randf_range(-10.0, 10.0), h, randf_range(-32.0, -20.0))
+			1: return Vector3(randf_range(-32.0, -20.0), h, randf_range(-20.0, -5.0))
+			2: return Vector3(randf_range(-32.0, -20.0), h, randf_range(5.0, 20.0))
+			3: return Vector3(randf_range(-10.0, 10.0), h, randf_range(20.0, 32.0))
+			4: return Vector3(randf_range(20.0, 32.0), h, randf_range(5.0, 20.0))
+			5: return Vector3(randf_range(20.0, 32.0), h, randf_range(-20.0, -5.0))
+			_: return Vector3(randf_range(-20.0, 20.0), h, randf_range(-20.0, 20.0))
+	else:
+		match p_id:
+			0: return Vector3(randf_range(-30.0, -12.0), h, randf_range(-30.0, -12.0))
+			1: return Vector3(randf_range(-30.0, -12.0), h, randf_range(12.0, 30.0))
+			2: return Vector3(randf_range(12.0, 30.0), h, randf_range(12.0, 30.0))
+			3: return Vector3(randf_range(12.0, 30.0), h, randf_range(-30.0, -12.0))
+			_: return Vector3(randf_range(-25.0, 25.0), h, randf_range(-25.0, 25.0))
 
 
 ## Scans the 2D board floor to find a landing spot closest to player's exit square with large clearance to pieces.
@@ -162,11 +176,16 @@ func find_empty_board_spot() -> Vector2:
 	# 1. Determine player's starting exit square 2D position
 	var start_square_id = 5
 	if self.player():
-		match self.player().id:
-			0: start_square_id = 5
-			1: start_square_id = 22
-			2: start_square_id = 39
-			3: start_square_id = 56
+		if self.player().route() and self.player().route().square_at(1):
+			start_square_id = self.player().route().square_at(1).id
+		else:
+			match self.player().id:
+				0: start_square_id = 5
+				1: start_square_id = 22
+				2: start_square_id = 39
+				3: start_square_id = 56
+				4: start_square_id = 73
+				5: start_square_id = 90
 	
 	var board_obj = self.player().board() if (self.player() and self.player().board()) else null
 	var exit_3d = board_obj.get_position3d(start_square_id, 0) if board_obj else Globals.position4(start_square_id, 0)

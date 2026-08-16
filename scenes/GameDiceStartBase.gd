@@ -10,10 +10,9 @@ var winers = []
 ## Returns the BoardBase child node instance. Virtual method.
 ## @return BoardBase node.
 func board() -> BoardBase:
-	var b = get_node_or_null("Board3")
-	if b: return b
-	b = get_node_or_null("Board4")
-	if b: return b
+	for child in get_children():
+		if child is BoardBase:
+			return child
 	return null
 
 
@@ -26,8 +25,12 @@ func get_target_game_scene_path() -> String:
 ## Node initialization loop. Rolls dice for all active players to decide starting player.
 func _ready():
 	print("LOADING GAMEDICESTART")
+	var cam = get_node_or_null("Camera")
+	if cam and self.board():
+		self.board().setup_camera_top(cam)
+
 	if FloatingText:
-		FloatingText.show_text(tr("Let's see who starts"), Color(255, 255, 255, 1))
+		FloatingText.show_text(tr("Let's see who starts"), Color.WHITE)
 
 	# Load global player configuration and await all pieces moving to their starting home positions
 	await Globals.game_load_glogals_game_data(self, true, true)
@@ -84,7 +87,7 @@ func is_there_a_winer():
 		if FloatingText:
 			FloatingText.show_text(tr("Player {0} starts").format([self.winers[0].playername]), self.winers[0].color)
 			await FloatingText.text_disappear
-		get_tree().change_scene_to_file.call_deferred(self.get_target_game_scene_path())
+		await Globals.fade_to_scene(get_tree(), self.get_target_game_scene_path())
 		return true
 	return null
 
@@ -93,4 +96,4 @@ func is_there_a_winer():
 ## @param _delta Delta frame time.
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Main.tscn")
+		await Globals.fade_to_scene(get_tree(), "res://scenes/Main.tscn")

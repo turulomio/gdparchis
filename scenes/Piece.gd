@@ -26,7 +26,7 @@ func initialize(color_):
 	# Create StandardMaterial3D with wood texture and polished clearcoat
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = self.color
+	new_material.albedo_color = self.color.darkened(0.3)
 	new_material.roughness = 0.3
 	new_material.metallic_specular = 0.5
 	new_material.clearcoat_enabled = true
@@ -54,6 +54,7 @@ func set_final_position(_route_position, _square_position, square_id):
 	self.square_position = _square_position
 	self.global_transform.origin = self.get_3d_position(square_id, self.square_position, 0.2)
 	self.rotation = Vector3.ZERO
+	self.change_scale_on_specials_squares(square_id)
 
 
 ## Performs a smooth corrective alignment animation, snapping the piece to its exact square slot and 3D upright stance on the board floor.
@@ -136,7 +137,7 @@ func can_move_to_route_position(_route_position):
 		return false
 		
 	# Barrier break rule: If a 6 is rolled, player must break a barrier ONLY IF at least one piece in the barrier can legally move
-	if self.player().last_throw() == 6 and self.am_i_in_a_barrier_of_my_player() == false:
+	if self.player().extra_moves.size() == 0 and self.player().last_throw() == 6 and self.am_i_in_a_barrier_of_my_player() == false:
 		if self.player().some_piece_in_barrier_of_my_player_can_move() == true:
 			return false
 		
@@ -179,16 +180,20 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 		var start_3d = self.get_3d_position(square_initial.id, square_position_initial)
 		var final_3d = self.get_3d_position(square_final.id, square_position_final)
 		
-		# If returning home or single-step teleport
+			# If returning home or single-step teleport
 		if _route_position == 0 or initial_route_pos == _route_position or _route_position < initial_route_pos:
 			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
 			var mid_single = (start_3d + final_3d) / 2.0 + Vector3(0, max_height, 0)
 			var half_single_dur = 0.25 * speed_mult
-			var tween_single = get_tree().create_tween()
+			if not is_inside_tree():
+				return
+			var tween_single = create_tween()
 			tween_single.tween_property(self, "global_transform:origin", mid_single, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			tween_single.tween_property(self, "global_transform:origin", final_3d, half_single_dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			tween_single.parallel().tween_property(self, "scale", dest_scale, half_single_dur * 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			await tween_single.finished
+			if not is_inside_tree():
+				return
 		else:
 			# Build list of 3D waypoint positions for each intermediate square step
 			var waypoints: Array[Vector3] = []
@@ -210,6 +215,8 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 			var apex_add_y: float = 0.8
 			
 			for step_idx in range(waypoints.size()):
+				if not is_inside_tree():
+					return
 				var is_last_step = (step_idx == waypoints.size() - 1)
 				var next_waypoint = waypoints[step_idx]
 				
@@ -217,27 +224,33 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 				var dest_pos = next_waypoint if is_last_step else Vector3(next_waypoint.x, cruise_y, next_waypoint.z)
 				var step_sq = self.route().square_at(initial_route_pos + step_idx + 1)
 				
-				# Target 0.75 scale if stepping onto special corridor square, otherwise restore normal 1.0 scale
-				var target_scale = Vector3(0.75, 0.75, 0.75) if (step_sq != null and is_special_square_id(step_sq.id)) else Vector3(1, 1, 1)
+				# Target scale calculated from board calibration data or special square check
+				var target_scale = get_target_scale_for_square(step_sq.id, self.square_position) if step_sq != null else Vector3(1, 1, 1)
 				var mid_y = max(current_pos.y, dest_pos.y) + apex_add_y
 				var mid_pos = Vector3((current_pos.x + dest_pos.x) / 2.0, mid_y, (current_pos.z + dest_pos.z) / 2.0)
 				
-				var tween_hop = get_tree().create_tween()
+				var tween_hop = create_tween()
 				# Sequential origin parabolic arc (upward half, then downward half)
 				tween_hop.tween_property(self, "global_transform:origin", mid_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				tween_hop.tween_property(self, "global_transform:origin", dest_pos, hop_duration / 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 				# Parallel scale interpolation across the entire hop duration
 				tween_hop.parallel().tween_property(self, "scale", target_scale, hop_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 				await tween_hop.finished
+				if not is_inside_tree():
+					return
 				
 				current_pos = dest_pos
 				
+			if not is_inside_tree():
+				return
 			# Soft touchdown bounce on final destination square matching target square scale
-			var bounce_tween = get_tree().create_tween()
-			var dest_scale = Vector3(0.75, 0.75, 0.75) if is_special_square_id(square_final.id) else Vector3(1, 1, 1)
+			var bounce_tween = create_tween()
+			var dest_scale = get_target_scale_for_square(square_final.id, self.square_position)
 			bounce_tween.tween_property(self, "scale", Vector3(dest_scale.x * 1.08, dest_scale.y * 0.88, dest_scale.z * 1.08), 0.05 * speed_mult)
 			bounce_tween.tween_property(self, "scale", dest_scale, 0.07 * speed_mult)
 			await bounce_tween.finished
+			if not is_inside_tree():
+				return
 		
 		# Smoothly correct any displacement and drop cleanly onto board floor (h=0.2)
 		await self.correct_position_and_drop(0.12 * speed_mult)
@@ -245,6 +258,19 @@ func move_to_route_position(_route_position, duration = 0.4, max_height = 4.0):
 	# Adjust visual scale on narrow corridor squares and signal completion
 	self.change_scale_on_specials_squares()
 	emit_signal("piece_moved")
+
+
+## Helper returning scale Vector3 for target square and slot based on board calibration or special square check.
+func get_target_scale_for_square(sq_id: int, sq_pos: int = -1) -> Vector3:
+	if sq_pos == -1:
+		sq_pos = self.square_position
+	var b = self.board()
+	if b and b.has_method("get_piece_scale"):
+		var custom_sc = b.get_piece_scale(sq_id, sq_pos)
+		return Vector3(custom_sc, custom_sc, custom_sc)
+	if is_special_square_id(sq_id):
+		return Vector3(0.75, 0.75, 0.75)
+	return Vector3(1.0, 1.0, 1.0)
 
 
 ## Helper evaluating whether a given square ID is a special narrow corridor square.
@@ -265,17 +291,7 @@ func change_scale_on_specials_squares(sq_id: int = -1):
 		else:
 			sq_id = 0
 			
-	var b = self.board()
-	if b and b.has_method("get_piece_scale"):
-		var custom_sc = b.get_piece_scale(sq_id, self.square_position)
-		if custom_sc != 1.0:
-			self.scale = Vector3(custom_sc, custom_sc, custom_sc)
-			return
-
-	if is_special_square_id(sq_id):
-		self.scale = Vector3(0.75, 0.75, 0.75)
-	else:
-		self.scale = Vector3(1.0, 1.0, 1.0)
+	self.scale = get_target_scale_for_square(sq_id, self.square_position)
 
 
 ## Returns the number of squares this piece should move based on throw and extra moves.
@@ -363,8 +379,9 @@ func on_clicked():
 		# Check victory condition
 		if self.player().has_won():
 			$Won.play()
-			if self.game() != null and "game_start_time" in self.game():
-				Globals.add_game_history_entry(self.game().game_start_time, self.player(), self.board())
+			if self.game() != null:
+				var elapsed = self.game().elapsed_time if "elapsed_time" in self.game() else 0.0
+				Globals.add_game_history_entry(elapsed, self.player(), self.board())
 			$FloatingText.show_text(tr("Player {0} wins").format([self.player().playername]), self.player().color)
 			await $FloatingText.text_disappear
 			
@@ -606,4 +623,19 @@ func threats_at(square):
 		for stalker in player_.pieces():
 			if self.is_threating_me(stalker, square):
 				r.append(stalker)
+	return r
+
+
+## Returns a list of opponent pieces that this piece is currently threatening to capture.
+## @return Array of threatened opponent Piece objects.
+func threats_generated() -> Array:
+	if self.square() == null:
+		return []
+	var r = []
+	for player_ in self.player().board().players():
+		if player_ == self.player():
+			continue
+		for opponent_piece in player_.pieces():
+			if opponent_piece.square() != null and opponent_piece.is_threating_me(self, opponent_piece.square()):
+				r.append(opponent_piece)
 	return r

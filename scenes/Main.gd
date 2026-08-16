@@ -41,7 +41,7 @@ func _ready() -> void:
 
 	var ver_label = find_child("Version", true, false)
 	if ver_label:
-		ver_label.text = tr(" Version: {0} - ").format([Globals.VERSION])
+		ver_label.text = tr(" Version: {0}").format([Globals.VERSION]) + " - "
 		
 	var file_dlg = find_child("FileDialog", true, false)
 	if file_dlg:
@@ -55,6 +55,14 @@ func _ready() -> void:
 	var p4_btn = find_child("Players4", true, false)
 	if p4_btn:
 		p4_btn.text = tr("4 players board")
+
+	var p6_btn = find_child("Players6", true, false)
+	if p6_btn:
+		p6_btn.text = tr("6 players board")
+		if not p6_btn.pressed.is_connected(_on_Players6_pressed):
+			p6_btn.pressed.connect(_on_Players6_pressed)
+		if not p6_btn.mouse_entered.is_connected(_on_Players6_mouse_entered):
+			p6_btn.mouse_entered.connect(_on_Players6_mouse_entered)
 
 	var load_btn = find_child("Load", true, false)
 	if load_btn:
@@ -135,6 +143,15 @@ func setup_calibration_developer_buttons() -> void:
 	calib4_btn.mouse_entered.connect(_play_click)
 	vbox.add_child(calib4_btn)
 	if exit_btn: vbox.move_child(calib4_btn, exit_btn.get_index())
+
+	# Board 6 Calibration Button
+	var calib6_btn = Button.new()
+	calib6_btn.name = "Calibration6"
+	calib6_btn.text = "Calibración Tablero 6"
+	calib6_btn.pressed.connect(func(): get_tree().change_scene_to_file.call_deferred("res://scenes/Board6Calibration.tscn"))
+	calib6_btn.mouse_entered.connect(_play_click)
+	vbox.add_child(calib6_btn)
+	if exit_btn: vbox.move_child(calib6_btn, exit_btn.get_index())
 
 
 ## Frame process loop spinning both background 3D red dice continuously around their vertical Y-axis like diamonds.
@@ -257,15 +274,29 @@ func _on_Players4_pressed():
 	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
 
 
+## Button handler starting a new 6-player game.
+func _on_Players6_pressed():
+	Globals.game_data = Globals.new_game(6)
+	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
+
+
+## Mouse hover audio feedback for 6 players button.
+func _on_Players6_mouse_entered():
+	_play_click()
+
+
 ## Callback when a saved game file is selected in FileDialog.
 ## @param path Absolute file path to .save file.
 func _on_FileDialog_file_selected(path):
 	var data = Globals.load_game(path)
 	Globals.game_data = data
-	if data.get("max_players", 4) == 3:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
-	else:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
+	match int(data.get("max_players", 4)):
+		3:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
+		6:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game6.tscn")
+		_:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 
 
 ## Button handler navigating to GameHistory.tscn scene.

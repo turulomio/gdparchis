@@ -15,8 +15,9 @@
 - 📐 **Polymorphic Board Variants:**
   - 🔺 **3-Player Triangular Board (`Board3`):** Symmetrical 3-arm triangular board geometry with 3 players (Yellow 🟡, Blue 🔵, Red 🔴), 78 custom squares, and a 6-sided mitered wooden frame.
   - 🟦 **4-Player Classic Board (`Board4`):** Classic 4-arm cross board geometry with 4 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢) and 104 squares.
-  - 🔷 **6 & 8 Player Expansions:** Modular support for 6 and 8 player boards.
-- 🎮 **Flexible Game Modes:** Configure 2, 3, or 4 players with any combination of **Human** or **AI (Artificial Intelligence)** players.
+  - ⬡ **6-Player Hexagonal Board (`Board6`):** Symmetrical 6-arm hexagonal board geometry with 6 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢, Grey 🩶, Pink 🩷), 150 custom squares, and a 6-sided mitered wooden frame.
+  - 🔷 **8-Player Expansion:** Modular support for 8-player board.
+- 🎮 **Flexible Game Modes:** Configure 2, 3, 4, or 6 players with any combination of **Human** or **AI (Artificial Intelligence)** players.
 - 🎲 **Comparative Starting Roll:** Simultaneous display of all initial dice rolls to determine the starting player, with automatic tie-breaker round management.
 - 📐 **Official Parchís Rules Enforcement:**
   - Leaving home requires rolling a **5**.
@@ -44,10 +45,10 @@
 
 ### 📐 Board Variants
 
-| 🔺 3-Player Triangular Board (`Board3`) | 🟦 4-Player Classic Board (`Board4`) |
-| :---: | :---: |
-| ![3-Player Triangular Board](snapshots/board3.png) | ![4-Player Classic Board](snapshots/board4.png) |
-| *Symmetrical 3-arm triangular board (78 squares) with custom wooden frame* | *Classic 4-arm cross board (104 squares) with 4 players* |
+| 🔺 3-Player Triangular Board (`Board3`) | 🟦 4-Player Classic Board (`Board4`) | ⬡ 6-Player Hexagonal Board (`Board6`) |
+| :---: | :---: | :---: |
+| ![3-Player Triangular Board](snapshots/board3.png) | ![4-Player Classic Board](snapshots/board4.png) | ![6-Player Hexagonal Board](snapshots/board6.png) |
+| *Symmetrical 3-arm triangular board (78 squares) with custom wooden frame* | *Classic 4-arm cross board (104 squares) with 4 players* | *Symmetrical 6-arm hexagonal board (150 squares) with 6 players* |
 
 ---
 
@@ -96,16 +97,6 @@ Output distributions are generated in `dist/`:
 - 🐧 **Linux:** `dist/Linux/gdparchis-<VERSION>.x86_64` & `dist/Linux/gdparchis-<VERSION>.pck`
 - 🪟 **Windows Desktop:** `dist/Windows/gdparchis-<VERSION>.exe`
 - 🤖 **Android:** `dist/Android/gdparchis-<VERSION>.apk`
-
----
-
-## 📊 Download Statistics by Release & Platform
-
-| Platform | Cumulative Downloads | Live Asset Badges by Release |
-| :--- | :---: | :--- |
-| 🐧 **Linux** | [![Linux Total](https://img.shields.io/badge/Linux-33_downloads-FCC624?logo=linux&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.x86_64?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) [![v0.3.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.3.0.Linux_x86_64?label=v0.3.0)](https://github.com/turulomio/gdparchis/releases/tag/0.3.0) [![v0.2.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.2.0.Linux_x86_64?label=v0.2.0)](https://github.com/turulomio/gdparchis/releases/tag/0.2.0) [![v0.1.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.1.0.Linux_x86_64?label=v0.1.0)](https://github.com/turulomio/gdparchis/releases/tag/0.1.0) [![v0.0.1](https://img.shields.io/github/downloads/turulomio/gdparchis/Gdparchis.x86_64?label=v0.0.1)](https://github.com/turulomio/gdparchis/releases/tag/0.0.1) |
-| 🪟 **Windows** | [![Windows Total](https://img.shields.io/badge/Windows-34_downloads-0078D6?logo=windows&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.exe?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) [![v0.3.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.3.0.exe?label=v0.3.0)](https://github.com/turulomio/gdparchis/releases/tag/0.3.0) [![v0.2.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.2.0.exe?label=v0.2.0)](https://github.com/turulomio/gdparchis/releases/tag/0.2.0) [![v0.1.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-0.1.0.exe?label=v0.1.0)](https://github.com/turulomio/gdparchis/releases/tag/0.1.0) [![v0.0.1](https://img.shields.io/github/downloads/turulomio/gdparchis/Gdparchis.exe?label=v0.0.1)](https://github.com/turulomio/gdparchis/releases/tag/0.0.1) |
-| 🤖 **Android** | [![Android Total](https://img.shields.io/badge/Android-1_download-3DDC84?logo=android&logoColor=white)](https://github.com/turulomio/gdparchis/releases) | [![v1.0.0](https://img.shields.io/github/downloads/turulomio/gdparchis/gdparchis-1.0.0.apk?label=v1.0.0)](https://github.com/turulomio/gdparchis/releases/tag/1.0.0) |
 
 ---
 

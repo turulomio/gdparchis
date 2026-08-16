@@ -3,11 +3,11 @@ const VERSION="1.0.0"
 const VERSION_DATE="2026-08-14"
 
 enum eSquareTypes {START, FIRST, NORMAL, SECURE, RAMP, END}
-enum ePlayer {YELLOW, BLUE, RED, GREEN, ORANGE, PURPLE, CYAN, MAGENTA}  # 0,1,2,3,4,5,6,7
+enum ePlayer {YELLOW, BLUE, RED, GREEN, GREY, VIOLET, ORANGE, CYAN}  # 0,1,2,3,4,5,6,7
 enum eDifficulty {EASY,NORMAL,DIFFICULT}
 enum eLanguages {ENGLISH,SPANISH,FRENCH}
 const UUID_UTIL = preload('res://scenes/uuid.gd')
-const IMAGE_WOOD = preload("res://images/wood.png")
+const IMAGE_WOOD = preload("res://images/transwood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 
 var game_data = null # Dictionary to load and init games
@@ -57,19 +57,23 @@ func clear_game_history() -> void:
 
 
 ## Adds a new game record to history log and persists to disk.
-## @param start_time Unix timestamp float when game began.
+## @param elapsed_time Elapsed match duration in seconds (or Unix start timestamp).
 ## @param winner Player object that won the game.
-## @param board Board4 node instance.
-func add_game_history_entry(start_time: float, winner, board) -> void:
+## @param board Board node instance.
+func add_game_history_entry(elapsed_time: float, winner, board) -> void:
 	# Ensure existing disk history is loaded before appending new match record
 	self.load_game_history()
 	
 	# Calculate elapsed game duration in seconds
-	var current_time = Time.get_unix_time_from_system()
-	var duration_sec = max(1, int(current_time - start_time))
-	var mins = duration_sec / 60
+	var duration_sec: int = max(1, int(elapsed_time))
+	if elapsed_time > 1000000000.0:
+		var current_time = Time.get_unix_time_from_system()
+		duration_sec = max(1, int(current_time - elapsed_time))
+		
+	var hrs = duration_sec / 3600
+	var mins = (duration_sec % 3600) / 60
 	var secs = duration_sec % 60
-	var duration_str = "%02d:%02d" % [mins, secs]
+	var duration_str = "%02d:%02d:%02d" % [hrs, mins, secs] if hrs > 0 else "%02d:%02d" % [mins, secs]
 	
 	# Format current date and time string
 	var datetime_dict = Time.get_datetime_dict_from_system()
@@ -116,17 +120,17 @@ func ePlayer2Color(player_id):
 		1:
 			return Color.BLUE
 		2:
-			return Color(0.75, 0, 0, 1) # Darkened RED by additional 10% (total 25%)
+			return Color.RED
 		3:
-			return Color(0, 0.85, 0, 1) # Darkened GREEN by 15%
+			return Color.GREEN
 		4:
-			return Color(1, 0.5, 0, 1) # Orange
+			return Color.GRAY
 		5:
-			return Color(0.6, 0.2, 0.8, 1) # Purple
+			return Color.VIOLET
 		6:
-			return Color(0, 0.8, 0.9, 1) # Cyan
+			return Color.ORANGE
 		7:
-			return Color(0.9, 0.2, 0.6, 1) # Magenta
+			return Color.CYAN
 		_:
 			return Color.WHITE
 
@@ -140,17 +144,17 @@ func Color2ePlayer(color):
 			return 0
 		Color.BLUE:
 			return 1
-		Color.RED, Color(0.85, 0, 0, 1), Color(0.75, 0, 0, 1):
+		Color.RED:
 			return 2
-		Color.GREEN, Color(0, 0.85, 0, 1):
+		Color.GREEN:
 			return 3
-		Color(1, 0.5, 0, 1):
+		Color.GRAY:
 			return 4
-		Color(0.6, 0.2, 0.8, 1):
+		Color.VIOLET:
 			return 5
-		Color(0, 0.8, 0.9, 1):
+		Color.ORANGE:
 			return 6
-		Color(0.9, 0.2, 0.6, 1):
+		Color.CYAN:
 			return 7
 	return null
 
@@ -169,14 +173,14 @@ func ePlayerDefaultName(player_id):
 			r = "Redy"
 		ePlayer.GREEN:
 			r = "Greeny"
+		ePlayer.GREY:
+			r = "Greyey"
+		ePlayer.VIOLET:
+			r = "Violety"
 		ePlayer.ORANGE:
 			r = "Orangey"
-		ePlayer.PURPLE:
-			r = "Purpley"
 		ePlayer.CYAN:
 			r = "Cyany"
-		ePlayer.MAGENTA:
-			r = "Magentey"
 		_:
 			r = "Player " + str(player_id + 1)
 	return r
@@ -234,6 +238,7 @@ func save_game(game):
 		dict["fake_dice"]=[]
 		dict["players"]=[]
 		dict["game_uuid"]=self.game_data.game_uuid
+		dict["elapsed_time"]=game.elapsed_time if "elapsed_time" in game else 0.0
 		for p in game.board().players():
 			var dict_p={}
 			dict_p["id"]=p.id
@@ -259,6 +264,7 @@ func new_game(max_players):
 	dict["fake_dice"]=[]
 	dict["players"]=[]
 	dict["game_uuid"]=generate_uuid()
+	dict["elapsed_time"]=0.0
 	for player_id in range(max_players):
 		var dict_p={}
 		dict_p["id"]=player_id
@@ -276,6 +282,7 @@ func new_game(max_players):
 			dict_piece["route_position"]=0
 			dict_piece["square_position"]=i
 			dict_p["pieces"].append(dict_piece)
+	self.game_data = dict
 	return dict
 	
 func load_game(filename):
@@ -431,11 +438,22 @@ func position3(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 		return board_script.new().get_position3d(square_id, square_position, h)
 	return Vector3(0, h, 0)
 
+
+## Delegates 3D vector coordinates for 6-player Parchis board squares to Board6.
+func position6(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
+	var board_script = load("res://scenes/Board6.gd")
+	if board_script:
+		return board_script.new().get_position3d(square_id, square_position, h)
+	return Vector3(0, h, 0)
+
 ## Loads global game state data into board, players, and piece positions.
 ## @param gameobject Scene object instance containing a board() method.
 ## @param show_pieces Boolean flag indicating whether piece visual models should be visible.
 ## @param animate Optional boolean flag controlling whether piece placement is animated step-by-step.
 func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
+	if "elapsed_time" in gameobject and Globals.game_data != null and Globals.game_data.has("elapsed_time"):
+		gameobject.elapsed_time = float(Globals.game_data.get("elapsed_time", 0.0))
+		
 	# 1. Initialize board squares, players, and default piece properties
 	gameobject.board().initialize(show_pieces)
 	
@@ -461,7 +479,9 @@ func game_load_glogals_game_data(gameobject, show_pieces, animate: bool = true):
 						await piece.piece_moved
 					else:
 						var square_final = player.route().square_at(d_piece["route_position"])
-						var square_position_final = square_final.empty_position()
+						var square_position_final = d_piece.get("square_position", square_final.empty_position())
+						if square_position_final < 0 or square_position_final >= square_final.max_pieces():
+							square_position_final = square_final.empty_position()
 						square_final.set_piece_at_square_position(square_position_final, piece)
 						piece.set_final_position(d_piece["route_position"], square_position_final, square_final.id)
 						piece.change_scale_on_specials_squares()
@@ -535,3 +555,42 @@ func _input(event: InputEvent) -> void:
 			return
 		get_viewport().set_input_as_handled()
 		self.toggle_window_mode()
+
+
+## Smoothly fades out current scene to black, changes scene to target_path, and fades back in.
+## @param tree SceneTree instance.
+## @param target_path File path to target scene.
+## @param duration Duration of fade out and fade in in seconds.
+func fade_to_scene(tree: SceneTree, target_path: String, duration: float = 0.35) -> void:
+	if not tree:
+		return
+		
+	# Create overlay CanvasLayer over all UI/3D layers
+	var canvas = CanvasLayer.new()
+	canvas.layer = 128
+	
+	var rect = ColorRect.new()
+	rect.color = Color(0, 0, 0, 0)
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	canvas.add_child(rect)
+	
+	tree.root.add_child(canvas)
+	
+	# Fade out to black
+	var tween_out = tree.create_tween()
+	tween_out.tween_property(rect, "color:a", 1.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await tween_out.finished
+	
+	# Change scene while screen is black
+	tree.change_scene_to_file(target_path)
+	
+	# Wait 2 process frames for new scene _ready() to execute fully
+	await tree.process_frame
+	await tree.process_frame
+	
+	# Fade in from black
+	var tween_in = tree.create_tween()
+	tween_in.tween_property(rect, "color:a", 0.0, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tween_in.finished
+	
+	canvas.queue_free()

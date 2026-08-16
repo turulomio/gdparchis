@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://b4u8nm6s4x3x7"]
 
 [ext_resource type="Script" path="res://scenes/Piece.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://ytq4lx03ic66" path="res://images/wood.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://c0epgkpobr3fh" path="res://images/transwood.png" id="2"]
 [ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="3"]
 [ext_resource type="AudioStream" uid="uid://c53k3o3xilm3j" path="res://sounds/meter.wav" id="4"]
 [ext_resource type="AudioStream" uid="uid://cs3nhgrntfgbe" path="res://sounds/win.wav" id="5"]

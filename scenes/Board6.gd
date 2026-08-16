@@ -1,27 +1,35 @@
 extends BoardBase
-class_name Board3
+class_name Board6
 
 @onready var BoardNode = $Board if has_node("Board") else null
 @onready var Player0 = $Player0 if has_node("Player0") else null
 @onready var Player1 = $Player1 if has_node("Player1") else null
 @onready var Player2 = $Player2 if has_node("Player2") else null
+@onready var Player3 = $Player3 if has_node("Player3") else null
+@onready var Player4 = $Player4 if has_node("Player4") else null
+@onready var Player5 = $Player5 if has_node("Player5") else null
 
 
 func _init():
-	self.max_players = 3
-	self.camera_top_position = Vector3(0.0, 40.25, -5.0)
-	self.camera_top_target = Vector3(0.0, 0.0, -5.001)
+	self.max_players = 6
+	self.camera_top_position = Vector3(0.0, 75.0, 0.0)
+	self.camera_top_target = Vector3(0.0, 0.0, 0.001)
 
 
+var user_calib_data: Dictionary = {}
+var user_calib_loaded: bool = false
 
-## Constructs a 6-sided 3D board plate and miter-closed frame matching the 3-player board SVG polygon with fully opaque faces.
+
+## Constructs a 6-sided 3D regular hexagon board plate and miter-closed frame matching the 6-player board texture (parchis6.png).
 func setup_wooden_frame() -> void:
-	# Hide the 4-player square Blender box
+	# Hide default 4-player square Blender box if present
 	var blend = get_node_or_null("Board/BoardBlend")
 	if blend:
 		blend.visible = false
 		
-	var board_node = self
+	var board_node = get_node_or_null("Board")
+	if not board_node:
+		board_node = self
 	if not board_node.has_node("WoodenFrame"):
 		var wf = Node3D.new()
 		wf.name = "WoodenFrame"
@@ -31,46 +39,35 @@ func setup_wooden_frame() -> void:
 	for child in frame_root.get_children():
 		child.queue_free()
 		
-	var wood_tex = load("res://images/wood.png")
-	var board_tex = load("res://images/parchis3.png")
+	var board_tex = load("res://images/parchis6.png")
 	if not board_tex:
-		board_tex = load("res://images/parchis3.svg")
+		board_tex = load("res://images/parchis6.svg")
 		
-	var wood_mat = StandardMaterial3D.new()
-	wood_mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
-	wood_mat.albedo_texture = wood_tex
-	wood_mat.roughness = 0.45
-	wood_mat.uv1_scale = Vector3(4, 4, 4)
-	wood_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	wood_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-	
-	var board_mat = StandardMaterial3D.new()
-	board_mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
-	board_mat.albedo_texture = board_tex
-	board_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	board_mat.roughness = 1.0
-	board_mat.metallic = 0.0
-	board_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	board_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	board_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	var wood_mat = self.create_wood_material()
+	var board_mat = self.create_board_face_material(board_tex)
 	
 	var rail_height: float = 0.625
 	var base_thickness: float = 0.625
 	var wall_thickness: float = 2.45
 	
-	# The 6 exact 3D vertices of the 3-player board texture polygon (in world XZ coordinates)
+	var board_width: float = 72.0
+	var R: float = board_width / 2.0
+	var H: float = sqrt(3.0) * R
+	var hH: float = H / 2.0
+
+	# 6 outer vertices of regular flat-topped hexagon (in world XZ coordinates)
 	var v_poly: Array[Vector2] = [
-		Vector2(-9.4234, -31.4113),  # V0: top-left Arm 1 (Yellow North)
-		Vector2(9.4234, -31.4113),   # V1: top-right Arm 1 (Yellow North)
-		Vector2(31.2368, 6.2781),    # V2: outer corner Red House (East)
-		Vector2(21.7919, 22.6371),   # V3: bottom-right Blue House (South)
-		Vector2(-21.8316, 22.6352),  # V4: bottom-left Blue House (South)
-		Vector2(-31.2368, 6.2781)    # V5: outer corner Yellow House (West)
+		Vector2(-R / 2.0, -hH), # V0: Top-Left
+		Vector2(R / 2.0, -hH),  # V1: Top-Right
+		Vector2(R, 0.0),        # V2: Right Corner
+		Vector2(R / 2.0, hH),   # V3: Bottom-Right
+		Vector2(-R / 2.0, hH),  # V4: Bottom-Left
+		Vector2(-R, 0.0)        # V5: Left Corner
 	]
 	var n_verts = v_poly.size()
 	
 	# ----------------------------------------------------
-	# 1. CREATE THE 6-SIDED 3D BOARD PLATE (TOP FACE = PARCHIS3, SIDES/BOTTOM = WOOD)
+	# 1. CREATE THE 6-SIDED 3D HEXAGON BOARD PLATE (TOP FACE = PARCHIS6, SIDES/BOTTOM = WOOD)
 	# ----------------------------------------------------
 	var y_top: float = 0.0
 	var y_bottom: float = -base_thickness
@@ -91,14 +88,14 @@ func setup_wooden_frame() -> void:
 		var p2 = v_poly[(i + 1) % n_verts]
 		var idx_c = t_verts.size()
 		
-		# CCW order viewed from top (+Y)
+		# Clockwise order viewed from top (+Y) so frontface points UP
 		t_verts.append(center_top)
-		t_verts.append(Vector3(p2.x, y_top, p2.y))
 		t_verts.append(Vector3(p1.x, y_top, p1.y))
+		t_verts.append(Vector3(p2.x, y_top, p2.y))
 		
 		t_uvs.append(center_uv)
-		t_uvs.append(Vector2(p2.x / 63.0 + 0.5, p2.y / 63.0 + 0.5))
-		t_uvs.append(Vector2(p1.x / 63.0 + 0.5, p1.y / 63.0 + 0.5))
+		t_uvs.append(Vector2(p1.x / board_width + 0.5, p1.y / H + 0.5))
+		t_uvs.append(Vector2(p2.x / board_width + 0.5, p2.y / H + 0.5))
 		
 		for k in range(3): t_normals.append(Vector3.UP)
 		
@@ -132,8 +129,8 @@ func setup_wooden_frame() -> void:
 		b_verts.append(Vector3(p2.x, y_bottom, p2.y))
 		
 		b_uvs.append(Vector2(0.5, 0.5))
-		b_uvs.append(Vector2(p1.x / 70.0 + 0.5, p1.y / 70.0 + 0.5))
-		b_uvs.append(Vector2(p2.x / 70.0 + 0.5, p2.y / 70.0 + 0.5))
+		b_uvs.append(Vector2(p1.x / board_width + 0.5, p1.y / H + 0.5))
+		b_uvs.append(Vector2(p2.x / board_width + 0.5, p2.y / H + 0.5))
 		
 		for k in range(3): b_normals.append(Vector3.DOWN)
 		
@@ -270,16 +267,11 @@ func setup_wooden_frame() -> void:
 		frame_root.add_child(wall_inst)
 
 
-## Configures materials and texture for 3-player board.
+## Configures materials and texture for 6-player board.
 func setup_board_materials() -> void:
+	self.setup_wooden_frame()
 	super.setup_board_materials()
-	var blend = get_node_or_null("Board/BoardBlend")
-	if blend:
-		blend.visible = false
 
-
-var user_calib_data: Dictionary = {}
-var user_calib_loaded: bool = false
 
 
 ## Returns the custom calibrated piece scale (0.1 to 1.0) for a target square and slot.
@@ -291,12 +283,12 @@ func get_piece_scale(square_id: int, square_position: int) -> float:
 		var d = user_calib_data[key_str]
 		if d is Dictionary and d.has("scale"):
 			return float(d["scale"])
-	return 1.0
+	return 0.75
 
 
-## Loads calibrated position overrides from res://scenes/board3_calibrated_positions.json if present in the project.
+## Loads calibrated position overrides from res://scenes/board6_calibrated_positions.json if present in the project.
 func load_user_calibration() -> void:
-	var path = "res://scenes/board3_calibrated_positions.json"
+	var path = "res://scenes/board6_calibrated_positions.json"
 	if FileAccess.file_exists(path):
 		var file = FileAccess.open(path, FileAccess.READ)
 		if file:
@@ -307,7 +299,7 @@ func load_user_calibration() -> void:
 	user_calib_loaded = true
 
 
-## Specialized 3D position calculator for 3-player board geometry loaded directly from JSON calibration file.
+## Specialized 3D position calculator for 6-player board geometry loaded directly from JSON calibration file.
 func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 	if not user_calib_loaded:
 		load_user_calibration()
@@ -323,15 +315,15 @@ func get_position3d(square_id: int, square_position: int, h: float = 0.2) -> Vec
 
 ## Returns max slots per square (4 for goal triangles & home houses, 2 for arm squares).
 func get_max_slots(sq_id: int) -> int:
-	return 4 if sq_id in [59, 67, 75, 101, 102, 103] else 2
+	return 4 if sq_id in [110, 118, 126, 134, 142, 150, 151, 152, 153, 154, 155, 156] else 2
 
 
-## Populates and configures squares dictionary for 3-player board geometry.
+## Populates and configures squares dictionary for 6-player board geometry.
 func setup_squares() -> void:
 	self.squares = {}
-	for i in range(1, 76):
+	for i in range(1, 151):
 		self.squares[i] = Square.new(i, Globals.eSquareTypes.NORMAL)
-	for i in [101, 102, 103]:
+	for i in range(151, 157):
 		self.squares[i] = Square.new(i, Globals.eSquareTypes.START)
 
 	self.squares[5].type = Globals.eSquareTypes.FIRST
@@ -340,17 +332,32 @@ func setup_squares() -> void:
 	self.squares[22].color = Color.BLUE
 	self.squares[39].type = Globals.eSquareTypes.FIRST
 	self.squares[39].color = Globals.ePlayer2Color(2)
+	self.squares[56].type = Globals.eSquareTypes.FIRST
+	self.squares[56].color = Globals.ePlayer2Color(3)
+	self.squares[73].type = Globals.eSquareTypes.FIRST
+	self.squares[73].color = Globals.ePlayer2Color(4)
+	self.squares[90].type = Globals.eSquareTypes.FIRST
+	self.squares[90].color = Globals.ePlayer2Color(5)
 
-	for sq_id in [12, 17, 29, 34, 46]:
+	for sq_id in [12, 17, 29, 34, 46, 51, 63, 68, 80, 85, 97, 102]:
 		self.squares[sq_id].type = Globals.eSquareTypes.SECURE
 
-	self.squares[59].type = Globals.eSquareTypes.END
-	self.squares[59].color = Color.YELLOW
-	self.squares[67].type = Globals.eSquareTypes.END
-	self.squares[67].color = Color.BLUE
-	self.squares[75].type = Globals.eSquareTypes.END
-	self.squares[75].color = Globals.ePlayer2Color(2)
+	self.squares[110].type = Globals.eSquareTypes.END
+	self.squares[110].color = Color.YELLOW
+	self.squares[118].type = Globals.eSquareTypes.END
+	self.squares[118].color = Color.BLUE
+	self.squares[126].type = Globals.eSquareTypes.END
+	self.squares[126].color = Globals.ePlayer2Color(2)
+	self.squares[134].type = Globals.eSquareTypes.END
+	self.squares[134].color = Globals.ePlayer2Color(3)
+	self.squares[142].type = Globals.eSquareTypes.END
+	self.squares[142].color = Globals.ePlayer2Color(4)
+	self.squares[150].type = Globals.eSquareTypes.END
+	self.squares[150].color = Globals.ePlayer2Color(5)
 
-	self.squares[101].color = Color.YELLOW
-	self.squares[102].color = Color.BLUE
-	self.squares[103].color = Globals.ePlayer2Color(2)
+	self.squares[151].color = Color.YELLOW
+	self.squares[152].color = Color.BLUE
+	self.squares[153].color = Globals.ePlayer2Color(2)
+	self.squares[154].color = Globals.ePlayer2Color(3)
+	self.squares[155].color = Globals.ePlayer2Color(4)
+	self.squares[156].color = Globals.ePlayer2Color(5)
