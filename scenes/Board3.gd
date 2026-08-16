@@ -13,6 +13,7 @@ func _init():
 	self.camera_top_target = Vector3(0.0, 0.0, -5.001)
 
 
+
 ## Constructs a 6-sided 3D board plate and miter-closed frame matching the 3-player board SVG polygon with fully opaque faces.
 func setup_wooden_frame() -> void:
 	# Hide the 4-player square Blender box
