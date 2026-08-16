@@ -62,7 +62,7 @@ func get_piece(player_id: int, piece_id: int):
 	return null
 
 
-## Frees memory by queueing node deletion for simulator board node.
+## Frees memory by explicitly freeing simulator board node and all child players/pieces.
 func cleanup():
 	if self.board_node and is_instance_valid(self.board_node):
-		self.board_node.queue_free()
+		self.board_node.free()
