@@ -276,6 +276,7 @@ func new_game(max_players):
 			dict_piece["route_position"]=0
 			dict_piece["square_position"]=i
 			dict_p["pieces"].append(dict_piece)
+	self.game_data = dict
 	return dict
 	
 func load_game(filename):

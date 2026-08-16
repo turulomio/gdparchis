@@ -142,17 +142,22 @@ func dice_throws_has_three_sixes():
 
 
 ## Evaluates if player has pending extra moves and can move a piece.
+## If extra moves exist but no piece can move, clears extra_moves so turn can proceed.
 ## @return True if player can move another piece with extra moves.
 func can_move_other_piece_stm():
-	if self.extra_moves.size() > 0 and self.can_some_piece_move_stm():
-		return true
+	if self.extra_moves.size() > 0:
+		if self.can_some_piece_move_stm():
+			return true
+		else:
+			self.extra_moves.clear()
 	return false
 
 
 ## Evaluates if player is allowed to throw dice again (rolled a 6 and under 3 throws).
 ## @return True if roll again is permitted.
 func can_throw_dice_again():
-	if self.dice().value == 6 and self.dice_throws.size() < 3:
+	var rolled_six = (self.last_throw() == 6) or (self.dice() != null and self.dice().value == 6)
+	if rolled_six and self.dice_throws.size() < 3:
 		return true
 	return false
 

@@ -29,6 +29,7 @@ func run_all_tests() -> Dictionary:
 	self.test_barrier_can_move_evaluation()
 	self.test_three_fives_cannot_move_third_piece_to_first_square()
 	self.test_threat_detection_logic()
+	self.test_roll_6_repeat_throw_and_extra_moves_handling()
 	return {"passed": self.passed, "failed": self.failed}
 
 
@@ -155,5 +156,56 @@ func test_threat_detection_logic() -> void:
 	# Assert out-of-bounds route position and null square evaluate safely without error
 	self.assert_true(p0_piece0.can_eat_at_route_position(999, false) == false, "Out-of-bounds route position returns false for can_eat_at_route_position")
 	self.assert_true(p0_piece0.threats_at(null).size() == 0, "Null square returns empty array for threats_at")
+	
+	sim.cleanup()
+
+
+## Verifies that rolling a 6 allows repeating throw and permits non-barrier pieces to move +20 extra moves.
+func test_roll_6_repeat_throw_and_extra_moves_handling() -> void:
+	var sim = TestSimulatorScript.new()
+	var p0 = sim.get_player(0)
+	var p0_piece0 = sim.get_piece(0, 0)
+	var p0_piece1 = sim.get_piece(0, 1)
+	var p0_piece2 = sim.get_piece(0, 2)
+	
+	# Case 1: Player rolls 6 when all pieces are in home (route_position 0)
+	p0.dice_throws = [6]
+	p0.dice().value = 6
+	self.assert_true(p0.can_some_piece_move_stm() == false, "No piece can move 6 when all pieces are at home")
+	self.assert_true(p0.can_throw_dice_again() == true, "Player gets repeat throw on 6 even when no piece can move 6")
+	
+	# Case 2: Player has a barrier AND an extra move (+20). Non-barrier piece MUST be allowed to move 20
+	var sq10 = sim.get_square(10)
+	sq10.set_piece_at_square_position(0, p0_piece0)
+	sq10.set_piece_at_square_position(1, p0_piece1)
+	p0_piece0.route_position = p0_piece0.route().position_in_route(sq10)
+	p0_piece0.square_position = 0
+	p0_piece1.route_position = p0_piece1.route().position_in_route(sq10)
+	p0_piece1.square_position = 1
+	
+	# Place Piece 2 at normal square 20
+	var sq20 = sim.get_square(20)
+	sq20.set_piece_at_square_position(0, p0_piece2)
+	p0_piece2.route_position = p0_piece2.route().position_in_route(sq20)
+	p0_piece2.square_position = 0
+	
+	p0.extra_moves.clear()
+	p0.extra_moves.append(20)
+	
+	# Piece 2 (not in barrier) can move +20 extra move because barrier break rule applies only to 6 dice roll
+	self.assert_true(p0_piece2.can_move_stm() == true, "Non-barrier Piece 2 can move +20 extra move")
+	
+	# Case 3: Player has extra_moves = [20], but no piece can move 20. can_move_other_piece_stm clears extra_moves and allows repeating throw on 6
+	p0_piece0.route_position = 0
+	p0_piece1.route_position = 0
+	p0_piece2.route_position = 0
+	p0.extra_moves.clear()
+	p0.extra_moves.append(20)
+	p0.dice_throws = [6]
+	p0.dice().value = 6
+	
+	self.assert_true(p0.can_move_other_piece_stm() == false, "can_move_other_piece_stm returns false when no piece can move 20")
+	self.assert_eq(p0.extra_moves.size(), 0, "Unexecutable extra move +20 is cleared automatically")
+	self.assert_true(p0.can_throw_dice_again() == true, "Player retains repeat throw on 6 after unexecutable +20 is cleared")
 	
 	sim.cleanup()

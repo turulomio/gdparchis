@@ -137,7 +137,7 @@ func can_move_to_route_position(_route_position):
 		return false
 		
 	# Barrier break rule: If a 6 is rolled, player must break a barrier ONLY IF at least one piece in the barrier can legally move
-	if self.player().last_throw() == 6 and self.am_i_in_a_barrier_of_my_player() == false:
+	if self.player().extra_moves.size() == 0 and self.player().last_throw() == 6 and self.am_i_in_a_barrier_of_my_player() == false:
 		if self.player().some_piece_in_barrier_of_my_player_can_move() == true:
 			return false
 		

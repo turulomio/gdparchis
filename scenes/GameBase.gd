@@ -30,6 +30,10 @@ func _notification(what: int):
 ## Scene entry point. Initializes board data, player turns, and auto-throws if AI.
 func _ready():
 	print("LOADING GAME: ", self.name)
+	if Globals.game_data == null or Globals.game_data.is_empty():
+		var max_p = 3 if self.name == "Game3" else (6 if self.name == "Game6" else 4)
+		Globals.new_game(max_p)
+		
 	self.game_start_time = Time.get_unix_time_from_system()
 	var d = Globals.game_data
 
