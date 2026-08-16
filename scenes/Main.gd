@@ -290,7 +290,7 @@ func _on_Players6_mouse_entered():
 func _on_FileDialog_file_selected(path):
 	var data = Globals.load_game(path)
 	Globals.game_data = data
-	match data.get("max_players", 4):
+	match int(data.get("max_players", 4)):
 		3:
 			get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
 		6:

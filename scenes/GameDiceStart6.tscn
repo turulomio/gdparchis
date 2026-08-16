@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6b6dicestart6tscn"]
+[gd_scene load_steps=6 format=3 uid="uid://c6b6dicestart6tscn"]
 
 [ext_resource type="Script" path="res://scenes/GameDiceStart6.gd" id="1_dicestart6script"]
 [ext_resource type="Environment" uid="uid://c6j2k4l5m8p9q" path="res://default_env.tres" id="2_env"]
 [ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="3_click"]
 [ext_resource type="PackedScene" uid="uid://c6b6board6tscn" path="res://scenes/Board6.tscn" id="4_board6inst"]
-[ext_resource type="Theme" uid="uid://duw8566j0i73g" path="res://themes/FreshmanMiddle.tres" id="5_theme"]
 [ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="5_floatingtext"]
 
 [node name="GameDiceStart6" type="Node3D"]
@@ -17,7 +16,7 @@ environment = ExtResource("2_env")
 stream = ExtResource("3_click")
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 42, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 46, 0)
 doppler_tracking = 2
 far = 1000.0
 

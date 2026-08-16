@@ -60,7 +60,7 @@ func _process(_delta):
 
 	# Process preset camera view angles
 	if Input.is_action_just_pressed("top_view"):
-		OrCamera.look_at_from_position(Vector3(0, 65, 0), Vector3(0, 0, 0.001), Vector3.UP)
+		OrCamera.look_at_from_position(Vector3(0, 75, 0), Vector3(0, 0, 0.001), Vector3.UP)
 		OrCamera.global_rotate(Vector3(0, 1, 0), PI)
 		
 	# Process camera zoom

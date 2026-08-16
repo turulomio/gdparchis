@@ -17,7 +17,7 @@ environment = ExtResource("2_env")
 stream = ExtResource("4")
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 42, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 46, 0)
 doppler_tracking = 2
 far = 1000.0
 

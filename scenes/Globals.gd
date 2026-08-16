@@ -120,9 +120,9 @@ func ePlayer2Color(player_id):
 		3:
 			return Color(0, 0.85, 0, 1) # Darkened GREEN
 		4:
-			return Color(0.5, 0.5, 0.5, 1) # Grey
+			return Color(0.35, 0.35, 0.35, 1) # Darkened Grey (30% darker)
 		5:
-			return Color(1.0, 0.4, 0.7, 1) # Pink
+			return Color(0.85, 0.2, 0.6, 1) # Dark Pink
 		6:
 			return Color(1.0, 0.5, 0.0, 1) # Orange
 		7:
@@ -140,13 +140,13 @@ func Color2ePlayer(color):
 			return 0
 		Color.BLUE:
 			return 1
-		Color.RED, Color(0.85, 0, 0, 1), Color(0.75, 0, 0, 1):
+		Color(0.75, 0, 0, 1), Color.RED:
 			return 2
-		Color.GREEN, Color(0, 0.85, 0, 1):
+		Color(0, 0.85, 0, 1), Color.GREEN:
 			return 3
-		Color(0.5, 0.5, 0.5, 1):
+		Color(0.35, 0.35, 0.35, 1):
 			return 4
-		Color(1.0, 0.4, 0.7, 1):
+		Color(0.85, 0.2, 0.6, 1):
 			return 5
 		Color(1.0, 0.5, 0.0, 1):
 			return 6
