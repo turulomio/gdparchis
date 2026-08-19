@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8b8dicestart8tscn"]
+
+[ext_resource type="Script" path="res://scenes/GameDiceStart8.gd" id="1_dicestart8script"]
+[ext_resource type="Environment" uid="uid://c6j2k4l5m8p9q" path="res://default_env.tres" id="2_env"]
+[ext_resource type="AudioStream" uid="uid://b0nr054ueqh1p" path="res://sounds/click.wav" id="3_click"]
+[ext_resource type="PackedScene" uid="uid://c8b8board8tscn" path="res://scenes/Board8.tscn" id="4_board8inst"]
+[ext_resource type="PackedScene" uid="uid://chhddmnj8hy4j" path="res://scenes/FloatingText.tscn" id="5_floatingtext"]
+
+[node name="GameDiceStart8" type="Node3D"]
+script = ExtResource("1_dicestart8script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_click")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 52, 0)
+doppler_tracking = 2
+far = 1000.0
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 35, 0)
+light_color = Color(1, 0.98, 0.94, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="FloatingText" parent="." instance=ExtResource("5_floatingtext")]
+visible = false
+position = Vector2(1, 1)
+scale = Vector2(1.5, 1.5)
+
+[node name="Board8" parent="." instance=ExtResource("4_board8inst")]
