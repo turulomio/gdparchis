@@ -25,9 +25,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      units="cm"
-     inkscape:zoom="0.32000001"
-     inkscape:cx="509.37499"
-     inkscape:cy="1457.8125"
+     inkscape:zoom="0.64000001"
+     inkscape:cx="1485.1562"
+     inkscape:cy="1677.3437"
      inkscape:window-width="1920"
      inkscape:window-height="1004"
      inkscape:window-x="0"
@@ -446,42 +446,38 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-215.75451,-0.11411167)">
-    <g
-       id="poligonos_esquinas_exteriores"
-       transform="translate(0.58445883,27.944216)">
-      <path
-         id="poligono_esquina_amarillo_azul"
-         d="M 153.90339,-271.54733 H 50.5727 l -73.64907,73.64907 176.97976,177.64138 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_azul_rojo"
-         d="M -156.34345,-64.63117 -229.94472,8.97009 V 113.05801 H 21.34573 Z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_rojo_verde"
-         d="m -229.94472,301.52613 v 104.08793 l 73.60126,73.60126 177.68919,-177.68919 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_verde_gris"
-         d="m -23.07637,612.48241 73.60113,73.60113 h 104.08807 l -2e-5,-251.29031 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_gris_rosa"
-         d="M 343.08095,686.08354 H 447.16886 L 520.77014,612.48227 343.08095,434.79309 Z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_rosa_naranja"
-         d="m 654.03722,479.21519 74.03464,-74.03464 V 301.12903 l -251.72382,0.39698 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_naranja_cyan"
-         d="M 728.07186,112.66091 V 9.48497 L 653.97269,-64.6142 476.78141,112.66091 Z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-      <path
-         id="poligono_esquina_cyan_amarillo"
-         d="m 520.7056,-197.88129 -73.66604,-73.66604 H 342.37151 l 0.64491,251.35523 z"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
-    </g>
+    <path
+       id="poligono_esquina_amarillo_azul"
+       d="M 154.48785,-243.60311 H 51.157159 l -73.64907,73.64907 L 154.48785,7.687336 Z"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_azul_rojo"
+       d="m -155.75899,-36.686954 -73.60127,73.60126 V 141.00223 H 21.930189 Z"
+       style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_rojo_verde"
+       d="M -229.36026,329.47035 V 433.55828 L -155.759,507.15954 21.930189,329.47035 Z"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_verde_gris"
+       d="m -22.491911,640.42663 73.60113,73.60113 H 155.19729 l -2e-5,-251.29031 z"
+       style="fill:#00cc00;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_gris_rosa"
+       d="M 343.66541,714.02776 H 447.75332 L 521.3546,640.42649 343.66541,462.73731 Z"
+       style="fill:#808080;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_rosa_naranja"
+       d="m 654.62168,507.15941 74.03464,-74.03464 V 329.07325 l -251.72382,0.39698 z"
+       style="fill:#c000c0;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_naranja_cyan"
+       d="M 728.65632,140.60513 V 37.429186 L 654.55715,-36.669984 477.36587,140.60513 Z"
+       style="fill:#ff8000;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="poligono_esquina_cyan_amarillo"
+       d="m 521.29006,-169.93707 -73.66604,-73.66604 H 342.95597 l 0.64491,251.355226 z"
+       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.773;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
     <g
        id="triangulos_centrales"
        transform="translate(0,27.951887)">
