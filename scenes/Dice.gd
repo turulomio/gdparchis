@@ -32,6 +32,16 @@ func set_my_position(h):
 			3: self.global_transform.origin = Vector3(0, h, 28)
 			4: self.global_transform.origin = Vector3(25, h, 15)
 			5: self.global_transform.origin = Vector3(25, h, -15)
+	elif max_p == 8:
+		match(self.player().id):
+			0: self.global_transform.origin = Vector3(0, h, -35)
+			1: self.global_transform.origin = Vector3(25, h, -25)
+			2: self.global_transform.origin = Vector3(35, h, 0)
+			3: self.global_transform.origin = Vector3(25, h, 25)
+			4: self.global_transform.origin = Vector3(0, h, 35)
+			5: self.global_transform.origin = Vector3(-25, h, 25)
+			6: self.global_transform.origin = Vector3(-35, h, 0)
+			7: self.global_transform.origin = Vector3(-25, h, -25)
 	else:
 		match(self.player().id):
 			0: self.global_transform.origin = Vector3(-20, h, -25)
@@ -161,6 +171,17 @@ func get_random_launch_origin() -> Vector3:
 			4: return Vector3(randf_range(20.0, 32.0), h, randf_range(5.0, 20.0))
 			5: return Vector3(randf_range(20.0, 32.0), h, randf_range(-20.0, -5.0))
 			_: return Vector3(randf_range(-20.0, 20.0), h, randf_range(-20.0, 20.0))
+	elif max_p == 8:
+		match p_id:
+			0: return Vector3(randf_range(-10.0, 10.0), h, randf_range(-38.0, -26.0))
+			1: return Vector3(randf_range(18.0, 30.0), h, randf_range(-30.0, -18.0))
+			2: return Vector3(randf_range(26.0, 38.0), h, randf_range(-10.0, 10.0))
+			3: return Vector3(randf_range(18.0, 30.0), h, randf_range(18.0, 30.0))
+			4: return Vector3(randf_range(-10.0, 10.0), h, randf_range(26.0, 38.0))
+			5: return Vector3(randf_range(-30.0, -18.0), h, randf_range(18.0, 30.0))
+			6: return Vector3(randf_range(-38.0, -26.0), h, randf_range(-10.0, 10.0))
+			7: return Vector3(randf_range(-30.0, -18.0), h, randf_range(-30.0, -18.0))
+			_: return Vector3(randf_range(-25.0, 25.0), h, randf_range(-25.0, 25.0))
 	else:
 		match p_id:
 			0: return Vector3(randf_range(-30.0, -12.0), h, randf_range(-30.0, -12.0))
@@ -186,6 +207,8 @@ func find_empty_board_spot() -> Vector2:
 				3: start_square_id = 56
 				4: start_square_id = 73
 				5: start_square_id = 90
+				6: start_square_id = 107
+				7: start_square_id = 124
 	
 	var board_obj = self.player().board() if (self.player() and self.player().board()) else null
 	var exit_3d = board_obj.get_position3d(start_square_id, 0) if board_obj else Globals.position4(start_square_id, 0)
