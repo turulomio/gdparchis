@@ -53,7 +53,8 @@ func setup_wooden_frame() -> void:
 	var wall_thickness: float = 2.45
 	
 	var board_width: float = 80.0
-	var R: float = board_width / 2.0
+	# Apothem is board_width/2, so circumscribed radius R is apothem / cos(22.5)
+	var R: float = board_width / (2.0 * cos(deg_to_rad(22.5)))
 	
 	# 8 outer vertices of regular octagon plate (in world XZ coordinates)
 	var v_poly: Array[Vector2] = []

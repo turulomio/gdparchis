@@ -34,14 +34,14 @@ func set_my_position(h):
 			5: self.global_transform.origin = Vector3(25, h, -15)
 	elif max_p == 8:
 		match(self.player().id):
-			0: self.global_transform.origin = Vector3(0, h, -35)
-			1: self.global_transform.origin = Vector3(25, h, -25)
-			2: self.global_transform.origin = Vector3(35, h, 0)
-			3: self.global_transform.origin = Vector3(25, h, 25)
-			4: self.global_transform.origin = Vector3(0, h, 35)
-			5: self.global_transform.origin = Vector3(-25, h, 25)
-			6: self.global_transform.origin = Vector3(-35, h, 0)
-			7: self.global_transform.origin = Vector3(-25, h, -25)
+			0: self.global_transform.origin = Vector3(-8.0, h, -34.0)
+			1: self.global_transform.origin = Vector3(17.0, h, -30.0)
+			2: self.global_transform.origin = Vector3(34.0, h, -9.0)
+			3: self.global_transform.origin = Vector3(30.0, h, 19.0)
+			4: self.global_transform.origin = Vector3(6.0, h, 34.0)
+			5: self.global_transform.origin = Vector3(-21.0, h, 28.0)
+			6: self.global_transform.origin = Vector3(-35.0, h, 6.0)
+			7: self.global_transform.origin = Vector3(-29.0, h, -19.0)
 	else:
 		match(self.player().id):
 			0: self.global_transform.origin = Vector3(-20, h, -25)
