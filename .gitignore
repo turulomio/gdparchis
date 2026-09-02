@@ -4,3 +4,6 @@ dist/
 *.blend1
 .vscode
 templates
+.venv/
+__pycache__/
+*.pyc

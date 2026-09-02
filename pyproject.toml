@@ -1,0 +1,20 @@
+[project]
+name = "gdparchis"
+version = "1.1.0"
+description = "Parchis board game made with Godot Engine"
+authors = [
+    {name = "turulomio", email = "turulomio@yahoo.es"}
+]
+readme = "README.md"
+license = "GPL-3.0-only"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
