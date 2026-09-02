@@ -21,7 +21,7 @@ doppler_tracking = 2
 far = 1000.0
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 35, 0)
+transform = Transform3D(-0.707107, -0.459627, 0.537042, 0, 0.760406, 0.649448, -0.707107, 0.459227, -0.537688, 0, 35, 0)
 light_color = Color(1, 0.98, 0.94, 1)
 light_energy = 1.2
 shadow_enabled = true

@@ -127,12 +127,7 @@ func setup_calibration_developer_buttons() -> void:
 	
 	var exit_btn = find_child("Exit", true, false)
 	
-	# Developer Calibration Section Label
-	var sep = Label.new()
-	sep.text = "--- MOD DEVEL CALIBRACIÓN ---"
-	sep.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(sep)
-	if exit_btn: vbox.move_child(sep, exit_btn.get_index())
+	# Developer Calibration Section Label removed per request
 	
 	# Board 3 Calibration Button
 	var calib3_btn = Button.new()
