@@ -92,8 +92,8 @@ func setup_wooden_frame() -> void:
 		t_verts.append(Vector3(p2.x, y_top, p2.y))
 		
 		t_uvs.append(center_uv)
-		t_uvs.append(Vector2(p1.x / board_width + 0.5, p1.y / board_width + 0.5))
-		t_uvs.append(Vector2(p2.x / board_width + 0.5, p2.y / board_width + 0.5))
+		t_uvs.append(Vector2(-p1.x / board_width + 0.5, -p1.y / board_width + 0.5))
+		t_uvs.append(Vector2(-p2.x / board_width + 0.5, -p2.y / board_width + 0.5))
 		
 		for k in range(3): t_normals.append(Vector3.UP)
 		
