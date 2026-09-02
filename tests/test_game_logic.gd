@@ -68,6 +68,24 @@ func test_barrier_can_move_evaluation() -> void:
 	
 	# When no barrier exists, method returns false
 	self.assert_true(p0.some_piece_in_barrier_of_my_player_can_move() == false, "No barrier means barrier move is false")
+	
+	# Form a barrier with piece 0 and piece 1 on route square 1
+	var first_sq = p0.route().square_at(1)
+	var piece0 = sim.get_piece(0, 0)
+	var piece1 = sim.get_piece(0, 1)
+	first_sq.set_piece_at_square_position(0, piece0)
+	piece0.route_position = 1
+	piece0.square_position = 0
+	first_sq.set_piece_at_square_position(1, piece1)
+	piece1.route_position = 1
+	piece1.square_position = 1
+	
+	# Set dice roll to 6
+	p0.dice().value = 6
+	p0.dice_throws.append(6)
+	
+	# Barrier can move forward 6 squares
+	self.assert_true(p0.some_piece_in_barrier_of_my_player_can_move() == true, "Barrier piece can legally move 6 squares")
 	sim.cleanup()
 
 

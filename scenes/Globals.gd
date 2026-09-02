@@ -446,6 +446,15 @@ func position6(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
 		return board_script.new().get_position3d(square_id, square_position, h)
 	return Vector3(0, h, 0)
 
+
+## Delegates 3D vector coordinates for 8-player Parchis board squares to Board8.
+func position8(square_id: int, square_position: int, h: float = 0.2) -> Vector3:
+	var board_script = load("res://scenes/Board8.gd")
+	if board_script:
+		return board_script.new().get_position3d(square_id, square_position, h)
+	return Vector3(0, h, 0)
+
+
 ## Loads global game state data into board, players, and piece positions.
 ## @param gameobject Scene object instance containing a board() method.
 ## @param show_pieces Boolean flag indicating whether piece visual models should be visible.

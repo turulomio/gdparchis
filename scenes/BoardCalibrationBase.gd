@@ -75,20 +75,17 @@ func _ready() -> void:
 	select_piece(1, 0)
 
 
-## Hides all dice nodes on the board for clean calibration viewing.
+## Hides all default player piece and dice nodes on the board instance for clean calibration viewing.
 func hide_all_dice() -> void:
 	if not board_inst: return
 	
-	if board_inst.has_method("players"):
-		for player in board_inst.players():
-			if player.has_method("dice"):
-				var d = player.dice()
-				if d:
-					d.visible = false
-
 	var all_dice = board_inst.find_children("*", "Dice", true, false)
 	for d_node in all_dice:
 		d_node.visible = false
+
+	var all_pieces = board_inst.find_children("*", "Piece", true, false)
+	for p_node in all_pieces:
+		p_node.visible = false
 
 
 ## Returns Player color associated with player ID.

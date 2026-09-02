@@ -26,15 +26,20 @@ Welcome to **GDParchis**, a 3D adaptation of the classic Parchís board game bui
 Upon launching the game, you will enter the **Player Selection Menu**:
 
 - **Player Count & Board Selection:** Select 3, 4, 6, or 8 player board modes for the match.
+- **Board Geometry & Layouts:**
+  - 3 Players: Triangle geometry (120º arm separation).
+  - 4 Players: Square geometry (90º arm separation).
+  - 6 Players: Regular Hexagon geometry (60º arm separation).
+  - 8 Players: Regular Octagon geometry (45º arm separation).
 - **Color Assignments:**
   - Player 0: Yellow 🟡
   - Player 1: Blue 🔵
   - Player 2: Red 🔴
   - Player 3: Green 🟢
-  - Player 4: Orange 🟠 (6/8 Player Modes)
-  - Player 5: Purple 🟣 (6/8 Player Modes)
-  - Player 6: Cyan 🩵 (8 Player Mode)
-  - Player 7: Magenta 🩷 (8 Player Mode)
+  - Player 4: Grey 🩶 (6 & 8 Player Modes)
+  - Player 5: Violet 🟣 (6 & 8 Player Modes)
+  - Player 6: Orange 🟠 (8 Player Mode)
+  - Player 7: Cyan 🩵 (8 Player Mode)
 - **Player Types:** Toggle each player slot between **Human Player** or **Artificial Intelligence (AI)**.
 - **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in post-game Match History logs.
 
@@ -67,7 +72,7 @@ Before moving pieces on the board:
 - Any square on the board can hold a **maximum of 2 pieces**.
 - **Barrier / Bridge Formation:** When 2 pieces of the same player occupy the same square, they form a **Barrier**.
 - **Blocking:** No piece (enemy or friendly) can leap over or pass through a barrier.
-- **Opening a Barrier:** If a player owns a barrier and rolls a **6**, they are mandated to break the barrier by moving one of its 2 pieces if a legal move exists.
+- **Opening a Barrier:** If a player owns a barrier and rolls a **6**, they are mandated to break the barrier by moving one of its 2 pieces if a legal move exists. The game displays an on-screen notification (`"A 6! Opening the barrier"` / `"¡Un 6! Abro la barrera"`) informing the player of this obligation.
 
 ### Capturing (Eating Pieces) & +20 Bonus
 - When a piece lands on a normal square occupied by a single opponent piece, the opponent piece is **captured** and sent back to its home base.
@@ -176,7 +181,7 @@ Selecting a board variant (3, 4, 6, or 8 players) launches the interactive 3D ca
 
 #### 1. Interactive 3D Drag & Drop with Instant Autosave
 - **Mouse Drag:** Left-Click and drag any piece to position it precisely on the board plane $(X, Z)$.
-- **Autosave on Release:** Releasing the mouse button automatically persists the updated coordinates and scale factors directly into project dataset files (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`).
+- **Autosave on Release:** Releasing the mouse button automatically persists the updated coordinates and scale factors directly into project dataset files (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`, `res://scenes/board6_calibrated_positions.json`, `res://scenes/board8_calibrated_positions.json`).
 
 #### 2. Fine-Grain Keyboard Nudging
 - **`Arrow Keys` / `WASD`:** Nudges the selected piece position in $0.1\text{ cm}$ micro-steps.
