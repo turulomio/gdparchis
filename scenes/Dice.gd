@@ -34,14 +34,14 @@ func set_my_position(h):
 			5: self.global_transform.origin = Vector3(25, h, -15)
 	elif max_p == 8:
 		match(self.player().id):
-			0: self.global_transform.origin = Vector3(8.0, h, 34.0)
-			1: self.global_transform.origin = Vector3(-21.0, h, 28.0)
-			2: self.global_transform.origin = Vector3(-35.0, h, 6.0)
-			3: self.global_transform.origin = Vector3(-29.0, h, -19.0)
-			4: self.global_transform.origin = Vector3(-8.0, h, -34.0)
-			5: self.global_transform.origin = Vector3(17.0, h, -30.0)
-			6: self.global_transform.origin = Vector3(34.0, h, -9.0)
-			7: self.global_transform.origin = Vector3(30.0, h, 19.0)
+			0: self.global_transform.origin = Vector3(-13.0, h, -31.0)
+			1: self.global_transform.origin = Vector3(-31.0, h, -13.0)
+			2: self.global_transform.origin = Vector3(-31.0, h, 13.0)
+			3: self.global_transform.origin = Vector3(-13.0, h, 31.0)
+			4: self.global_transform.origin = Vector3(13.0, h, 31.0)
+			5: self.global_transform.origin = Vector3(31.0, h, 13.0)
+			6: self.global_transform.origin = Vector3(31.0, h, -13.0)
+			7: self.global_transform.origin = Vector3(13.0, h, -32.0)
 	else:
 		match(self.player().id):
 			0: self.global_transform.origin = Vector3(-20, h, -25)
@@ -173,14 +173,14 @@ func get_random_launch_origin() -> Vector3:
 			_: return Vector3(randf_range(-20.0, 20.0), h, randf_range(-20.0, 20.0))
 	elif max_p == 8:
 		match p_id:
-			0: return Vector3(randf_range(-10.0, 10.0), h, randf_range(26.0, 38.0))
-			1: return Vector3(randf_range(-30.0, -18.0), h, randf_range(18.0, 30.0))
-			2: return Vector3(randf_range(-38.0, -26.0), h, randf_range(-10.0, 10.0))
-			3: return Vector3(randf_range(-30.0, -18.0), h, randf_range(-30.0, -18.0))
-			4: return Vector3(randf_range(-10.0, 10.0), h, randf_range(-38.0, -26.0))
-			5: return Vector3(randf_range(18.0, 30.0), h, randf_range(-30.0, -18.0))
-			6: return Vector3(randf_range(26.0, 38.0), h, randf_range(-10.0, 10.0))
-			7: return Vector3(randf_range(18.0, 30.0), h, randf_range(18.0, 30.0))
+			0: return Vector3(randf_range(-15.0, -10.0), h, randf_range(-36.0, -26.0))
+			1: return Vector3(randf_range(-37.0, -25.0), h, randf_range(-16.0, -10.0))
+			2: return Vector3(randf_range(-37.0, -25.0), h, randf_range(10.0, 16.0))
+			3: return Vector3(randf_range(-15.0, -10.0), h, randf_range(25.0, 36.0))
+			4: return Vector3(randf_range(10.0, 15.0), h, randf_range(25.0, 36.0))
+			5: return Vector3(randf_range(25.0, 37.0), h, randf_range(10.0, 16.0))
+			6: return Vector3(randf_range(26.0, 37.0), h, randf_range(-16.0, -10.0))
+			7: return Vector3(randf_range(11.0, 15.0), h, randf_range(-37.0, -26.0))
 			_: return Vector3(randf_range(-25.0, 25.0), h, randf_range(-25.0, 25.0))
 	else:
 		match p_id:
