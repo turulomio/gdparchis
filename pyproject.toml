@@ -8,9 +8,7 @@ authors = [
 readme = "README.md"
 license = "GPL-3.0-only"
 requires-python = ">=3.10"
-dependencies = [
-    "requests>=2.31.0",
-]
+dependencies = []
 
 [tool.poetry]
 package-mode = false
