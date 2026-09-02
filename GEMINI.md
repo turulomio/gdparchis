@@ -213,8 +213,16 @@ Para la gestión y mantenimiento de coordenadas de casillas y escalas de fichas 
   python3 management.py --calibration
   ```
 * **Persistencia Filtrada en Datasets JSON**:
-  - Archivos de calibración del proyecto: `res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`.
+  - Archivos de calibración del proyecto: `res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`, `res://scenes/board6_calibrated_positions.json`, `res://scenes/board8_calibrated_positions.json`.
   - `save_calibration_file()` filtra y almacena únicamente las casillas oficiales devueltas por `get_square_ids()` y los slots válidos (`0..max_slots-1`), purgando de forma automática cualquier clave obsoleta.
+
+---
+
+## 12. Regla Estricta sobre Ficheros de Calibración (`*_calibrated_positions.json`)
+
+* **Prohibición de Modificación Automática:** Los ficheros JSON de calibración de casillas (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`, `res://scenes/board6_calibrated_positions.json`, `res://scenes/board8_calibrated_positions.json`) son gestionados exclusivamente por el usuario mediante la herramienta interactiva (`python3 management.py --calibration`).
+* **Edición bajo Demanda Explícita:** Nunca se deben editar, alterar, transformar, rotar ni sobrescribir estos ficheros a menos que el usuario lo solicite expresamente.
+
 
 
 

@@ -64,6 +64,14 @@ func _ready() -> void:
 		if not p6_btn.mouse_entered.is_connected(_on_Players6_mouse_entered):
 			p6_btn.mouse_entered.connect(_on_Players6_mouse_entered)
 
+	var p8_btn = find_child("Players8", true, false)
+	if p8_btn:
+		p8_btn.text = tr("8 players board")
+		if not p8_btn.pressed.is_connected(_on_Players8_pressed):
+			p8_btn.pressed.connect(_on_Players8_pressed)
+		if not p8_btn.mouse_entered.is_connected(_on_Players8_mouse_entered):
+			p8_btn.mouse_entered.connect(_on_Players8_mouse_entered)
+
 	var load_btn = find_child("Load", true, false)
 	if load_btn:
 		load_btn.text = tr("Load game")
@@ -119,12 +127,7 @@ func setup_calibration_developer_buttons() -> void:
 	
 	var exit_btn = find_child("Exit", true, false)
 	
-	# Developer Calibration Section Label
-	var sep = Label.new()
-	sep.text = "--- MOD DEVEL CALIBRACIÓN ---"
-	sep.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(sep)
-	if exit_btn: vbox.move_child(sep, exit_btn.get_index())
+	# Developer Calibration Section Label removed per request
 	
 	# Board 3 Calibration Button
 	var calib3_btn = Button.new()
@@ -152,6 +155,15 @@ func setup_calibration_developer_buttons() -> void:
 	calib6_btn.mouse_entered.connect(_play_click)
 	vbox.add_child(calib6_btn)
 	if exit_btn: vbox.move_child(calib6_btn, exit_btn.get_index())
+
+	# Board 8 Calibration Button
+	var calib8_btn = Button.new()
+	calib8_btn.name = "Calibration8"
+	calib8_btn.text = "Calibración Tablero 8"
+	calib8_btn.pressed.connect(func(): get_tree().change_scene_to_file.call_deferred("res://scenes/Board8Calibration.tscn"))
+	calib8_btn.mouse_entered.connect(_play_click)
+	vbox.add_child(calib8_btn)
+	if exit_btn: vbox.move_child(calib8_btn, exit_btn.get_index())
 
 
 ## Frame process loop spinning both background 3D red dice continuously around their vertical Y-axis like diamonds.
@@ -285,6 +297,17 @@ func _on_Players6_mouse_entered():
 	_play_click()
 
 
+## Button handler starting a new 8-player game.
+func _on_Players8_pressed():
+	Globals.game_data = Globals.new_game(8)
+	get_tree().change_scene_to_file.call_deferred("res://scenes/PlayersSelection.tscn")
+
+
+## Mouse hover audio feedback for 8 players button.
+func _on_Players8_mouse_entered():
+	_play_click()
+
+
 ## Callback when a saved game file is selected in FileDialog.
 ## @param path Absolute file path to .save file.
 func _on_FileDialog_file_selected(path):
@@ -295,6 +318,8 @@ func _on_FileDialog_file_selected(path):
 			get_tree().change_scene_to_file.call_deferred("res://scenes/Game3.tscn")
 		6:
 			get_tree().change_scene_to_file.call_deferred("res://scenes/Game6.tscn")
+		8:
+			get_tree().change_scene_to_file.call_deferred("res://scenes/Game8.tscn")
 		_:
 			get_tree().change_scene_to_file.call_deferred("res://scenes/Game4.tscn")
 

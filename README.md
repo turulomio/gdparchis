@@ -16,8 +16,8 @@
   - 🔺 **3-Player Triangular Board (`Board3`):** Symmetrical 3-arm triangular board geometry with 3 players (Yellow 🟡, Blue 🔵, Red 🔴), 78 custom squares, and a 6-sided mitered wooden frame.
   - 🟦 **4-Player Classic Board (`Board4`):** Classic 4-arm cross board geometry with 4 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢) and 104 squares.
   - ⬡ **6-Player Hexagonal Board (`Board6`):** Symmetrical 6-arm hexagonal board geometry with 6 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢, Grey 🩶, Pink 🩷), 150 custom squares, and a 6-sided mitered wooden frame.
-  - 🔷 **8-Player Expansion:** Modular support for 8-player board.
-- 🎮 **Flexible Game Modes:** Configure 2, 3, 4, or 6 players with any combination of **Human** or **AI (Artificial Intelligence)** players.
+  - 🛑 **8-Player Octagonal Board (`Board8`):** Symmetrical 8-arm octagonal board geometry with 8 players (Yellow 🟡, Blue 🔵, Red 🔴, Green 🟢, Grey 🩶, Violet 💜, Orange 🟠, Cyan 🩵), 208 custom squares, and an 8-sided mitered wooden frame.
+- 🎮 **Flexible Game Modes:** Configure 2, 3, 4, 6, or 8 players with any combination of **Human** or **AI (Artificial Intelligence)** players.
 - 🎲 **Comparative Starting Roll:** Simultaneous display of all initial dice rolls to determine the starting player, with automatic tie-breaker round management.
 - 📐 **Official Parchís Rules Enforcement:**
   - Leaving home requires rolling a **5**.
@@ -45,10 +45,15 @@
 
 ### 📐 Board Variants
 
-| 🔺 3-Player Triangular Board (`Board3`) | 🟦 4-Player Classic Board (`Board4`) | ⬡ 6-Player Hexagonal Board (`Board6`) |
-| :---: | :---: | :---: |
-| ![3-Player Triangular Board](snapshots/board3.png) | ![4-Player Classic Board](snapshots/board4.png) | ![6-Player Hexagonal Board](snapshots/board6.png) |
-| *Symmetrical 3-arm triangular board (78 squares) with custom wooden frame* | *Classic 4-arm cross board (104 squares) with 4 players* | *Symmetrical 6-arm hexagonal board (150 squares) with 6 players* |
+| 🔺 3-Player Triangular Board (`Board3`) | 🟦 4-Player Classic Board (`Board4`) |
+| :---: | :---: |
+| ![3-Player Triangular Board](snapshots/board3.png) | ![4-Player Classic Board](snapshots/board4.png) |
+| *Symmetrical 3-arm triangular board (78 squares) with custom wooden frame* | *Classic 4-arm cross board (104 squares) with 4 players* |
+
+| ⬡ 6-Player Hexagonal Board (`Board6`) | 🛑 8-Player Octagonal Board (`Board8`) |
+| :---: | :---: |
+| ![6-Player Hexagonal Board](snapshots/board6.png) | ![8-Player Octagonal Board](snapshots/board8.png) |
+| *Symmetrical 6-arm hexagonal board (150 squares) with 6 players* | *Symmetrical 8-arm octagonal board (208 squares) with 8 players* |
 
 ---
 

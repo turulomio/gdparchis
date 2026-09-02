@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8b8calibtscn"]
+
+[ext_resource type="Script" path="res://scenes/Board8Calibration.gd" id="1_board8calib"]
+
+[node name="Board8Calibration" type="Node3D"]
+script = ExtResource("1_board8calib")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 85, 0)
+projection = 0
+fov = 75.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 40, 0)

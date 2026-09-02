@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6b6board6tscn"]
+[gd_scene load_steps=5 format=3 uid="uid://c8b8board8tscn"]
 
-[ext_resource type="Script" path="res://scenes/Board6.gd" id="1_board6script"]
+[ext_resource type="Script" path="res://scenes/Board8.gd" id="1_board8script"]
 [ext_resource type="PackedScene" uid="uid://bnt8il78gpg7m" path="res://scenes/Player.tscn" id="2_playerinstance"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_board"]
@@ -8,13 +8,13 @@ friction = 0.7
 bounce = 0.05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
-size = Vector3(120, 10, 120)
+size = Vector3(140, 10, 140)
 
-[node name="Board6" type="Node3D"]
-script = ExtResource("1_board6script")
+[node name="Board8" type="Node3D"]
+script = ExtResource("1_board8script")
 
 [node name="Board" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 physics_material_override = SubResource("PhysicsMaterial_board")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Board"]
@@ -45,3 +45,11 @@ id = 4
 [node name="Player5" parent="." groups=["players"] instance=ExtResource("2_playerinstance")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 id = 5
+
+[node name="Player6" parent="." groups=["players"] instance=ExtResource("2_playerinstance")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+id = 6
+
+[node name="Player7" parent="." groups=["players"] instance=ExtResource("2_playerinstance")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+id = 7

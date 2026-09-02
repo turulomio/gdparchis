@@ -54,6 +54,8 @@ func _on_Button_pressed():
 			target_sc = "res://scenes/GameDiceStart3.tscn"
 		6:
 			target_sc = "res://scenes/GameDiceStart6.tscn"
+		8:
+			target_sc = "res://scenes/GameDiceStart8.tscn"
 		_:
 			target_sc = "res://scenes/GameDiceStart.tscn"
 	await Globals.fade_to_scene(get_tree(), target_sc)
