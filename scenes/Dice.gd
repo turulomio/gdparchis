@@ -463,6 +463,10 @@ func on_clicked():
 		if self.value == 5 and self.player().can_some_piece_move_to_first_square():
 			$FloatingText.show_text(tr("A 5! You must leave home"), self.player().color)
 			
+		# Notify player when rolling a 6 requires opening a barrier
+		if self.value == 6 and self.player().extra_moves.size() == 0 and self.player().some_piece_in_barrier_of_my_player_can_move():
+			$FloatingText.show_text(tr("A 6! Opening the barrier"), self.player().color)
+			
 		self.player().can_move_pieces = true
 		if self.player().ia == true:
 			var p = self.player().ia_selects_piece_to_move()

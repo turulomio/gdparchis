@@ -72,7 +72,7 @@ Before moving pieces on the board:
 - Any square on the board can hold a **maximum of 2 pieces**.
 - **Barrier / Bridge Formation:** When 2 pieces of the same player occupy the same square, they form a **Barrier**.
 - **Blocking:** No piece (enemy or friendly) can leap over or pass through a barrier.
-- **Opening a Barrier:** If a player owns a barrier and rolls a **6**, they are mandated to break the barrier by moving one of its 2 pieces if a legal move exists.
+- **Opening a Barrier:** If a player owns a barrier and rolls a **6**, they are mandated to break the barrier by moving one of its 2 pieces if a legal move exists. The game displays an on-screen notification (`"A 6! Opening the barrier"` / `"¡Un 6! Abro la barrera"`) informing the player of this obligation.
 
 ### Capturing (Eating Pieces) & +20 Bonus
 - When a piece lands on a normal square occupied by a single opponent piece, the opponent piece is **captured** and sent back to its home base.
