@@ -338,7 +338,7 @@ func setup_squares() -> void:
 	self.squares[124].color = Globals.ePlayer2Color(7)
 
 	# Corner Safe Squares (SECURE)
-	for sq_id in [12, 29, 46, 63, 80, 97, 114, 131]:
+	for sq_id in [12, 17, 29, 34, 46, 51, 63, 68, 80, 85, 97, 102, 114, 119, 131, 136]:
 		self.squares[sq_id].type = Globals.eSquareTypes.SECURE
 
 	# Goals (END)
