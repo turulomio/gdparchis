@@ -10,10 +10,44 @@ const UUID_UTIL = preload('res://scenes/uuid.gd')
 const IMAGE_WOOD = preload("res://images/transwood.png")
 const SCENE_PLAYER_OPTIONS=preload("res://scenes/PlayerOptions.tscn")
 
+const BOARD_PRESETS: Dictionary = {
+	3: {
+		"camera_top_position": Vector3(0.0, 40.25, -5.0),
+		"camera_top_target": Vector3(0.0, 0.0, -5.001),
+		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0)),
+		"light_shadow_max_distance": 65.0,
+	},
+	4: {
+		"camera_top_position": Vector3(0.0, 50.0, 0.0),
+		"camera_top_target": Vector3(0.0, 0.0, 0.001),
+		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0)),
+		"light_shadow_max_distance": 65.0,
+	},
+	6: {
+		"camera_top_position": Vector3(0.0, 75.0, 0.0),
+		"camera_top_target": Vector3(0.0, 0.0, 0.001),
+		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 35.0, 0.0)),
+		"light_shadow_max_distance": 80.0,
+	},
+	8: {
+		"camera_top_position": Vector3(0.0, 85.0, 0.0),
+		"camera_top_target": Vector3(0.0, 0.0, 0.001),
+		"light_transform": Transform3D(Vector3(-0.707107, -0.459627, 0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(-0.707107, 0.459227, -0.537688), Vector3(0.0, 35.0, 0.0)),
+		"light_shadow_max_distance": 80.0,
+	},
+}
+
 var game_data = null # Dictionary to load and init games
 var settings
 var from_dice_start: bool = false
 var game_history: Array = []
+
+
+## Returns the centralized camera and lighting preset configuration for a given board player count.
+## @param player_count Number of board players (3, 4, 6, 8).
+## @return Dictionary containing camera_top_position, camera_top_target, light_transform, and light_shadow_max_distance.
+func get_board_preset(player_count: int) -> Dictionary:
+	return BOARD_PRESETS.get(player_count, BOARD_PRESETS[4])
 
 
 ## Singleton initialization callback. Loads saved configuration settings and game history.
@@ -344,6 +378,10 @@ func load_settings():
 		settings["latest_version"] = ""
 	if not settings.has("latest_release_url"):
 		settings["latest_release_url"] = "https://github.com/turulomio/gdparchis/releases"
+	for p_count in [3, 4, 6, 8]:
+		var key = "camera_height_%d" % p_count
+		if not settings.has(key):
+			settings[key] = null
 
 	settings["full_screen"] = bool(settings["full_screen"])
 	settings["sound"] = bool(settings["sound"])

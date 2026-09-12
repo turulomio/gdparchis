@@ -9,8 +9,7 @@ class_name Board3
 
 func _init():
 	self.max_players = 3
-	self.camera_top_position = Vector3(0.0, 40.25, -5.0)
-	self.camera_top_target = Vector3(0.0, 0.0, -5.001)
+	self.apply_board_presets()
 
 
 

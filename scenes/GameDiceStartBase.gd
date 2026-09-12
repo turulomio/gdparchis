@@ -29,6 +29,10 @@ func _ready():
 	if cam and self.board():
 		self.board().setup_camera_top(cam)
 
+	var dir_light = get_node_or_null("DirectionalLight")
+	if dir_light is DirectionalLight3D and self.board():
+		self.board().setup_directional_light(dir_light)
+
 	if FloatingText:
 		FloatingText.show_text(tr("Let's see who starts"), Color.WHITE)
 
@@ -97,3 +101,33 @@ func is_there_a_winer():
 func _process(_delta):	
 	if Input.is_action_just_pressed("exit"):
 		await Globals.fade_to_scene(get_tree(), "res://scenes/Main.tscn")
+
+
+## Handles mouse wheel zooming and top view (F10) reset, persisting camera height per board variant.
+## @param event Input event object.
+func _unhandled_input(event: InputEvent) -> void:
+	var cam = get_node_or_null("Camera")
+	if not cam or not (cam is Camera3D):
+		return
+
+	if Input.is_action_just_pressed("top_view"):
+		if self.board():
+			self.board().reset_camera_to_default(cam)
+			get_viewport().set_input_as_handled()
+			return
+
+	if event is InputEventMouseButton and event.is_pressed():
+		var amount: float = 0.0
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			amount = -2.5
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			amount = 2.5
+			
+		if amount != 0.0:
+			var forward = -cam.global_transform.basis.z.normalized()
+			var new_pos = cam.global_transform.origin + forward * (-amount)
+			if new_pos.y >= 8.0 and new_pos.y <= 120.0:
+				cam.global_transform.origin = new_pos
+				if self.board():
+					self.board().save_custom_camera_height(new_pos.y)
+				get_viewport().set_input_as_handled()

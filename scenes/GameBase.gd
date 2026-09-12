@@ -40,6 +40,14 @@ func _ready():
 	setup_timer_ui()
 	var d = Globals.game_data
 
+	# Standardize top camera framing and directional lighting from board instance
+	if self.board():
+		if OrCamera:
+			self.board().setup_camera_top(OrCamera)
+		var dir_light = get_node_or_null("DirectionalLight")
+		if dir_light is DirectionalLight3D:
+			self.board().setup_directional_light(dir_light)
+
 	# Check if transition came from GameDiceStart (pieces already animated) or saved game load
 	var animate = not Globals.from_dice_start
 	Globals.from_dice_start = false
@@ -308,7 +316,7 @@ func orbit_camera(relative: Vector2):
 	_last_cam_pos = new_pos
 
 
-## Adjusts 3D camera zoom level along its viewing vector.
+## Adjusts 3D camera zoom level along its viewing vector and persists custom height per board.
 ## @param amount Zoom distance offset.
 func zoom_camera(amount: float):
 	if not OrCamera:
@@ -317,6 +325,9 @@ func zoom_camera(amount: float):
 	var new_pos = OrCamera.global_transform.origin + forward * (-amount)
 	if new_pos.y >= 8.0 and new_pos.y <= 120.0:
 		OrCamera.global_transform.origin = new_pos
+		_last_cam_pos = new_pos
+		if self.board():
+			self.board().save_custom_camera_height(new_pos.y)
 
 
 ## Rotates turn to next participating player, saves game state, and initiates turn action.
@@ -469,7 +480,18 @@ func update_timer_ui() -> void:
 			_timer_label.text = "%02d:%02d" % [mins, secs]
 
 
-## Virtual method overridden by specialized game variants (Game3, Game4, Game6) for camera preset views.
+## Resets camera to top-down view and factory default height for the active board.
+func set_camera_top_view_default() -> void:
+	if self.board() and OrCamera:
+		self.board().reset_camera_to_default(OrCamera)
+		_last_cam_pos = OrCamera.global_transform.origin
+		orbit_yaw = 0.0
+		orbit_pitch = 1.45
+		orbit_radius = OrCamera.position.length()
+
+
+## Virtual method overridden by specialized game variants (Game3, Game4, Game6, Game8) for camera preset views.
 ## @param _delta Frame time delta.
 func process_camera_inputs(_delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("top_view"):
+		set_camera_top_view_default()

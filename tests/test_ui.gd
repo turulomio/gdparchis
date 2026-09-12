@@ -189,3 +189,56 @@ func test_update_frequency_check() -> void:
 	# 5. Restore original timestamp
 	Globals.settings["last_internet_update"] = original_timestamp
 	Globals.save_settings()
+
+
+## Verifies per-board camera height zoom persistence and dynamic recovery.
+func test_camera_height_persistence() -> void:
+	# 1. Create a dummy Board4 instance
+	var board4 = BoardBase.new()
+	board4.max_players = 4
+	board4.camera_top_position = Vector3(0.0, 50.0, 0.0)
+	
+	# 2. Verify default top camera position without user override
+	Globals.settings["camera_height_4"] = null
+	var default_pos = board4.get_configured_camera_top_position()
+	self.assert_true(default_pos == Vector3(0.0, 50.0, 0.0), "Default camera position is used when setting is null")
+	
+	# 3. Test saving custom camera height (e.g., zoomed in to 42.5)
+	board4.save_custom_camera_height(42.5)
+	self.assert_true(Globals.settings["camera_height_4"] == 42.5, "Custom camera height saved in Globals.settings")
+	
+	# 4. Verify that get_configured_camera_top_position recovers custom height
+	var configured_pos = board4.get_configured_camera_top_position()
+	self.assert_true(configured_pos.y == 42.5, "Custom camera height recovered in get_configured_camera_top_position")
+	
+	# 5. Verify camera setup applies custom height
+	var cam = Camera3D.new()
+	board4.setup_camera_top(cam)
+	self.assert_true(cam.position.y == 42.5, "setup_camera_top applied custom camera height to Camera3D")
+	
+	# 6. Verify standardized directional light configuration
+	var light = DirectionalLight3D.new()
+	board4.setup_directional_light(light)
+	self.assert_true(light.shadow_enabled, "setup_directional_light enabled shadow")
+	self.assert_true(light.directional_shadow_max_distance == 65.0, "setup_directional_light configured shadow distance")
+	
+	# 7. Test resetting camera height back to default and restoring top view (F10 behavior)
+	cam.rotation_degrees = Vector3(-45, 30, 0) # simulate an angled perspective
+	board4.reset_camera_to_default(cam)
+	self.assert_true(cam.position.y == 50.0, "reset_camera_to_default restored camera position Y to 50.0")
+	self.assert_true(cam.rotation_degrees == Vector3(-90, 0, 0), "reset_camera_to_default restored top view orientation")
+	self.assert_true(Globals.settings["camera_height_4"] == 50.0, "reset_camera_to_default persisted 50.0 to settings")
+
+	# 8. Verify centralized Globals.get_board_preset for all variants
+	for p_count in [3, 4, 6, 8]:
+		var preset = Globals.get_board_preset(p_count)
+		self.assert_true(preset.has("camera_top_position"), "Preset %d has camera_top_position" % p_count)
+		self.assert_true(preset.has("light_transform"), "Preset %d has light_transform" % p_count)
+		self.assert_true(preset.has("light_shadow_max_distance"), "Preset %d has light_shadow_max_distance" % p_count)
+
+	# 9. Clean up and restore default
+	Globals.settings["camera_height_4"] = null
+	Globals.save_settings()
+	board4.free()
+	cam.free()
+	light.free()

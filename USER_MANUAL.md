@@ -132,12 +132,14 @@ Access the **Credits** screen (`Credits`) from the main menu:
   - **Right Click Drag:** Rotate and orbit 3D board camera.
   - **Scroll Wheel Up / `+` Key:** Zoom 3D camera in.
   - **Scroll Wheel Down / `-` Key:** Zoom 3D camera out.
+  - **Persistent Per-Board Zoom:** Whenever the mouse wheel is adjusted in any scene (Game, Starting Dice Roll, or Calibration), the camera height for that specific board variant (3, 4, 6, or 8 players) is saved in user preferences and automatically recovered across all scenes for identical framing.
+  - **Unified Lighting & Viewport:** Standardized directional lighting and camera viewport framing ensure maximum board width and identical illumination across all game modes.
 
 - **Camera Perspective Shortcuts:**
   - **`F1` / `F2` / `F3` / `F4`:** Switch camera view to Yellow, Blue, Red, or Green player's perspective.
   - **`Shift + F1` / `Shift + F2` / `Shift + F3` / `Shift + F4`:** Switch camera view to Yellow, Blue, Red, or Green player's floor level view.
   - **`F9`:** Bottom camera view angle.
-  - **`F10` / `Enter`:** Top-down overhead camera view angle.
+  - **`F10` / `Enter`:** Top-down overhead camera view angle and reset camera height zoom back to factory default values.
 
 - **System & Navigation Shortcuts:**
   - **`F11` / `F` Key:** Toggle fullscreen mode.

@@ -13,8 +13,7 @@ func board() -> BoardBase:
 ## @param _delta Frame time delta.
 func process_camera_inputs(_delta: float) -> void:
 	if Input.is_action_just_pressed("top_view"):
-		if self.board():
-			self.board().setup_camera_top(OrCamera)
+		self.set_camera_top_view_default()
 	if Input.is_action_just_pressed("bottom_view"):
 		if self.board():
 			OrCamera.position = Vector3(self.board().camera_top_position.x, -self.board().camera_top_position.y, self.board().camera_top_position.z)

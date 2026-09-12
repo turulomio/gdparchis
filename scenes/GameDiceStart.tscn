@@ -19,6 +19,7 @@ stream = ExtResource("4")
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 50, 0)
 doppler_tracking = 2
+far = 1000.0
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 30, 0)

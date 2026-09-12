@@ -6,6 +6,21 @@ var max_players: int = 4
 var show_pieces: bool = true
 var camera_top_position: Vector3 = Vector3(0.0, 50.0, 0.0)
 var camera_top_target: Vector3 = Vector3(0.0, 0.0, 0.001)
+var light_transform: Transform3D = Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0))
+var light_shadow_max_distance: float = 65.0
+
+func _init():
+	self.apply_board_presets()
+
+
+## Initializes default board camera and light parameters from centralized Globals presets.
+func apply_board_presets() -> void:
+	var preset = Globals.get_board_preset(self.max_players)
+	self.camera_top_position = preset.get("camera_top_position", Vector3(0.0, 50.0, 0.0))
+	self.camera_top_target = preset.get("camera_top_target", Vector3(0.0, 0.0, 0.001))
+	self.light_transform = preset.get("light_transform", Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0)))
+	self.light_shadow_max_distance = float(preset.get("light_shadow_max_distance", 65.0))
+
 
 var camera_top_height: float:
 	get:
@@ -14,13 +29,69 @@ var camera_top_height: float:
 		camera_top_position.y = v
 
 
+## Returns the configured top camera position, reading user configuration override if present.
+## @return Vector3 target camera position.
+func get_configured_camera_top_position() -> Vector3:
+	# 1. Check if user settings contains a custom saved height for this board variant
+	if Globals.settings != null and Globals.settings is Dictionary:
+		var key = "camera_height_%d" % self.max_players
+		var saved_height = Globals.settings.get(key, null)
+		if saved_height != null and (saved_height is float or saved_height is int) and float(saved_height) > 0.0:
+			return Vector3(self.camera_top_position.x, float(saved_height), self.camera_top_position.z)
+			
+	# 2. Fall back to the default board camera top position
+	return self.camera_top_position
+
+
+## Persists custom camera height for this board variant in user configuration settings.
+## @param height Camera Y height coordinate.
+func save_custom_camera_height(height: float) -> void:
+	if Globals.settings != null and Globals.settings is Dictionary:
+		var key = "camera_height_%d" % self.max_players
+		Globals.settings[key] = height
+		Globals.save_settings()
+
+
+## Resets the camera height for this board variant to default, sets top view, and persists the configuration.
+## @param cam Optional Camera3D instance to reset position and top view orientation for.
+func reset_camera_to_default(cam: Camera3D = null) -> void:
+	# 1. Reset saved height setting to the default board camera Y coordinate
+	self.save_custom_camera_height(self.camera_top_position.y)
+	
+	# 2. Re-apply standard top view position and orientation if camera instance provided
+	if cam:
+		cam.fov = 75.0
+		cam.position = self.camera_top_position
+		cam.rotation_degrees = Vector3(-90, 0, 0)
+
+
 ## Applies standard top camera position and target orientation for this board.
 ## @param cam Camera3D instance to configure.
 func setup_camera_top(cam: Camera3D) -> void:
 	if cam:
 		cam.fov = 75.0
-		cam.position = self.camera_top_position
+		cam.position = self.get_configured_camera_top_position()
 		cam.rotation_degrees = Vector3(-90, 0, 0)
+
+
+## Configures a DirectionalLight3D node with standardized transform, color, energy, and shadow properties for this board.
+## @param light DirectionalLight3D instance to configure.
+func setup_directional_light(light: DirectionalLight3D) -> void:
+	if not light:
+		return
+	light.transform = self.light_transform
+	light.light_color = Color(1, 0.98, 0.94, 1)
+	light.light_energy = 1.2
+	light.shadow_enabled = true
+	light.shadow_bias = 0.02
+	light.shadow_normal_bias = 1.5
+	light.shadow_blur = 2.0
+	light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+	light.directional_shadow_split_1 = 0.15
+	light.directional_shadow_split_2 = 0.35
+	light.directional_shadow_split_3 = 0.65
+	light.directional_shadow_blend_splits = true
+	light.directional_shadow_max_distance = self.light_shadow_max_distance
 
 
 ## Node ready lifecycle callback.

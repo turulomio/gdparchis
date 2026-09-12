@@ -14,8 +14,7 @@ class_name Board8
 
 func _init():
 	self.max_players = 8
-	self.camera_top_position = Vector3(0.0, 85.0, 0.0)
-	self.camera_top_target = Vector3(0.0, 0.0, 0.001)
+	self.apply_board_presets()
 
 
 var user_calib_data: Dictionary = {}

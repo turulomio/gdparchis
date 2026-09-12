@@ -68,6 +68,12 @@ func _ready() -> void:
 			board_inst.setup_camera_top(camera)
 		camera.make_current()
 
+	var dir_light = find_child("DirectionalLight3D", true, false)
+	if not dir_light:
+		dir_light = find_child("DirectionalLight", true, false)
+	if dir_light is DirectionalLight3D and board_inst:
+		board_inst.setup_directional_light(dir_light)
+
 	load_calibration_file()
 	populate_pieces()
 	setup_selection_ring()
@@ -415,7 +421,7 @@ func _on_route_selected(index: int) -> void:
 ## Resets camera height and horizontal pan position back to center.
 func reset_camera_view() -> void:
 	if camera and board_inst:
-		board_inst.setup_camera_top(camera)
+		board_inst.reset_camera_to_default(camera)
 
 
 ## OptionButton dropdown item selection callback.
@@ -511,16 +517,26 @@ func update_info_display() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# Top view (F10) / Default camera reset
+	if Input.is_action_just_pressed("top_view"):
+		reset_camera_view()
+		get_viewport().set_input_as_handled()
+		return
+
 	# Mouse Wheel Zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			if camera:
 				camera.position.y = max(min_cam_y, camera.position.y - 4.0)
+				if board_inst:
+					board_inst.save_custom_camera_height(camera.position.y)
 				get_viewport().set_input_as_handled()
 				return
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			if camera:
 				camera.position.y = min(max_cam_y, camera.position.y + 4.0)
+				if board_inst:
+					board_inst.save_custom_camera_height(camera.position.y)
 				get_viewport().set_input_as_handled()
 				return
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
