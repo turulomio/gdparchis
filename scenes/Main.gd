@@ -175,11 +175,29 @@ func _process(delta: float) -> void:
 		Dice2Pivot.rotate_y(-delta * rotation_speed)
 
 
-## Initializes HTTPRequest node and sends asynchronous API query to GitHub releases endpoint.
+## Initializes HTTPRequest node and sends asynchronous API query to GitHub releases endpoint if not checked recently.
 func check_for_updates() -> void:
 	var status_label = find_child("UpdateStatus", true, false)
 	if not status_label:
 		return
+
+	# 1. Check if an update check was already performed within the last 24 hours
+	if not Globals.should_check_for_updates():
+		# Restore cached update state instantly without network overhead or UI delays
+		var cached_tag = str(Globals.settings.get("latest_version", ""))
+		var cached_url = str(Globals.settings.get("latest_release_url", "https://github.com/turulomio/gdparchis/releases"))
+		self.latest_release_url = cached_url
+		
+		if cached_tag != "" and Globals.is_newer_version(cached_tag, Globals.VERSION):
+			status_label.text = tr("New version available: {0}!").format([cached_tag])
+			status_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
+			status_label.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		else:
+			status_label.text = tr("Up to date")
+			status_label.add_theme_color_override("font_color", Color(0.4, 0.9, 0.4))
+		return
+
+	# 2. Display progress status and dispatch asynchronous HTTP release query
 	status_label.text = tr("Checking for updates...")
 	
 	http_request = HTTPRequest.new()
@@ -207,11 +225,13 @@ func _on_update_request_completed(result: int, response_code: int, _headers: Pac
 	if not status_label:
 		return
 	
+	# 1. Handle HTTP connection errors or non-200 status codes
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
 		status_label.text = tr("Could not check for updates")
 		status_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		return
 		
+	# 2. Parse JSON response body payload
 	var json_str = body.get_string_from_utf8()
 	var json_data = JSON.parse_string(json_str)
 	if json_data == null or not (json_data is Dictionary):
@@ -219,10 +239,12 @@ func _on_update_request_completed(result: int, response_code: int, _headers: Pac
 		status_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		return
 		
+	# 3. Extract release tag version and URL
 	var tag_name = str(json_data.get("tag_name", ""))
 	var release_url = str(json_data.get("html_url", "https://github.com/turulomio/gdparchis/releases"))
 	self.latest_release_url = release_url
 	
+	# 4. Compare release version against local version and format status label
 	if Globals.is_newer_version(tag_name, Globals.VERSION):
 		status_label.text = tr("New version available: {0}!").format([tag_name])
 		status_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
@@ -231,9 +253,11 @@ func _on_update_request_completed(result: int, response_code: int, _headers: Pac
 		status_label.text = tr("Up to date")
 		status_label.add_theme_color_override("font_color", Color(0.4, 0.9, 0.4))
 		
-	# Store timestamp of successful update check
+	# 5. Persist timestamp and latest release metadata to user configuration settings
 	if Globals.settings != null and Globals.settings is Dictionary:
-		Globals.settings["last_internet_update"] = Time.get_datetime_string_from_system()
+		Globals.settings["last_internet_update"] = int(Time.get_unix_time_from_system())
+		Globals.settings["latest_version"] = tag_name
+		Globals.settings["latest_release_url"] = release_url
 		Globals.save_settings()
 
 

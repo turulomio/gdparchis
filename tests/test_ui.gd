@@ -163,3 +163,29 @@ func test_version_comparison() -> void:
 	self.assert_true(Globals.is_newer_version("gdparchis-1.2.3", "0.9.99"), "gdparchis-1.2.3 is newer than 0.9.99")
 	self.assert_true(not Globals.is_newer_version("0.9.99", "0.9.99"), "0.9.99 is not newer than 0.9.99")
 	self.assert_true(not Globals.is_newer_version("v0.9.0", "0.9.99"), "v0.9.0 is not newer than 0.9.99")
+
+
+## Verifies that update check frequency limiter runs at most once per 24 hours.
+func test_update_frequency_check() -> void:
+	# 1. Backup current settings update timestamp
+	var original_timestamp = Globals.settings.get("last_internet_update", null)
+	var current_time = int(Time.get_unix_time_from_system())
+	
+	# 2. Test scenario where never checked before (null or empty)
+	Globals.settings["last_internet_update"] = null
+	self.assert_true(Globals.should_check_for_updates(), "Should check updates when timestamp is null")
+	
+	Globals.settings["last_internet_update"] = ""
+	self.assert_true(Globals.should_check_for_updates(), "Should check updates when timestamp is empty string")
+	
+	# 3. Test scenario where checked just now (less than 24 hours ago)
+	Globals.settings["last_internet_update"] = current_time - 3600 # 1 hour ago
+	self.assert_true(not Globals.should_check_for_updates(), "Should not check updates if checked 1 hour ago")
+	
+	# 4. Test scenario where checked 25 hours ago (more than 86400 seconds)
+	Globals.settings["last_internet_update"] = current_time - 90000 # 25 hours ago
+	self.assert_true(Globals.should_check_for_updates(), "Should check updates if checked 25 hours ago")
+	
+	# 5. Restore original timestamp
+	Globals.settings["last_internet_update"] = original_timestamp
+	Globals.save_settings()
