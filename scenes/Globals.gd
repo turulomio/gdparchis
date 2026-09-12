@@ -14,26 +14,54 @@ const BOARD_PRESETS: Dictionary = {
 	3: {
 		"camera_top_position": Vector3(0.0, 40.25, -5.0),
 		"camera_top_target": Vector3(0.0, 0.0, -5.001),
-		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0)),
+		"light_transform": Transform3D(Vector3(0.6024, 0.0, -0.7982), Vector3(-0.7088, 0.4584, -0.5350), Vector3(0.3659, 0.8887, 0.2761), Vector3(0.0, 30.0, -5.0)),
+		"light_energy": 0.46,
 		"light_shadow_max_distance": 65.0,
+		"piece_roughness": 0.65,
+		"piece_metallic_specular": 0.10,
+		"piece_clearcoat_enabled": false,
+		"piece_color_darken": 0.3,
+		"wood_albedo_color": Color(0.85, 0.85, 0.85, 1.0),
+		"wood_roughness": 0.5,
 	},
 	4: {
 		"camera_top_position": Vector3(0.0, 50.0, 0.0),
 		"camera_top_target": Vector3(0.0, 0.0, 0.001),
-		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 30.0, 0.0)),
+		"light_transform": Transform3D(Vector3(0.6024, 0.0, -0.7982), Vector3(-0.7088, 0.4584, -0.5350), Vector3(0.3659, 0.8887, 0.2761), Vector3(0.0, 30.0, 0.0)),
+		"light_energy": 0.46,
 		"light_shadow_max_distance": 65.0,
+		"piece_roughness": 0.65,
+		"piece_metallic_specular": 0.10,
+		"piece_clearcoat_enabled": false,
+		"piece_color_darken": 0.3,
+		"wood_albedo_color": Color(0.85, 0.85, 0.85, 1.0),
+		"wood_roughness": 0.5,
 	},
 	6: {
 		"camera_top_position": Vector3(0.0, 75.0, 0.0),
 		"camera_top_target": Vector3(0.0, 0.0, 0.001),
-		"light_transform": Transform3D(Vector3(0.707107, 0.459627, -0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(0.707107, -0.459227, 0.537688), Vector3(0.0, 35.0, 0.0)),
+		"light_transform": Transform3D(Vector3(0.6024, 0.0, -0.7982), Vector3(-0.7088, 0.4584, -0.5350), Vector3(0.3659, 0.8887, 0.2761), Vector3(0.0, 35.0, 0.0)),
+		"light_energy": 0.46,
 		"light_shadow_max_distance": 80.0,
+		"piece_roughness": 0.65,
+		"piece_metallic_specular": 0.10,
+		"piece_clearcoat_enabled": false,
+		"piece_color_darken": 0.3,
+		"wood_albedo_color": Color(0.85, 0.85, 0.85, 1.0),
+		"wood_roughness": 0.5,
 	},
 	8: {
 		"camera_top_position": Vector3(0.0, 85.0, 0.0),
 		"camera_top_target": Vector3(0.0, 0.0, 0.001),
-		"light_transform": Transform3D(Vector3(-0.707107, -0.459627, 0.537042), Vector3(0.0, 0.760406, 0.649448), Vector3(-0.707107, 0.459227, -0.537688), Vector3(0.0, 35.0, 0.0)),
+		"light_transform": Transform3D(Vector3(0.6024, 0.0, -0.7982), Vector3(-0.7088, 0.4584, -0.5350), Vector3(0.3659, 0.8887, 0.2761), Vector3(0.0, 35.0, 0.0)),
+		"light_energy": 0.46,
 		"light_shadow_max_distance": 80.0,
+		"piece_roughness": 0.65,
+		"piece_metallic_specular": 0.10,
+		"piece_clearcoat_enabled": false,
+		"piece_color_darken": 0.3,
+		"wood_albedo_color": Color(0.85, 0.85, 0.85, 1.0),
+		"wood_roughness": 0.5,
 	},
 }
 
@@ -48,6 +76,26 @@ var game_history: Array = []
 ## @return Dictionary containing camera_top_position, camera_top_target, light_transform, and light_shadow_max_distance.
 func get_board_preset(player_count: int) -> Dictionary:
 	return BOARD_PRESETS.get(player_count, BOARD_PRESETS[4])
+
+
+## Creates a standardized StandardMaterial3D for pieces based on board player count preset.
+## @param color Base player color for the piece.
+## @param player_count Number of players for preset lookup (default 4).
+## @return StandardMaterial3D configured with wood texture and non-reflective matte finish.
+func create_piece_material(color: Color, player_count: int = 4) -> StandardMaterial3D:
+	var preset = get_board_preset(player_count)
+	var mat = StandardMaterial3D.new()
+	mat.albedo_texture = IMAGE_WOOD
+	var darken_amt = float(preset.get("piece_color_darken", 0.3))
+	mat.albedo_color = color.darkened(darken_amt)
+	mat.roughness = float(preset.get("piece_roughness", 0.65))
+	mat.metallic_specular = float(preset.get("piece_metallic_specular", 0.10))
+	mat.clearcoat_enabled = bool(preset.get("piece_clearcoat_enabled", false))
+	if mat.clearcoat_enabled:
+		mat.clearcoat = float(preset.get("piece_clearcoat", 0.2))
+		mat.clearcoat_roughness = float(preset.get("piece_clearcoat_roughness", 0.3))
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	return mat
 
 
 ## Singleton initialization callback. Loads saved configuration settings and game history.
@@ -328,10 +376,11 @@ func load_game(filename):
 	
 	
 func save_settings():
-	var file= FileAccess.open("user://gdparchis.cfg", FileAccess.WRITE)
-	file.store_line(JSON.stringify(settings))
-	file.close()
-	print("Settings saved: ", settings)
+	var file = FileAccess.open("user://gdparchis.cfg", FileAccess.WRITE)
+	if file:
+		file.store_line(JSON.stringify(settings))
+		file.close()
+		print("Settings saved: ", settings)
 	
 func load_settings():
 	if FileAccess.file_exists("user://gdparchis.cfg") == false:

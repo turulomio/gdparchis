@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4boardcalibration01"]
+[gd_scene load_steps=3 format=3 uid="uid://c4boardcalibration01"]
 
 [ext_resource type="Script" path="res://scenes/Board4Calibration.gd" id="1_script"]
+[ext_resource type="Environment" uid="uid://c6j2k4l5m8p9q" path="res://default_env.tres" id="2_env"]
 
 [node name="Board4Calibration" type="Node3D"]
 script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 50, 0)
@@ -14,7 +18,7 @@ far = 1000.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, 0.459627, -0.537042, 0, 0.760406, 0.649448, 0.707107, -0.459227, 0.537688, 0, 30, 0)
 light_color = Color(1, 0.98, 0.94, 1)
-light_energy = 1.2
+light_energy = 0.9
 shadow_enabled = true
 shadow_bias = 0.02
 shadow_normal_bias = 1.5

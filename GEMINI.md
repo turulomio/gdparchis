@@ -223,6 +223,9 @@ Para la gestión y mantenimiento de coordenadas de casillas y escalas de fichas 
 * **Prohibición de Modificación Automática:** Los ficheros JSON de calibración de casillas (`res://scenes/board3_calibrated_positions.json`, `res://scenes/board4_calibrated_positions.json`, `res://scenes/board6_calibrated_positions.json`, `res://scenes/board8_calibrated_positions.json`) son gestionados exclusivamente por el usuario mediante la herramienta interactiva (`python3 management.py --calibration`).
 * **Edición bajo Demanda Explícita:** Nunca se deben editar, alterar, transformar, rotar ni sobrescribir estos ficheros a menos que el usuario lo solicite expresamente.
 
+---
 
+## 13. Integridad de Posiciones y Jerarquías de Tableros 3D
 
-
+* **Inmutabilidad de Posiciones y Jerarquías de Tableros:** Nunca se deben alterar, desplazar, reanclar ni transformar las posiciones, orígenes o jerarquías de los tableros (`Board3`, `Board4`, `Board6`, `Board8`) ni sus nodos de marco (`WoodenFrame`). La calibración de casillas y fichas (`*_calibrated_positions.json`) depende estrictamente del sistema de coordenadas exacto de cada tablero.
+* **Alcance de Mejoras Visuales:** Para mejorar la visibilidad y estética de los tableros, únicamente se deben ajustar los parámetros de **iluminación** (`DirectionalLight3D`, transform de luz, energía, colores, sombras) y de **cámara / entorno** (`Camera3D`, `WorldEnvironment`, `default_env.tres`), sin modificar en ningún caso la posición ni la estructura de los tableros.

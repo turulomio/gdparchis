@@ -253,6 +253,15 @@ func get_player_name(_player_id: int) -> String:
 		_: return "Jugador %d" % _player_id
 
 
+## Returns color for a square ID based on player routes or default neutral tint.
+func get_square_color(sq_id: int) -> Color:
+	for p_id in range(8):
+		var r_sqs = get_player_route_square_ids(p_id)
+		if sq_id in r_sqs:
+			return get_player_color(p_id)
+	return Color(0.9, 0.9, 0.9)
+
+
 ## Populates piece instances on all board squares.
 func populate_pieces() -> void:
 	var piece_scene = load("res://scenes/Piece.tscn")
@@ -283,6 +292,10 @@ func populate_pieces() -> void:
 				p_inst.scale = Vector3(p_scale, p_scale, p_scale)
 				p_inst.set_meta("sq_id", sq_id)
 				p_inst.set_meta("slot", slot)
+				if p_inst.has_method("initialize"):
+					var p_color = get_square_color(sq_id)
+					var p_count = board_inst.max_players if (board_inst and "max_players" in board_inst) else 4
+					p_inst.initialize(p_color, p_count)
 				add_child(p_inst)
 				piece_nodes[Vector2i(sq_id, slot)] = p_inst
 

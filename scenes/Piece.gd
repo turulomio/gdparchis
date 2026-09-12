@@ -18,20 +18,26 @@ var TweenWaiting
 
 ## Initializes piece properties including material, color, varnish finish, and mass.
 ## @param color_ Player color assigned to this piece.
-func initialize(color_):
+## @param player_count Optional board player count for preset material lookup.
+func initialize(color_, player_count: int = -1):
 	# Force piece mass to 24.0 kg (20x heavier than dice)
 	self.mass = 24.0
 	self.color = color_
 	
-	# Create StandardMaterial3D with wood texture and polished clearcoat
-	var new_material = StandardMaterial3D.new()
-	new_material.albedo_texture = Globals.IMAGE_WOOD
-	new_material.albedo_color = self.color.darkened(0.3)
-	new_material.roughness = 0.3
-	new_material.metallic_specular = 0.5
-	new_material.clearcoat_enabled = true
-	new_material.clearcoat = 0.4
-	new_material.clearcoat_roughness = 0.15
+	# Determine player count for presets lookup
+	var p_count = player_count
+	if p_count <= 0:
+		var p = self.get_parent()
+		if p != null:
+			if "max_players" in p:
+				p_count = p.max_players
+			elif p.get_parent() != null and "max_players" in p.get_parent():
+				p_count = p.get_parent().max_players
+	if p_count <= 0:
+		p_count = 4
+	
+	# Create StandardMaterial3D via centralized Globals presets
+	var new_material = Globals.create_piece_material(self.color, p_count)
 	if MeshInstance != null:
 		MeshInstance.material_override = new_material
 

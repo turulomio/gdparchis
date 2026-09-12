@@ -79,9 +79,10 @@ func setup_camera_top(cam: Camera3D) -> void:
 func setup_directional_light(light: DirectionalLight3D) -> void:
 	if not light:
 		return
+	var preset = Globals.get_board_preset(self.max_players)
 	light.transform = self.light_transform
 	light.light_color = Color(1, 0.98, 0.94, 1)
-	light.light_energy = 1.2
+	light.light_energy = float(preset.get("light_energy", 0.46))
 	light.shadow_enabled = true
 	light.shadow_bias = 0.02
 	light.shadow_normal_bias = 1.5
@@ -159,13 +160,14 @@ func get_board_texture() -> Texture2D:
 ## Creates a standardized StandardMaterial3D for board wood surfaces.
 ## @return StandardMaterial3D instance.
 func create_wood_material() -> StandardMaterial3D:
+	var preset = Globals.get_board_preset(self.max_players)
 	var wood_tex = load("res://images/wood.png")
 	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+	mat.albedo_color = preset.get("wood_albedo_color", Color(0.85, 0.85, 0.85, 1.0))
 	mat.albedo_texture = wood_tex
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
 	mat.emission_enabled = false
-	mat.roughness = 0.45
+	mat.roughness = float(preset.get("wood_roughness", 0.5))
 	mat.metallic = 0.0
 	mat.metallic_specular = 0.5
 	mat.uv1_scale = Vector3(4, 4, 4)

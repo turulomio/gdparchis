@@ -35,13 +35,7 @@ func setup_wooden_frame() -> void:
 	if not board_tex:
 		board_tex = load("res://images/parchis3.svg")
 		
-	var wood_mat = StandardMaterial3D.new()
-	wood_mat.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
-	wood_mat.albedo_texture = wood_tex
-	wood_mat.roughness = 0.45
-	wood_mat.uv1_scale = Vector3(4, 4, 4)
-	wood_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	wood_mat.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	var wood_mat = self.create_wood_material()
 	
 	var board_mat = StandardMaterial3D.new()
 	board_mat.albedo_color = Color(1.0, 1.0, 1.0, 1.0)
@@ -275,6 +269,12 @@ func setup_board_materials() -> void:
 	var blend = get_node_or_null("Board/BoardBlend")
 	if blend:
 		blend.visible = false
+	var wf = get_node_or_null("WoodenFrame")
+	if wf:
+		var meshes = _find_all_mesh_instances(wf)
+		for mesh_inst in meshes:
+			mesh_inst.layers = 1
+			mesh_inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 
 
 var user_calib_data: Dictionary = {}
