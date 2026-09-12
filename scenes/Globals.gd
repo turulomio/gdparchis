@@ -338,6 +338,12 @@ func load_settings():
 		settings["statistics"] = true
 	if not settings.has("installation_uuid"):
 		settings["installation_uuid"] = generate_uuid()
+	if not settings.has("last_internet_update"):
+		settings["last_internet_update"] = null
+	if not settings.has("latest_version"):
+		settings["latest_version"] = ""
+	if not settings.has("latest_release_url"):
+		settings["latest_release_url"] = "https://github.com/turulomio/gdparchis/releases"
 
 	settings["full_screen"] = bool(settings["full_screen"])
 	settings["sound"] = bool(settings["sound"])
@@ -351,6 +357,43 @@ func load_settings():
 	set_window_mode_fullscreen(settings["full_screen"])		
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), not settings["sound"])
 	change_language(settings["language"])
+
+
+## Checks whether an internet update query should be performed (at most once every 24 hours).
+## @return True if update check is needed, false if already checked within the last 24 hours.
+func should_check_for_updates() -> bool:
+	# 1. Retrieve last internet update check timestamp from settings
+	if settings == null or not (settings is Dictionary):
+		return true
+		
+	var last_update = settings.get("last_internet_update", null)
+	if last_update == null:
+		return true
+		
+	var last_unix: int = 0
+	if last_update is int or last_update is float:
+		last_unix = int(last_update)
+	elif last_update is String:
+		var str_val: String = (last_update as String).strip_edges()
+		if str_val == "":
+			return true
+		if str_val.is_valid_int():
+			last_unix = int(str_val)
+		else:
+			last_unix = int(Time.get_unix_time_from_datetime_string(str_val))
+			
+	if last_unix <= 0:
+		return true
+		
+	# 2. Compare against current system unix timestamp (86400 seconds = 24 hours)
+	var current_unix = int(Time.get_unix_time_from_system())
+	var elapsed_seconds = current_unix - last_unix
+	
+	# If time difference is negative (e.g. system clock was adjusted backward) or >= 24 hours (86400s), check again
+	if elapsed_seconds < 0 or elapsed_seconds >= 86400:
+		return true
+		
+	return false
 
 
 ## Toggles master audio sound mute setting, updates settings dictionary, and saves configuration.

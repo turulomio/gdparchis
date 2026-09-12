@@ -42,6 +42,7 @@ Upon launching the game, you will enter the **Player Selection Menu**:
   - Player 7: Cyan 🩵 (8 Player Mode)
 - **Player Types:** Toggle each player slot between **Human Player** or **Artificial Intelligence (AI)**.
 - **Custom Player Names:** Enter custom names for each player to be displayed during in-game floating text announcements and in post-game Match History logs.
+- **Automatic Version & Update Status:** The main menu checks GitHub releases automatically at most once per day (24 hours), instantly restoring cached status on subsequent scene visits to keep menu navigation snappy and instant. When a new version is released, an interactive notification link appears directly at the bottom of the main menu.
 
 ---
 
